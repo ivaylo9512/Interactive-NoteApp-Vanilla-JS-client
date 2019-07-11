@@ -1,0 +1,111 @@
+@import url('https://fonts.googleapis.com/css?family=Varela+Round');
+
+body {
+    background-color: #EAE9E5;
+    color: #41291B;
+    font-family: "Aladin";
+    font: normal 33px/1 "Aladin", Helvetica, sans-serif;
+}
+section{
+    width: 989px;
+    margin: 0 auto;
+    text-align: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    position: relative;
+}
+.first-section {
+    background-image: url("resources/notebook-bottom.png");
+    height: 579px;
+    overflow: hidden;
+}
+
+.seconde-section {
+    background-image: url("resources/notebook-middle.png");
+    overflow: visible;
+    background-position: 1.4px -0.3px;
+    height: 560px;
+    background-attachment: local;
+    z-index: 9;
+}
+
+.tree{
+    width: 240px;
+    margin-right: 37px;
+    margin-top: 10px;
+}
+
+.pink-bulb {
+    margin-bottom: 150px;
+    margin-right: 0px;
+    width: 184px;
+    animation-delay: 2s;
+}
+
+.blue-bulb {
+    width: 184px;
+    margin-bottom: 100px;
+}
+
+.pointer {
+    position: absolute;
+    width: 200px;
+    margin-left: 222px;
+}
+.onload-animation {
+    text-align: center;
+}
+
+.first-section nav {
+    height: 20%;
+    position: relative;
+    opacity: 0;
+}
+
+.first-section nav li{
+    margin-top: 40px;
+    color: #41291B;
+    text-shadow: 1px 1px 0 rgba(140, 140, 140, 0.6), 0px 0px 1px rgba(0, 0, 0, 0.67);
+    float: left;
+    list-style-type: none;
+    cursor: pointer;
+}
+
+.first-section nav ul{
+    display: flex;
+    justify-content: center;
+}
+
+.profile-btn{
+    margin-right: 124px;
+    font-size: 55px;
+    margin-left: -34px;
+}
+
+.album-btn{
+    font-size: 55px;
+}
+
+.album-btns{
+    font-size: 45px;
+    position: absolute;
+
+}
+.album-btns.first {
+    transform: rotate(-44deg);
+    bottom: 52%;
+    left: 77.5%;
+}
+
+.album-btns.second {
+    transform: rotate(-53deg);
+    bottom: 43%;
+    left: 74.5%;
+}
+
+.album-btns.third {
+    margin-left: 9%;
+    transform: rotate(-45deg);
+    top: 10%;
+    left: 65%;
+}
