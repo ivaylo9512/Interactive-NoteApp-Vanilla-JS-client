@@ -109,7 +109,53 @@ section{
     top: 10%;
     left: 65%;
 }
-.circles-container span{
+.onLoad-photo{
+    position: absolute;
+    border-radius: 12px;
+}
+.onLoad-photo:nth-child(1){
+    bottom: 5%;
+    width: 10%;
+    transform: rotate(20deg);
+    right: 20%;
+}
+
+.onLoad-photo:nth-child(2){
+    bottom: 5%;
+    width: 10%;
+    transform: rotate(-20deg);
+    right: 25%;
+}
+
+.onLoad-photo:nth-child(3) {
+    bottom: 18%;
+    width: 10%;
+    transform: rotate(30deg);
+    right: 25%;
+}
+
+.onLoad-photo:nth-child(4) {
+    bottom: 10%;
+    width: 10%;
+    transform: rotate(10deg);
+    right: 30%;
+}
+
+.onLoad-photo:nth-child(5) {
+    bottom: 14%;
+    width: 10%;
+    transform: rotate(40deg);
+    right: 19%;
+}
+
+.onLoad-photo:nth-child(6) {
+    bottom: 17%;
+    width: 10%;
+    transform: rotate(-25deg);
+    right: 30%;
+}
+
+.circles-container span:before{
     position: absolute;
     content: ' \25CF';
 }
