@@ -119,23 +119,11 @@ const app = (() =>{
     let albumImages = [];
     const getAlbumImages = (e) => {
         const id = e.target.id
-        let getImages;
 
-        switch(id){
-            case '1':
-                getImages = () => remote.getAlbumImages(1);
-                break;
-            case '2':    
-                getImages = () => remote.getAlbumImages(2);
-                break;
-            case '3':
-                getImages = () => remote.getAlbumImages(3);
-                break;    
-        }
-
-        getImages()
+        remote.getAlbumImages(id)
             .then(function (response) {
                 currentAlbum = id
+                console.log(response.data)
                 albumImages = response.data
             })
             .catch(function (error) {
