@@ -1,5 +1,6 @@
 const app = (() =>{
 
+
     const photos = document.getElementsByClassName("onLoad-photo");
     
     const circles = [];
@@ -39,7 +40,9 @@ const app = (() =>{
             if (window.scrollY < 446 && pointerHidden == false) {
                 hidePointer();
             }
+
         }
+
         let hiding = false;
         const showCircles = () => {
             const delay = 100;
@@ -52,6 +55,7 @@ const app = (() =>{
                     if(current == circles.length || hiding){
                         return;
                     }
+                    
                     const circle = circles[current];            
                     if(current >= 4 && current <= 9){
                         const photo = photos[current - 4];
@@ -76,6 +80,7 @@ const app = (() =>{
                     if(current < 0 || !hiding){
                         return;
                     }
+
                     const circle = circles[current];            
                     if(current >= 4 && current <= 9){
                         const photo = photos[current - 4];
@@ -83,6 +88,7 @@ const app = (() =>{
                         delay = 120;
                     }
                     circle.classList.remove("animate");
+                    
                     current--;
                     hideLoop();
                 }, delay);
@@ -112,7 +118,12 @@ const app = (() =>{
     })();
 
     const start = () => {
-        createCircles()
+        window.scrollTo(0, window.innerHeight);
+        window.onbeforeunload = function () {
+            window.scrollTo(0, window.innerHeight);
+        }
+
+        createCircles();
         window.addEventListener('scroll', setScrollEvents.decideEvent);
         window.addEventListener("wheel", setDelta);
     }
