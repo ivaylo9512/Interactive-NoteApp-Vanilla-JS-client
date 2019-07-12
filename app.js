@@ -16,15 +16,19 @@ const app = (() =>{
         }
     }
 
-    const setScrollEvents = (() => {
+    let deltaDir = 0;
+    const setDelta = () => {
+        deltaDir = Math.sign(event.deltaY);
+    }
 
+    const setScrollEvents = (() => {
         const decideEvent = () =>{
 
-            if (window.scrollY < 300) {
+            if (window.scrollY == 0 && deltaDir < 0) {
                 showCircles();
             }
         
-            if (window.scrollY > 300) {
+            if (window.scrollY > 0 && deltaDir > 0) {
                 hideCircles();
             }
         
@@ -36,41 +40,52 @@ const app = (() =>{
                 hidePointer();
             }
         }
-        let circlesAnimated = false;
+        let hiding = false;
         const showCircles = () => {
             const delay = 100;
-
-            for (let i = 0; i < circles.length; i++) {
+            let current = 1;
+            hiding = false;
+            
+            showLoop();
+            function showLoop() {
                 setTimeout(() => {
-                    
-                    const circle = circles[i];            
-                    if(i >= 4 && i <= 9){
-                        const photo = photos[i - 4];
+                    if(current == circles.length || hiding){
+                        return;
+                    }
+                    const circle = circles[current];            
+                    if(current >= 4 && current <= 9){
+                        const photo = photos[current - 4];
                         photo.classList.add("animate");
                     }
                     circle.classList.add("animate");
 
-                }, delay * i);
-            }
-            circlesAnimated = true;
+                    current++;
+                    showLoop();
 
+                }, delay);
+            };
         }
         const hideCircles = () => {
             let delay = 50;
+            hiding = true;
+            let current = circles.length - 1;
 
-            for (let i = circles.length - 1; i >= 0; i--) {
+            hideLoop();
+            function hideLoop() {
                 setTimeout(() => {
-                    
-                    const circle = circles[i];            
-                    if(i >= 4 && i <= 9){
-                        const photo = photos[i - 4];
+                    if(current < 0 || !hiding){
+                        return;
+                    }
+                    const circle = circles[current];            
+                    if(current >= 4 && current <= 9){
+                        const photo = photos[current - 4];
                         photo.classList.remove("animate");
                         delay = 120;
                     }
                     circle.classList.remove("animate");
-
-                }, delay * i);
-
+                    current--;
+                    hideLoop();
+                }, delay);
             }
             circlesAnimated = true;
         }
@@ -98,9 +113,8 @@ const app = (() =>{
 
     const start = () => {
         createCircles()
-        
         window.addEventListener('scroll', setScrollEvents.decideEvent);
-
+        window.addEventListener("wheel", setDelta);
     }
 
     return {
