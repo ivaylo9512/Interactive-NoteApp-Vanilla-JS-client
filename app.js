@@ -33,11 +33,11 @@ const app = (() =>{
                 hideCircles();
             }
         
-            if (window.scrollY <= 446 && treeAnimated == false) {
+            if (window.scrollY <= 446 && treeAnimated == false && deltaDir < 0) {
                 treeAnimation();
             }
 
-            if (window.scrollY < 446 && pointerHidden == false) {
+            if (window.scrollY < 446 && pointerHidden == false && deltaDir < 0) {
                 hidePointer();
             }
 
@@ -46,7 +46,7 @@ const app = (() =>{
         let hiding = false;
         const showCircles = () => {
             const delay = 100;
-            let current = 1;
+            let current = 0;
             hiding = false;
             
             showLoop();
