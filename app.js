@@ -133,16 +133,19 @@ const app = (() =>{
         const colors = new Array('#E2007A', '#7398CA', '#E2007A', '#7398CA', '#41291B');
         function getRandomColor() {
             const randomNumber = Math.floor(Math.random() * 5);
-            var currentColor = colors[randomNumber];
+            const randomColor = colors[randomNumber];
         
-            if (currentColor == chosenColor) {
+            if (currentColor == randomColor) {
                 count = true;
             } else {
                 count = false;
             }
-            return colors[randomNumber];
+            return randomColor;
         }
         
+        return {
+            currentColor,
+        };
     })();
     const start = () => {
         window.scrollTo(0, window.innerHeight);
@@ -155,6 +158,14 @@ const app = (() =>{
         window.addEventListener("wheel", setDelta);
 
         document.getElementById('album-btns').addEventListener('mousedown', getAlbumImages);
+
+
+        document.getElementById('pink-bulb').addEventListener("mousedown", function () {
+            colorize.currentColor = '#E2007A'
+        })
+        document.getElementById("blue-bulb").addEventListener("mousedown", function () {
+            colorize.currentColor = '#7398CA'
+        })
     }
 
     return {
