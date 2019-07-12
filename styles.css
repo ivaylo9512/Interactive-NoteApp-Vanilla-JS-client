@@ -61,7 +61,14 @@ section{
     position: relative;
     opacity: 0;
 }
-
+.first-section nav.nav-show {
+    opacity: 1;
+    -webkit-transition: opacity 1.15s ease-in-out;
+    -moz-transition: opacity 1.15s ease-in-out;
+    -ms-transition: opacity 1.15s ease-in-out;
+    -o-transition: opacity 1.15s ease-in-out;
+    transition: opacity 1.15s ease-in-out;
+}
 .first-section nav li{
     margin-top: 40px;
     color: #41291B;
@@ -158,6 +165,51 @@ section{
 .circles-container span:before{
     position: absolute;
     content: ' \25CF';
+}
+
+.circles-container span,
+.circles-container img {
+    display: none;
+    opacity: 0;
+}
+
+.circles-container span.animate,
+.circles-container img.animate {
+    display: block;
+    -moz-animation: fadeIn .5s ease-in forwards;
+    -o-animation: fadeIn .5s ease-in forwards;
+    -webkit-animation: fadeIn .5s ease-in forwards;
+    animation: fadeIn ease-in .5s forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@-moz-keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 .circle1:before {
     bottom: 5%;
