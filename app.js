@@ -123,11 +123,14 @@ const app = (() =>{
         remote.getAlbumImages(id)
             .then(function (response) {
                 currentAlbum = id
-                console.log(response.data)
                 albumImages = response.data
             })
             .catch(function (error) {
             })
+    }
+
+    const colorize = (e) => {
+         
     }
     const start = () => {
         window.scrollTo(0, window.innerHeight);
