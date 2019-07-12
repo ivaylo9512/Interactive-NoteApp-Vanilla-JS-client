@@ -131,6 +131,8 @@ const app = (() =>{
 
     const colorize = (() => {
         const colors = new Array('#E2007A', '#7398CA', '#E2007A', '#7398CA', '#41291B');
+        let colorizables = [];
+
         function getRandomColor() {
             const randomNumber = Math.floor(Math.random() * 5);
             const randomColor = colors[randomNumber];
@@ -143,8 +145,45 @@ const app = (() =>{
             return randomColor;
         }
         
+        let currentColor = '';
+        const getElements = () => {
+            colorizables = Array.from(document.getElementsByClassName('colorize'))
+        }
+
+        const manageListeners = (e) => {
+
+            let state = e.target.id;
+
+            if(state == 'play'){
+                e.target.id = 'stop'
+                colorizables.forEach(colorizable => {
+                    colorizable.addEventListener("mouseover", changeBulbColor(bulbs[i]));
+
+                });
+            }else{
+                e.target.id = 'stop'
+                colorizables.forEach(colorizable => {
+                    colorizable.removeEventListener("mouseover", changeBulbColor);
+                });    
+            }
+        }
+
+        function changeColor(node) {
+            return function () {
+        
+                if (currentColor != "") {
+                    const randomColor = getRandomColor();
+                    calculate(node)
+                    node.style.color = randomColor;
+                }
+            };
+        
+        }
+
         return {
+            manageListeners,
             currentColor,
+            getElements
         };
     })();
     const start = () => {
@@ -159,13 +198,10 @@ const app = (() =>{
 
         document.getElementById('album-btns').addEventListener('mousedown', getAlbumImages);
 
-
-        document.getElementById('pink-bulb').addEventListener("mousedown", function () {
-            colorize.currentColor = '#E2007A'
-        })
-        document.getElementById("blue-bulb").addEventListener("mousedown", function () {
-            colorize.currentColor = '#7398CA'
-        })
+        colorize.getElements();
+        document.getElementById('play').addEventListener('mousedown', colorize.manageListeners);
+        document.getElementById('pink-bulb').addEventListener("mousedown", () => colorize.currentColor = '#E2007A')
+        document.getElementById("blue-bulb").addEventListener("mousedown", () => colorize.currentColor = '#7398CA')
     }
 
     return {
