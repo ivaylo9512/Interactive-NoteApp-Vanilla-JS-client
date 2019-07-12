@@ -93,24 +93,24 @@ section{
     font-size: 55px;
 }
 
-.album-btns{
+.album-btns li{
     font-size: 45px;
     position: absolute;
-
 }
-.album-btns.first {
+
+.album-btns .first {
     transform: rotate(-44deg);
     bottom: 52%;
     left: 77.5%;
 }
 
-.album-btns.second {
+.album-btns .second {
     transform: rotate(-53deg);
     bottom: 43%;
     left: 74.5%;
 }
 
-.album-btns.third {
+.album-btns .third {
     margin-left: 9%;
     transform: rotate(-45deg);
     top: 10%;

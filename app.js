@@ -1,6 +1,4 @@
 const app = (() =>{
-
-
     const photos = document.getElementsByClassName("onLoad-photo");
     
     const circles = [];
@@ -117,6 +115,32 @@ const app = (() =>{
         };
     })();
 
+    let currentAlbum;
+    let albumImages = [];
+    const getAlbumImages = (e) => {
+        const id = e.target.id
+        let getImages;
+
+        switch(id){
+            case '1':
+                getImages = () => remote.getAlbumImages(1);
+                break;
+            case '2':    
+                getImages = () => remote.getAlbumImages(2);
+                break;
+            case '3':
+                getImages = () => remote.getAlbumImages(3);
+                break;    
+        }
+
+        getImages()
+            .then(function (response) {
+                currentAlbum = id
+                albumImages = response.data
+            })
+            .catch(function (error) {
+            })
+    }
     const start = () => {
         window.scrollTo(0, window.innerHeight);
         window.onbeforeunload = function () {
@@ -126,6 +150,8 @@ const app = (() =>{
         createCircles();
         window.addEventListener('scroll', setScrollEvents.decideEvent);
         window.addEventListener("wheel", setDelta);
+
+        document.getElementById('album-btns').addEventListener('mousedown', getAlbumImages);
     }
 
     return {
