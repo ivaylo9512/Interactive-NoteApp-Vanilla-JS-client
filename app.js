@@ -21,7 +21,7 @@ const app = (() =>{
     }
 
     const setScrollEvents = (() => {
-        const decideEvent = () =>{
+        const decideEvent = () => {
 
             if (window.scrollY == 0 && deltaDir < 0) {
                 showCircles();
@@ -129,9 +129,21 @@ const app = (() =>{
             })
     }
 
-    const colorize = (e) => {
-         
-    }
+    const colorize = (() => {
+        const colors = new Array('#E2007A', '#7398CA', '#E2007A', '#7398CA', '#41291B');
+        function getRandomColor() {
+            const randomNumber = Math.floor(Math.random() * 5);
+            var currentColor = colors[randomNumber];
+        
+            if (currentColor == chosenColor) {
+                count = true;
+            } else {
+                count = false;
+            }
+            return colors[randomNumber];
+        }
+        
+    })();
     const start = () => {
         window.scrollTo(0, window.innerHeight);
         window.onbeforeunload = function () {
