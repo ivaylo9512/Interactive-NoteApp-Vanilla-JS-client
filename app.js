@@ -131,16 +131,49 @@ const app = (() =>{
     }
 
     const profile = (() =>{
+        let labels = document.getElementById('labels-container').children;
+        let inputs = document.getElementById('inputs-container').children;
 
-        const setLabels = (oldState, newState) => {
+        let userBtn = document.getElementById('user-btn');
+        let labelsTexts = [
+            ['Username', 'Password'], 
+            ['Username', 'Password', 'Repeat'],
+            ['First Name', 'Last Name', 'Age', 'Country'],
+        ];
+
+        const changeInputView = (newState, oldState) => {
+
             oldState.classList.remove('active');
             newState.classList.add('active');
+        
+            userBtn.innerHTML = newState.id == 'login-btn' ? 'login' : 'next';
+            const currentLabels = newState.id == 'login-btn' ? labelsTexts[0] : labelsTexts[1];
+            resetInputs(currentLabels);
+        }
+
+        const resetInputs = (currentLabels) => {
+            for (let i = 0; i < 4; i++) {
+                if (currentLabels.length <= i) {
+                    labels[i].style.display = 'none';
+                    inputs[i].style.display = 'none';
+                } else {
+                    labels[i].style.display = 'block';
+                    inputs[i].style.display = 'block';
+                    labels[i].innerHTML = currentLabels[i];
+                    inputs[i].value = '';
+                    inputs[i].type = 'text';
+        
+                    if (currentLabels[i] == 'Password' || currentLabels[i] == 'Repeat') {
+                        inputs[i].type = 'password'
+                    }
+                }
+            }
         }
 
         return{
-            setLabels
+            changeInputView
         }
-        
+
     })();
 
     const start = () => {
@@ -162,8 +195,8 @@ const app = (() =>{
 
         const loginBtn = document.getElementById('login-btn');
         const registerBtn = document.getElementById('register-btn');
-        loginBtn.addEventListener('mousedown', () => profile.setLabels(registerBtn, loginBtn))
-        registerBtn.addEventListener('mousedown', () => profile.setLabels(loginBtn, registerBtn))
+        loginBtn.addEventListener('mousedown', () => profile.changeInputView(loginBtn, registerBtn))
+        registerBtn.addEventListener('mousedown', () => profile.changeInputView(registerBtn, loginBtn))
         
     }
 

@@ -504,10 +504,8 @@ section{
     height: 44px;
     margin-top: 1.7px;
     transition: all 1s;
-}
-.buttons-container button p{
-    color: #EAE9E5;
     text-align: center;
+    color: #EAE9E5;
 }
 .buttons-container .register{
     margin-left: 1px;
@@ -519,7 +517,7 @@ section{
 .buttons-container .login.active{
     margin-right: -5px;
 }
-.buttons-container .user-button {
+.buttons-container .user-btn {
     transform: rotate(0.25deg);
     float: left;
 }
