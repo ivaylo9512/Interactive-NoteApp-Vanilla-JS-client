@@ -23,31 +23,33 @@
             <div class="balloons-container" id="insert-balloons">
                 <img class="balloon" id="balloon" src="resources-finale/static-balloon.png" />
             </div>
-            <div class="buttons-container" id="buttons-container">
-                <button class="register" id="register-btn">Register</button>
-                <button class="login" id="login-btn">Login</button>
-                <button class="user-btn" id="user-btn"></button>
-            </div>
-            <div class="user-info">
-                <div class="labels-container" id="labels-container">
-                    <label class="colorize">First name:</label>
-                    <label class="colorize">Last name:</label>
-                    <label class="colorize">Age:</label>
-                    <label class="colorize">Country:</label>
+            <form action="">
+                <div class="buttons-container" id="buttons-container">
+                    <button type="button" class="register" id="register-btn">Register</button>
+                    <button type="button" class="login" id="login-btn">Login</button>
+                    <button type="submit" class="user-btn" id="user-btn"></button>
                 </div>
-                <div class="inputs-container" id="inputs-container">
-                    <input type="text" />
-                    <input type="text" />
-                    <input type="text" />
-                    <input type="text" />
-                    <button type="submit" class="login-button" id="login-button"></button>
+                <div class="user-info">
+                    <div class="labels-container" id="labels-container">
+                        <label class="colorize">First name:</label>
+                        <label class="colorize">Last name:</label>
+                        <label class="colorize">Age:</label>
+                        <label class="colorize">Country:</label>
+                    </div>
+                    <div class="inputs-container" id="inputs-container">
+                            <input type="text" />
+                            <input type="text" />
+                            <input type="text" />
+                            <input type="text" />
+                    </div>
+                    <div class="profile-photo-container" id="profile-photo-container">
+                            <img src="resources/photo-frame.png" class="profile-photo" alt="" />
+                            <input id="profile-photo" type="file" />
+                            <img class="chosen-profile-photo" id="choosen-image" src="#" alt="" />
+                    </div>
                 </div>
-                <div class="profile-photo-container" id="profile-photo-container">
-                        <img src="resources/photo-frame.png" class="profile-photo" alt="" />
-                        <input id="profile-photo" type="file" />
-                        <img class="chosen-profile-photo" id="choosen-image" src="#" alt="" />
-                </div>
-            </div>
+            </form>
+
         </section>
         <section class="seconde-section wrapper" id='second-section'>
             <div class="circles-container" id="circles-container">

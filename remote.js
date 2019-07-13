@@ -8,7 +8,10 @@ const remote = (() => {
         }
     })
 
+    const login = (user) => axios.post(`${base}/api/login`, user)
+
     return({
         getAlbumImages,
+        login
     })
 })();

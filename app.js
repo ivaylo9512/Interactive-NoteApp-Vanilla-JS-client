@@ -131,29 +131,34 @@ const app = (() =>{
     }
 
     const profile = (() =>{
+
+        let isAuth = localStorage.getItem('Authorization') != null;
+
         let labels = document.getElementById('labels-container').children;
         let inputs = document.getElementById('inputs-container').children;
         let profilePhoto = document.getElementById("choosen-image");
-
         let userBtn = document.getElementById('user-btn');
-        let labelsTexts = [
+
+        const labelsTexts = [
             ['Username', 'Password'], 
             ['Username', 'Password', 'Repeat'],
             ['First Name', 'Last Name', 'Age', 'Country'],
         ];
-
+        let currentLabels;
+        let currentBtn;
         const changeInputView = (newState, oldState) => {
             oldState.classList.remove('active');
             newState.classList.add('active');
-        
+            
             userBtn.style.display = 'block';
             userBtn.innerHTML = newState.id == 'login-btn' ? 'login' : 'next';
-            const currentLabels = newState.id == 'login-btn' ? labelsTexts[0] : labelsTexts[1];
+            currentLabels = newState.id == 'login-btn' ? labelsTexts[0] : labelsTexts[1];
+            currentBtn = newState;
 
-            resetInputs(currentLabels);
+            resetInputs();
         }
 
-        const resetInputs = (currentLabels) => {
+        const resetInputs = () => {
             for (let i = 0; i < 4; i++) {
                 if (currentLabels.length <= i) {
                     labels[i].style.display = 'none';
@@ -172,31 +177,66 @@ const app = (() =>{
             }
         }
 
-        const userAction = () => {
+        const userAction = (e) => {
+            e.preventDefault();
             switch(userBtn.innerHTML){
                 case 'login':
+                    login();
                     break;
                 case 'register':
                     break;
                 case 'logout':
-                    localStorage.removeItem('Authorization');
-                    const currentLabels = labelsTexts[2];
-                    
-                    profilePhoto.src = '';
-                    userBtn.style.display =  'none';
-                    userBtn.innerHTML = '';
-
-                    resetInputs(labelsText);        
+                    logout();
                     break;  
                 case 'next':
-                    const currentLabels = labelsTexts[2];
+                    currentLabels = labelsTexts[2];
                     userBtn.innerHTML = 'register';
-                    resetInputs(currentLabels); 
+                    resetInputs(); 
                     break;    
             }
             
         }
 
+        const logout = () => {
+            localStorage.removeItem('Authorization');
+            
+            profilePhoto.src = '';
+            userBtn.style.display =  'none';
+            userBtn.innerHTML = '';
+
+            currentLabels = labelsTexts[2];
+            resetInputs();  
+        }
+
+        const login = () => {
+            let username = inputs[0].value;
+            let password = inputs[1].value;
+            let user = {
+                username,
+                password,
+            }
+            remote.login(user).then(
+                res => {
+                    console.log(res);
+                    currentLabels = labelsTexts[2];
+                    resetInputs(currentLabels)
+
+                    userBtn.innerHTML = "logout";
+                    inputs[0].value = res['firstname'];
+                    inputs[1].value = res['lastname'];
+                    inputs[2].value = res['age'];
+                    inputs[3].value = res['country'];
+                    profilePhoto.src = res['profilePicture'];
+        
+                    localStorage.setItem('Authorization', res['token']);
+                    localStorage.setItem('firstName', res['firstname']);
+                    localStorage.setItem('profilePic', res['profilePicture']);
+                    localStorage.setItem('lastName', res['lastname']);
+                    localStorage.setItem('age', res['age']);
+                    localStorage.setItem('country', res['country']);
+                    currentBtn.classList.remove("active");
+                })
+        }
         return{
             changeInputView,
             userAction
@@ -225,7 +265,7 @@ const app = (() =>{
         const registerBtn = document.getElementById('register-btn');
         loginBtn.addEventListener('mousedown', () => profile.changeInputView(loginBtn, registerBtn))
         registerBtn.addEventListener('mousedown', () => profile.changeInputView(registerBtn, loginBtn))
-        document.getElementById('user-btn').addEventListener('mousedown', profile.userAction)
+        document.getElementById('user-btn').addEventListener('click', profile.userAction)
         
     }
 
