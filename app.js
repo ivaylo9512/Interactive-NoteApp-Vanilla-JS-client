@@ -133,56 +133,71 @@ const app = (() =>{
         const colors = new Array('#E2007A', '#7398CA', '#E2007A', '#7398CA', '#41291B');
         let colorizables = [];
 
+        let matched;
         function getRandomColor() {
             const randomNumber = Math.floor(Math.random() * 5);
             const randomColor = colors[randomNumber];
         
             if (currentColor == randomColor) {
-                count = true;
+                matched = true;
             } else {
-                count = false;
+                matched = false;
             }
             return randomColor;
         }
         
-        let currentColor = '';
+        var currentColor = '';
         const getElements = () => {
             colorizables = Array.from(document.getElementsByClassName('colorize'))
         }
 
-        const manageListeners = (e) => {
+        let colorMode = false;
+        const manageListeners = () => {
 
-            let state = e.target.id;
-
-            if(state == 'play'){
-                e.target.id = 'stop'
+            if(colorMode){
+                colorMode = false;
                 colorizables.forEach(colorizable => {
-                    colorizable.addEventListener("mouseover", changeBulbColor(bulbs[i]));
-
+                    colorizable.removeEventListener("mouseover", changeColor);
                 });
             }else{
-                e.target.id = 'stop'
+                colorMode = true;
                 colorizables.forEach(colorizable => {
-                    colorizable.removeEventListener("mouseover", changeBulbColor);
+                    colorizable.addEventListener("mouseover", changeColor);
                 });    
             }
         }
 
-        function changeColor(node) {
-            return function () {
-        
-                if (currentColor != "") {
+        const setCurrentColor = (color) =>{
+            currentColor = color;
+        }
+
+        const changeColor = () => {
+            const node = event.target; 
+            if (currentColor != '') {
+                if(node.tagName === 'SPAN'){
                     const randomColor = getRandomColor();
                     calculate(node)
                     node.style.color = randomColor;
                 }
-            };
-        
+            }
         }
 
+        let amountCounted = 0;
+        let score = document.getElementById('score');
+        const calculate = (node) => {
+            if (node.getAttribute('value') == 'marked' && matched == false) {
+                amountCounted--;
+                node.setAttribute('value', 'unmarked');
+            } else if (matched == true && (node.getAttribute('value') == "unmarked" || node.getAttribute("value") == null)) {
+                amountCounted++;
+                node.setAttribute("value", 'marked');
+            }
+            score.innerHTML = amountCounted;
+        }
+        
         return {
             manageListeners,
-            currentColor,
+            setCurrentColor,
             getElements
         };
     })();
@@ -200,8 +215,8 @@ const app = (() =>{
 
         colorize.getElements();
         document.getElementById('play').addEventListener('mousedown', colorize.manageListeners);
-        document.getElementById('pink-bulb').addEventListener("mousedown", () => colorize.currentColor = '#E2007A')
-        document.getElementById("blue-bulb").addEventListener("mousedown", () => colorize.currentColor = '#7398CA')
+        document.getElementById('pink-bulb').addEventListener("mousedown", () => colorize.setCurrentColor('#E2007A'))
+        document.getElementById("blue-bulb").addEventListener("mousedown", () => colorize.setCurrentColor('#7398CA'))
     }
 
     return {
