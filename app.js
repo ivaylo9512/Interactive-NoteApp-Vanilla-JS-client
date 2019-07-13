@@ -22,12 +22,13 @@ const app = (() =>{
 
     const setScrollEvents = (() => {
         const decideEvent = () => {
-
-            if (window.scrollY == 0 && deltaDir < 0) {
+            const height = document.body.scrollHeight;
+            
+            if (window.scrollY < height - 1139 && deltaDir < 0) {
                 showCircles();
             }
         
-            if (window.scrollY > 0 && deltaDir > 0) {
+            if (window.scrollY > height - 1139 && deltaDir > 0) {
                 hideCircles();
             }
         
@@ -160,9 +161,11 @@ const app = (() =>{
             return randomImage;
         }
 
+        let maxScore = document.getElementById('max-score');
         let colorizables = [];
         const getElements = () => {
-            colorizables = Array.from(document.getElementsByClassName('colorize'))
+            colorizables = Array.from(document.getElementsByClassName('colorize'));
+            maxScore.innerHTML = colorizables.length - 1;
         }
 
         let colorMode = false;
@@ -193,11 +196,13 @@ const app = (() =>{
                 if(node.tagName === 'IMG' && ((currentColor == '#7398CA' && node.id == "pink-bulb") || (currentColor == '#E2007A' && node.id == "blue-bulb"))){
                     const randomImage = getRandomImage(node.id);
                     node.src = "resources/" + randomImage;
+                    calculate(node);
                 }else if(node.tagName !== 'IMG'){
                     const randomColor = getRandomColor();
                     node.style.color = randomColor;
+                    calculate(node);
                 }
-                calculate(node);
+
 
             }
         }
@@ -223,9 +228,9 @@ const app = (() =>{
     })();
 
     const start = () => {
-        window.scrollTo(0, window.innerHeight);
+        window.scrollTo(0, document.body.scrollHeight);
         window.onbeforeunload = function () {
-            window.scrollTo(0, window.innerHeight);
+            window.scrollTo(0, document.body.scrollHeight);
         }
 
         createCircles();

@@ -29,7 +29,10 @@ section{
     background-attachment: local;
     z-index: 8;
 }
-
+.third-section {
+    background-image: url("resources/notebook-top.png");
+    height: 560px;
+}
 .tree{
     width: 240px;
     margin-right: 37px;
