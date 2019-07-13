@@ -451,3 +451,86 @@ section{
     right: 5.6%;
     font-size: 64px;
 }
+.balloons-container{
+    height: 300px;
+}
+.user-info > div{
+    float: left;
+}
+.labels-container{
+    margin-left: 17%;
+    width: 150px;
+}
+.labels-container label{
+    display: block;
+    font-weight: bold;
+    margin-bottom: 21px;
+    text-align: center;
+    font-size: 27px;
+}
+.inputs-container {
+    width: 16%;
+    height: 20%;
+}
+.inputs-container input{
+    background: transparent;
+    width: 82%;
+    margin-top: -7px;
+    margin-bottom: 28px;
+    font: normal 21px/1 "Aladin", Helvetica, sans-serif;
+    text-align: center;
+    display: block;
+    border: 0px;
+    border-bottom: 2px solid #41291B;
+}
+.buttons-container {
+    height: 60px;
+    width: 692px;
+    float: right;
+    position: relative;
+    z-index: 9;
+}
+.buttons-container button {
+    padding: 0;
+    background-color: #442818;
+    width: 100px;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    border: 1px solid white;
+    outline: none;
+    cursor: pointer;
+    float: right;
+    font-size: 27px;
+    height: 44px;
+    margin-top: 1.7px;
+    transition: all 1s;
+}
+.buttons-container button p{
+    color: #EAE9E5;
+    text-align: center;
+}
+.buttons-container .register{
+    margin-left: 1px;
+    margin-right: 209px;
+}
+
+.buttons-container .user-button {
+    transform: rotate(0.25deg);
+    float: left;
+}
+.profile-photo-container {
+    width: 180px;
+    height: 174px;
+    margin-left: 95px;
+    position: relative;
+}
+.profile-photo-container > * {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+}
+.profile-photo-container input{
+    opacity: 0;
+    z-index: 9;
+}
