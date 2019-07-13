@@ -133,6 +133,7 @@ const app = (() =>{
     const profile = (() =>{
         let labels = document.getElementById('labels-container').children;
         let inputs = document.getElementById('inputs-container').children;
+        let profilePhoto = document.getElementById("choosen-image");
 
         let userBtn = document.getElementById('user-btn');
         let labelsTexts = [
@@ -142,12 +143,13 @@ const app = (() =>{
         ];
 
         const changeInputView = (newState, oldState) => {
-
             oldState.classList.remove('active');
             newState.classList.add('active');
         
+            userBtn.style.display = 'block';
             userBtn.innerHTML = newState.id == 'login-btn' ? 'login' : 'next';
             const currentLabels = newState.id == 'login-btn' ? labelsTexts[0] : labelsTexts[1];
+
             resetInputs(currentLabels);
         }
 
@@ -170,8 +172,34 @@ const app = (() =>{
             }
         }
 
+        const userAction = () => {
+            switch(userBtn.innerHTML){
+                case 'login':
+                    break;
+                case 'register':
+                    break;
+                case 'logout':
+                    localStorage.removeItem('Authorization');
+                    const currentLabels = labelsTexts[2];
+                    
+                    profilePhoto.src = '';
+                    userBtn.style.display =  'none';
+                    userBtn.innerHTML = '';
+
+                    resetInputs(labelsText);        
+                    break;  
+                case 'next':
+                    const currentLabels = labelsTexts[2];
+                    userBtn.innerHTML = 'register';
+                    resetInputs(currentLabels); 
+                    break;    
+            }
+            
+        }
+
         return{
-            changeInputView
+            changeInputView,
+            userAction
         }
 
     })();
@@ -197,6 +225,7 @@ const app = (() =>{
         const registerBtn = document.getElementById('register-btn');
         loginBtn.addEventListener('mousedown', () => profile.changeInputView(loginBtn, registerBtn))
         registerBtn.addEventListener('mousedown', () => profile.changeInputView(registerBtn, loginBtn))
+        document.getElementById('user-btn').addEventListener('mousedown', profile.userAction)
         
     }
 

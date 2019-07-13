@@ -520,6 +520,7 @@ section{
 .buttons-container .user-btn {
     transform: rotate(0.25deg);
     float: left;
+    display: none;
 }
 .buttons-container button.active{
     height: 48px;
