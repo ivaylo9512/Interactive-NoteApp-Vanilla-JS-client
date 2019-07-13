@@ -32,11 +32,11 @@ const app = (() =>{
                 hideCircles();
             }
         
-            if (window.scrollY <= 446 && treeAnimated == false && deltaDir < 0) {
+            if (window.scrollY <= height - 446 && treeAnimated == false && deltaDir < 0) {
                 treeAnimation();
             }
 
-            if (window.scrollY < 446 && pointerHidden == false && deltaDir < 0) {
+            if (window.scrollY < height - 446 && pointerHidden == false && deltaDir < 0) {
                 hidePointer();
             }
 
@@ -149,9 +149,14 @@ const app = (() =>{
 
         const loginBtn = document.getElementById('login-btn');
         const registerBtn = document.getElementById('register-btn');
-        loginBtn.addEventListener('mousedown', () => profile.changeInputView(loginBtn, registerBtn))
-        registerBtn.addEventListener('mousedown', () => profile.changeInputView(registerBtn, loginBtn))
-        document.getElementById('user-btn').addEventListener('click', profile.userAction)
+        loginBtn.addEventListener('mousedown', () => profile.changeInputView(loginBtn, registerBtn));
+        registerBtn.addEventListener('mousedown', () => profile.changeInputView(registerBtn, loginBtn));
+        document.getElementById('user-btn').addEventListener('click', profile.userAction);
+
+        setTimeout(() => {
+            document.getElementById("pink-bulb").src = "resources/pink-bulb.gif";
+            document.getElementById("blue-bulb").src = "resources/blue-bulb.gif";            
+        }, 500);
 
     }
 
