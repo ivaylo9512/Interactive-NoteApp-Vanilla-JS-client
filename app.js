@@ -130,14 +130,13 @@ const app = (() =>{
     }
 
     const colorize = (() => {
-        const colors = new Array('#E2007A', '#7398CA', '#E2007A', '#7398CA', '#41291B');
-        let colorizables = [];
-
         let matched;
+
+        const colors = new Array('#E2007A', '#7398CA', '#E2007A', '#7398CA', '#41291B');
         function getRandomColor() {
             const randomNumber = Math.floor(Math.random() * 5);
             const randomColor = colors[randomNumber];
-        
+
             if (currentColor == randomColor) {
                 matched = true;
             } else {
@@ -145,8 +144,23 @@ const app = (() =>{
             }
             return randomColor;
         }
-        
-        var currentColor = '';
+
+        const leftBulbImages = ['left-bulb-pink.png', 'left-bulb-brown.png', 'left-bulb-blue.png'];
+        const rightBulbImages = ['right-bulb-pink.png', 'right-bulb-brown.png', 'right-bulb-blue.png'];
+        const getRandomImage = (id) => {
+            const randomIndex = Math.floor(Math.random() * leftBulbImages.length);
+            const randomImage = id == 'pink-bulb' ? rightBulbImages[randomIndex] : leftBulbImages[randomIndex];
+            
+            if(currentColor == "#7398CA"){
+                matched = randomImage == "right-bulb-blue.png";
+            }else{
+                matched = randomImage == "left-bulb-pink.png";
+            } 
+
+            return randomImage;
+        }
+
+        let colorizables = [];
         const getElements = () => {
             colorizables = Array.from(document.getElementsByClassName('colorize'))
         }
@@ -167,6 +181,7 @@ const app = (() =>{
             }
         }
 
+        let currentColor = '';
         const setCurrentColor = (color) =>{
             currentColor = color;
         }
@@ -174,11 +189,16 @@ const app = (() =>{
         const changeColor = () => {
             const node = event.target; 
             if (currentColor != '') {
-                if(node.tagName === 'SPAN'){
+
+                if(node.tagName === 'IMG' && ((currentColor == '#7398CA' && node.id == "pink-bulb") || (currentColor == '#E2007A' && node.id == "blue-bulb"))){
+                    const randomImage = getRandomImage(node.id);
+                    node.src = "resources/" + randomImage;
+                }else if(node.tagName !== 'IMG'){
                     const randomColor = getRandomColor();
-                    calculate(node)
                     node.style.color = randomColor;
                 }
+                calculate(node);
+
             }
         }
 
@@ -201,6 +221,7 @@ const app = (() =>{
             getElements
         };
     })();
+
     const start = () => {
         window.scrollTo(0, window.innerHeight);
         window.onbeforeunload = function () {
@@ -215,8 +236,8 @@ const app = (() =>{
 
         colorize.getElements();
         document.getElementById('play').addEventListener('mousedown', colorize.manageListeners);
-        document.getElementById('pink-bulb').addEventListener("mousedown", () => colorize.setCurrentColor('#E2007A'))
-        document.getElementById("blue-bulb").addEventListener("mousedown", () => colorize.setCurrentColor('#7398CA'))
+        document.getElementById('pink-bulb-btn').addEventListener("mousedown", () => colorize.setCurrentColor('#E2007A'))
+        document.getElementById("blue-bulb-btn").addEventListener("mousedown", () => colorize.setCurrentColor('#7398CA'))
     }
 
     return {
