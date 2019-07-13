@@ -130,6 +130,19 @@ const app = (() =>{
             })
     }
 
+    const profile = (() =>{
+
+        const setLabels = (oldState, newState) => {
+            oldState.classList.remove('active');
+            newState.classList.add('active');
+        }
+
+        return{
+            setLabels
+        }
+        
+    })();
+
     const start = () => {
         window.scrollTo(0, document.body.scrollHeight);
         window.onbeforeunload = function () {
@@ -144,8 +157,14 @@ const app = (() =>{
 
         colorize.getElements();
         document.getElementById('play').addEventListener('mousedown', colorize.manageListeners);
-        document.getElementById('pink-bulb-btn').addEventListener("mousedown", () => colorize.setCurrentColor('#E2007A'))
-        document.getElementById("blue-bulb-btn").addEventListener("mousedown", () => colorize.setCurrentColor('#7398CA'))
+        document.getElementById('pink-bulb-btn').addEventListener("mousedown", () => colorize.setCurrentColor('#E2007A'));
+        document.getElementById("blue-bulb-btn").addEventListener("mousedown", () => colorize.setCurrentColor('#7398CA'));
+
+        const loginBtn = document.getElementById('login-btn');
+        const registerBtn = document.getElementById('register-btn');
+        loginBtn.addEventListener('mousedown', () => profile.setLabels(registerBtn, loginBtn))
+        registerBtn.addEventListener('mousedown', () => profile.setLabels(loginBtn, registerBtn))
+        
     }
 
     return {

@@ -513,10 +513,22 @@ section{
     margin-left: 1px;
     margin-right: 209px;
 }
-
+.buttons-container .register.active{
+    margin-left: -4px;
+}
+.buttons-container .login.active{
+    margin-right: -5px;
+}
 .buttons-container .user-button {
     transform: rotate(0.25deg);
     float: left;
+}
+.buttons-container button.active{
+    height: 48px;
+    margin-top: -2px;
+    position: relative;
+    z-index: 9;
+    transition: all 1s;
 }
 .profile-photo-container {
     width: 180px;
