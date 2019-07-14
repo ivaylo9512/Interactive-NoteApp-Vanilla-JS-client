@@ -143,6 +143,7 @@ const animate = (() => {
     
     let balloonPlayed = false;
     let animationIsPlaying = false;
+    let brushAnimated = false;
     const brushAnimation = document.createElement("IMG");
         brushAnimation.setAttribute('src', 'resources/brush-reveal.gif');
         brushAnimation.setAttribute('width', '30%');
@@ -156,6 +157,9 @@ const animate = (() => {
     const balloonsContainer = document.getElementById('balloons-container');
     const balloonLeft = document.createElement('IMG');
     const balloonrRight = document.createElement('IMG');
+    const noteHolders = document.getElementById('note-animation');
+    const brushAnimationContainer = document.getElementById('brush-animation-container');
+    const noteContainer = document.getElementById('note-container');
 
     const balloonAnimation = () => {
         if (balloonPlayed == false) {
@@ -183,7 +187,7 @@ const animate = (() => {
                 balloonLeft.src = 'resources/first-balloon-second-animation.gif';
                 setTimeout(() => {
                     animationIsPlaying = false;
-                    document.getElementById('note-animation').classList.add('animate');
+                    noteHolders.classList.add('animate');
                     balloonLeft.classList.add('hide');
 
                     cloud.classList.add('hide');
@@ -196,24 +200,37 @@ const animate = (() => {
                     }, 300);
 
                     setTimeout(() => {
-                        document.getElementById('brush-animation-container').appendChild(brushAnimation);
+                        brushAnimationContainer.appendChild(brushAnimation);
+                        brushAnimated = true;
                         balloonLeft.style.display = 'none';
                     }, 1100);
-
-                    setTimeout(() => {
-                        brushAnimated = true;
-                    }, 2400);
-
+                    
                 }, 5050);
             }, 3500);
         }
 
     }
     
+    const noteAnimation = () => {
+        if (brushAnimated) {
+            noteHolders.src = "resources/note-animation.gif";
+        }
+    }
+
+    const noteAppend = () => {
+        if (brushAnimated) {
+            noteContainer.style.display = "block";
+            noteHolders.src = "resources/note-animation-static-open.png";
+            noteHolders.removeEventListener("mouseover", noteAnimation);
+            noteHolders.removeEventListener("mousedown", noteAppend);
+        }
+    }
 
     return {
         decideEvent,
         setDelta,
-        createCircles
+        createCircles,
+        noteAnimation,
+        noteAppend
     };
 })();

@@ -35,7 +35,7 @@ const app = (() =>{
                     if(appendedPhotos[i].parentElement.className == "user-note" && appendedPhotos[i].parentElement.id != noteId){
                         appendedPhotosSection.appendChild(appendedPhotos[i]);
                     }
-                    
+
                     if(document.getElementById(noteId)){
                         document.getElementById(noteId).appendChild(appendedPhotos[i]);
                     }
@@ -54,6 +54,11 @@ const app = (() =>{
             window.scrollTo(0, document.body.scrollHeight);
         }
 
+        setTimeout(() => {
+            document.getElementById("pink-bulb").src = "resources/pink-bulb.gif";
+            document.getElementById("blue-bulb").src = "resources/blue-bulb.gif";            
+        }, 500);
+
         animate.createCircles();
         window.addEventListener('scroll', animate.decideEvent);
         window.addEventListener("wheel", animate.setDelta, {passive: false});
@@ -71,11 +76,9 @@ const app = (() =>{
         registerBtn.addEventListener('mousedown', () => profile.changeInputView(registerBtn, loginBtn));
         document.getElementById('user-btn').addEventListener('click', profile.userAction);
 
-        setTimeout(() => {
-            document.getElementById("pink-bulb").src = "resources/pink-bulb.gif";
-            document.getElementById("blue-bulb").src = "resources/blue-bulb.gif";            
-        }, 500);
-
+        noteAnimation = document.getElementById('note-animation');
+        noteAnimation.addEventListener('mouseover', animate.noteAnimation);
+        noteAnimation.addEventListener('mousedown', animate.noteAppend);
     }
 
     return {
