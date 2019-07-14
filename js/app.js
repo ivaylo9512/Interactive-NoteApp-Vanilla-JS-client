@@ -1,24 +1,4 @@
 const app = (() =>{
-    const photos = document.getElementsByClassName("onLoad-photo");
-    
-    const circles = [];
-    const createCircles = () => {
-        const circleContainer = document.getElementById('circles-container');
-        const maxCircles = 25;
-        for (let i = 1; i < maxCircles; i++) {
-            const circle = document.createElement('span');
-            
-            circle.className = `colorize circle${i}`;
-            circles.push(circle);
-              
-            circleContainer.appendChild(circle);  
-        }
-    }
-
-    let deltaDir = 0;
-    const setDelta = () => {
-        deltaDir = Math.sign(event.deltaY);
-    }
 
     let currentAlbum;
     let albumImages = [];
@@ -40,9 +20,9 @@ const app = (() =>{
             window.scrollTo(0, document.body.scrollHeight);
         }
 
-        createCircles();
-        window.addEventListener('scroll', setScrollEvents.decideEvent);
-        window.addEventListener("wheel", setDelta);
+        animate.createCircles();
+        window.addEventListener('scroll', animate.decideEvent);
+        window.addEventListener("wheel", animate.setDelta);
 
         document.getElementById('album-btns').addEventListener('mousedown', getAlbumImages);
 
