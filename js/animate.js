@@ -50,7 +50,6 @@ const animate = (() => {
     let deltaDir = 0;
     const setDelta = () => {
         deltaDir = Math.sign(event.deltaY);
-        
         if(animationIsPlaying){
             event.preventDefault();
         }
@@ -165,7 +164,7 @@ const animate = (() => {
 
             window.scrollTo(0, 800);
             smoothScroll(100, 3100);
-            setTimeout(() => smoothScroll(-800, 3500), 3100);
+            setTimeout(() => smoothScroll(-900, 3500), 3100);
 
             document.getElementById("balloon").src = 'resources/balloon.gif';
             setTimeout(() => {
@@ -183,6 +182,7 @@ const animate = (() => {
             setTimeout(() => {
                 balloonLeft.src = 'resources/first-balloon-second-animation.gif';
                 setTimeout(() => {
+                    animationIsPlaying = false;
                     document.getElementById('note-animation').classList.add('animate');
                     balloonLeft.classList.add('hide');
 

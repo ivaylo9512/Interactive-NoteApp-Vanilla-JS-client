@@ -652,3 +652,45 @@ section{
     margin-top: -55px;
     margin-left: 95px;
 }
+.note-container {
+    display: none;
+    text-align: center;
+    position: absolute;
+    width: 43%;
+    z-index: 6;
+}
+.sticky-note {
+    width: 100%;
+    transform: rotate(7deg);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+.note-container input{
+    z-index: 8;
+    position: relative;
+    width: 60%;
+    font: bold 45px/1 "Aladin", Helvetica, sans-serif;
+    margin-right: 68px;
+    margin-top: 73px;
+
+}
+.note-container textarea{
+    height: 266px;
+    width: 76.8%;
+    font-size: 13px;
+    color: #41291B;
+    margin-right: 3px;
+    margin-top: 5px;
+    font-family: Arial;
+}
+.submit-note{
+    position: absolute;
+    width: 11%;
+    left: 97%;
+    transform: rotate(-26.79deg);
+    top: 0%;
+    display: none;
+    cursor: pointer;
+}
