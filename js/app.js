@@ -22,7 +22,7 @@ const app = (() =>{
 
         animate.createCircles();
         window.addEventListener('scroll', animate.decideEvent);
-        window.addEventListener("wheel", animate.setDelta);
+        window.addEventListener("wheel", animate.setDelta,);
 
         document.getElementById('album-btns').addEventListener('mousedown', getAlbumImages);
 

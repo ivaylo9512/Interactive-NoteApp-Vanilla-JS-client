@@ -1,27 +1,47 @@
 const animate = (() => {
     const decideEvent = () => {
         const height = document.body.scrollHeight;
-        
-        if (window.scrollY < 920) {
+        const scrollY = window.pageYOffset;
+
+        if (scrollY < 800) {
             balloonAnimation();
         }
 
-        if (window.scrollY < height - 1139 && deltaDir < 0) {
+        if (scrollY < height - 1139 && deltaDir < 0) {
             showCircles();
         }
     
-        if (window.scrollY > height - 1139 && deltaDir > 0) {
+        if (scrollY > height - 1139 && deltaDir > 0) {
             hideCircles();
         }
     
-        if (window.scrollY <= height - 446 && treeAnimated == false && deltaDir < 0) {
+        if (scrollY <= height - 446 && treeAnimated == false && deltaDir < 0) {
             treeAnimation();
         }
 
-        if (window.scrollY < height - 446 && pointerHidden == false && deltaDir < 0) {
+        if (scrollY < height - 446 && pointerHidden == false && deltaDir < 0) {
             hidePointer();
         }
 
+    }
+
+    const smoothScroll = (y, durration) => {
+        const startPos = window.pageYOffset;
+        let startTime = null;
+
+        const scroll = (currentTime) => {
+            if(!startTime) startTime = currentTime;
+            const timeElapsed = currentTime - startTime;
+            
+            const amount = linearTween(timeElapsed, startPos, y, durration);
+
+            window.scrollTo(0, amount);
+            if(timeElapsed < durration) requestAnimationFrame(scroll);
+        }
+
+        const linearTween = (t, b, c, d) =>  c*t/d + b;
+
+        requestAnimationFrame(scroll);
     }
 
     let deltaDir = 0;
@@ -133,8 +153,13 @@ const animate = (() => {
     const balloonAnimation = () => {
         if (balloonPlayed == false) {
             balloonPlayed = true;
-            document.getElementById("balloon").src = 'resources/balloon.gif';
 
+            console.log(window.pageYOffset)
+            window.scrollTo(0, 800);
+            smoothScroll(100, 3100);
+            setTimeout(() => smoothScroll(-800, 4000), 3100);
+
+            document.getElementById("balloon").src = 'resources/balloon.gif';
             setTimeout(() => {
                 balloonLeft.classList.add('balloon2');
                 balloonLeft.setAttribute('src', 'resources/left-balloon-first-animation.gif');
@@ -165,7 +190,6 @@ const animate = (() => {
                     setTimeout(() => {
                         document.getElementById('brush-animation-container').appendChild(brushAnimation);
                         balloonLeft.style.display = 'none';
-                        loginButtonsContainer.style.opacity = 1;
                     }, 1100);
 
                     setTimeout(() => {
@@ -173,7 +197,7 @@ const animate = (() => {
                     }, 2400);
 
                 }, 5050);
-            }, 4550);
+            }, 3500);
         }
 
     }
