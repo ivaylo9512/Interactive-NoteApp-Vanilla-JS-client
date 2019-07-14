@@ -23,6 +23,9 @@ const animate = (() => {
             hidePointer();
         }
 
+        if(animationIsPlaying){
+            event.preventDefault();
+        }
     }
 
     const smoothScroll = (y, durration) => {
@@ -47,6 +50,10 @@ const animate = (() => {
     let deltaDir = 0;
     const setDelta = () => {
         deltaDir = Math.sign(event.deltaY);
+        
+        if(animationIsPlaying){
+            event.preventDefault();
+        }
     }
 
     const circles = [];
@@ -136,6 +143,7 @@ const animate = (() => {
 
     
     let balloonPlayed = false;
+    let animationIsPlaying = false;
     const brushAnimation = document.createElement("IMG");
         brushAnimation.setAttribute('src', 'resources/brush-reveal.gif');
         brushAnimation.setAttribute('width', '30%');
@@ -153,11 +161,11 @@ const animate = (() => {
     const balloonAnimation = () => {
         if (balloonPlayed == false) {
             balloonPlayed = true;
+            animationIsPlaying = true;
 
-            console.log(window.pageYOffset)
             window.scrollTo(0, 800);
             smoothScroll(100, 3100);
-            setTimeout(() => smoothScroll(-800, 4000), 3100);
+            setTimeout(() => smoothScroll(-800, 3500), 3100);
 
             document.getElementById("balloon").src = 'resources/balloon.gif';
             setTimeout(() => {
