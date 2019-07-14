@@ -694,3 +694,6 @@ section{
     display: none;
     cursor: pointer;
 }
+.full-mode{
+    display: none;
+}
