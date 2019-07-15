@@ -245,7 +245,7 @@ const animate = (() => {
         }
     }
 
-    const showClouds = () => {
+    const showTopAnimations = () => {
         if (brushAnimated) {
             noteHolders.classList.remove('show');
             brushAnimation.classList.add('hide');
@@ -253,7 +253,7 @@ const animate = (() => {
         }
     }
 
-    const hideClouds = () => {
+    const hideTopAnimations = () => {
         if (brushAnimated) {
             noteHolders.classList.add('show');
             brushAnimation.classList.remove('hide');
@@ -263,15 +263,15 @@ const animate = (() => {
 
     const showNoteView = () => {
         if (brushAnimated) {
-            notes.setCloudsAnimated();
             noteHolders.classList.remove('show');
             brushAnimation.classList.add('hide');
             noteContainer.classList.add('hide');
-
+            
             const noteHeader = document.getElementById('notes-header');
-            noteHeader.removeEventListener('mouseout', hideClouds);
-            noteHeader.removeEventListener('mouseout', showNoteView);
+            noteHeader.removeEventListener('mouseout', hideTopAnimations);
+            noteHeader.removeEventListener('mouseout', showTopAnimations);
 
+            app.setIsAnimated();
             setTimeout(() => {
 
                 setTimeout(() => {
@@ -301,8 +301,8 @@ const animate = (() => {
         createCircles,
         noteAnimation,
         noteAppend,
-        showClouds,
-        hideClouds,
+        showTopAnimations,
+        hideTopAnimations,
         showNoteView,
         scrollToProfile,
         scrollToAlbum

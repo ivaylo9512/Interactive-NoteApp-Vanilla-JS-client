@@ -79,9 +79,15 @@ const app = (() =>{
         if(fullModeOn){ 
             initialLoad = false;
             initialAnimation();
-            
+
+            if(!isAnimated){
+                animate.hideTopAnimations();
+            }
             document.body.classList.remove('full-mode-active');
         }else{
+            if(!isAnimated){
+                animate.showTopAnimations();
+            }
             document.body.classList.add('full-mode-active');
         }
         fullModeOn = !fullModeOn;
@@ -106,17 +112,21 @@ const app = (() =>{
             fullModeBtn.style.marginTop = '0%';
         }else{
             fullModeNav.classList.add('active');
-            fullModeBtn.style.marginTop = '7%';
+            fullModeBtn.style.marginTop = '9%';
         }
         fullModeNavOn = !fullModeNavOn;
     }
 
-    const start = () => {
+    let isAnimated = false;
+    const setIsAnimated = () => {
+        isAnimated = true;
+    }
 
+    const start = () => {
         initialAnimation();
 
         animate.createCircles();
-        window.addEventListener('scroll', ()=> !fullModeOn && initialLoad && animate.decideEvent());
+        window.addEventListener('scroll', () => !fullModeOn && initialLoad && animate.decideEvent());
 
         window.addEventListener('wheel', animate.setDelta, {passive: false});
 
@@ -139,8 +149,8 @@ const app = (() =>{
         const noteHeader = document.getElementById('notes-header');
         noteAnimation.addEventListener('mouseover', animate.noteAnimation);
         noteAnimation.addEventListener('mousedown', animate.noteAppend);
-        noteHeader.addEventListener('mouseover', animate.showClouds);
-        noteHeader.addEventListener('mouseout', animate.hideClouds);
+        noteHeader.addEventListener('mouseover', animate.showTopAnimations);
+        noteHeader.addEventListener('mouseout', animate.hideTopAnimations);
         noteHeader.addEventListener('mousedown', animate.showNoteView);
 
         draggables.dragElement(document.getElementById('move-note'));
@@ -150,7 +160,8 @@ const app = (() =>{
     }
 
     return {
-        start
+        start,
+        setIsAnimated
     }
 })();
 app.start();
