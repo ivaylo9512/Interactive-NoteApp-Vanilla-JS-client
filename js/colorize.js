@@ -38,7 +38,6 @@ const colorize = (() => {
 
     let colorMode = false;
     const manageListeners = (e) => {
-        console.log(e);
         const playNav = e.target.parentElement.parentElement;
 
         if(colorMode){
@@ -59,10 +58,24 @@ const colorize = (() => {
     }
 
     let currentColor = '';
-    const setCurrentColor = (color) =>{
+    const setCurrentColor = (color) => {
+        if(currentColor != ''){
+            resetNodes();
+        }
+
         currentColor = color;
     }
 
+    const resetNodes = () => {
+
+        colorizables.forEach(colorizeable => {
+            colorizeable.style.color = '#41291B';
+            colorizeable.removeAttribute('value');
+        })
+        amountCounted = 0;
+        score.innerHTML = 0;
+
+    }
     const changeColor = () => {
         const node = event.target; 
         if (currentColor != '') {
@@ -74,6 +87,7 @@ const colorize = (() => {
             }else if(node.tagName !== 'IMG'){
                 const randomColor = getRandomColor();
                 node.style.color = randomColor;
+                node.style.borderColor = randomColor;
                 calculate(node);
             }
 
@@ -84,10 +98,11 @@ const colorize = (() => {
     let amountCounted = 0;
     let score = document.getElementById('score');
     const calculate = (node) => {
+        console.log(node.getAttribute('value'))
         if (node.getAttribute('value') == 'marked' && !matched) {
             amountCounted--;
             node.setAttribute('value', 'unmarked');
-        } else if (matched && (node.getAttribute('value') == 'unmarked' || node.getAttribute('value') == null)) {
+        } else if (matched && (node.getAttribute('value') == 'unmarked' || node.getAttribute('value') === null)) {
             amountCounted++;
             node.setAttribute('value', 'marked');
         }

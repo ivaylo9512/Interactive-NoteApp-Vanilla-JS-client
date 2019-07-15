@@ -1,6 +1,6 @@
 const app = (() =>{
 
-    const userPhotosContainer = document.getElementById("user-photos");
+    const userPhotosContainer = document.getElementById('user-photos');
     const appendedPhotos = Array.from(userPhotosContainer.children);
     
     let firstAlbum = [];
@@ -16,7 +16,6 @@ const app = (() =>{
                     case 1:
                         firstAlbum = response.data;
                         animateAlbumPhotos(firstAlbum);
-                        console.log(window.location.origin);
                         break;
                     case 2:
                         secondAlbum = response.data;
@@ -47,12 +46,12 @@ const app = (() =>{
                     appendedPhotos[i].style.left = currentAlbum[i]['left'];
                     appendedPhotos[i].style.top = currentAlbum[i]['top'];
 
-                    let noteId = currentAlbum[i]['noteId'] + "note";
+                    let noteId = currentAlbum[i]['noteId'] + 'note';
                     if(currentAlbum[i]['noteId'] != null){
-                        appendedPhotos[i].style.display = "none";
+                        appendedPhotos[i].style.display = 'none';
                     }
 
-                    if(appendedPhotos[i].parentElement.className == "user-note" && appendedPhotos[i].parentElement.id != noteId){
+                    if(appendedPhotos[i].parentElement.className == 'user-note' && appendedPhotos[i].parentElement.id != noteId){
                         appendedPhotosSection.appendChild(appendedPhotos[i]);
                     }
 
@@ -76,13 +75,13 @@ const app = (() =>{
         }
 
         setTimeout(() => {
-            document.getElementById("pink-bulb").src = "resources/pink-bulb.gif";
-            document.getElementById("blue-bulb").src = "resources/blue-bulb.gif";            
+            document.getElementById('pink-bulb').src = 'resources/pink-bulb.gif';
+            document.getElementById('blue-bulb').src = 'resources/blue-bulb.gif';            
         }, 500);
 
         animate.createCircles();
         window.addEventListener('scroll', animate.decideEvent);
-        window.addEventListener("wheel", animate.setDelta, {passive: false});
+        window.addEventListener('wheel', animate.setDelta, {passive: false});
 
         document.getElementById('profile-btn').addEventListener('mousedown', animate.scrollToProfile);
         document.getElementById('album-btn').addEventListener('mousedown', animate.scrollToAlbum);
