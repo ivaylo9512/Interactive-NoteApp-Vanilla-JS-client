@@ -163,13 +163,8 @@ const animate = (() => {
     let balloonPlayed = false;
     let animationIsPlaying = false;
     let brushAnimated = false;
-    const brushAnimation = document.createElement('IMG');
-        brushAnimation.setAttribute('src', 'resources/brush-reveal.gif');
-        brushAnimation.setAttribute('width', '30%');
-        brushAnimation.setAttribute('position', 'absolute');
-        brushAnimation.className = 'brush-animation';
-        brushAnimation.id = 'brush-animation';
 
+    const brushAnimation = document.getElementById('brush-animation');
     const cloud = document.getElementById('cloud');
     const cloud1 = document.getElementById('cloud1');
     const cloud2 = document.getElementById('cloud2');
@@ -219,6 +214,7 @@ const animate = (() => {
                     }, 300);
 
                     setTimeout(() => {
+                        brushAnimation.style.display = 'block';
                         brushAnimationContainer.appendChild(brushAnimation);
                         brushAnimated = true;
                         balloonLeft.style.display = 'none';

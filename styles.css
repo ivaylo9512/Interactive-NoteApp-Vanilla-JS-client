@@ -803,6 +803,7 @@ body.full-mode-active .cloud-header img{
     margin-top: -55px;
     margin-left: 45px;
     transition: all 1.5s ease-in-out; 
+    display: none;
 }
 .note-container {
     display: none;
