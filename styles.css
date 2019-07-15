@@ -111,33 +111,99 @@ section{
     top: 10%;
     left: 65%;
 }
+.full-screen-button{
+    height: 69%;
+}
+
+.full-screen-button img{
+    margin-right: 13px;
+    width: 9%;
+    cursor: pointer;
+    float: right;
+    transition: 1s all;
+    z-index: 9;
+}
+
+.play-nav{
+    position: absolute;
+    bottom: 554px;
+    right: 0;
+    z-index: 9;
+    height: 2%;
+}
+
+.play-nav.active{
+    position: fixed;
+    right: 0;
+    z-index: 9;
+    height: 8%;
+}
+
+.gear {
+    width: 8%;
+    margin-top: 5px;
+    z-index: 7;
+    margin-right: 15px;
+}
+
 .play-box{
     width: 395px;
-    position: absolute;
     z-index: 9;
-    bottom: 577px;
-    right: 0;
+    height: 75%;
+}
+
+.play-box > *:not(:first-child) {
+    display: none;
+}
+
+.play-nav.active .play-box > *{
+    display: block;
+}
+
+.play-nav.active .gear{
+    display: none;
+}
+
+.play-nav.active .play-btn {
+    border-color: transparent;
+}
+.play-nav.active .play-btn:after {
+    opacity: 1;
+    width: 20px;
+    height: 80px;
+    background: transparent;
+    position: absolute;
+    left: -70px;
+    top: -40px;
+    border-left: 20px solid #41291B;
+    border-right: 20px solid #41291B;
+}
+.play-box:hover > *{
+    display: block;
 }
 
 .play-box * {
     float: right;
 }
+
 .play-box .score{
     margin-top: 6px;
 }
+
 .play-box .score li{
     list-style: none;
     margin-right: 5px;
 }
 
 .play-box .pink-bulb{
-    width: 10%;
+    width: 15%;
+    margin-top: -10px;
 }
 
 .play-box .blue-bulb{
-    width: 12.5%;
-    margin-top: -7px;
-    margin-left: 6px;
+    width: 12%;
+    margin-top: -3px;
+    margin-right: 8px;
 }
 .play-btn {
     display: block;
@@ -180,22 +246,6 @@ section{
     transition: all 0.3s;
     -webkit-transition: all 0.3s;
     -moz-transition: all 0.3s;
-}
-
-.play-btn.active {
-    border-color: transparent;
-}
-
-.play-btn.active:after {
-    opacity: 1;
-    width: 20px;
-    height: 80px;
-    background: transparent;
-    position: absolute;
-    left: -70px;
-    top: -40px;
-    border-left: 20px solid #41291B;
-    border-right: 20px solid #41291B;
 }
 .second-section {
     background-image: url("resources/notebook-middle.png");

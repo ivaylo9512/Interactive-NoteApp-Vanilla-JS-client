@@ -37,18 +37,24 @@ const colorize = (() => {
     }
 
     let colorMode = false;
-    const manageListeners = () => {
+    const manageListeners = (e) => {
+        console.log(e);
+        const playNav = e.target.parentElement.parentElement;
 
         if(colorMode){
             colorMode = false;
             colorizables.forEach(colorizable => {
                 colorizable.removeEventListener('mouseover', changeColor);
             });
+
+            playNav.classList.remove('active');
         }else{
             colorMode = true;
             colorizables.forEach(colorizable => {
                 colorizable.addEventListener('mouseover', changeColor);
-            });    
+            });
+
+            playNav.classList.add('active');
         }
     }
 

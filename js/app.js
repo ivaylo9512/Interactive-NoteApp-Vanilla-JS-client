@@ -89,7 +89,7 @@ const app = (() =>{
         document.getElementById('album-btns').addEventListener('mousedown', getAlbumImages);
 
         colorize.getElements();
-        document.getElementById('play').addEventListener('mousedown', colorize.manageListeners);
+        document.getElementById('play-btn').addEventListener('mousedown', colorize.manageListeners);
         document.getElementById('pink-bulb-btn').addEventListener('mousedown', () => colorize.setCurrentColor('#E2007A'));
         document.getElementById('blue-bulb-btn').addEventListener('mousedown', () => colorize.setCurrentColor('#7398CA'));
 

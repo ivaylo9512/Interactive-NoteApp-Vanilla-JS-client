@@ -9,15 +9,19 @@
         <link rel="stylesheet" type="text/css" media="screen" href="styles.css" />
     </head>
     <body>
-        <div class="play-box">
-            <a class="play-btn" id="play"></a>
-            <div class="score">
-                <li id="score">0</li>
-                <li>/</li>
-                <li id="max-score">100</li>
+        <div class="play-nav" id="play-nav">
+            <div class="full-screen-button"><img src="resources/full-screen.png" id="full-screen"></div>
+            <div class="play-box">
+                <img src="resources/settings.png" class="gear" id="gear">
+                <a class="play-btn" id="play-btn"></a>
+                <div class="score">
+                    <li class="colorize" id="score">0</li>
+                    <li class="colorize">/</li>
+                    <li class="colorize" id="max-score">100</li>
+                </div>
+                <img src="resources/right-bulb-blue.png" class="blue-bulb" id="blue-bulb-btn">
+                <img src="resources/left-bulb-pink.png" class="pink-bulb" id="pink-bulb-btn">
             </div>
-            <img src="resources/left-bulb-pink.png" class="pink-bulb" id="pink-bulb-btn">
-            <img src="resources/blue-bulb.gif"  class="blue-bulb" id="blue-bulb-btn">
         </div>
         <div class="full-mode" id="full-mode">
             <button class="menu-circle" id="menu-circle">
