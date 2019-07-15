@@ -71,39 +71,52 @@ const app = (() =>{
     }
 
     const fullModeNav = document.getElementById('full-mode-nav');
+    const fullModeBtn = document.getElementById('full-mode-btn');
     let fullModeOn = false;
     let fullModeNavOn = false;
+    let initialLoad = false;
     const fullModeToggle = () => {
-        if(fullModeOn){
-            fullModeOn = false;
+        if(fullModeOn){ 
+            initialLoad = false;
+            initialAnimation();
+            
+            document.body.classList.remove('full-mode-active');
         }else{
-            fullModeOn = true;
             document.body.classList.add('full-mode-active');
         }
+        fullModeOn = !fullModeOn;
     }
 
+    const initialAnimation = () => {
+        setTimeout(() => {
+            window.scrollTo(0, document.body.scrollHeight);
+        },800);
+        
+        setTimeout(() => {
+            document.getElementById('pink-bulb').src = 'resources/pink-bulb.gif';
+            document.getElementById('blue-bulb').src = 'resources/blue-bulb.gif';
+            initialLoad = true;            
+        }, 600);
+    }
+
+    const play = document.getElementById('play-box');
     const fullModeNavToggle = () => {
-        fullModeNavOn ? fullModeNav.classList.remove('active') : fullModeNav.classList.add('active');
+        if(fullModeNavOn){
+            fullModeNav.classList.remove('active')
+            fullModeBtn.style.marginTop = '0%';
+        }else{
+            fullModeNav.classList.add('active');
+            fullModeBtn.style.marginTop = '7%';
+        }
         fullModeNavOn = !fullModeNavOn;
     }
 
     const start = () => {
-        window.scrollTo(0, document.body.scrollHeight);
-        window.onbeforeunload = function () {
-            window.scrollTo(0, document.body.scrollHeight);
-        }
 
-        setTimeout(() => {
-            document.getElementById('pink-bulb').src = 'resources/pink-bulb.gif';
-            document.getElementById('blue-bulb').src = 'resources/blue-bulb.gif';            
-        }, 500);
+        initialAnimation();
 
         animate.createCircles();
-        window.addEventListener('scroll', ()=>{
-            if(!fullModeOn){
-                animate.decideEvent                
-            }
-        });
+        window.addEventListener('scroll', ()=> !fullModeOn && initialLoad && animate.decideEvent());
 
         window.addEventListener('wheel', animate.setDelta, {passive: false});
 
@@ -132,7 +145,7 @@ const app = (() =>{
 
         draggables.dragElement(document.getElementById('move-note'));
 
-        document.getElementById('full-mode-btn').addEventListener('mousedown', fullModeToggle)
+        fullModeBtn.addEventListener('mousedown', fullModeToggle)
         document.getElementById('menu-circle').addEventListener('mousedown', fullModeNavToggle)
     }
 

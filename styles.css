@@ -123,25 +123,27 @@ body.full-mode-active .play-mode > *{
     top: 10%;
     left: 65%;
 }
-.full-screen-button{
+.full-mode-button{
     height: 69%;
+    transition: 1.5s;
 }
 
-.full-screen-button img{
+.full-mode-button img{
     margin-right: 13px;
     width: 9%;
     cursor: pointer;
     float: right;
-    transition: 1s all;
+    transition: all 1.5s;
     z-index: 9;
 }
 
 .play-nav{
     position: absolute;
-    bottom: 554px;
+    bottom: 573px;
     right: 0;
     z-index: 9;
     height: 52px;
+    width: 395px;
 }
 
 .play-nav.active{
@@ -168,6 +170,9 @@ body.full-mode-active .play-mode > *{
     display: none;
 }
 
+body.full-mode-active .play-box{
+    display: none;
+}
 .play-nav.active .play-box > *{
     display: block;
 }

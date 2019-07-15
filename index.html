@@ -10,8 +10,10 @@
     </head>
     <body>
         <div class="play-nav" id="play-nav">
-            <div class="full-screen-button"><img src="resources/full-screen.png" id="full-mode-btn"></div>
-            <div class="play-box">
+            <div class="full-mode-button">
+                <img src="resources/full-mode.png" id="full-mode-btn">
+            </div>
+            <div id="play-box" class="play-box">
                 <img src="resources/settings.png" class="gear" id="gear">
                 <a class="play-btn" id="play-btn"></a>
                 <div class="score">
@@ -30,18 +32,18 @@
                 <li id="play-full-mode-btn">Play</li>
             </nav>
             <button class="menu-circle" id="menu-circle">
-                <div class="photos-button-animation" id="full-screen-photos-animations-container">
-                    <!-- <img class="photo1-full-screen" id="show-photo1-full-screen" src="resources/photo1.jpg">
-                    <img class="photo2-full-screen " id="show-photo2-full-screen" src="resources/photo2.jpg">
-                    <img class="photo3-full-screen " id="show-photo3-full-screen" src="resources/photo3.jpg">
-                    <img class="photo4-full-screen " id="show-photo4-full-screen" src="resources/photo4.jpg"> -->
+                <div class="photos-button-animation" id="full-mode-photos-animations-container">
+                    <!-- <img class="photo1-full-mode" id="show-photo1-full-mode" src="resources/photo1.jpg">
+                    <img class="photo2-full-mode " id="show-photo2-full-mode" src="resources/photo2.jpg">
+                    <img class="photo3-full-mode " id="show-photo3-full-mode" src="resources/photo3.jpg">
+                    <img class="photo4-full-mode " id="show-photo4-full-mode" src="resources/photo4.jpg"> -->
                 </div>
             </button>
             <button class="add-photo" id="add-photo">
-                <input class="input-photo-full-screen" id="input-photo-full-screen" type="file" />
-                <img class="chosen-photo-full-screen" id="choose-image-full-screen" src="#" alt="" />
+                <input class="input-photo-full-mode" id="input-photo-full-mode" type="file" />
+                <img class="chosen-photo-full-mode" id="choose-image-full-mode" src="#" alt="" />
             </button>
-            <div class="photo-section-full-screen" id="photo-section-full-screen">
+            <div class="photo-section-full-mode" id="photo-section-full-mode">
                 <div class="album-container">
                     <div class="place-photo"></div>
                     <div class="place-photo"></div>
@@ -73,7 +75,7 @@
                     <div class="place-photo"></div>
                     <div class="place-photo"></div>
                 </div>
-                <div class="photos-container-full-screen" id="photos-container-full-screen"></div>
+                <div class="photos-container-full-mode" id="photos-container-full-mode"></div>
             </div>
         </div>
 
