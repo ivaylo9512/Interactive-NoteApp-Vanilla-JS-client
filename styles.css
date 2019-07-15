@@ -20,15 +20,6 @@ section{
     height: 579px;
     overflow: hidden;
 }
-
-.seconde-section {
-    background-image: url("resources/notebook-middle.png");
-    overflow: visible;
-    background-position: 1.4px -0.3px;
-    height: 560px;
-    background-attachment: local;
-    z-index: 8;
-}
 .third-section {
     background-image: url("resources/notebook-top.png");
     height: 560px;
@@ -206,9 +197,17 @@ section{
     border-left: 20px solid #41291B;
     border-right: 20px solid #41291B;
 }
-.onLoad-photo{
+.second-section {
+    background-image: url("resources/notebook-middle.png");
+    overflow: visible;
+    background-position: 1.4px -0.3px;
+    height: 560px;
+    background-attachment: local;
+    z-index: 8;
+}
+.second-section img {
     position: absolute;
-    border-radius: 12px;
+    border-radius: 10px;
 }
 .onLoad-photo:nth-child(1){
     bottom: 5%;
@@ -250,6 +249,87 @@ section{
     width: 10%;
     transform: rotate(-25deg);
     right: 30%;
+}
+.user-photo{
+    position: absolute;
+}
+.user-photo:nth-child(1){
+    bottom: 19%;
+    width: 10%;
+    right: 65%;
+    transform: rotate(32deg);
+}
+.user-photo:nth-child(2){
+    bottom: 24%;
+    width: 10%;
+    right: 60%;
+    transform: rotate(16deg);
+    z-index: 1;
+}
+
+.user-photo:nth-child(3){
+    bottom: 17%;
+    width: 10%;
+    right: 55%;
+    transform: rotate(-33deg);
+}
+
+.user-photo:nth-child(4){
+    bottom: 38%;
+    width: 10%;
+    right: 55%;
+    transform: rotate(48deg);
+    z-index: 1;
+}
+.user-photo:nth-child(5){
+    bottom: 29%;
+    width: 10%;
+    right: 68%;
+    transform: rotate(-17deg);
+}
+
+.user-photo:nth-child(6){
+    bottom: 32%;
+    width: 12%;
+    right: 57%;
+    transform: rotate(28deg);
+}
+
+.user-photo:nth-child(7){
+    bottom: 40%;
+    width: 10%;
+    right: 67%;
+    transform: rotate(28deg);
+}
+
+.user-photo:nth-child(8){
+    bottom: 75%;
+    width: 16%;
+    right: 62%;
+    transform: rotate(-32deg);
+}
+
+.user-photo:nth-child(9){
+    bottom: 62%;
+    width: 16%;
+    right: 56%;
+    z-index: 1;
+}
+
+.user-photo:nth-child(10){
+    bottom: 62%;
+    width: 15%;
+    right: 64%;
+    z-index: 2;
+    transform: rotate(25deg);
+}
+
+.user-photo:nth-child(11){
+    bottom: 75%;
+    width: 16%;
+    right: 54%;
+    z-index: 1;
+    transform: rotate(34deg);
 }
 
 .circles-container span:before{

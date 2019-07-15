@@ -1,14 +1,33 @@
 const app = (() =>{
 
-    let currentAlbum;
-    let albumImages = [];
+    const userPhotosContainer = document.getElementById("user-photos");
+    const appendedPhotos = Array.from(userPhotosContainer.children);
+    
+    let firstAlbum = [];
+    let secondAlbum = [];
+    let thirdAlbum = [];
+
     const getAlbumImages = (e) => {
         const id = e.target.id
 
         remote.getAlbumImages(id)
             .then(function (response) {
-                currentAlbum = id
-                albumImages = response.data
+                switch(+id){
+                    case 1:
+                        firstAlbum = response.data;
+                        animateAlbumPhotos(firstAlbum);
+                        console.log(window.location.origin);
+                        break;
+                    case 2:
+                        secondAlbum = response.data;
+                        animateAlbumPhotos(secondAlbum);
+                        break;
+                    case 3:
+                        thirdAlbum = response.data;
+                        animateAlbumPhotos(thirdAlbum);
+                        break; 
+                }
+                albumImages = response.data;
             })
             .catch(function (error) {
             })
@@ -22,7 +41,7 @@ const app = (() =>{
                     appendedPhotos[i].style.display = 'block';
                     appendedPhotos[i].style.opacity = 1;
                     appendedPhotos[i].id = currentAlbum[i]['id'];
-                    appendedPhotos[i].src = currentAlbum[i]['location'];
+                    appendedPhotos[i].src = 'http://localhost:8000/' + currentAlbum[i]['location'];
                     appendedPhotos[i].style.width = currentAlbum[i]['width'];
                     appendedPhotos[i].style.transform = 'rotate(' + currentAlbum[i]['rotation'] + 'deg)';
                     appendedPhotos[i].style.left = currentAlbum[i]['left'];
@@ -82,13 +101,11 @@ const app = (() =>{
 
         const noteAnimation = document.getElementById('note-animation');
         const noteHeader = document.getElementById('notes-header');
-
         noteAnimation.addEventListener('mouseover', animate.noteAnimation);
         noteAnimation.addEventListener('mousedown', animate.noteAppend);
         noteHeader.addEventListener('mouseover', animate.showClouds);
         noteHeader.addEventListener('mouseout', animate.hideClouds);
         noteHeader.addEventListener('mousedown', animate.showNoteView);
-
 
         draggables.dragElement(document.getElementById('move-note'));
     }
