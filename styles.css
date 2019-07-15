@@ -7,6 +7,11 @@ body {
     font: normal 33px/1 "Aladin", Helvetica, sans-serif;
     position: relative;
 }
+
+body.full-mode-active{
+    border: 8px solid;
+}
+
 section{
     width: 989px;
     margin: 0 auto;
@@ -15,15 +20,22 @@ section{
     background-size: 100% 100%;
     position: relative;
 }
+
 .first-section {
     background-image: url("resources/notebook-bottom.png");
     height: 579px;
     overflow: hidden;
 }
+
 .third-section {
     background-image: url("resources/notebook-top.png");
     height: 560px;
 }
+
+body.full-mode-active .play-mode > *{
+    display: none;
+}
+
 .tree{
     width: 240px;
     margin-right: 37px;
@@ -129,7 +141,7 @@ section{
     bottom: 554px;
     right: 0;
     z-index: 9;
-    height: 2%;
+    height: 52px;
 }
 
 .play-nav.active{
@@ -726,25 +738,24 @@ section{
     height: 320px;
     position: relative;
     z-index: 5;
-    margin-left: 10px;
     margin-top: 50px;
 }
 .cloud-header {
-    height: 400px;
+    height: 300px;
     position: relative;
 }
 .cloud {
     position: absolute;
     width: 160px;
     left: 62%;
-    top: -30%;
+    top: -40%;
     opacity: 1;
 }
 .cloud1 {
     position: absolute;
     width: 88px;
     left: 32%;
-    top: -38%;
+    top: -48%;
     transform: rotate(10.97deg);
     opacity: 1;
 }
@@ -753,7 +764,7 @@ section{
     position: absolute;
     width: 128px;
     left: -28%;
-    top: -27.5%;
+    top: -37.5%;
     transform: rotate(-22.91deg);
     opacity: 1;
 }
@@ -762,7 +773,7 @@ section{
     letter-spacing: 7px;
     color: #442818;
     margin-top: 245px;
-    padding-left: 27px;
+    margin-left: 15px;
     cursor: pointer;
 }
 
@@ -834,6 +845,12 @@ section{
 }
 .full-mode{
     display: none;
+    height: 633px;
+    overflow: hidden;
+}
+
+body.full-mode-active .full-mode{
+    display: block;
 }
 
 .hide {

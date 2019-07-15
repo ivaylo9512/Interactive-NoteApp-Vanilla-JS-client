@@ -31,6 +31,7 @@ const app = (() =>{
             .catch(function (error) {
             })
     }
+
     const animateAlbumPhotos = (currentAlbum) => {
         for (let i = 0; i < appendedPhotos.length; i++) {
             appendedPhotos[i].style.display = 'none';
@@ -68,6 +69,18 @@ const app = (() =>{
             }
         }
     }
+
+    const playMode = document.getElementById('play-mode');
+    let fullModeOn = false;
+    const fullModeToggle = () => {
+        if(fullModeOn){
+            fullModeOn = false;
+        }else{
+            fullModeOn = true;
+            document.body.classList.add('full-mode-active');
+        }
+    }
+    
     const start = () => {
         window.scrollTo(0, document.body.scrollHeight);
         window.onbeforeunload = function () {
@@ -80,7 +93,12 @@ const app = (() =>{
         }, 500);
 
         animate.createCircles();
-        window.addEventListener('scroll', animate.decideEvent);
+        window.addEventListener('scroll', ()=>{
+            if(!fullModeOn){
+                animate.decideEvent                
+            }
+        });
+        
         window.addEventListener('wheel', animate.setDelta, {passive: false});
 
         document.getElementById('profile-btn').addEventListener('mousedown', animate.scrollToProfile);
@@ -107,6 +125,8 @@ const app = (() =>{
         noteHeader.addEventListener('mousedown', animate.showNoteView);
 
         draggables.dragElement(document.getElementById('move-note'));
+
+        document.getElementById('full-mode-btn').addEventListener('mousedown', fullModeToggle)
     }
 
     return {

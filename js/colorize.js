@@ -16,7 +16,7 @@ const colorize = (() => {
 
     const leftBulbImages = ['left-bulb-pink.png', 'left-bulb-brown.png', 'left-bulb-blue.png'];
     const rightBulbImages = ['right-bulb-pink.png', 'right-bulb-brown.png', 'right-bulb-blue.png'];
-    const getRandomImage = (id) => {
+    const getRandomImage = id => {
         const randomIndex = Math.floor(Math.random() * leftBulbImages.length);
         const randomImage = id == 'pink-bulb' ? rightBulbImages[randomIndex] : leftBulbImages[randomIndex];
         
@@ -98,7 +98,6 @@ const colorize = (() => {
     let amountCounted = 0;
     let score = document.getElementById('score');
     const calculate = (node) => {
-        console.log(node.getAttribute('value'))
         if (node.getAttribute('value') == 'marked' && !matched) {
             amountCounted--;
             node.setAttribute('value', 'unmarked');

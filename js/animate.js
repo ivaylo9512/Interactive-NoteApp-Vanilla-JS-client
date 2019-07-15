@@ -263,6 +263,7 @@ const animate = (() => {
 
     const showNoteView = () => {
         if (brushAnimated) {
+            notes.setCloudsAnimated();
             noteHolders.classList.remove('show');
             brushAnimation.classList.add('hide');
             noteContainer.classList.add('hide');

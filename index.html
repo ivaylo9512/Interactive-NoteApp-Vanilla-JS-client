@@ -10,7 +10,7 @@
     </head>
     <body>
         <div class="play-nav" id="play-nav">
-            <div class="full-screen-button"><img src="resources/full-screen.png" id="full-screen"></div>
+            <div class="full-screen-button"><img src="resources/full-screen.png" id="full-mode-btn"></div>
             <div class="play-box">
                 <img src="resources/settings.png" class="gear" id="gear">
                 <a class="play-btn" id="play-btn"></a>
@@ -72,116 +72,117 @@
             </div>
 
         </div>
-        <div class="note-container" id="note-container">
-            <input>
-            <textarea></textarea>
-            <img class="sticky-note" id="sticky-note" src="resources/sticky.png">
-            <div class="move-note" id="move-note"></div>
-            <img class="submit-note" id="submit-note" src="resources/forward.png">
+        <div class="play-mode" id="play-mode">
+            <div class="note-container" id="note-container">
+                <input>
+                <textarea></textarea>
+                <img class="sticky-note" id="sticky-note" src="resources/sticky.png">
+                <div class="move-note" id="move-note"></div>
+                <img class="submit-note" id="submit-note" src="resources/forward.png">
+            </div>
+            <section class="note-section" id="note-section">
+                <div class="note-animation-container" id="left-notes">
+                    <img src="resources/note-animation-static.png" class="note-animation" id="note-animation">
+                </div>
+                <div class="cloud-container" id="cloud-container">
+                    <div class="cloud-header" id="cloud-header">
+                        <h1 id="notes-header">Notes</h1>
+                        <div class="chosen-month-container" id="chosen-month-container"></div>
+                            <img class="cloud" id="cloud" src="resources/cloud.png" alt="">
+                            <img class="cloud1" id="cloud1" src="resources/cloud.png" alt="">
+                            <img class="cloud2" id="cloud2" src="resources/cloud.png" alt="">
+                        <div class="chosen-day-container"></div>
+                    </div>
+                </div>
+
+                <div class="brush-animation-container" id="brush-animation-container">
+                </div>
+            </section>
+            <section class="third-section" id='shrink-third'>
+                <div class="balloons-container" id="balloons-container">
+                    <img class="balloon" id="balloon" src="resources/static-balloon.png" />
+                </div>
+                <form action="">
+                    <div class="buttons-container" id="buttons-container">
+                        <button type="button" class="register" id="register-btn">Register</button>
+                        <button type="button" class="login" id="login-btn">Login</button>
+                        <button type="submit" class="user-btn" id="user-btn"></button>
+                    </div>
+                    <div class="user-info">
+                        <div class="labels-container" id="labels-container">
+                            <label class="colorize">First name:</label>
+                            <label class="colorize">Last name:</label>
+                            <label class="colorize">Age:</label>
+                            <label class="colorize">Country:</label>
+                        </div>
+                        <div class="inputs-container" id="inputs-container">
+                                <input class="colorize" type="text" />
+                                <input class="colorize" type="text" />
+                                <input class="colorize" type="text" />
+                                <input class="colorize" type="text" />
+                        </div>
+                        <div class="profile-photo-container" id="profile-photo-container">
+                                <img src="resources/photo-frame.png" class="profile-photo" alt="" />
+                                <input id="profile-photo" type="file" />
+                                <img class="chosen-profile-photo" id="choosen-image" src="#" alt="" />
+                        </div>
+                    </div>
+                </form>
+
+            </section>
+            <section class="second-section" id='second-section'>
+                <div class="circles-container" id="circles-container">
+                    <img class="onLoad-photo" src="resources/photo1.jpg">
+                    <img class="onLoad-photo" src="resources/photo2.jpg">
+                    <img class="onLoad-photo" src="resources/photo3.jpg">
+                    <img class="onLoad-photo" src="resources/photo4.jpg">
+                    <img class="onLoad-photo" src="resources/photo5.jpg">
+                    <img class="onLoad-photo" src="resources/photo6.jpg">
+                </div>
+                <div class="user-photos" id="user-photos">
+                    <img class="user-photo">
+                    <img class="user-photo">
+                    <img class="user-photo">
+                    <img class="user-photo">
+                    <img class="user-photo">
+                    <img class="user-photo">
+                    <img class="user-photo">
+                    <img class="user-photo">
+                    <img class="user-photo">
+                    <img class="user-photo">
+                    <img class="user-photo">
+                </div>
+                <!-- <div class="photo-menu">
+                    <img class="move-photo" id="move-photo" src="resources-finale/move-option1.png">
+                    <img class="resize" id="resize" src="resources-finale/resize2.png">
+                    <img class="rotate-button" id="rotate" src="resources-finale/rotate4.png">
+                    <div class="speech-bubble-left" id="speech-bubble-left"><span>Save</span></div>
+                    <div class="speech-bubble-right" id="speech-bubble-right"><span id="edit-button">Edit</span></div>
+                    <div id="circle"></div>
+                </div> -->
+            </section>
+
+            <section class="first-section" id='shrink-seconde'>
+                <nav id="onload-nav">
+                    <ul>
+                        <li class="profile-btn colorize" id="profile-btn">PROFILE</li>
+                        <li class="album-btn colorize" id="album-btn">ALBUM</li>
+                        <div class="album-btns" id="album-btns">
+                            <li class="third colorize" id="3">3</li>
+                            <li class="second colorize" id="2">2</li>
+                            <li class="first colorize" id="1">1</li>
+                        </div>
+                    </ul>
+                </nav>
+            
+                <div class="onload-animation">
+                    <img src="resources/pointer.gif" class="pointer" id="pointer"/>
+                    <img class="blue-bulb colorize" id="blue-bulb"/>
+                    <img src="resources/tree.png" class="tree" id="tree"/>
+                    <img class="pink-bulb colorize" id="pink-bulb"/>
+                </div>
+            </section>
         </div>
-        <section class="note-section" id="note-section">
-            <div class="note-animation-container" id="left-notes">
-                <img src="resources/note-animation-static.png" class="note-animation" id="note-animation">
-            </div>
-            <div class="cloud-container" id="cloud-container">
-                <div class="cloud-header" id="cloud-header">
-                    <h1 id="notes-header">Notes</h1>
-                    <div class="chosen-month-container" id="chosen-month-container"></div>
-                        <img class="cloud" id="cloud" src="resources/cloud.png" alt="">
-                        <img class="cloud1" id="cloud1" src="resources/cloud.png" alt="">
-                        <img class="cloud2" id="cloud2" src="resources/cloud.png" alt="">
-                    <div class="chosen-day-container"></div>
-                </div>
-            </div>
-
-            <div class="brush-animation-container" id="brush-animation-container">
-            </div>
-        </section>
-        <section class="third-section" id='shrink-third'>
-            <div class="balloons-container" id="balloons-container">
-                <img class="balloon" id="balloon" src="resources/static-balloon.png" />
-            </div>
-            <form action="">
-                <div class="buttons-container" id="buttons-container">
-                    <button type="button" class="register" id="register-btn">Register</button>
-                    <button type="button" class="login" id="login-btn">Login</button>
-                    <button type="submit" class="user-btn" id="user-btn"></button>
-                </div>
-                <div class="user-info">
-                    <div class="labels-container" id="labels-container">
-                        <label class="colorize">First name:</label>
-                        <label class="colorize">Last name:</label>
-                        <label class="colorize">Age:</label>
-                        <label class="colorize">Country:</label>
-                    </div>
-                    <div class="inputs-container" id="inputs-container">
-                            <input class="colorize" type="text" />
-                            <input class="colorize" type="text" />
-                            <input class="colorize" type="text" />
-                            <input class="colorize" type="text" />
-                    </div>
-                    <div class="profile-photo-container" id="profile-photo-container">
-                            <img src="resources/photo-frame.png" class="profile-photo" alt="" />
-                            <input id="profile-photo" type="file" />
-                            <img class="chosen-profile-photo" id="choosen-image" src="#" alt="" />
-                    </div>
-                </div>
-            </form>
-
-        </section>
-        <section class="second-section" id='second-section'>
-            <div class="circles-container" id="circles-container">
-                <img class="onLoad-photo" src="resources/photo1.jpg">
-                <img class="onLoad-photo" src="resources/photo2.jpg">
-                <img class="onLoad-photo" src="resources/photo3.jpg">
-                <img class="onLoad-photo" src="resources/photo4.jpg">
-                <img class="onLoad-photo" src="resources/photo5.jpg">
-                <img class="onLoad-photo" src="resources/photo6.jpg">
-            </div>
-            <div class="user-photos" id="user-photos">
-                <img class="user-photo">
-                <img class="user-photo">
-                <img class="user-photo">
-                <img class="user-photo">
-                <img class="user-photo">
-                <img class="user-photo">
-                <img class="user-photo">
-                <img class="user-photo">
-                <img class="user-photo">
-                <img class="user-photo">
-                <img class="user-photo">
-            </div>
-            <!-- <div class="photo-menu">
-                <img class="move-photo" id="move-photo" src="resources-finale/move-option1.png">
-                <img class="resize" id="resize" src="resources-finale/resize2.png">
-                <img class="rotate-button" id="rotate" src="resources-finale/rotate4.png">
-                <div class="speech-bubble-left" id="speech-bubble-left"><span>Save</span></div>
-                <div class="speech-bubble-right" id="speech-bubble-right"><span id="edit-button">Edit</span></div>
-                <div id="circle"></div>
-            </div> -->
-        </section>
-
-        <section class="first-section" id='shrink-seconde'>
-            <nav id="onload-nav">
-                <ul>
-                    <li class="profile-btn colorize" id="profile-btn">PROFILE</li>
-                    <li class="album-btn colorize" id="album-btn">ALBUM</li>
-                    <div class="album-btns" id="album-btns">
-                        <li class="third colorize" id="3">3</li>
-                        <li class="second colorize" id="2">2</li>
-                        <li class="first colorize" id="1">1</li>
-                    </div>
-                </ul>
-            </nav>
-        
-            <div class="onload-animation">
-                <img src="resources/pointer.gif" class="pointer" id="pointer"/>
-                <img class="blue-bulb colorize" id="blue-bulb"/>
-                <img src="resources/tree.png" class="tree" id="tree"/>
-                <img class="pink-bulb colorize" id="pink-bulb"/>
-            </div>
-        </section>
-
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script src="js/remote.js"></script>
         <script src="js/draggables.js"></script>
