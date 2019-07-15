@@ -7,25 +7,43 @@ const animate = (() => {
             balloonAnimation();
         }
 
-        if (scrollY < height - 1139 && deltaDir < 0) {
+        if (scrollY < height - 1139 && deltaDir < 0 && hiding) {
             showCircles();
         }
     
-        if (scrollY > height - 1139 && deltaDir > 0) {
+        if (scrollY > height - 1139 && deltaDir > 0 && !hiding) {
             hideCircles();
         }
     
-        if (scrollY <= height - 446 && treeAnimated == false && deltaDir < 0) {
+        if (scrollY <= height - 446 && !treeAnimated && deltaDir < 0) {
             treeAnimation();
         }
 
-        if (scrollY < height - 446 && pointerHidden == false && deltaDir < 0) {
+        if (scrollY < height - 446 && !pointerHidden && deltaDir < 0) {
             hidePointer();
         }
 
         if(animationIsPlaying){
             event.preventDefault();
         }
+    }
+
+    const scrollToProfile = () => {
+        const height = document.body.scrollHeight;
+        const scroll = height - 1400 - window.pageYOffset;
+        deltaDir = -1;
+        
+        smoothScroll(scroll, 1000);
+        showCircles();
+    }
+
+    const scrollToAlbum = () => {
+        const height = document.body.scrollHeight;
+        const scroll = height - 1100 - window.pageYOffset;
+        deltaDir = -1;        
+
+        smoothScroll(scroll, 1000);
+        showCircles();
     }
 
     const smoothScroll = (y, durration) => {
@@ -70,7 +88,7 @@ const animate = (() => {
     }
     const photos = document.getElementsByClassName('onLoad-photo');
 
-    let hiding = false;
+    let hiding = true;
 
     const showCircles = () => {
         const delay = 100;
@@ -80,6 +98,7 @@ const animate = (() => {
         showLoop();
         function showLoop() {
             setTimeout(() => {
+
                 if(current == circles.length || hiding){
                     return;
                 }
@@ -162,7 +181,7 @@ const animate = (() => {
     const noteContainer = document.getElementById('note-container');
 
     const balloonAnimation = () => {
-        if (balloonPlayed == false) {
+        if (!balloonPlayed) {
             balloonPlayed = true;
             animationIsPlaying = true;
 
@@ -283,6 +302,8 @@ const animate = (() => {
         noteAppend,
         showClouds,
         hideClouds,
-        showNoteView
+        showNoteView,
+        scrollToProfile,
+        scrollToAlbum
     };
 })();

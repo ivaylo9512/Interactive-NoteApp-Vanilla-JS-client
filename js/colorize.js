@@ -78,10 +78,10 @@ const colorize = (() => {
     let amountCounted = 0;
     let score = document.getElementById('score');
     const calculate = (node) => {
-        if (node.getAttribute('value') == 'marked' && matched == false) {
+        if (node.getAttribute('value') == 'marked' && !matched) {
             amountCounted--;
             node.setAttribute('value', 'unmarked');
-        } else if (matched == true && (node.getAttribute('value') == 'unmarked' || node.getAttribute('value') == null)) {
+        } else if (matched && (node.getAttribute('value') == 'unmarked' || node.getAttribute('value') == null)) {
             amountCounted++;
             node.setAttribute('value', 'marked');
         }

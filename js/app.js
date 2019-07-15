@@ -65,6 +65,8 @@ const app = (() =>{
         window.addEventListener('scroll', animate.decideEvent);
         window.addEventListener("wheel", animate.setDelta, {passive: false});
 
+        document.getElementById('profile-btn').addEventListener('mousedown', animate.scrollToProfile);
+        document.getElementById('album-btn').addEventListener('mousedown', animate.scrollToAlbum);
         document.getElementById('album-btns').addEventListener('mousedown', getAlbumImages);
 
         colorize.getElements();
