@@ -68,7 +68,7 @@ const animate = (() => {
             circleContainer.appendChild(circle);  
         }
     }
-    const photos = document.getElementsByClassName("onLoad-photo");
+    const photos = document.getElementsByClassName('onLoad-photo');
 
     let hiding = false;
 
@@ -87,9 +87,9 @@ const animate = (() => {
                 const circle = circles[current];            
                 if(current >= 4 && current <= 9){
                     const photo = photos[current - 4];
-                    photo.classList.add("animate");
+                    photo.classList.add('animate');
                 }
-                circle.classList.add("animate");
+                circle.classList.add('animate');
 
                 current++;
                 showLoop();
@@ -112,10 +112,10 @@ const animate = (() => {
                 const circle = circles[current];            
                 if(current >= 4 && current <= 9){
                     const photo = photos[current - 4];
-                    photo.classList.remove("animate");
+                    photo.classList.remove('animate');
                     delay = 120;
                 }
-                circle.classList.remove("animate");
+                circle.classList.remove('animate');
                 
                 current--;
                 hideLoop();
@@ -126,17 +126,17 @@ const animate = (() => {
 
     var treeAnimated = false;
     const treeAnimation = () => {
-        document.getElementById("tree").src = "resources/tree-animation.gif";
+        document.getElementById('tree').src = 'resources/tree-animation.gif';
         treeAnimated = true;
         setTimeout(
             function showNav() {
-                document.getElementById("onload-nav").classList.add("nav-show");
+                document.getElementById('onload-nav').classList.add('nav-show');
             }, 2300);
     }
 
     let pointerHidden = false;
     const hidePointer = () => {
-        document.getElementById("pointer").style.display = "none";
+        document.getElementById('pointer').style.display = 'none';
         pointerHidden = true;
     }
 
@@ -144,7 +144,7 @@ const animate = (() => {
     let balloonPlayed = false;
     let animationIsPlaying = false;
     let brushAnimated = false;
-    const brushAnimation = document.createElement("IMG");
+    const brushAnimation = document.createElement('IMG');
         brushAnimation.setAttribute('src', 'resources/brush-reveal.gif');
         brushAnimation.setAttribute('width', '30%');
         brushAnimation.setAttribute('position', 'absolute');
@@ -170,7 +170,7 @@ const animate = (() => {
             smoothScroll(100, 3100);
             setTimeout(() => smoothScroll(-900, 3500), 3100);
 
-            document.getElementById("balloon").src = 'resources/balloon.gif';
+            document.getElementById('balloon').src = 'resources/balloon.gif';
             setTimeout(() => {
                 balloonLeft.classList.add('balloon2');
                 balloonLeft.setAttribute('src', 'resources/left-balloon-first-animation.gif');
@@ -187,7 +187,7 @@ const animate = (() => {
                 balloonLeft.src = 'resources/first-balloon-second-animation.gif';
                 setTimeout(() => {
                     animationIsPlaying = false;
-                    noteHolders.classList.add('animate');
+                    noteHolders.classList.add('show');
                     balloonLeft.classList.add('hide');
 
                     cloud.classList.add('hide');
@@ -204,7 +204,7 @@ const animate = (() => {
                         brushAnimated = true;
                         balloonLeft.style.display = 'none';
                     }, 1100);
-                    
+
                 }, 5050);
             }, 3500);
         }
@@ -213,24 +213,76 @@ const animate = (() => {
     
     const noteAnimation = () => {
         if (brushAnimated) {
-            noteHolders.src = "resources/note-animation.gif";
+            noteHolders.src = 'resources/note-animation.gif';
         }
     }
 
     const noteAppend = () => {
         if (brushAnimated) {
-            noteContainer.style.display = "block";
-            noteHolders.src = "resources/note-animation-static-open.png";
-            noteHolders.removeEventListener("mouseover", noteAnimation);
-            noteHolders.removeEventListener("mousedown", noteAppend);
+            noteContainer.style.display = 'block';
+            noteHolders.src = 'resources/note-animation-static-open.png';
+            noteHolders.removeEventListener('mouseover', noteAnimation);
+            noteHolders.removeEventListener('mousedown', noteAppend);
         }
     }
 
+    const showClouds = () => {
+        if (brushAnimated) {
+            noteHolders.classList.remove('show');
+            brushAnimation.classList.add('hide');
+            noteContainer.classList.add('hide');
+        }
+    }
+
+    const hideClouds = () => {
+        if (brushAnimated) {
+            noteHolders.classList.add('show');
+            brushAnimation.classList.remove('hide');
+            noteContainer.classList.remove('hide');
+        }
+    }
+
+    const showNoteView = () => {
+        if (brushAnimated) {
+            noteHolders.classList.remove('show');
+            brushAnimation.classList.add('hide');
+            noteContainer.classList.add('hide');
+
+            const noteHeader = document.getElementById('notes-header');
+            noteHeader.removeEventListener('mouseout', hideClouds);
+            noteHeader.removeEventListener('mouseout', showNoteView);
+
+            setTimeout(() => {
+
+                setTimeout(() => {
+                    cloud2.classList.add('show');
+                }, 200);
+
+                setTimeout(() => {
+                    cloud.classList.add('show');
+                }, 400);
+
+                setTimeout(() => {
+                    cloud1.classList.add('show');
+                }, 600);
+
+                setTimeout(() => {
+                    noteContainer.style.display = 'none';
+                    noteHolders.style.display = 'none';
+                    brushAnimation.style.display = 'none';
+                }, 1500);
+
+            }, 100);
+        }
+    }
     return {
         decideEvent,
         setDelta,
         createCircles,
         noteAnimation,
-        noteAppend
+        noteAppend,
+        showClouds,
+        hideClouds,
+        showNoteView
     };
 })();

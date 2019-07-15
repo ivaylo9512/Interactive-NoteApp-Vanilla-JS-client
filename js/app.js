@@ -16,6 +16,7 @@ const app = (() =>{
     const animateAlbumPhotos = (currentAlbum) => {
         for (let i = 0; i < appendedPhotos.length; i++) {
             appendedPhotos[i].style.display = 'none';
+
             if(i < currentAlbum.length){
                 setTimeout(() => {
                     appendedPhotos[i].style.display = 'block';
@@ -44,6 +45,7 @@ const app = (() =>{
                         currentAlbum[i]['left'] = window.getComputedStyle(appendedPhotos[i]).left;
                         currentAlbum[i]['top'] = window.getComputedStyle(appendedPhotos[i]).top;
                     }, 40)
+
                 }, i * 80)
             }
         }
@@ -67,8 +69,8 @@ const app = (() =>{
 
         colorize.getElements();
         document.getElementById('play').addEventListener('mousedown', colorize.manageListeners);
-        document.getElementById('pink-bulb-btn').addEventListener("mousedown", () => colorize.setCurrentColor('#E2007A'));
-        document.getElementById("blue-bulb-btn").addEventListener("mousedown", () => colorize.setCurrentColor('#7398CA'));
+        document.getElementById('pink-bulb-btn').addEventListener('mousedown', () => colorize.setCurrentColor('#E2007A'));
+        document.getElementById('blue-bulb-btn').addEventListener('mousedown', () => colorize.setCurrentColor('#7398CA'));
 
         const loginBtn = document.getElementById('login-btn');
         const registerBtn = document.getElementById('register-btn');
@@ -76,9 +78,14 @@ const app = (() =>{
         registerBtn.addEventListener('mousedown', () => profile.changeInputView(registerBtn, loginBtn));
         document.getElementById('user-btn').addEventListener('click', profile.userAction);
 
-        noteAnimation = document.getElementById('note-animation');
+        const noteAnimation = document.getElementById('note-animation');
+        const noteHeader = document.getElementById('notes-header');
+
         noteAnimation.addEventListener('mouseover', animate.noteAnimation);
         noteAnimation.addEventListener('mousedown', animate.noteAppend);
+        noteHeader.addEventListener('mouseover', animate.showClouds);
+        noteHeader.addEventListener('mouseout', animate.hideClouds);
+        noteHeader.addEventListener('mousedown', animate.showNoteView);
     }
 
     return {

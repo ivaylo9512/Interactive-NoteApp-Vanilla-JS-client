@@ -2,7 +2,7 @@ const profile = (() =>{
 
     let labels = document.getElementById('labels-container').children;
     let inputs = document.getElementById('inputs-container').children;
-    let profilePhoto = document.getElementById("choosen-image");
+    let profilePhoto = document.getElementById('choosen-image');
     let userBtn = document.getElementById('user-btn');
 
     let isAuth = () => localStorage.getItem('Authorization') != null;
@@ -13,8 +13,8 @@ const profile = (() =>{
         inputs[3].value = localStorage.getItem('country');
         profilePhoto.src = localStorage.getItem('profilePic') != 'undefined' ? localStorage.getItem('profilePic') : '#'; 
 
-        userBtn.style.display = "block";
-        userBtn.innerHTML = "logout";
+        userBtn.style.display = 'block';
+        userBtn.innerHTML = 'logout';
     }
 
     const labelsTexts = [
@@ -97,7 +97,7 @@ const profile = (() =>{
                 currentLabels = labelsTexts[2];
                 resetInputs(currentLabels)
 
-                userBtn.innerHTML = "logout";
+                userBtn.innerHTML = 'logout';
                 inputs[0].value = res['firstname'];
                 inputs[1].value = res['lastname'];
                 inputs[2].value = res['age'];
@@ -110,7 +110,7 @@ const profile = (() =>{
                 localStorage.setItem('lastName', res['lastname']);
                 localStorage.setItem('age', res['age']);
                 localStorage.setItem('country', res['country']);
-                currentBtn.classList.remove("active");
+                currentBtn.classList.remove('active');
             })
     }
 

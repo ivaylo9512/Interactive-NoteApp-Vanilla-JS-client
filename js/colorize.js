@@ -20,10 +20,10 @@ const colorize = (() => {
         const randomIndex = Math.floor(Math.random() * leftBulbImages.length);
         const randomImage = id == 'pink-bulb' ? rightBulbImages[randomIndex] : leftBulbImages[randomIndex];
         
-        if(currentColor == "#7398CA"){
-            matched = randomImage == "right-bulb-blue.png";
+        if(currentColor == '#7398CA'){
+            matched = randomImage == 'right-bulb-blue.png';
         }else{
-            matched = randomImage == "left-bulb-pink.png";
+            matched = randomImage == 'left-bulb-pink.png';
         } 
 
         return randomImage;
@@ -42,12 +42,12 @@ const colorize = (() => {
         if(colorMode){
             colorMode = false;
             colorizables.forEach(colorizable => {
-                colorizable.removeEventListener("mouseover", changeColor);
+                colorizable.removeEventListener('mouseover', changeColor);
             });
         }else{
             colorMode = true;
             colorizables.forEach(colorizable => {
-                colorizable.addEventListener("mouseover", changeColor);
+                colorizable.addEventListener('mouseover', changeColor);
             });    
         }
     }
@@ -61,9 +61,9 @@ const colorize = (() => {
         const node = event.target; 
         if (currentColor != '') {
 
-            if(node.tagName === 'IMG' && ((currentColor == '#7398CA' && node.id == "pink-bulb") || (currentColor == '#E2007A' && node.id == "blue-bulb"))){
+            if(node.tagName === 'IMG' && ((currentColor == '#7398CA' && node.id == 'pink-bulb') || (currentColor == '#E2007A' && node.id == 'blue-bulb'))){
                 const randomImage = getRandomImage(node.id);
-                node.src = "resources/" + randomImage;
+                node.src = 'resources/' + randomImage;
                 calculate(node);
             }else if(node.tagName !== 'IMG'){
                 const randomColor = getRandomColor();
@@ -81,9 +81,9 @@ const colorize = (() => {
         if (node.getAttribute('value') == 'marked' && matched == false) {
             amountCounted--;
             node.setAttribute('value', 'unmarked');
-        } else if (matched == true && (node.getAttribute('value') == "unmarked" || node.getAttribute("value") == null)) {
+        } else if (matched == true && (node.getAttribute('value') == 'unmarked' || node.getAttribute('value') == null)) {
             amountCounted++;
-            node.setAttribute("value", 'marked');
+            node.setAttribute('value', 'marked');
         }
         score.innerHTML = amountCounted;
     }
