@@ -86,6 +86,8 @@ const app = (() =>{
         noteHeader.addEventListener('mouseover', animate.showClouds);
         noteHeader.addEventListener('mouseout', animate.hideClouds);
         noteHeader.addEventListener('mousedown', animate.showNoteView);
+
+        draggables.dragElement(noteHeader);
     }
 
     return {
