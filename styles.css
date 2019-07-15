@@ -862,3 +862,48 @@ body.full-mode-active .full-mode{
     opacity: 1;
     transition: opacity 1.15s ease-in-out;
 }
+
+.full-mode nav{
+    height: 0;
+    background: #41291b;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    transition: all 1.5s;
+    overflow: hidden;
+}
+
+.full-mode nav.active{
+    height: 7%;
+}
+
+.full-mode nav li{
+    float: left;
+    color: #eae9e5;
+    list-style: none;
+    flex: 1;
+    text-align: center;
+    height: 80%;
+    border-right: 1px solid #EAE9E5;
+}
+
+.full-mode nav li:first-child{
+    border-left: 1px solid #EAE9E5;
+}
+
+.menu-circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -30px;
+    margin-top: -30px;
+    background: url(resources/menu-icon.png) no-repeat center center;
+    background-size: 40%;
+    border: 3px solid #41291B;
+    border-radius: 90px;
+    height: 60px;
+    width: 60px;
+    transform: scale(1);
+    z-index: 5;
+    cursor: pointer;
+}

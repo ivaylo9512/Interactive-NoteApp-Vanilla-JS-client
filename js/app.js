@@ -70,8 +70,9 @@ const app = (() =>{
         }
     }
 
-    const playMode = document.getElementById('play-mode');
+    const fullModeNav = document.getElementById('full-mode-nav');
     let fullModeOn = false;
+    let fullModeNavOn = false;
     const fullModeToggle = () => {
         if(fullModeOn){
             fullModeOn = false;
@@ -80,7 +81,12 @@ const app = (() =>{
             document.body.classList.add('full-mode-active');
         }
     }
-    
+
+    const fullModeNavToggle = () => {
+        fullModeNavOn ? fullModeNav.classList.remove('active') : fullModeNav.classList.add('active');
+        fullModeNavOn = !fullModeNavOn;
+    }
+
     const start = () => {
         window.scrollTo(0, document.body.scrollHeight);
         window.onbeforeunload = function () {
@@ -98,7 +104,7 @@ const app = (() =>{
                 animate.decideEvent                
             }
         });
-        
+
         window.addEventListener('wheel', animate.setDelta, {passive: false});
 
         document.getElementById('profile-btn').addEventListener('mousedown', animate.scrollToProfile);
@@ -127,6 +133,7 @@ const app = (() =>{
         draggables.dragElement(document.getElementById('move-note'));
 
         document.getElementById('full-mode-btn').addEventListener('mousedown', fullModeToggle)
+        document.getElementById('menu-circle').addEventListener('mousedown', fullModeNavToggle)
     }
 
     return {
