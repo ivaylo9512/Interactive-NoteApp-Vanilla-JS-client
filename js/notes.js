@@ -9,14 +9,6 @@ const notes = (() => {
         cloudsAnimated = true;
     }
 
-    const showMonths = () => {
-        hideYears();
-        timelineMonths.classList.add('show');
-    }
-    const hideMonths = () => {
-        timelineMonths.classList.remove('show');
-    }
-
     const maxYear = 1995;
     const currentYear = new Date().getFullYear();
     const yearsCount = currentYear - maxYear;
@@ -41,18 +33,55 @@ const notes = (() => {
         }
     }
 
+    yearsHiding = false;
+
+    const showMonths = () => {
+        yearsHiding = true;
+        hideYears();
+        timelineMonths.classList.add('show');
+    }
+
+    const hideMonths = () => {
+        timelineMonths.classList.remove('show');
+    }
+
     const showYears = () => {
+        yearsHiding = false;
         hideMonths();
-        years.forEach((year, i) => {
-            setTimeout(() => years[years.length - 1 - i].style.opacity = '1', 70 * i)
-        })
+
+        let current = years.length - 1;
+        showLoop()
+        function showLoop(){
+
+            setTimeout(() => { 
+                if(current < 0 || yearsHiding){
+                    return;
+                }
+                years[current].style.opacity = '1';
+                current--;
+                showLoop();
+            }, 70)
+
+        }
     }
 
     const hideYears = () => {
-        years.forEach((year, i) => {
-            setTimeout(() => year.style.opacity = '0', 70 * i)
-        })
-}
+
+        let current = 0;        
+        hideLoop();
+        function hideLoop(){
+
+            setTimeout(() => { 
+                if(current == years.length || !yearsHiding){
+                    return;
+                }
+                years[current].style.opacity = '0';
+                current++;
+                hideLoop();
+            }, 70)
+
+        }
+    }
 
     return {
         setCloudsAnimated,
