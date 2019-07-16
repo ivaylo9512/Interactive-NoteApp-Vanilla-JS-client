@@ -947,10 +947,10 @@ body.full-mode-active .full-mode{
     position: relative;
     float: left;
     overflow: hidden;
+    transition: all 2.5s;
 }
 .timeline-months.show{
     width: 100%;
-    transition: all 2.5s;
 }
 ol {
     height: 2.5px;

@@ -10,6 +10,7 @@ const notes = (() => {
     }
 
     const showMonths = () => {
+        hideYears();
         timelineMonths.classList.add('show');
     }
     const hideMonths = () => {
@@ -41,20 +42,15 @@ const notes = (() => {
     }
 
     const showYears = () => {
-            years.forEach((year, i) => {
-                setTimeout(() => {
-                   years[years.length - 1 - i].style.opacity = '1';
-
-                }, 70 * i)
-            })
+        hideMonths();
+        years.forEach((year, i) => {
+            setTimeout(() => years[years.length - 1 - i].style.opacity = '1', 70 * i)
+        })
     }
 
     const hideYears = () => {
         years.forEach((year, i) => {
-            setTimeout(() => {
-               year.style.opacity = '0';
-
-            }, 70 * i)
+            setTimeout(() => year.style.opacity = '0', 70 * i)
         })
 }
 
