@@ -967,6 +967,38 @@ ol {
     display: flex;
     margin-top: 40px;
 }
+.timeline-years {
+    width: 10%;
+    position: absolute;
+    margin-left: -16px;
+    z-index: 5;
+}
+.timeline-years ol {
+    height: 480px;
+    width: 10px;
+    overflow: hidden;
+    background: transparent;
+    display: block;
+}
+.timeline-years ol::before, 
+.timeline-years ol::after {
+    border: 0px;
+}
+.timeline-years p {
+    margin-top: -30px;
+    margin-left: -27px;
+    font: bold 17px "Aladin", Helvetica, sans-serif;
+}
+.timeline-years ol li {
+    height: 65px;
+    transition: 1s opacity;
+}
+.timeline-years ol li .point {
+    margin-left: -24px;
+    margin-top: 11px;
+    position: relative;
+    display: block;
+}
 ol li {
     float: left;
     width: 88px;
