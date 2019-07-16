@@ -935,25 +935,37 @@ body.full-mode-active .full-mode{
     cursor: pointer;
 }
 
-.timeline-months{
+.timeline-months-container{
     float: left;
     width: 100%;
-    margin-top: 100px;
+    margin-top: 60px;
     position: relative;
+}
+.timeline-months{
+    width: 0%;
+    height: 200px;
+    position: relative;
+    float: left;
+    overflow: hidden;
+}
+.timeline-months.show{
+    width: 100%;
+    transition: all 2.5s;
 }
 ol {
     height: 2.5px;
-    width: 93%;
+    width: 1174px;
     background: #41291B;
     z-index: 7;
     position: relative;
-    margin: 0 auto;
+    margin-left: 25.5px;
     padding-left: 38px;
     align-items: center;
     display: -webkit-box; 
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
+    margin-top: 40px;
 }
 ol li {
     float: left;
@@ -1033,8 +1045,8 @@ ol::after {
     position: absolute;
     z-index: 9;
     transition: all 3s;
-    left: 23px;
-    top: -7px;
+    left: 24px;
+    top: 33px;
     content: "";
     width: 0;
     height: 0;

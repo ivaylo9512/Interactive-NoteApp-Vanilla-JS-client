@@ -147,10 +147,7 @@ const animate = (() => {
     const treeAnimation = () => {
         document.getElementById('tree').src = 'resources/tree-animation.gif';
         treeAnimated = true;
-        setTimeout(
-            function showNav() {
-                document.getElementById('onload-nav').classList.add('nav-show');
-            }, 2300);
+        setTimeout(() => document.getElementById('onload-nav').classList.add('nav-show'), 2300);
     }
 
     let pointerHidden = false;

@@ -33,11 +33,11 @@ const draggables = (() =>{
             node.style.left = node.offsetLeft - pos1 + 'px';
 
             switch (className) {
-                case "move-photo":
+                case 'move-photo':
                     break;
-                case "drag-photo":
+                case 'drag-photo':
                     break;
-                case "nav-point":
+                case 'nav-point':
                     checkPointPosition();
                     break;
             }
@@ -45,8 +45,8 @@ const draggables = (() =>{
 
         const checkPointPosition = () => {
             if (pos3 > 100) {
+                notes.showMonths();
                 closeDrag();
-
             } else if (node.parentElement.getBoundingClientRect().top - event.clientY > 44) {
                 closeDrag();
             }
@@ -58,20 +58,20 @@ const draggables = (() =>{
             document.removeEventListener('mouseup', closeDrag);
 
             switch (className) {
-                case "move-photo":
+                case 'move-photo':
                     break;
-                case "drag-photo":
+                case 'drag-photo':
                     break;
-                case "nav-point":
+                case 'nav-point':
                     resetNavPoint();
                     break;
             }
         }
 
         const resetNavPoint = () => {
-            node.style.transition = "2s"
-                node.style.left = "23px";
-                node.style.top = "-7px"
+            node.style.transition = '2s';
+            node.style.left = '24px';
+            node.style.top = '33px';
         }
     }
     return {
