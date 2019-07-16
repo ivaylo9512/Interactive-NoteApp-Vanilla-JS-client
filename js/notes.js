@@ -3,7 +3,7 @@ const notes = (() => {
 
     const timelineMonths = document.getElementById('timeline-months');
     const timelineYears = document.getElementById('timeline-years');
-    const months = timelineMonths.getElementsByTagName('LI');
+    const months = Array.from(timelineMonths.getElementsByTagName('LI'));
 
     const setCloudsAnimated = () => {
         cloudsAnimated = true;
@@ -194,8 +194,8 @@ const notes = (() => {
             hideYears();
     }
 
-    months.forEach(month => month.addEventListener('click', getMonth(months.children[0].innerHTML)))
-    years.forEach(year => year.addEventListener('click', getYear(years.children[0].innerHTML)));
+    months.forEach(month => month.addEventListener('click',() => getMonth(month.children[0].innerHTML)))
+    years.forEach(year => year.addEventListener('click', () => getYear(year.children[0].innerHTML)));
 
     return {
         setCloudsAnimated,

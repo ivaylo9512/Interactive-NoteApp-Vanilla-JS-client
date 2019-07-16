@@ -970,15 +970,17 @@ ol {
 .timeline-years {
     width: 10%;
     position: absolute;
-    margin-left: -16px;
+    margin-left: -5px;
     z-index: 5;
 }
 .timeline-years ol {
-    height: 480px;
-    width: 10px;
+    height: 458px;
+    width: 40px;
     overflow: hidden;
     background: transparent;
     display: block;
+    padding: 0;
+    margin-top: 65px;
 }
 .timeline-years ol::before, 
 .timeline-years ol::after {
@@ -986,7 +988,6 @@ ol {
 }
 .timeline-years p {
     margin-top: -30px;
-    margin-left: -27px;
     font: bold 14px "Aladin", Helvetica, sans-serif;
 }
 .timeline-years ol li {
@@ -995,7 +996,7 @@ ol {
     transition: 1s opacity;
 }
 .timeline-years ol li .point {
-    margin-left: -24px;
+    margin-left: 3px;
     margin-top: 11px;
     position: relative;
     display: block;
