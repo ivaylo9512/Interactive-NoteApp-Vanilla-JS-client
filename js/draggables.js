@@ -56,6 +56,22 @@ const draggables = (() =>{
             mouseDown = false;
             document.removeEventListener('mousemove', onDrag);
             document.removeEventListener('mouseup', closeDrag);
+
+            switch (className) {
+                case "move-photo":
+                    break;
+                case "drag-photo":
+                    break;
+                case "nav-point":
+                    resetNavPoint();
+                    break;
+            }
+        }
+
+        const resetNavPoint = () => {
+            node.style.transition = "2s"
+                node.style.left = "23px";
+                node.style.top = "-7px"
         }
     }
     return {
