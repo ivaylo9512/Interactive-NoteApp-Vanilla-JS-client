@@ -757,15 +757,15 @@ body.full-mode-active .play-box{
 .cloud {
     position: absolute;
     width: 160px;
-    left: 62%;
-    top: -40%;
+    left: 60%;
+    top: 40%;
     opacity: 1;
 }
 .cloud1 {
     position: absolute;
     width: 88px;
     left: 32%;
-    top: -48%;
+    top: 32%;
     transform: rotate(10.97deg);
     opacity: 1;
 }
@@ -773,8 +773,8 @@ body.full-mode-active .play-box{
 .cloud2 {
     position: absolute;
     width: 128px;
-    left: -28%;
-    top: -37.5%;
+    left: -15%;
+    top: 46.5%;
     transform: rotate(-22.91deg);
     opacity: 1;
 }
@@ -922,4 +922,78 @@ body.full-mode-active .full-mode{
     transform: scale(1);
     z-index: 5;
     cursor: pointer;
+}
+
+.timeline-months{
+    float: left;
+    width: 100%;
+    margin-top: 100px;
+}
+ol {
+    height: 4px;
+    width: 93%;
+    background: #41291B;
+    z-index: 7;
+    position: relative;
+    margin: 0 auto;
+    padding-left: 38px;
+}
+ol li {
+    position: relative;
+    float: left;
+    width: 88px;
+    font: bold 11px arial;
+    height: 40px;
+    text-align: center;
+}
+ol li .point {
+    left: 38.5px;
+    content: "";
+    position: absolute;
+    top: -6px;
+    display: block;
+    width: 0;
+    height: 0;
+    border-radius: 10px;
+    border: 8px solid #41291B;
+}
+ol li .day-container {
+    width: 72px;
+    height: 16px;
+    border: 3px solid #41291B;
+    border-radius: 8px;
+    background: #e9e9e4;
+    position: absolute;
+    bottom: 27px;
+    left: 5px;
+}
+.timeline-months p {
+    margin-top: 20px;
+    text-align: center;
+}
+
+ol::before,
+ol::after {
+    content: "";
+    display: block;
+    width: 0;
+    bottom: 0px;
+    height: 0;
+    border-radius: 10px;
+    border: 8px solid #41291B;
+    position: absolute;
+    top: -6px;
+}
+
+ol::before {
+    left: -2px;
+}
+
+ol::after {
+    right: -10px;
+    border: 10px solid transparent;
+    border-right: 0;
+    border-left: 20px solid #41291B;
+    border-radius: 3px;
+    top: -8px;
 }
