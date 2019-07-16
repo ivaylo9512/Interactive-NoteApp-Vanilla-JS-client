@@ -1086,3 +1086,52 @@ ol::after {
     border-radius: 10px;
     border: 8px solid #41291B;
 }
+
+
+.photo-section-full-mode{
+    display: none;
+    width: 1259px;
+    height: 500px;
+    margin-top: 50px;
+    margin-left: 5px;
+    position:relative;
+    z-index: 2;
+}
+
+.album-one-label{
+    height: 68px;
+    margin-left: 10px;
+    margin-top: 5px;
+}
+.album-container{
+    height: 70px;
+    margin-left: 163px;
+    margin-bottom: 5px;
+}
+.album-container > div{
+    height: 61px;
+    width: 121px;
+    position: relative;
+    border: 3px solid #41291B;
+    border-style: double;
+    display: inline-block;
+    overflow: hidden;
+    border-radius: 5px;
+}
+.album-numbers{
+    background-color: #41291B;
+    background-size: 100%;
+}
+.album-numbers div:hover{
+    border: 1px solid #41291B;
+}
+.album-numbers div{
+    background-size: 100%;
+    width: 33.3%;
+    height: 100%;
+    position: absolute;
+    display: inline-block;
+    transform: scale(1);
+    transition: transform 0.4s;
+    cursor: pointer;
+}
