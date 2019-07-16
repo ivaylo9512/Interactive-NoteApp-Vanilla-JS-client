@@ -87,13 +87,11 @@ const notes = (() => {
             if (clickedMonth != '') {
                 showMonth.className = 'month';
                 showMonth.id = 'month';
-                if (chosenMonthContainer.contains(showMonth)) {
-                    chosenMonthContainer.removeChild(showMonth);
-                }
+                if (chosenMonthContainer.contains(showMonth)) chosenMonthContainer.removeChild(showMonth);
 
-                if (clickedMonth != '') {
-                    showMonth.innerHTML = clickedMonth;
-                }
+
+                if (clickedMonth != '') showMonth.innerHTML = clickedMonth;
+                
 
                 cloud.src = 'resources-finale/cloud-filled.png';
                 chosenMonthContainer.appendChild(showMonth);
@@ -172,9 +170,32 @@ const notes = (() => {
                 }
             }
     }
+    const getYear = (clickedYear) => {
+            showYear.className = 'year';
+            showYear.id = 'year'
+
+            if (cloudHeader.contains(showYear)) cloudHeader.removeChild(showYear);
+            
+
+            showYear.innerHTML = clickedYear;
+            cloud2.src = 'resources-finale/cloud-filled.png';
+            cloudHeader.appendChild(showYear);
+
+            if (showMonth.innerHTML != '' && showYear.innerHTML != '' && showDay.innerHTML != '') {
+                let date = showDay.innerHTML + '-' + monthNumber + '-' + showYear.innerHTML
+                remote.findNoteByDate(date, currentAlbumNumber).then(
+                    res => {
+                        userNotes = res;
+                        appendNotes();
+                    }
+                ).catch(e => {
+                })
+            }
+            hideYears();
+    }
 
     months.forEach(month => month.addEventListener('click', getMonth(months.children[0].innerHTML)))
-
+    years.forEach(year => year.addEventListener('click', getYear(years.children[0].innerHTML)));
 
     return {
         setCloudsAnimated,
