@@ -154,6 +154,7 @@ const app = (() =>{
         noteHeader.addEventListener('mousedown', animate.showNoteView);
 
         draggables.dragElement(document.getElementById('move-note'));
+        draggables.dragElement(document.getElementById('point'));
 
         fullModeBtn.addEventListener('mousedown', fullModeToggle)
         document.getElementById('menu-circle').addEventListener('mousedown', fullModeNavToggle)

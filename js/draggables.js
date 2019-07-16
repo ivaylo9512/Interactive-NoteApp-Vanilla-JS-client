@@ -15,8 +15,10 @@ const draggables = (() =>{
             pos4 = e.pageY;            
             document.addEventListener('mousemove', onDrag);
             document.addEventListener('mouseup', closeDrag);
-
-            className = node.className
+            
+            node.style.transition = '0s';
+            className = node.className;
+            
             if (className == 'move-note') node = node.parentElement;
         }
 
@@ -29,6 +31,25 @@ const draggables = (() =>{
 
             node.style.top = node.offsetTop - pos2 + 'px';
             node.style.left = node.offsetLeft - pos1 + 'px';
+
+            switch (className) {
+                case "move-photo":
+                    break;
+                case "drag-photo":
+                    break;
+                case "nav-point":
+                    checkPointPosition();
+                    break;
+            }
+        }
+
+        const checkPointPosition = () => {
+            if (pos3 > 100) {
+                closeDrag();
+
+            } else if (node.parentElement.getBoundingClientRect().top - event.clientY > 44) {
+                closeDrag();
+            }
         }
 
         function closeDrag(e) {
