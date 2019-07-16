@@ -98,11 +98,18 @@
                 <div class="cloud-container" id="cloud-container">
                     <div class="cloud-header" id="cloud-header">
                         <h1 id="notes-header">Notes</h1>
-                        <div class="chosen-month-container" id="chosen-month-container"></div>
-                            <img class="cloud" id="cloud" src="resources/cloud.png" alt="">
-                            <img class="cloud1" id="cloud1" src="resources/cloud.png" alt="">
-                            <img class="cloud2" id="cloud2" src="resources/cloud.png" alt="">
-                        <div class="chosen-day-container"></div>
+                        <div class="chosen-month-container">
+                            <p id="chosen-month"></p>
+                        </div>
+                        <img class="cloud" id="cloud" src="resources/cloud.png" alt="">
+                        <img class="cloud1" id="cloud1" src="resources/cloud.png" alt="">
+                        <img class="cloud2" id="cloud2" src="resources/cloud.png" alt="">
+                        <div class="chosen-day-container">
+                            <p id="chosen-day"></p>
+                        </div>
+                        <div class="chosen-year-container">
+                            <p class="chosen-year" id="chosen-year">2018</p>
+                        </div>
                     </div>
                 </div>
 
@@ -140,7 +147,7 @@
                             </li>
                             <li>
                                 <span class="day-container"></span>
-                                <button class="day-container">
+                                <button class="day-container" id="days-container">
                                     <div class="days" id="days">
                                     </div>
                                 </button>

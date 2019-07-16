@@ -83,18 +83,16 @@ const notes = (() => {
         }
     }
 
+    const daysContainer = document.getElementById('days-container');
+    const chosenMonth = document.getElementById('chosen-month');
+    const chosenYear = document.getElementById('chosen-year');
+    const chosenDay = document.getElementById('chosen-day');
+
     const getMonth = (clickedMonth) => {
             if (clickedMonth != '') {
-                showMonth.className = 'month';
-                showMonth.id = 'month';
-                if (chosenMonthContainer.contains(showMonth)) chosenMonthContainer.removeChild(showMonth);
-
-
-                if (clickedMonth != '') showMonth.innerHTML = clickedMonth;
                 
-
-                cloud.src = 'resources-finale/cloud-filled.png';
-                chosenMonthContainer.appendChild(showMonth);
+                chosenMonth.innerHTML = clickedMonth;
+                cloud.src = 'resources/cloud-filled.png';
 
                 let daysCount;
                 switch (clickedMonth) {
@@ -146,7 +144,6 @@ const notes = (() => {
                         monthNumber = 12;
                         daysCount = 31;
                         break;
-                    default:
                 }
 
                 if (showMonth.innerHTML != '' && showYear.innerHTML != '' && showDay.innerHTML != '') {
@@ -171,15 +168,9 @@ const notes = (() => {
             }
     }
     const getYear = (clickedYear) => {
-            showYear.className = 'year';
-            showYear.id = 'year'
 
-            if (cloudHeader.contains(showYear)) cloudHeader.removeChild(showYear);
-            
-
-            showYear.innerHTML = clickedYear;
-            cloud2.src = 'resources-finale/cloud-filled.png';
-            cloudHeader.appendChild(showYear);
+            chosenYear.innerHTML = clickedYear;
+            cloud2.src = 'resources/cloud-filled.png';
 
             if (showMonth.innerHTML != '' && showYear.innerHTML != '' && showDay.innerHTML != '') {
                 let date = showDay.innerHTML + '-' + monthNumber + '-' + showYear.innerHTML
@@ -191,6 +182,7 @@ const notes = (() => {
                 ).catch(e => {
                 })
             }
+            yearsHiding = true;
             hideYears();
     }
 

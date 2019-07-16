@@ -6,6 +6,14 @@ body {
     font-family: "Aladin";
     font: normal 33px/1 "Aladin", Helvetica, sans-serif;
     position: relative;
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
 }
 
 body.full-mode-active{
@@ -782,6 +790,25 @@ body.full-mode-active .play-box{
     opacity: 1;
 }
 
+.cloud-container p{
+    color: #EAE9E5;
+    font: bold 40px/1 "Aladin", Helvetica, sans-serif;
+    text-align: center;
+}
+.chosen-month-container{
+    left: 61%;
+    position: absolute;
+    z-index: 5;
+    top: 64.7%;
+    width: 60%;
+}
+.chosen-year-container{
+    position: absolute;
+    top: 64%;
+    left: -12%;
+    width: 50%;
+    transform: rotate(-22.91deg);
+}
 body.full-mode-active .cloud-header img{
     opacity: 1;
 }
