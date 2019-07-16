@@ -143,7 +143,7 @@ const animate = (() => {
         circlesAnimated = true;
     }
 
-    var treeAnimated = false;
+    let treeAnimated = false;
     const treeAnimation = () => {
         document.getElementById('tree').src = 'resources/tree-animation.gif';
         treeAnimated = true;

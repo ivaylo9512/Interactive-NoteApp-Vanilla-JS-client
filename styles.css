@@ -721,6 +721,7 @@ body.full-mode-active .play-box{
 .note-section{
     position: relative;
     height: 649px;
+    width: 1263px;
     z-index: 5; 
 }
 
@@ -734,7 +735,6 @@ body.full-mode-active .play-box{
 .note-animation {
     width: 528px;
     margin-top: -60px;
-    margin-left: -35%;
     opacity: 0;
     transition: all 1.5s ease-in-out;
     position: relative;
@@ -752,6 +752,7 @@ body.full-mode-active .play-box{
 .cloud-header {
     height: 300px;
     position: relative;
+    text-align: center;
 }
 .cloud {
     position: absolute;
@@ -789,6 +790,7 @@ body.full-mode-active .cloud-header img{
     margin-top: 245px;
     margin-left: 15px;
     cursor: pointer;
+    display: inline-block;
 }
 
 .brush-animation-container {
@@ -798,7 +800,7 @@ body.full-mode-active .cloud-header img{
     margin-top: 120px;
 }
 .brush-animation {
-    width: 90%;
+    width: 71%;
     transform: rotate(10deg);
     margin-top: -55px;
     margin-left: 45px;
@@ -859,7 +861,7 @@ body.full-mode-active .cloud-header img{
 }
 .full-mode{
     display: none;
-    height: 633px;
+    height: calc(100vh - 16px);
     overflow: hidden;
 }
 

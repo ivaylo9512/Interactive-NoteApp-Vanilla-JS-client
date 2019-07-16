@@ -6,16 +6,16 @@ const profile = (() =>{
     let userBtn = document.getElementById('user-btn');
 
     let isAuth = () => localStorage.getItem('Authorization') != null;
-    if (isAuth()) {
-        inputs[0].value = localStorage.getItem('firstName')
-        inputs[1].value = localStorage.getItem('lastName');
-        inputs[2].value = localStorage.getItem('age');
-        inputs[3].value = localStorage.getItem('country');
-        profilePhoto.src = localStorage.getItem('profilePic') != 'undefined' ? localStorage.getItem('profilePic') : '#'; 
+    // if (isAuth()) {
+    //     inputs[0].value = localStorage.getItem('firstName')
+    //     inputs[1].value = localStorage.getItem('lastName');
+    //     inputs[2].value = localStorage.getItem('age');
+    //     inputs[3].value = localStorage.getItem('country');
+    //     profilePhoto.src = localStorage.getItem('profilePic') != 'undefined' ? localStorage.getItem('profilePic') : '#'; 
 
-        userBtn.style.display = 'block';
-        userBtn.innerHTML = 'logout';
-    }
+    //     userBtn.style.display = 'block';
+    //     userBtn.innerHTML = 'logout';
+    // }
 
     const labelsTexts = [
         ['Username', 'Password'], 
