@@ -48,6 +48,7 @@ const draggables = (() =>{
                 notes.showMonths();
                 closeDrag();
             } else if (node.parentElement.getBoundingClientRect().top - event.clientY > 44) {
+                notes.showYears();
                 closeDrag();
             }
         }
