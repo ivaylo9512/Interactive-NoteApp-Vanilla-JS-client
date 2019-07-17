@@ -166,8 +166,9 @@ const animate = (() => {
     const cloud1 = document.getElementById('cloud1');
     const cloud2 = document.getElementById('cloud2');
     const balloonsContainer = document.getElementById('balloons-container');
-    const balloonLeft = document.createElement('IMG');
-    const balloonrRight = document.createElement('IMG');
+    const balloon = document.getElementById('balloon');
+    const balloonLeft = document.getElementById('balloon-left');
+    const balloonRight = document.getElementById('balloon-right');
     const noteHolders = document.getElementById('note-animation');
     const brushAnimationContainer = document.getElementById('right-notes');
     const noteContainer = document.getElementById('note-container');
@@ -181,17 +182,10 @@ const animate = (() => {
             smoothScroll(100, 3100);
             setTimeout(() => smoothScroll(-900, 3500), 3100);
 
-            document.getElementById('balloon').src = 'resources/balloon.gif';
+            balloon.src = 'resources/balloon.gif';
             setTimeout(() => {
-                balloonLeft.classList.add('balloon2');
-                balloonLeft.setAttribute('src', 'resources/left-balloon-first-animation.gif');
-                balloonLeft.id = 'balloon3';
-    
-                balloonrRight.classList.add('balloon1');
-                balloonrRight.setAttribute('src', 'resources/right-balloon-second-animation.gif');
-    
-                balloonsContainer.appendChild(balloonLeft);
-                balloonsContainer.appendChild(balloonrRight);
+                balloonLeft.style.display = 'block';
+                balloonRight.style.display = 'block';
             }, 1250);
 
             setTimeout(() => {

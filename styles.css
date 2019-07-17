@@ -628,9 +628,11 @@ body.full-mode-active .play-box{
     bottom: 38.3%;
     width: 30%;
     z-index: 1;
+    display: none;
 }
 .balloon2 {
     position: absolute;
+    display: none;
     right: 44%;
     bottom: 38.8%;
     z-index: 1;
