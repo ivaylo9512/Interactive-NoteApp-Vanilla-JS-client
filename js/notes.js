@@ -208,6 +208,32 @@ const notes = (() => {
         })
     }
 
+    const appendNotes = () => {
+        let notesCount = userNotes.length;
+        resetNotes();
+    }
+
+    const cloudContainer = document.getElementById('cloud-container');
+    const leftNotesContainer = document.getElementById('left-notes');
+    const rightNotesContainer = document.getElementById('right-notes');
+
+    const resetNotes = () => {
+        while (cloudContainer.childNodes.length > 2) {
+            cloudContainer.removeChild(cloudContainer.lastChild)
+
+        }
+        while (document.body.firstChild.className == 'buffer') {
+            document.body.removeChild(body.firstChild)
+        }
+
+        while (leftNotesContainer.lastChild.id == 'user-note-container') {
+            leftNotesContainer.removeChild(leftNotesContainer.lastChild)
+        }
+        while (rightNotesContainer.lastChild.id == 'user-note-container') {
+            rightNotesContainer.removeChild(rightNotesContainer.lastChild)
+        }
+    }
+
     months.forEach(month => month.addEventListener('mousedown',() => getMonth(month.children[0].innerHTML)))
     years.forEach(year => year.addEventListener('mousedown', () => getYear(year.children[0].innerHTML)));
     daysContainer.addEventListener('mousedown', getDay);

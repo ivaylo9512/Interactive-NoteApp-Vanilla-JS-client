@@ -169,7 +169,7 @@ const animate = (() => {
     const balloonLeft = document.createElement('IMG');
     const balloonrRight = document.createElement('IMG');
     const noteHolders = document.getElementById('note-animation');
-    const brushAnimationContainer = document.getElementById('brush-animation-container');
+    const brushAnimationContainer = document.getElementById('right-notes');
     const noteContainer = document.getElementById('note-container');
 
     const balloonAnimation = () => {
