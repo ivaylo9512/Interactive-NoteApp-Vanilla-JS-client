@@ -7,6 +7,7 @@ const app = (() =>{
     let secondAlbum = [];
     let thirdAlbum = [];
 
+    let currentAlbumNumber;
     const getAlbumImages = (e) => {
         const id = e.target.id
 
@@ -14,14 +15,17 @@ const app = (() =>{
             .then(function (response) {
                 switch(+id){
                     case 1:
+                        currentAlbumNumber = 1;
                         firstAlbum = response.data;
                         animateAlbumPhotos(firstAlbum);
                         break;
                     case 2:
+                        currentAlbumNumber = 2;
                         secondAlbum = response.data;
                         animateAlbumPhotos(secondAlbum);
                         break;
                     case 3:
+                        currentAlbumNumber = 3;
                         thirdAlbum = response.data;
                         animateAlbumPhotos(thirdAlbum);
                         break; 
@@ -69,6 +73,8 @@ const app = (() =>{
             }
         }
     }
+
+    const getCurrentAlbumNumber = () => currentAlbumNumber;
 
     const fullModeNav = document.getElementById('full-mode-nav');
     const fullModeBtn = document.getElementById('full-mode-btn');
@@ -162,7 +168,8 @@ const app = (() =>{
 
     return {
         start,
-        setIsAnimated
+        setIsAnimated,
+        getCurrentAlbumNumber
     }
 })();
 app.start();

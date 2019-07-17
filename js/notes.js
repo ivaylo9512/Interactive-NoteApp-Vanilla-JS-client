@@ -13,7 +13,7 @@ const notes = (() => {
     const currentYear = new Date().getFullYear();
     const yearsCount = currentYear - maxYear;
     const years = [];
-    for(let i = 0; i < yearsCount ; i++){
+    for(let i = 0; i <= yearsCount ; i++){
         const year = document.createElement('LI');
         const yearLabel = document.createElement('P');
         const point = document.createElement('SPAN');
@@ -25,10 +25,10 @@ const notes = (() => {
         years.push(year);
         timelineYears.children[0].appendChild(year);
         
-        if(i < yearsCount - 8){
+        if(i < yearsCount - 7){
             year.style.marginTop = '-69px';
         }
-        if(i == yearsCount - 8){
+        if(i == yearsCount - 7){
             year.style.marginTop = '-49px';
         }
     }
@@ -189,16 +189,25 @@ const notes = (() => {
 
     const checkDate = () => {
         if (month && year && day) {
-            let date = day + '-' + month + '-' + year;
-            
-            remote.findNoteByDate(date).then(
-                res => {
-                    userNotes = res;
-                    appendNotes();
-                }).catch(e => {
-            })
+            month = month.length > 1 ? month : '0' + month;
+            day = day.length > 1 ? day : '0' + day;
+
+            let date = year + '-' + month + '-' + day;
+            getNotes(date);
         }
     }
+
+    let userNotes = []; 
+    const getNotes = (date) => {
+        const albumNumber = app.getCurrentAlbumNumber();
+        remote.getNotes(date, albumNumber).then(
+            res => {
+                userNotes = res;
+                appendNotes();
+            }).catch(e => {
+        })
+    }
+
     months.forEach(month => month.addEventListener('mousedown',() => getMonth(month.children[0].innerHTML)))
     years.forEach(year => year.addEventListener('mousedown', () => getYear(year.children[0].innerHTML)));
     daysContainer.addEventListener('mousedown', getDay);

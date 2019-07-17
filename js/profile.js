@@ -94,6 +94,7 @@ const profile = (() =>{
         }
         remote.login(user).then(
             res => {
+                console.log(res);
                 currentLabels = labelsTexts[2];
                 resetInputs(currentLabels)
 
