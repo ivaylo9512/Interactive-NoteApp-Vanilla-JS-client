@@ -84,6 +84,7 @@ const notes = (() => {
     }
 
     const daysContainer = document.getElementById('days');
+
     const chosenMonth = document.getElementById('chosen-month');
     const chosenYear = document.getElementById('chosen-year');
     const chosenDay = document.getElementById('chosen-day');
@@ -161,7 +162,6 @@ const notes = (() => {
                 }
 
                 checkDate();
-
             }
     }
     const getYear = (clickedYear) => {
@@ -221,26 +221,38 @@ const notes = (() => {
     const rightNotesFragment = document.createDocumentFragment();
 
     let isTopNote = false;
+    let delay = 0;
     const appendNotes = () => {
         let notesCount = userNotes.length;
+        delay = notesCount * 0.2;
         resetNotes();
 
         addBuffers(notesCount);
+        window.scrollTo(0, body.scrollHeight - 2749);
 
-        const note = createNote();
+        const noteContainer = createNote();
 
         userNotes.forEach((userNote, i) => {
-            const noteCopy = note.cloneNode(true);
-            const noteText = noteCopy.children[0].children[0];
-            noteText.style.marginTop = isTopNote ? '38px' : '-366px';
+            const containerCopy = noteContainer.cloneNode(true);
+            const note = containerCopy.children[0];
+            const noteText = note.children[0];
+            const noteName = note.children[2];
+            
+            noteText.innerHTML = userNote.note;
+            noteName.value = userNote.name;
+            note.id = userNote.id + 'note';
 
+            containerCopy.style.animationDelay = delay + 's';
+            noteText.style.marginTop = isTopNote ? '38px' : '-366px';   
+
+            delay -= 0.2;
             if(i % 2 == 0) {
                 noteText.style.marginLeft = '280.5px';
-                leftNotesFragment.appendChild(noteCopy);
+                leftNotesFragment.appendChild(containerCopy);
             }else{
                 isTopNote = !isTopNote;
                 noteText.style.marginLeft = '-401.5px';
-                rightNotesFragment.appendChild(noteCopy);
+                rightNotesFragment.appendChild(containerCopy);
             }
         })
 
@@ -333,11 +345,12 @@ const notes = (() => {
             buffer.className = 'buffer';
             i == 0 ? buffer.style.height = '240px' : buffer.style.height = '785px';
             
-            const cloudHeaderCopy = cloudHeader.cloneNode(true);
-            cloudHeader.style.marginBottom = '120px';
-
+            if(i > 1){
+                const cloudHeaderCopy = cloudHeader.cloneNode(true);
+                cloudHeader.style.marginBottom = '120px';
+                cloudsFragment.appendChild(cloudHeaderCopy);
+            }
             bufferFragment.appendChild(buffer);
-            cloudsFragment.appendChild(cloudHeaderCopy);
         }
         playMode.insertBefore(bufferFragment, playMode.firstChild);
         cloudContainer.insertBefore(cloudsFragment, cloudContainer.firstChild);
