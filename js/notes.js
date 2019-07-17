@@ -202,28 +202,47 @@ const notes = (() => {
         const albumNumber = app.getCurrentAlbumNumber();
         remote.getNotes(date, albumNumber).then(
             res => {
-                userNotes = res;
+                userNotes = res.data;
                 appendNotes();
             }).catch(e => {
         })
     }
 
+    const body = document.body;
+
+    const cloudContainer = document.getElementById('cloud-container');
+    const cloudHeader = document.getElementById('cloud-header');
+    const leftNotesContainer = document.getElementById('left-notes-container');
+    const rightNotesContainer = document.getElementById('right-notes-container');
+
+    const leftNotesFragment = document.createDocumentFragment();
+    const rightNotesFragment = document.createDocumentFragment();
+
     const appendNotes = () => {
         let notesCount = userNotes.length;
         resetNotes();
+
+        addBuffers(notesCount);
+
+        const note = createNote()
+
+        userNotes.forEach((userNote, i) => {
+            const noteCopy = note.cloneNode(true);
+            i % 2 == 0 ? leftNotesFragment.appendChild(noteCopy) : rightNotesFragment.appendChild(noteCopy);
+        })
+
+        rightNotesContainer.appendChild(rightNotesFragment);
+        leftNotesContainer.appendChild(leftNotesFragment);
+        
     }
 
-    const cloudContainer = document.getElementById('cloud-container');
-    const leftNotesContainer = document.getElementById('left-notes');
-    const rightNotesContainer = document.getElementById('right-notes');
-
     const resetNotes = () => {
-        while (cloudContainer.childNodes.length > 2) {
+        while (cloudContainer.children.length > 1) {
             cloudContainer.removeChild(cloudContainer.lastChild)
 
         }
-        while (document.body.firstChild.className == 'buffer') {
-            document.body.removeChild(body.firstChild)
+        while (body.firstChild.className == 'buffer') {
+            body.removeChild(body.firstChild)
         }
 
         while (leftNotesContainer.lastChild.id == 'user-note-container') {
@@ -232,7 +251,62 @@ const notes = (() => {
         while (rightNotesContainer.lastChild.id == 'user-note-container') {
             rightNotesContainer.removeChild(rightNotesContainer.lastChild)
         }
+
+
     }
+
+    const createNote = () =>{
+        const userNoteContainer = document.createElement("div");
+        userNoteContainer.className = "user-note-container";
+        userNoteContainer.id = "user-note-container"
+
+        const note = document.createElement("button");
+        note.className = "user-note";
+
+        const noteInput = document.createElement("textarea");
+        noteInput.name = "user-note-input";
+        noteInput.id = "user-note-input"
+
+        const noteName = document.createElement("input");
+        noteName.name = "user-note-name";
+        noteName.id = "user-note-name"
+
+        const noteUpdateButton = document.createElement("button");
+        noteUpdateButton.className = "note-update-button";
+        noteUpdateButton.id = "note-update-button"
+
+        note.appendChild(noteInput);
+        note.appendChild(noteUpdateButton);
+        note.appendChild(noteName);
+        userNoteContainer.appendChild(note);
+
+        return userNoteContainer;
+    }
+
+    let cloudTopPosition = -190;
+    const playMode = document.getElementById('play-mode');
+    const bufferFragment = document.createDocumentFragment();
+    const cloudsFragment = document.createDocumentFragment();
+    let buffers = [];
+
+    const addBuffers = (notesCount) => {
+        buffers = [];
+        for (let i = 0; i < notesCount / 4; i++) {
+            const buffer = document.createElement('div');
+            buffer.className = 'buffer';
+            i == 0 ? buffer.style.height = '240px' : buffer.style.height = '803'
+            
+            const cloudHeaderCopy = cloudHeader.cloneNode(true);
+            cloudTopPosition = cloudTopPosition - 1650
+            cloudHeaderCopy.style.top = cloudTopPosition + 'px';
+
+            bufferFragment.appendChild(buffer);
+            cloudsFragment.appendChild(cloudHeaderCopy);
+        }
+        playMode.insertBefore(bufferFragment, playMode.firstChild);
+        cloudContainer.appendChild(cloudsFragment);
+    }
+
 
     months.forEach(month => month.addEventListener('mousedown',() => getMonth(month.children[0].innerHTML)))
     years.forEach(year => year.addEventListener('mousedown', () => getYear(year.children[0].innerHTML)));

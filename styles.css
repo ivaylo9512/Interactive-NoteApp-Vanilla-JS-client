@@ -1188,3 +1188,27 @@ ol::after {
     transition: transform 0.4s;
     cursor: pointer;
 }
+
+.left-notes-container{
+    position: absolute;
+    bottom: 0;
+    margin-left: 36%;
+}
+.user-note-container {
+    width: 395px;
+    position: relative;
+    height: 210px;
+    bottom: 0%;
+    opacity: 0;
+    margin-top: 197px;
+    z-index: 7;
+}
+
+.user-note {
+    height: 100%;
+    width: 70%;
+    background: url(resources/cloud-note.png) no-repeat bottom;
+    background-size: 90%;
+    border: 0px;
+    outline: none;
+}
