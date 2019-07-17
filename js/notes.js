@@ -83,7 +83,7 @@ const notes = (() => {
         }
     }
 
-    const daysContainer = document.getElementById('days-container');
+    const daysContainer = document.getElementById('days');
     const chosenMonth = document.getElementById('chosen-month');
     const chosenYear = document.getElementById('chosen-year');
     const chosenDay = document.getElementById('chosen-day');
@@ -186,9 +186,29 @@ const notes = (() => {
             hideYears();
     }
 
-    months.forEach(month => month.addEventListener('click',() => getMonth(month.children[0].innerHTML)))
-    years.forEach(year => year.addEventListener('click', () => getYear(year.children[0].innerHTML)));
+    const getDay = () => {
+        if (event.target.tagName == 'A') {
 
+            cloud1.src = 'resources/cloud-filled.png';
+            chosenDay.innerHTML = event.target.innerHTML;
+
+            if (showMonth.innerHTML != '' && showYear.innerHTML != '' && showDay.innerHTML != '') {
+                let date = showDay.innerHTML + '-' + monthNumber + '-' + showYear.innerHTML
+                remote.findNoteByDate(date, currentAlbumNumber).then(
+                    res => {
+                        userNotes = res;
+                        appendNotes();
+                    }
+                ).catch(e => {
+                })
+            }
+        }
+    }
+
+    months.forEach(month => month.addEventListener('mousedown',() => getMonth(month.children[0].innerHTML)))
+    years.forEach(year => year.addEventListener('mousedown', () => getYear(year.children[0].innerHTML)));
+    daysContainer.addEventListener('mousedown', getDay);
+    
     return {
         setCloudsAnimated,
         showMonths,
