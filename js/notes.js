@@ -199,6 +199,7 @@ const notes = (() => {
 
     let userNotes = []; 
     const getNotes = (date) => {
+        userNotes = [];
         const albumNumber = app.getCurrentAlbumNumber();
         remote.getNotes(date, albumNumber).then(
             res => {
@@ -209,8 +210,9 @@ const notes = (() => {
     }
 
     const body = document.body;
+    const playMode = document.getElementById('play-mode');
 
-    const cloudContainer = document.getElementById('cloud-container');
+    const cloudContainer = document.getElementById('cloud-headers');
     const cloudHeader = document.getElementById('cloud-header');
     const leftNotesContainer = document.getElementById('left-notes-container');
     const rightNotesContainer = document.getElementById('right-notes-container');
@@ -238,11 +240,11 @@ const notes = (() => {
 
     const resetNotes = () => {
         while (cloudContainer.children.length > 1) {
-            cloudContainer.removeChild(cloudContainer.lastChild)
+            cloudContainer.removeChild(cloudContainer.firstChild)
 
         }
-        while (body.firstChild.className == 'buffer') {
-            body.removeChild(body.firstChild)
+        while (playMode.firstChild.className == 'buffer') {
+            playMode.removeChild(playMode.firstChild)
         }
 
         while (leftNotesContainer.lastChild.id == 'user-note-container') {
@@ -252,28 +254,29 @@ const notes = (() => {
             rightNotesContainer.removeChild(rightNotesContainer.lastChild)
         }
 
-
+        userNotes.length > 0 ? cloudHeader.style.marginBottom = '150px' : cloudHeader.style.marginBottom = '0px';
+        
     }
 
     const createNote = () =>{
-        const userNoteContainer = document.createElement("div");
-        userNoteContainer.className = "user-note-container";
-        userNoteContainer.id = "user-note-container"
+        const userNoteContainer = document.createElement('div');
+        userNoteContainer.className = 'user-note-container';
+        userNoteContainer.id = 'user-note-container';
 
-        const note = document.createElement("button");
-        note.className = "user-note";
+        const note = document.createElement('button');
+        note.className = 'user-note';
 
-        const noteInput = document.createElement("textarea");
-        noteInput.name = "user-note-input";
-        noteInput.id = "user-note-input"
+        const noteInput = document.createElement('textarea');
+        noteInput.name = 'user-note-input';
+        noteInput.id = 'user-note-input';
 
-        const noteName = document.createElement("input");
-        noteName.name = "user-note-name";
-        noteName.id = "user-note-name"
+        const noteName = document.createElement('input');
+        noteName.name = 'user-note-name';
+        noteName.id = 'user-note-name';
 
-        const noteUpdateButton = document.createElement("button");
-        noteUpdateButton.className = "note-update-button";
-        noteUpdateButton.id = "note-update-button"
+        const noteUpdateButton = document.createElement('button');
+        noteUpdateButton.className = 'note-update-button';
+        noteUpdateButton.id = 'note-update-button';
 
         note.appendChild(noteInput);
         note.appendChild(noteUpdateButton);
@@ -283,8 +286,6 @@ const notes = (() => {
         return userNoteContainer;
     }
 
-    let cloudTopPosition = -190;
-    const playMode = document.getElementById('play-mode');
     const bufferFragment = document.createDocumentFragment();
     const cloudsFragment = document.createDocumentFragment();
     let buffers = [];
@@ -294,21 +295,20 @@ const notes = (() => {
         for (let i = 0; i < notesCount / 4; i++) {
             const buffer = document.createElement('div');
             buffer.className = 'buffer';
-            i == 0 ? buffer.style.height = '240px' : buffer.style.height = '803'
+            i == 0 ? buffer.style.height = '240px' : buffer.style.height = '785px';
             
             const cloudHeaderCopy = cloudHeader.cloneNode(true);
-            cloudTopPosition = cloudTopPosition - 1650
-            cloudHeaderCopy.style.top = cloudTopPosition + 'px';
+            cloudHeader.style.marginBottom = '120px';
 
             bufferFragment.appendChild(buffer);
             cloudsFragment.appendChild(cloudHeaderCopy);
         }
         playMode.insertBefore(bufferFragment, playMode.firstChild);
-        cloudContainer.appendChild(cloudsFragment);
+        cloudContainer.insertBefore(cloudsFragment, cloudContainer.firstChild);
     }
 
 
-    months.forEach(month => month.addEventListener('mousedown',() => getMonth(month.children[0].innerHTML)))
+    months.forEach(month => month.addEventListener('mousedown',() => getMonth(month.children[0].innerHTML)));
     years.forEach(year => year.addEventListener('mousedown', () => getYear(year.children[0].innerHTML)));
     daysContainer.addEventListener('mousedown', getDay);
     

@@ -738,6 +738,7 @@ body.full-mode-active .play-box{
 }
 
 .note-animation-container{
+    position: relative;
     float: left;
     width: 40%;
     height: 320px;
@@ -765,6 +766,13 @@ body.full-mode-active .play-box{
     height: 300px;
     position: relative;
     text-align: center;
+    margin-top: 110px;
+}
+.cloud-headers {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    margin-bottom: 30px;
 }
 .cloud {
     position: absolute;
@@ -836,6 +844,7 @@ body.full-mode-active .cloud-header img{
 }
 
 .brush-animation-container {
+    position: relative;
     float: left;
     width: 40%;
     height: 320px;
@@ -1191,6 +1200,11 @@ ol::after {
     cursor: pointer;
 }
 
+.right-notes-container{
+    position: absolute;
+    bottom: 0;
+    margin-left: 17%;
+}
 .left-notes-container{
     position: absolute;
     bottom: 0;
@@ -1209,7 +1223,7 @@ ol::after {
 .user-note {
     height: 100%;
     width: 70%;
-    background: url(resources/cloud-note.png) no-repeat bottom;
+    background: url('resources/cloud-note.png') no-repeat bottom;
     background-size: 90%;
     border: 0px;
     outline: none;
