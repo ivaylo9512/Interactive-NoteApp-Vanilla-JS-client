@@ -794,6 +794,17 @@ body.full-mode-active .play-box{
     font: bold 40px/1 "Aladin", Helvetica, sans-serif;
     text-align: center;
 }
+.chosen-day-container{
+    position: absolute;
+    top: 43%;
+    left: 37%;
+    width: 26%;
+    transform: rotate(12deg);
+    font-size: 30px;
+}
+.chosen-day-container p {
+    font-size: 30px;
+}
 .chosen-month-container{
     left: 61%;
     position: absolute;
@@ -1077,8 +1088,9 @@ button.day-container:focus{
 .days{
     width: 152px;
     margin-top: 25px;
-    line-height: 0.3;
     text-align: center;
+    height: 95px;
+    font-size: 19px;
 }
 .days a{
     margin-left: 4px;

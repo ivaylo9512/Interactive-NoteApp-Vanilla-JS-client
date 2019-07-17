@@ -88,6 +88,10 @@ const notes = (() => {
     const chosenYear = document.getElementById('chosen-year');
     const chosenDay = document.getElementById('chosen-day');
 
+    let day;
+    let year;
+    let month;
+
     const getMonth = (clickedMonth) => {
             if (clickedMonth != '') {
                 
@@ -97,63 +101,53 @@ const notes = (() => {
                 let daysCount;
                 switch (clickedMonth) {
                     case 'January':
-                        monthNumber = 1;
+                        month = 1;
                         daysCount = 31;
                         break;
                     case 'February':
-                        monthNumber = 2;
+                        month = 2;
                         daysCount = 28;
                         break;
                     case 'March':
-                        monthNumber = 3;
+                        month = 3;
                         daysCount = 31;
                         break;
                     case 'April':
-                        monthNumber = 4;
+                        month = 4;
                         daysCount = 30;
                         break;
                     case 'May':
-                        monthNumber = 5;
+                        month = 5;
                         daysCount = 31;
                         break;
                     case 'June':
-                        monthNumber = 6;
+                        month = 6;
                         daysCount = 30;
                         break;
                     case 'July':
-                        monthNumber = 7;
+                        month = 7;
                         daysCount = 31;
                         break;
                     case 'August':
-                        monthNumber = 8;
+                        month = 8;
                         daysCount = 31;
                         break;
                     case 'September':
-                        monthNumber = 9;
+                        month = 9;
                         daysCount = 30;
                         break;
                     case 'October':
-                        monthNumber = 10;
+                        month = 10;
                         daysCount = 31;
                         break;
                     case 'November':
-                        monthNumber = 11;
+                        month = 11;
                         daysCount = 30;
                         break;
                     case 'December':
-                        monthNumber = 12;
+                        month = 12;
                         daysCount = 31;
                         break;
-                }
-
-                if (showMonth.innerHTML != '' && showYear.innerHTML != '' && showDay.innerHTML != '') {
-                    let date = showDay.innerHTML + '-' + monthNumber + '-' + showYear.innerHTML
-                    remote.findNoteByDate(date, currentAlbumNumber).then(
-                        res => {
-                            userNotes = res;
-                            appendNotes();
-                        }).catch(e => {
-                    })
                 }
 
                 while (daysContainer.firstChild) {
@@ -165,46 +159,46 @@ const notes = (() => {
                     a.innerHTML = i;
                     daysContainer.appendChild(a);
                 }
+
+                checkDate();
+
             }
     }
     const getYear = (clickedYear) => {
 
+            year = clickedYear;
             chosenYear.innerHTML = clickedYear;
             cloud2.src = 'resources/cloud-filled.png';
 
-            if (showMonth.innerHTML != '' && showYear.innerHTML != '' && showDay.innerHTML != '') {
-                let date = showDay.innerHTML + '-' + monthNumber + '-' + showYear.innerHTML
-                remote.findNoteByDate(date, currentAlbumNumber).then(
-                    res => {
-                        userNotes = res;
-                        appendNotes();
-                    }
-                ).catch(e => {
-                })
-            }
             yearsHiding = true;
             hideYears();
+            showMonths();
+
+            checkDate();
     }
 
-    const getDay = () => {
+    function getDay() {
         if (event.target.tagName == 'A') {
-
             cloud1.src = 'resources/cloud-filled.png';
-            chosenDay.innerHTML = event.target.innerHTML;
+            day = event.target.innerHTML;
+            chosenDay.innerHTML = day;
 
-            if (showMonth.innerHTML != '' && showYear.innerHTML != '' && showDay.innerHTML != '') {
-                let date = showDay.innerHTML + '-' + monthNumber + '-' + showYear.innerHTML
-                remote.findNoteByDate(date, currentAlbumNumber).then(
-                    res => {
-                        userNotes = res;
-                        appendNotes();
-                    }
-                ).catch(e => {
-                })
-            }
+            checkDate();
         }
     }
 
+    const checkDate = () => {
+        if (month && year && day) {
+            let date = day + '-' + month + '-' + year;
+            
+            remote.findNoteByDate(date).then(
+                res => {
+                    userNotes = res;
+                    appendNotes();
+                }).catch(e => {
+            })
+        }
+    }
     months.forEach(month => month.addEventListener('mousedown',() => getMonth(month.children[0].innerHTML)))
     years.forEach(year => year.addEventListener('mousedown', () => getYear(year.children[0].innerHTML)));
     daysContainer.addEventListener('mousedown', getDay);
