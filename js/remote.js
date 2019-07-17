@@ -20,9 +20,12 @@ const remote = (() => {
         
     });
 
+    const updateNote = (note) => axios.patch(`${base}/api/notes/updateNote/`, note);
+
     return({
         getAlbumImages,
         login,
-        getNotes
+        getNotes,
+        updateNote
     })
 })();

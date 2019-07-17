@@ -232,8 +232,8 @@ const notes = (() => {
         userNotes.forEach((userNote, i) => {
             const noteCopy = note.cloneNode(true);
             const noteText = noteCopy.children[0].children[0];
+            noteText.style.marginTop = isTopNote ? '38px' : '-366px';
 
-            noteText.style.marginTop = isTopNote ? '38px' : '-366px'; 
             if(i % 2 == 0) {
                 noteText.style.marginLeft = '280.5px';
                 leftNotesFragment.appendChild(noteCopy);
@@ -297,6 +297,29 @@ const notes = (() => {
         userNoteContainer.appendChild(note);
 
         return userNoteContainer;
+    }
+
+    const updateNote = () => {
+        const id = userNotes[i]['id'],
+            name = noteName.value,
+            note = noteInput.value,
+            owner = userNotes[i]['owner'],
+            date = userNotes[i]['date']
+
+        const updateNote = {
+            id,
+            name,
+            note,
+            owner,
+            date
+        }
+        remote.updateNote(updateNote).then(
+            res => {
+
+            }
+        )
+        updateButton.style.transform = "rotate(" + rotate + "deg)";
+        rotate = rotate + 360;
     }
 
     const bufferFragment = document.createDocumentFragment();
