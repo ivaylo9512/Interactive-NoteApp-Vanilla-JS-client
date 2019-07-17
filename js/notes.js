@@ -220,18 +220,31 @@ const notes = (() => {
     const leftNotesFragment = document.createDocumentFragment();
     const rightNotesFragment = document.createDocumentFragment();
 
+    let isTopNote = false;
     const appendNotes = () => {
         let notesCount = userNotes.length;
         resetNotes();
 
         addBuffers(notesCount);
 
-        const note = createNote()
+        const note = createNote();
 
         userNotes.forEach((userNote, i) => {
             const noteCopy = note.cloneNode(true);
-            i % 2 == 0 ? leftNotesFragment.appendChild(noteCopy) : rightNotesFragment.appendChild(noteCopy);
+            const noteText = noteCopy.children[0].children[0];
+
+            noteText.style.marginTop = isTopNote ? '38px' : '-366px'; 
+            if(i % 2 == 0) {
+                noteText.style.marginLeft = '280.5px';
+                leftNotesFragment.appendChild(noteCopy);
+            }else{
+                isTopNote = !isTopNote;
+                noteText.style.marginLeft = '-401.5px';
+                rightNotesFragment.appendChild(noteCopy);
+            }
         })
+
+
 
         rightNotesContainer.appendChild(rightNotesFragment);
         leftNotesContainer.appendChild(leftNotesFragment);
