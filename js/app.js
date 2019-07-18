@@ -78,6 +78,7 @@ const app = (() =>{
 
     const fullModeNav = document.getElementById('full-mode-nav');
     const fullModeBtn = document.getElementById('full-mode-btn');
+    const inputNote = document.getElementById('input-note');
     let fullModeOn = false;
     let fullModeNavOn = false;
     let initialLoad = false;
@@ -89,11 +90,13 @@ const app = (() =>{
             if(!isAnimated){
                 animate.hideTopAnimations();
             }
+            inputNote.classList.remove('inactive')
             document.body.classList.remove('full-mode-active');
         }else{
             if(!isAnimated){
                 animate.showTopAnimations();
             }
+            inputNote.classList.add('inactive')
             document.body.classList.add('full-mode-active');
         }
         fullModeOn = !fullModeOn;

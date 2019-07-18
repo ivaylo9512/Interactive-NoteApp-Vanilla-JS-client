@@ -25,20 +25,20 @@
                 <img src="resources/left-bulb-pink.png" class="pink-bulb" id="pink-bulb-btn">
             </div>
         </div>
+        <button class="full-mode-circle" id="menu-circle">
+            <div class="photos-button-animation" id="full-mode-photos-animations-container">
+                <!-- <img class="photo1-full-mode" id="show-photo1-full-mode" src="resources/photo1.jpg">
+                <img class="photo2-full-mode " id="show-photo2-full-mode" src="resources/photo2.jpg">
+                <img class="photo3-full-mode " id="show-photo3-full-mode" src="resources/photo3.jpg">
+                <img class="photo4-full-mode " id="show-photo4-full-mode" src="resources/photo4.jpg"> -->
+            </div>
+        </button>
         <div class="full-mode" id="full-mode">
             <nav id="full-mode-nav">
                 <li id="notes-full-mode-btn">Notes</li>
                 <li id="photos-full-mode-btn">Photos</li>
                 <li id="play-full-mode-btn">Play</li>
             </nav>
-            <button class="menu-circle" id="menu-circle">
-                <div class="photos-button-animation" id="full-mode-photos-animations-container">
-                    <!-- <img class="photo1-full-mode" id="show-photo1-full-mode" src="resources/photo1.jpg">
-                    <img class="photo2-full-mode " id="show-photo2-full-mode" src="resources/photo2.jpg">
-                    <img class="photo3-full-mode " id="show-photo3-full-mode" src="resources/photo3.jpg">
-                    <img class="photo4-full-mode " id="show-photo4-full-mode" src="resources/photo4.jpg"> -->
-                </div>
-            </button>
             <button class="add-photo" id="add-photo">
                 <input class="input-photo-full-mode" id="input-photo-full-mode" type="file" />
                 <img class="chosen-photo-full-mode" id="choose-image-full-mode" src="#" alt="" />
@@ -78,16 +78,19 @@
                 <div class="photos-container-full-mode" id="photos-container-full-mode"></div>
             </div>
         </div>
-
         <div class="play-mode" id="play-mode">
             <div id="buffers-container"></div>
-            <div class="note-container" id="note-container">
-                <input>
-                <textarea></textarea>
-                <img class="sticky-note" id="sticky-note" src="resources/sticky.png">
-                <div class="move-note" id="move-note"></div>
-                <img class="submit-note" id="submit-note" src="resources/forward.png">
+
+            <div class="input-note-container">
+                <div class="input-note" id="input-note">
+                    <input>
+                    <textarea></textarea>
+                    <img class="sticky-note" id="sticky-note" src="resources/sticky.png">
+                    <div class="move-note" id="move-note"></div>
+                    <img class="submit-note" id="submit-note" src="resources/forward.png">
+                </div>
             </div>
+            
             <section class="note-section" id="note-section">
                 <div class="timeline-years" id="timeline-years">
                     <ol>

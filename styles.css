@@ -14,11 +14,6 @@ body {
     -o-user-select: none;
     user-select: none;
 }
-
-body.full-mode-active{
-    border: 8px solid;
-}
-
 section{
     width: 989px;
     margin: 0 auto;
@@ -29,8 +24,9 @@ section{
 }
 
 .play-mode{
-    overflow: hidden;
+    width: 1263px;
     position: relative;
+    overflow: hidden;
 }
 
 .first-section {
@@ -282,7 +278,7 @@ body.full-mode-active .play-box{
 .second-section {
     background-image: url("resources/notebook-middle.png");
     overflow: visible;
-    background-position: 1.4px -0.3px;
+    background-position: 1.4px;
     height: 560px;
     background-attachment: local;
     z-index: 8;
@@ -733,8 +729,12 @@ body.full-mode-active .play-box{
 .note-section{
     position: relative;
     height: 649px;
-    width: 1263px;
+    width: 100%;
     z-index: 5; 
+}
+
+body.full-mode-active .note-section {
+    height: auto;
 }
 
 .note-animation-container{
@@ -859,13 +859,31 @@ body.full-mode-active .cloud-header img{
     transition: all 1.5s ease-in-out; 
     display: none;
 }
-.note-container {
+body.full-mode-active .input-note-container{
+    position: fixed;
+    height: 100%;
+    top: 0;
+    width: 100%;
+}
+.input-note {
     display: none;
     text-align: center;
     position: absolute;
     width: 34%;
     z-index: 9;
     transition: opacity 1.5s ease-in-out;
+}
+.input-note.inactive{
+    top: 30%;
+    left: 41%;
+    width: 18%;
+}
+.input-note.inactive > *{
+    display: none;
+}
+.input-note.inactive .sticky-note {
+    transform: rotate(0deg);
+    display: block;
 }
 .sticky-note {
     width: 100%;
@@ -875,7 +893,7 @@ body.full-mode-active .cloud-header img{
     left: 0;
     z-index: -1;
 }
-.note-container input{
+.input-note input{
     z-index: 8;
     position: relative;
     width: 60%;
@@ -884,7 +902,7 @@ body.full-mode-active .cloud-header img{
     margin-top: 73px;
 
 }
-.note-container textarea{
+.input-note textarea{
     height: 266px;
     width: 76.8%;
     font-size: 13px;
@@ -913,8 +931,9 @@ body.full-mode-active .cloud-header img{
 }
 .full-mode{
     display: none;
-    height: calc(100vh - 16px);
-    overflow: hidden;
+    min-height: calc(100vh - 16px);
+    border: 8px solid;
+    min-width: 1263px;
 }
 
 body.full-mode-active .full-mode{
@@ -946,13 +965,14 @@ body.full-mode-active .full-mode{
 }
 
 .full-mode nav.active{
-    height: 7%;
+    height: 33px;
 }
 
 .full-mode nav li{
     float: left;
     color: #eae9e5;
     list-style: none;
+    padding-top: 3px;
     text-align: center;
     height: 80%;
     border-right: 1px solid #EAE9E5;
@@ -966,14 +986,13 @@ body.full-mode-active .full-mode{
 .full-mode nav li:first-child{
     border-left: 1px solid #EAE9E5;
 }
-
-.menu-circle {
+.full-mode-circle {
     position: absolute;
     top: 50%;
     left: 50%;
     margin-left: -30px;
     margin-top: -30px;
-    background: url(resources/menu-icon.png) no-repeat center center;
+    background: url('resources/menu-icon.png') no-repeat center center;
     background-size: 40%;
     border: 3px solid #41291B;
     border-radius: 90px;
@@ -982,8 +1001,11 @@ body.full-mode-active .full-mode{
     transform: scale(1);
     z-index: 5;
     cursor: pointer;
+    display: none;
 }
-
+body.full-mode-active .full-mode-circle {
+    display: block;
+}
 .timeline-months-container{
     float: left;
     width: 100%;
@@ -998,6 +1020,9 @@ body.full-mode-active .full-mode{
     float: left;
     overflow: hidden;
     transition: all 2.5s;
+}
+body.full-mode-active .timeline-months {
+    height: 100px;
 }
 .timeline-months.show{
     width: 100%;
@@ -1087,6 +1112,9 @@ button.days-container {
     left: 50.35%;
     overflow: hidden;
     opacity: 0;
+}
+body.full-mode-active button.days-container {
+    bottom: 36.25%;
 }
 button.days-container:focus{
     width: 160px;

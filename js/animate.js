@@ -168,13 +168,12 @@ const animate = (() => {
     const cloud = document.getElementById('cloud');
     const cloud1 = document.getElementById('cloud1');
     const cloud2 = document.getElementById('cloud2');
-    const balloonsContainer = document.getElementById('balloons-container');
     const balloon = document.getElementById('balloon');
     const balloonLeft = document.getElementById('balloon-left');
     const balloonRight = document.getElementById('balloon-right');
     const noteHolders = document.getElementById('note-animation');
     const brushAnimationContainer = document.getElementById('right-notes');
-    const noteContainer = document.getElementById('note-container');
+    const noteContainer = document.getElementById('input-note');
 
     const balloonAnimation = () => {
         if (!balloonPlayed) {
