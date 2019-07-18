@@ -231,16 +231,13 @@ const notes = (() => {
 
     let isTopNote = false;
     let delay = 0;
+    let notesCount = 0;
     const appendNotes = () => {
-        let notesCount = userNotes.length;
+        notesCount = userNotes.length;
         delay = notesCount * 0.2;
-        console.log(notesCount)
 
         resetNotes();
-        console.log(notesCount)
-
-        addBuffers(notesCount);
-        console.log(notesCount)
+        addBuffers();
 
         window.scrollTo(0, body.scrollHeight - 2749);
 
@@ -353,7 +350,7 @@ const notes = (() => {
     const bufferFragment = document.createDocumentFragment();
     const cloudsFragment = document.createDocumentFragment();
 
-    const addBuffers = (notesCount) => {
+    const addBuffers = () => {
 
         if(notesCount > 0){
             const buffer = document.createElement('div');
@@ -377,6 +374,20 @@ const notes = (() => {
         cloudContainer.insertBefore(cloudsFragment, cloudContainer.firstChild);
     }
 
+    const inputNote = document.getElementById('input-note');
+    const showNote = () => {
+        inputNote.style.display = 'block';
+        inputNote.classList.add('inactive');
+        inputNote.style.left = null;
+        inputNote.style.top = null;
+        inputNote.classList.remove('hide');
+        inputNote.parentElement.style.display = 'block';
+    }
+
+    const activateNote = () => {
+        inputNote.classList.remove('inactive');
+        inputNote.classList.add('bounce');
+    }
 
     months.forEach(month => month.addEventListener('click',() => getMonth(month.children[0].innerHTML)));
     years.forEach(year => year.addEventListener('click', () => getYear(year.children[0].innerHTML)));
@@ -385,6 +396,8 @@ const notes = (() => {
     return {
         setCloudsAnimated,
         showMonths,
-        showYears
+        showYears,
+        showNote,
+        activateNote
     }
 })();

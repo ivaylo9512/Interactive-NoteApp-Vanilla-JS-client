@@ -126,6 +126,20 @@ const app = (() =>{
         fullModeNavOn = !fullModeNavOn;
     }
 
+    const navHoverAnimations = () => {
+        if(event.target.tagName == 'LI'){
+            switch(event.target.innerHTML){
+                case 'Notes':
+                    notes.showNote();
+                    break;
+                case 'Photos':
+                    break;
+                case 'Play':        
+                    break;
+            }
+        }
+    }
+
     let isAnimated = false;
     const setIsAnimated = () => {
         isAnimated = true;
@@ -166,7 +180,11 @@ const app = (() =>{
         draggables.dragElement(document.getElementById('point'));
 
         fullModeBtn.addEventListener('click', fullModeToggle)
-        document.getElementById('menu-circle').addEventListener('click', fullModeNavToggle)
+        document.getElementById('menu-circle').addEventListener('click', fullModeNavToggle);
+
+        fullModeNav.addEventListener('mouseover', navHoverAnimations)
+        inputNote.addEventListener('mousedown', notes.activateNote)
+
     }
 
     return {
