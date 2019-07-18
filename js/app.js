@@ -17,17 +17,17 @@ const app = (() =>{
                     case 1:
                         currentAlbumNumber = 1;
                         firstAlbum = response.data;
-                        animateAlbumPhotos(firstAlbum);
+                        appendAlbumPhotos(firstAlbum);
                         break;
                     case 2:
                         currentAlbumNumber = 2;
                         secondAlbum = response.data;
-                        animateAlbumPhotos(secondAlbum);
+                        appendAlbumPhotos(secondAlbum);
                         break;
                     case 3:
                         currentAlbumNumber = 3;
                         thirdAlbum = response.data;
-                        animateAlbumPhotos(thirdAlbum);
+                        appendAlbumPhotos(thirdAlbum);
                         break; 
                 }
                 albumImages = response.data;
@@ -36,7 +36,7 @@ const app = (() =>{
             })
     }
 
-    const animateAlbumPhotos = (currentAlbum) => {
+    const appendAlbumPhotos = (currentAlbum) => {
         for (let i = 0; i < appendedPhotos.length; i++) {
             appendedPhotos[i].style.display = 'none';
 
@@ -86,10 +86,12 @@ const app = (() =>{
         if(fullModeOn){ 
             initialLoad = false;
             initialAnimation();
-
             notes.resetNote();
             notes.resetNoteView();
-            inputNote.classList.remove('inactive')
+
+            fullModeBtn.classList.remove('active');
+            inputNote.classList.remove('inactive');
+            fullModeNav.classList.remove('active');
             document.body.classList.remove('full-mode-active');
         }else{
 
@@ -115,15 +117,16 @@ const app = (() =>{
     const fullModeNavToggle = () => {
         if(menuCircle.classList.contains('inactive')){
             menuCircle.classList.remove('inactive');
-            fullModeNav.classList.remove('active')
-            fullModeBtn.style.marginTop = '0%';
-        }else{
-            menuCircle.classList.add('inactive');
-            fullModeNav.classList.add('active');
-            fullModeBtn.style.marginTop = '9%';
+            
+            fullMode.style.display = 'block';
+            fullModeReset();
         }
+        fullModeNav.classList.add('active');
+        fullModeBtn.classList.add('active');
     }
-
+    const fullModeReset = () => {
+        notes.hideFullScreenNotes();
+    }
     const navHoverAnimations = () => {
         if(event.target.tagName == 'LI'){
             switch(event.target.innerHTML){
@@ -139,12 +142,14 @@ const app = (() =>{
     }
     const fullScreenNavEvents = () => {
         if(event.target.tagName == 'LI'){
+            menuCircle.classList.add('inactive');
             fullModeNav.classList.remove('active')
-            fullModeBtn.style.marginTop = '0%';
+            fullModeBtn.classList.remove('active');
+            
             switch(event.target.innerHTML){
                 case 'Notes':
                     fullMode.style.display = 'none';
-                    notes.fullScreenNotes();
+                    notes.showFullScreenNotes();
                     break;
                 case 'Photos':
                     break;

@@ -389,13 +389,21 @@ const notes = (() => {
         inputNote.classList.add('bounce');
     }
 
-    const fullScreenNotes = () => {
+    const showFullScreenNotes = () => {
+        timelineYears.style.display = 'block';
+        timelineMonths.parentElement.style.display = 'block';  
+        
         inputNote.style.display = 'none';
         buffersContainer.style.display = 'block';
         noteSection.style.display = 'block';
+    }
 
-        timelineYears.style.display = 'block';
-        timelineMonths.parentElement.style.display = 'block';
+    const hideFullScreenNotes = () => {
+        timelineYears.style.display = 'none';
+        timelineMonths.parentElement.style.display = 'none';
+
+        buffersContainer.style.display = 'none';
+        noteSection.style.display = 'none';     
     }
 
     const resetNoteView = () => {
@@ -527,7 +535,8 @@ const notes = (() => {
         showYears,
         showNote,
         activateNote,
-        fullScreenNotes,
+        showFullScreenNotes,
+        hideFullScreenNotes,
         resetNoteView,
         resetNote,
         noteAnimation,
