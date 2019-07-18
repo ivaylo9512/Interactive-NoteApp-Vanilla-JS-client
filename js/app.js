@@ -181,11 +181,11 @@ const app = (() =>{
 
         const noteAnimation = document.getElementById('note-animation');
         const noteHeader = document.getElementById('notes-header');
-        noteAnimation.addEventListener('mouseover', animate.noteAnimation);
-        noteAnimation.addEventListener('click', animate.noteAppend);
-        noteHeader.addEventListener('mouseover', animate.showTopAnimations);
-        noteHeader.addEventListener('mouseout', animate.hideTopAnimations);
-        noteHeader.addEventListener('click', animate.showNoteView);
+        noteAnimation.addEventListener('mouseover', notes.noteAnimation);
+        noteAnimation.addEventListener('click', notes.noteAppend);
+        noteHeader.addEventListener('mouseover', notes.showTopAnimations);
+        noteHeader.addEventListener('mouseout', notes.hideTopAnimations);
+        noteHeader.addEventListener('click', notes.showNoteView);
 
         draggables.dragElement(document.getElementById('move-note'));
         draggables.dragElement(document.getElementById('point'));

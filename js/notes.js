@@ -438,6 +438,78 @@ const notes = (() => {
         }
     }
 
+    const noteHolders = document.getElementById('note-animation');
+    const brushAnimation = document.getElementById('brush-animation');
+
+    const noteAnimation = () => {
+        if (brushAnimated) {
+            noteHolders.src = 'resources/note-animation.gif';
+        }
+    }
+
+    const noteAppend = () => {
+        if (brushAnimated) {
+            inputNote.style.display = 'block';
+            noteHolders.src = 'resources/note-animation-static-open.png';
+            noteHolders.removeEventListener('mouseover', noteAnimation);
+            noteHolders.removeEventListener('click', noteAppend);
+        }
+    }
+
+    const showTopAnimations = () => {
+        if (brushAnimated) {
+            noteHolders.classList.remove('show');
+            brushAnimation.classList.add('hide');
+            inputNote.classList.add('hide');
+        }
+    }
+
+    const hideTopAnimations = () => {
+        if (brushAnimated) {
+            noteHolders.classList.add('show');
+            brushAnimation.classList.remove('hide');
+            inputNote.classList.remove('hide');
+        }
+    }
+
+    const showNoteView = () => {
+        if (brushAnimated && document.body.className != 'full-mode-active') {
+            noteHolders.classList.remove('show');
+            brushAnimation.classList.add('hide');
+            inputNote.classList.add('hide');
+            
+            const noteHeader = document.getElementById('notes-header');
+            noteHeader.removeEventListener('mouseout', hideTopAnimations);
+            noteHeader.removeEventListener('mouseout', showTopAnimations);
+
+            app.setIsAnimated();
+            setTimeout(() => {
+
+                setTimeout(() => {
+                    cloud2.classList.add('show');
+                }, 200);
+
+                setTimeout(() => {
+                    cloud.classList.add('show');
+                }, 400);
+
+                setTimeout(() => {
+                    cloud1.classList.add('show');
+                }, 600);
+
+                setTimeout(() => {
+                    inputNote.style.display = 'none';
+                    noteHolders.style.display = 'none';
+                    brushAnimation.style.display = 'none';
+
+                    document.getElementById('timeline-months-container').style.display = 'block';
+                    document.getElementById('timeline-years').style.display = 'block';
+                }, 1500);
+
+            }, 100);
+        }
+    }
+
     months.forEach(month => month.addEventListener('click',() => getMonth(month.children[0].innerHTML)));
     years.forEach(year => year.addEventListener('click', () => getYear(year.children[0].innerHTML)));
     daysContainer.addEventListener('click', getDay);
@@ -449,6 +521,11 @@ const notes = (() => {
         activateNote,
         fullScreenNotes,
         resetNoteView,
-        resetNote
+        resetNote,
+        noteAnimation,
+        noteAppend,
+        showTopAnimations,
+        hideTopAnimations,
+        showNoteView,
     }
 })();

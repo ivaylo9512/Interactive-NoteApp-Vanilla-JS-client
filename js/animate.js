@@ -219,83 +219,10 @@ const animate = (() => {
 
     }
     
-    const noteAnimation = () => {
-        if (brushAnimated) {
-            noteHolders.src = 'resources/note-animation.gif';
-        }
-    }
-
-    const noteAppend = () => {
-        if (brushAnimated) {
-            noteContainer.style.display = 'block';
-            noteHolders.src = 'resources/note-animation-static-open.png';
-            noteHolders.removeEventListener('mouseover', noteAnimation);
-            noteHolders.removeEventListener('click', noteAppend);
-        }
-    }
-
-    const showTopAnimations = () => {
-        if (brushAnimated) {
-            noteHolders.classList.remove('show');
-            brushAnimation.classList.add('hide');
-            noteContainer.classList.add('hide');
-        }
-    }
-
-    const hideTopAnimations = () => {
-        if (brushAnimated) {
-            noteHolders.classList.add('show');
-            brushAnimation.classList.remove('hide');
-            noteContainer.classList.remove('hide');
-        }
-    }
-
-    const showNoteView = () => {
-        if (brushAnimated && document.body.className != 'full-mode-active') {
-            noteHolders.classList.remove('show');
-            brushAnimation.classList.add('hide');
-            noteContainer.classList.add('hide');
-            
-            const noteHeader = document.getElementById('notes-header');
-            noteHeader.removeEventListener('mouseout', hideTopAnimations);
-            noteHeader.removeEventListener('mouseout', showTopAnimations);
-
-            app.setIsAnimated();
-            setTimeout(() => {
-
-                setTimeout(() => {
-                    cloud2.classList.add('show');
-                }, 200);
-
-                setTimeout(() => {
-                    cloud.classList.add('show');
-                }, 400);
-
-                setTimeout(() => {
-                    cloud1.classList.add('show');
-                }, 600);
-
-                setTimeout(() => {
-                    noteContainer.style.display = 'none';
-                    noteHolders.style.display = 'none';
-                    brushAnimation.style.display = 'none';
-
-                    document.getElementById('timeline-months-container').style.display = 'block';
-                    document.getElementById('timeline-years').style.display = 'block';
-                }, 1500);
-
-            }, 100);
-        }
-    }
     return {
         decideEvent,
         setDelta,
         createCircles,
-        noteAnimation,
-        noteAppend,
-        showTopAnimations,
-        hideTopAnimations,
-        showNoteView,
         scrollToProfile,
         scrollToAlbum
     };
