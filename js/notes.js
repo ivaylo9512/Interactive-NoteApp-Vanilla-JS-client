@@ -490,7 +490,7 @@ const notes = (() => {
             noteHeader.removeEventListener('mouseout', hideTopAnimations);
             noteHeader.removeEventListener('mouseout', showTopAnimations);
 
-            app.setIsAnimated();
+            noteViewActivated = true;
             setTimeout(() => {
 
                 setTimeout(() => {

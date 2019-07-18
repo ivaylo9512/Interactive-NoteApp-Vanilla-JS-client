@@ -81,7 +81,6 @@ const app = (() =>{
     const fullMode = document.getElementById('full-mode');
     const inputNote = document.getElementById('input-note');
     let fullModeOn = false;
-    let fullModeNavOn = false;
     let initialLoad = false;
     const fullModeToggle = () => {
         if(fullModeOn){ 
@@ -112,16 +111,17 @@ const app = (() =>{
         }, 600);
     }
 
-    const play = document.getElementById('play-box');
+    const menuCircle = document.getElementById('menu-circle');
     const fullModeNavToggle = () => {
-        if(fullModeNavOn){
+        if(menuCircle.classList.contains('inactive')){
+            menuCircle.classList.remove('inactive');
             fullModeNav.classList.remove('active')
             fullModeBtn.style.marginTop = '0%';
         }else{
+            menuCircle.classList.add('inactive');
             fullModeNav.classList.add('active');
             fullModeBtn.style.marginTop = '9%';
         }
-        fullModeNavOn = !fullModeNavOn;
     }
 
     const navHoverAnimations = () => {
@@ -139,6 +139,8 @@ const app = (() =>{
     }
     const fullScreenNavEvents = () => {
         if(event.target.tagName == 'LI'){
+            fullModeNav.classList.remove('active')
+            fullModeBtn.style.marginTop = '0%';
             switch(event.target.innerHTML){
                 case 'Notes':
                     fullMode.style.display = 'none';
@@ -150,10 +152,6 @@ const app = (() =>{
                     break;
             }
         }
-    }
-    let isAnimated = false;
-    const setIsAnimated = () => {
-        isAnimated = true;
     }
 
     const start = () => {
@@ -190,19 +188,18 @@ const app = (() =>{
         draggables.dragElement(document.getElementById('move-note'));
         draggables.dragElement(document.getElementById('point'));
 
-        fullModeBtn.addEventListener('click', fullModeToggle)
-        document.getElementById('menu-circle').addEventListener('click', fullModeNavToggle);
+        fullModeBtn.addEventListener('click', fullModeToggle);
+        menuCircle.addEventListener('click', fullModeNavToggle);
 
-        fullModeNav.addEventListener('mouseover', navHoverAnimations)
-        fullModeNav.addEventListener('click', fullScreenNavEvents)
+        fullModeNav.addEventListener('mouseover', navHoverAnimations);
+        fullModeNav.addEventListener('click', fullScreenNavEvents);
 
-        inputNote.addEventListener('mousedown', notes.activateNote)
+        inputNote.addEventListener('mousedown', notes.activateNote);
 
     }
 
     return {
         start,
-        setIsAnimated,
         getCurrentAlbumNumber
     }
 })();

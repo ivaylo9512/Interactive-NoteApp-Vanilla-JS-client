@@ -1024,6 +1024,15 @@ body.full-mode-active .full-mode{
 body.full-mode-active .full-mode-circle {
     display: block;
 }
+.full-mode-circle.inactive {
+    display: block;
+    position: fixed;
+    left: 98.4%;
+    top: 20%;
+    width: 38px;
+    height: 38px;
+    border: 2.5px solid #41291B;
+}
 .timeline-months-container{
     float: left;
     width: 100%;
