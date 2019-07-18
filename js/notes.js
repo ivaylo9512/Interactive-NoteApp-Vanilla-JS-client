@@ -1,13 +1,9 @@
 const notes = (() => {
-    let cloudsAnimated = false;
 
     const timelineMonths = document.getElementById('timeline-months');
     const timelineYears = document.getElementById('timeline-years');
     const months = Array.from(timelineMonths.getElementsByTagName('LI'));
-
-    const setCloudsAnimated = () => {
-        cloudsAnimated = true;
-    }
+    let noteViewActivated = false;
 
     const maxYear = 1995;
     const currentYear = new Date().getFullYear();
@@ -234,6 +230,7 @@ const notes = (() => {
     let delay = 0;
     let notesCount = 0;
     const appendNotes = () => {
+        isTopNote = false;
         notesCount = userNotes.length;
         delay = notesCount * 0.2;
 
@@ -391,6 +388,7 @@ const notes = (() => {
         inputNote.classList.remove('inactive');
         inputNote.classList.add('bounce');
     }
+
     const fullScreenNotes = () => {
         inputNote.style.display = 'none';
         buffersContainer.style.display = 'block';
@@ -400,16 +398,48 @@ const notes = (() => {
         timelineMonths.parentElement.style.display = 'block';
     }
 
+    const resetNoteView = () => {
+        if(!noteViewActivated){
+            daysCount = 0;
+            day = null;
+            year = null;
+            month = null;
+
+            isTopNote = false;
+            delay = 0;
+
+            userNotes = [];
+            notesCount = 0;
+            resetNotes();
+            resetDays();
+
+            timelineMonths.parentElement.style.display = 'none';
+            timelineYears.style.display = 'none';
+
+            chosenMonth.innerHTML = '';
+            chosenYear.innerHTML = '';
+            chosenDay.innerHTML = '';
+
+            cloud.src = 'resources/cloud.png';
+            cloud1.src = 'resources/cloud.png';
+            cloud2.src = 'resources/cloud.png';
+
+            hideYears();
+            hideMonths();
+
+        }
+    } 
+
     months.forEach(month => month.addEventListener('click',() => getMonth(month.children[0].innerHTML)));
     years.forEach(year => year.addEventListener('click', () => getYear(year.children[0].innerHTML)));
     daysContainer.addEventListener('click', getDay);
     
     return {
-        setCloudsAnimated,
         showMonths,
         showYears,
         showNote,
         activateNote,
-        fullScreenNotes
+        fullScreenNotes,
+        resetNoteView
     }
 })();

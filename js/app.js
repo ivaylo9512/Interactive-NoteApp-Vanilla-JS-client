@@ -91,6 +91,7 @@ const app = (() =>{
             if(!isAnimated){
                 animate.hideTopAnimations();
             }
+            notes.resetNoteView();
             inputNote.classList.remove('inactive')
             document.body.classList.remove('full-mode-active');
         }else{
