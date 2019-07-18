@@ -734,10 +734,6 @@ body.full-mode-active .play-box{
     z-index: 5; 
 }
 
-body.full-mode-active .note-section {
-    height: auto;
-}
-
 .note-animation-container{
     position: relative;
     float: left;
@@ -895,7 +891,7 @@ body.full-mode-active .input-note {
 .input-note.inactive > *{
     display: none;
 }
-.input-note .sticky-note {
+body.full-mode-active .input-note .sticky-note {
     margin-left: 114px;
     margin-top: 115px;
     width: 47.5%;

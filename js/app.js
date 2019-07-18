@@ -78,6 +78,7 @@ const app = (() =>{
 
     const fullModeNav = document.getElementById('full-mode-nav');
     const fullModeBtn = document.getElementById('full-mode-btn');
+    const fullMode = document.getElementById('full-mode');
     const inputNote = document.getElementById('input-note');
     let fullModeOn = false;
     let fullModeNavOn = false;
@@ -139,7 +140,20 @@ const app = (() =>{
             }
         }
     }
-
+    const fullScreenNavEvents = () => {
+        if(event.target.tagName == 'LI'){
+            switch(event.target.innerHTML){
+                case 'Notes':
+                    fullMode.style.display = 'none';
+                    notes.fullScreenNotes();
+                    break;
+                case 'Photos':
+                    break;
+                case 'Play':        
+                    break;
+            }
+        }
+    }
     let isAnimated = false;
     const setIsAnimated = () => {
         isAnimated = true;
@@ -183,6 +197,8 @@ const app = (() =>{
         document.getElementById('menu-circle').addEventListener('click', fullModeNavToggle);
 
         fullModeNav.addEventListener('mouseover', navHoverAnimations)
+        fullModeNav.addEventListener('click', fullScreenNavEvents)
+
         inputNote.addEventListener('mousedown', notes.activateNote)
 
     }

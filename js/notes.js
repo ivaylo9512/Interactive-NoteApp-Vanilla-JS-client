@@ -221,6 +221,7 @@ const notes = (() => {
     const body = document.body;
     const buffersContainer = document.getElementById('buffers-container');
 
+    const noteSection = document.getElementById('note-section');
     const cloudContainer = document.getElementById('cloud-headers');
     const cloudHeader = document.getElementById('cloud-header');
     const leftNotesContainer = document.getElementById('left-notes-container');
@@ -378,15 +379,25 @@ const notes = (() => {
     const showNote = () => {
         inputNote.style.display = 'block';
         inputNote.classList.add('inactive');
+        inputNote.classList.remove('bounce');    
         inputNote.style.left = null;
         inputNote.style.top = null;
         inputNote.classList.remove('hide');
         inputNote.parentElement.style.display = 'block';
+    
     }
 
     const activateNote = () => {
         inputNote.classList.remove('inactive');
         inputNote.classList.add('bounce');
+    }
+    const fullScreenNotes = () => {
+        inputNote.style.display = 'none';
+        buffersContainer.style.display = 'block';
+        noteSection.style.display = 'block';
+
+        timelineYears.style.display = 'block';
+        timelineMonths.parentElement.style.display = 'block';
     }
 
     months.forEach(month => month.addEventListener('click',() => getMonth(month.children[0].innerHTML)));
@@ -398,6 +409,7 @@ const notes = (() => {
         showMonths,
         showYears,
         showNote,
-        activateNote
+        activateNote,
+        fullScreenNotes
     }
 })();
