@@ -752,6 +752,9 @@ body.full-mode-active .play-box{
     z-index: 1;
     cursor: pointer;
 }
+body.full-mode-active .note-animation {
+    display: none!important;
+}
 .cloud-container {
     float: left;
     width: 20%;
@@ -855,6 +858,9 @@ body.full-mode-active .cloud-header img{
     margin-left: 45px;
     transition: all 1.5s ease-in-out; 
     display: none;
+}
+body.full-mode-active .brush-animation {
+    display: none!important;
 }
 body.full-mode-active .input-note-container{
     position: fixed;

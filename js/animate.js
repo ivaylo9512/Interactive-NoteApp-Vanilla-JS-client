@@ -251,7 +251,7 @@ const animate = (() => {
     }
 
     const showNoteView = () => {
-        if (brushAnimated) {
+        if (brushAnimated && document.body.className != 'full-mode-active') {
             noteHolders.classList.remove('show');
             brushAnimation.classList.add('hide');
             noteContainer.classList.add('hide');

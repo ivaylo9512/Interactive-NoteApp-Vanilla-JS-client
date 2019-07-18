@@ -430,6 +430,14 @@ const notes = (() => {
         }
     } 
 
+    const resetNote = () => {
+        if(noteIsAnimated){
+            noteInput.style.display = 'block';
+        }else{
+            noteInput.style.display = 'none';
+        }
+    }
+
     months.forEach(month => month.addEventListener('click',() => getMonth(month.children[0].innerHTML)));
     years.forEach(year => year.addEventListener('click', () => getYear(year.children[0].innerHTML)));
     daysContainer.addEventListener('click', getDay);
@@ -440,6 +448,7 @@ const notes = (() => {
         showNote,
         activateNote,
         fullScreenNotes,
-        resetNoteView
+        resetNoteView,
+        resetNote
     }
 })();
