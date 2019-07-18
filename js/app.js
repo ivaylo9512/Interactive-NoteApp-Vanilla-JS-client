@@ -92,9 +92,10 @@ const app = (() =>{
             fullModeBtn.classList.remove('active');
             inputNote.classList.remove('inactive');
             fullModeNav.classList.remove('active');
+            fullMode.style.display = 'none';
             document.body.classList.remove('full-mode-active');
         }else{
-
+            fullMode.style.display = 'block';
             inputNote.classList.add('inactive')
             document.body.classList.add('full-mode-active');
         }
@@ -124,9 +125,11 @@ const app = (() =>{
         fullModeNav.classList.add('active');
         fullModeBtn.classList.add('active');
     }
+
     const fullModeReset = () => {
         notes.hideFullScreenNotes();
     }
+
     const navHoverAnimations = () => {
         if(event.target.tagName == 'LI'){
             switch(event.target.innerHTML){
@@ -140,6 +143,7 @@ const app = (() =>{
             }
         }
     }
+    
     const fullScreenNavEvents = () => {
         if(event.target.tagName == 'LI'){
             menuCircle.classList.add('inactive');
@@ -200,6 +204,7 @@ const app = (() =>{
         fullModeNav.addEventListener('click', fullScreenNavEvents);
 
         inputNote.addEventListener('mousedown', notes.activateNote);
+        document.getElementById('submit-note').addEventListener('click', notes.submitNote);
 
     }
 

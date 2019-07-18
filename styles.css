@@ -995,6 +995,7 @@ body.full-mode-active .full-mode{
     color: #eae9e5;
     list-style: none;
     text-align: center;
+    cursor: pointer;
     height: 80%;
     border-right: 1px solid #EAE9E5;
 
@@ -1034,7 +1035,7 @@ body.full-mode-active .full-mode-circle {
     top: 14%;
     width: 37px;
     height: 37px;
-    z-index: 7;
+    z-index: 9;
     border: 2.5px solid #41291B;
 }
 .timeline-months-container{

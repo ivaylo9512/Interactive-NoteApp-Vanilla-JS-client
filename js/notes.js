@@ -526,6 +526,17 @@ const notes = (() => {
         }
     }
 
+    const inputName = inputNote.children[0];
+    const inputText = inputNote.children[1];
+    const submitNote = () => {
+        remote.submitNote(inputName.value, inputText.value).then(
+            res =>{
+                inputName.value = '';
+                inputText.value = '';
+            }
+        )
+    }
+    
     months.forEach(month => month.addEventListener('click',() => getMonth(month.children[0].innerHTML)));
     years.forEach(year => year.addEventListener('click', () => getYear(year.children[0].innerHTML)));
     daysContainer.addEventListener('click', getDay);
@@ -544,6 +555,7 @@ const notes = (() => {
         showTopAnimations,
         hideTopAnimations,
         showNoteView,
-        setBrushAnimated
+        setBrushAnimated,
+        submitNote
     }
 })();
