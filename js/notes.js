@@ -430,14 +430,21 @@ const notes = (() => {
         }
     } 
 
+    let brushAnimated = false;
+    let noteIsAnimated = false;
+    const setBrushAnimated = () => {
+        brushAnimated = true;
+    }
+
     const resetNote = () => {
         if(noteIsAnimated){
-            noteInput.style.display = 'block';
+            inputNote.style.display = 'block';
         }else{
-            noteInput.style.display = 'none';
+            inputNote.style.display = 'none';
         }
     }
 
+    
     const noteHolders = document.getElementById('note-animation');
     const brushAnimation = document.getElementById('brush-animation');
 
@@ -449,6 +456,7 @@ const notes = (() => {
 
     const noteAppend = () => {
         if (brushAnimated) {
+            noteIsAnimated = true;
             inputNote.style.display = 'block';
             noteHolders.src = 'resources/note-animation-static-open.png';
             noteHolders.removeEventListener('mouseover', noteAnimation);
@@ -527,5 +535,6 @@ const notes = (() => {
         showTopAnimations,
         hideTopAnimations,
         showNoteView,
+        setBrushAnimated
     }
 })();

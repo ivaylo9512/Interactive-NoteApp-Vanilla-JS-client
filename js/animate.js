@@ -162,7 +162,6 @@ const animate = (() => {
     
     let balloonPlayed = false;
     let animationIsPlaying = false;
-    let brushAnimated = false;
 
     const brushAnimation = document.getElementById('brush-animation');
     const cloud = document.getElementById('cloud');
@@ -173,7 +172,6 @@ const animate = (() => {
     const balloonRight = document.getElementById('balloon-right');
     const noteHolders = document.getElementById('note-animation');
     const brushAnimationContainer = document.getElementById('right-notes');
-    const noteContainer = document.getElementById('input-note');
 
     const balloonAnimation = () => {
         if (!balloonPlayed) {
@@ -209,7 +207,7 @@ const animate = (() => {
                     setTimeout(() => {
                         brushAnimation.style.display = 'block';
                         brushAnimationContainer.appendChild(brushAnimation);
-                        brushAnimated = true;
+                        notes.setBrushAnimated();
                         balloonLeft.style.display = 'none';
                     }, 1100);
 
