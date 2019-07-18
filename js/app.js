@@ -136,34 +136,34 @@ const app = (() =>{
 
         window.addEventListener('wheel', animate.setDelta, {passive: false});
 
-        document.getElementById('profile-btn').addEventListener('mousedown', animate.scrollToProfile);
-        document.getElementById('album-btn').addEventListener('mousedown', animate.scrollToAlbum);
-        document.getElementById('album-btns').addEventListener('mousedown', getAlbumImages);
+        document.getElementById('profile-btn').addEventListener('click', animate.scrollToProfile);
+        document.getElementById('album-btn').addEventListener('click', animate.scrollToAlbum);
+        document.getElementById('album-btns').addEventListener('click', getAlbumImages);
 
         colorize.getElements();
-        document.getElementById('play-btn').addEventListener('mousedown', colorize.manageListeners);
-        document.getElementById('pink-bulb-btn').addEventListener('mousedown', () => colorize.setCurrentColor('#E2007A'));
-        document.getElementById('blue-bulb-btn').addEventListener('mousedown', () => colorize.setCurrentColor('#7398CA'));
+        document.getElementById('play-btn').addEventListener('click', colorize.manageListeners);
+        document.getElementById('pink-bulb-btn').addEventListener('click', () => colorize.setCurrentColor('#E2007A'));
+        document.getElementById('blue-bulb-btn').addEventListener('click', () => colorize.setCurrentColor('#7398CA'));
 
         const loginBtn = document.getElementById('login-btn');
         const registerBtn = document.getElementById('register-btn');
-        loginBtn.addEventListener('mousedown', () => profile.changeInputView(loginBtn, registerBtn));
-        registerBtn.addEventListener('mousedown', () => profile.changeInputView(registerBtn, loginBtn));
+        loginBtn.addEventListener('click', () => profile.changeInputView(loginBtn, registerBtn));
+        registerBtn.addEventListener('click', () => profile.changeInputView(registerBtn, loginBtn));
         document.getElementById('user-btn').addEventListener('click', profile.userAction);
 
         const noteAnimation = document.getElementById('note-animation');
         const noteHeader = document.getElementById('notes-header');
         noteAnimation.addEventListener('mouseover', animate.noteAnimation);
-        noteAnimation.addEventListener('mousedown', animate.noteAppend);
+        noteAnimation.addEventListener('click', animate.noteAppend);
         noteHeader.addEventListener('mouseover', animate.showTopAnimations);
         noteHeader.addEventListener('mouseout', animate.hideTopAnimations);
-        noteHeader.addEventListener('mousedown', animate.showNoteView);
+        noteHeader.addEventListener('click', animate.showNoteView);
 
         draggables.dragElement(document.getElementById('move-note'));
         draggables.dragElement(document.getElementById('point'));
 
-        fullModeBtn.addEventListener('mousedown', fullModeToggle)
-        document.getElementById('menu-circle').addEventListener('mousedown', fullModeNavToggle)
+        fullModeBtn.addEventListener('click', fullModeToggle)
+        document.getElementById('menu-circle').addEventListener('click', fullModeNavToggle)
     }
 
     return {

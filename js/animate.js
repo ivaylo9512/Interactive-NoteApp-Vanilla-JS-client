@@ -228,7 +228,7 @@ const animate = (() => {
             noteContainer.style.display = 'block';
             noteHolders.src = 'resources/note-animation-static-open.png';
             noteHolders.removeEventListener('mouseover', noteAnimation);
-            noteHolders.removeEventListener('mousedown', noteAppend);
+            noteHolders.removeEventListener('click', noteAppend);
         }
     }
 

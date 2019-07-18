@@ -92,6 +92,7 @@ const notes = (() => {
     let day;
     let year;
     let month;
+    let daysCount;
 
     const getMonth = (clickedMonth) => {
             if (clickedMonth != '') {
@@ -99,7 +100,6 @@ const notes = (() => {
                 chosenMonth.innerHTML = clickedMonth;
                 cloud.src = 'resources/cloud-filled.png';
 
-                let daysCount;
                 switch (clickedMonth) {
                     case 'January':
                         month = 1;
@@ -151,18 +151,21 @@ const notes = (() => {
                         break;
                 }
 
-                while (daysContainer.firstChild) {
-                    daysContainer.removeChild(daysContainer.firstChild);
-                }
-
-                for (i = 1; i <= daysCount; i++) {
-                    let a = document.createElement('a');
-                    a.innerHTML = i;
-                    daysContainer.appendChild(a);
-                }
-
+                resetDays();
                 checkDate();
             }
+    }
+
+    const resetDays = () => {
+        while (daysContainer.firstChild) {
+            daysContainer.removeChild(daysContainer.firstChild);
+        }
+
+        for (i = 1; i <= daysCount; i++) {
+            let a = document.createElement('a');
+            a.innerHTML = i;
+            daysContainer.appendChild(a);
+        }
     }
     const getYear = (clickedYear) => {
 
@@ -340,26 +343,35 @@ const notes = (() => {
 
     const addBuffers = (notesCount) => {
         buffers = [];
-        for (let i = 0; i < notesCount / 4; i++) {
+
+        if(notesCount > 0){
             const buffer = document.createElement('div');
             buffer.className = 'buffer';
-            i == 0 ? buffer.style.height = '240px' : buffer.style.height = '785px';
-            
-            if(i > 1){
-                const cloudHeaderCopy = cloudHeader.cloneNode(true);
-                cloudHeader.style.marginBottom = '120px';
-                cloudsFragment.appendChild(cloudHeaderCopy);
-            }
+            buffer.style.height = '210px';
             bufferFragment.appendChild(buffer);
+
+            if(notesCount > 4){
+                for (let i = 0; i < notesCount  / 4; i++) {
+                    const bufferCopy = buffer.cloneNode(true);
+                    const cloudHeaderCopy = cloudHeader.cloneNode(true);
+                    
+                    bufferCopy.style.height = '400px';                    
+                    cloudHeader.style.marginBottom = '120px';
+
+                    cloudsFragment.appendChild(cloudHeaderCopy);
+                    bufferFragment.appendChild(bufferCopy);
+                }
+            }
         }
+
         playMode.insertBefore(bufferFragment, playMode.firstChild);
         cloudContainer.insertBefore(cloudsFragment, cloudContainer.firstChild);
     }
 
 
-    months.forEach(month => month.addEventListener('mousedown',() => getMonth(month.children[0].innerHTML)));
-    years.forEach(year => year.addEventListener('mousedown', () => getYear(year.children[0].innerHTML)));
-    daysContainer.addEventListener('mousedown', getDay);
+    months.forEach(month => month.addEventListener('click',() => getMonth(month.children[0].innerHTML)));
+    years.forEach(year => year.addEventListener('click', () => getYear(year.children[0].innerHTML)));
+    daysContainer.addEventListener('click', getDay);
     
     return {
         setCloudsAnimated,
