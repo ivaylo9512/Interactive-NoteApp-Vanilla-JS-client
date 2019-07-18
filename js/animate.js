@@ -76,16 +76,19 @@ const animate = (() => {
     const circles = [];
     const createCircles = () => {
         const circleContainer = document.getElementById('circles-container');
+        const circlesFragment = document.createDocumentFragment();
+        const circle = document.createElement('span');
         const maxCircles = 25;
         for (let i = 1; i < maxCircles; i++) {
-            const circle = document.createElement('span');
-            
-            circle.className = `colorize circle${i}`;
-            circles.push(circle);
-              
-            circleContainer.appendChild(circle);  
+            const circleCopy = circle.cloneNode(true);
+            circleCopy.className = `colorize circle${i}`;
+
+            circles.push(circleCopy);
+            circlesFragment.appendChild(circleCopy);
         }
+        circleContainer.appendChild(circlesFragment);  
     }
+    
     const photos = document.getElementsByClassName('onLoad-photo');
 
     let hiding = true;
@@ -277,6 +280,9 @@ const animate = (() => {
                     noteContainer.style.display = 'none';
                     noteHolders.style.display = 'none';
                     brushAnimation.style.display = 'none';
+
+                    document.getElementById('timeline-months-container').style.display = 'block';
+                    document.getElementById('timeline-years').style.display = 'block';
                 }, 1500);
 
             }, 100);
