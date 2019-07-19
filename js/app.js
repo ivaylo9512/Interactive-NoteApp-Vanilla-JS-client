@@ -178,7 +178,7 @@ const app = (() =>{
             res => {
                 const images = res.data;
                 
-                const photoContainer = document.createElement("div");
+                const photoContainer = document.createElement('div');
                 photoContainer.className = 'drag-photo-container';
                 
                 const photo = document.createElement('img');
@@ -200,6 +200,30 @@ const app = (() =>{
             }
         )
     }
+
+    const albumNumbersContainer = document.getElementById('album-numbers');
+    const albumNumbers = albumNumbersContainer.children;
+    let number;
+    let left;
+    let delay;
+    let transition;
+
+    const chooseAlbumNumber = () => {
+        
+        if(event.target != event.currentTarget && !number){
+            number = event.target;
+            number == albumNumbers[1] ? albumNumbersContainer.classList.add('middle') : albumNumbersContainer.classList.remove('middle');
+            
+            albumNumbersContainer.classList.add('active');
+            number.classList.add('slide-middle');
+
+        }else if (number){
+            albumNumbersContainer.classList.remove('active');
+            number.classList.remove('slide-middle');
+            number = null;
+        }
+    }
+
     const start = () => {
         initialAnimation();
 
@@ -242,6 +266,8 @@ const app = (() =>{
 
         inputNote.addEventListener('mousedown', notes.activateNote);
         document.getElementById('submit-note').addEventListener('click', notes.submitNote);
+
+        albumNumbersContainer.addEventListener('click', chooseAlbumNumber);
 
     }
 
