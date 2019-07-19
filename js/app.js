@@ -11,8 +11,9 @@ const app = (() =>{
     const getAlbumImages = (e) => {
         const id = e.target.id
 
-        remote.getAlbumImages(id)
-            .then(function (response) {
+        remote.getAlbumImages(id).then(
+            res => {
+
                 switch(+id){
                     case 1:
                         currentAlbumNumber = 1;
@@ -31,9 +32,11 @@ const app = (() =>{
                         break; 
                 }
                 albumImages = response.data;
-            })
-            .catch(function (error) {
-            })
+            }
+        
+        ).catch(
+            e => {
+        })
     }
 
     const appendAlbumPhotos = (currentAlbum) => {
@@ -201,21 +204,21 @@ const app = (() =>{
         )
     }
 
+    const placePhotos = Array.from(document.getElementsByClassName('place-photo'));
     const albumNumbersContainer = document.getElementById('album-numbers');
-    const albumNumbers = albumNumbersContainer.children;
+    const albumNumbers = Array.from(albumNumbersContainer.children);
     let number;
-    let left;
-    let delay;
-    let transition;
-
     const chooseAlbumNumber = () => {
         
         if(event.target != event.currentTarget && !number){
             number = event.target;
-            number == albumNumbers[1] ? albumNumbersContainer.classList.add('middle') : albumNumbersContainer.classList.remove('middle');
-            
+            const index = albumNumbers.indexOf(number); 
+            index == 1 ? albumNumbersContainer.classList.add('middle') : albumNumbersContainer.classList.remove('middle');
+
             albumNumbersContainer.classList.add('active');
             number.classList.add('slide-middle');
+
+            appendPlacePhotos(index);
 
         }else if (number){
             albumNumbersContainer.classList.remove('active');
@@ -224,6 +227,37 @@ const app = (() =>{
         }
     }
 
+    const appendPlacePhotos = (index) => {
+        remote.getAlbumImages(index).then(
+            res => {
+                const images = res.data;
+                
+                switch(index){
+                    case 1:
+                        firstAlbum = images;
+                        break;
+                    case 2:
+                        secondAlbum = images;
+                        break;
+                    case 3:
+                        thirdAlbum = images;
+                        break;    
+                }
+                let photo = document.createElement('img');
+                photo.className = 'appended';
+
+                images.forEach((image, i) => {
+                    const photoCopy = photo.cloneNode(false);
+
+                    photo.id = image.id;
+                    photo.src = image.location;
+                    
+                    placePhotos[i].appendChild(photoCopy);
+                    placePhotos[i].className = 'placed-photo';
+                })
+            }
+        )
+    }
     const start = () => {
         initialAnimation();
 
