@@ -173,6 +173,17 @@ const app = (() =>{
         }
     }
 
+    const photoContainer = (() => { 
+        const container = document.createElement('div');
+        container.className = 'drag-photo-container';
+
+        const photo = document.createElement('img');
+        photo.className = 'drag-photo';
+        
+        container.appendChild(photo);
+        return container;
+    })();
+
     const photosFragment = document.createDocumentFragment();
     const showPhotoSection = () => {
         photoSection.style.display = 'block';
@@ -180,14 +191,6 @@ const app = (() =>{
         remote.getAlbumImages(0).then(
             res => {
                 const images = res.data;
-                
-                const photoContainer = document.createElement('div');
-                photoContainer.className = 'drag-photo-container';
-                
-                const photo = document.createElement('img');
-                photo.className = 'drag-photo';
-
-                photoContainer.appendChild(photo);
 
                 images.forEach((image) => {
                     const containerCopy = photoContainer.cloneNode(true);
@@ -284,6 +287,16 @@ const app = (() =>{
 
             remote.submitImage(imageData).then(
                 res => {
+                    const image = res.data;
+                   
+                    const containerCopy = photoContainer.cloneNode(true);
+                    const photoCopy = containerCopy.children[0];
+
+                    photoCopy.id = image.id;
+                    photoCopy.src = remote.getBase() + image.location;
+                    
+                    photosContainer.insertBefore(containerCopy, photosContainer.firstChild);
+                    // dragElement(photo);
             })
         }
     }
