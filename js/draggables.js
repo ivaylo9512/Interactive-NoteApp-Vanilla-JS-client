@@ -124,6 +124,42 @@ const draggables = (() =>{
         node.style.position = 'relative';
     }
 
+    function exchangePhotos() {
+        let currentPhoto = elementFromPoint;
+        let currentPhotoId = Number(currentPhoto.id);
+        let currentPhotoSrc = currentPhoto.src;
+        let newPhotoId = Number(elmnt.id);
+        let newPhotoSrc = elmnt.src;
+        currentPhoto.src = newPhotoSrc;
+        elmnt.src = currentPhotoSrc;
+        element.style.top = '0px';
+        element.style.left = '0px';
+        element.style.marginLeft = '2px';
+        element.style.marginTop = '2px';
+        element.style.position = 'relative';
+        let index = placePhotos.indexOf(currentPhoto.parentElement);
+        let photos = [];
+        photos.push(currentPhotoId);
+        photos.push(newPhotoId);
+        remote.exchangePhotos(photos).then(
+            res => {
+                elmnt.id = currentPhotoId;
+                currentPhoto.id = newPhotoId;
+                switch (currentAlbumNumber) {
+                    case 1:
+                        firstAlbum[index] = res;
+                        break;
+                    case 2:
+                        secondAlbum[index] = res;
+                        break;
+                    case 3:
+                        thirdAlbum[index] = res;
+                        break;
+                }
+            }
+        )
+    }
+    
     const resetNavPoint = () => {
         node.style.transition = '2s';
         node.style.left = '24px';
