@@ -1221,6 +1221,7 @@ ol::after {
     margin-top: 50px;
     position:relative;
     z-index: 2;
+    text-align: center;
 }
 
 .album-one-label{
@@ -1230,7 +1231,6 @@ ol::after {
 }
 .album-container{
     height: 210px;
-    margin-bottom: 5px;
     text-align: center;
     padding: 0 12%;
 }
@@ -1272,6 +1272,30 @@ ol::after {
 .album-numbers div:nth-child(3){
     background-image: url('resources/three.png');
     left: 66.6%;
+}
+.photos-container-full-mode{
+    margin-top: 40px;
+    display: inline-block;
+}
+.drag-photo-container{
+    height: 75px;
+    width: 152.1px;
+    position: relative;
+    float: left;
+    overflow: hidden;
+    border: 1px solid rgb(65, 41, 27);
+    margin-left : 2px;
+    margin-top: 2px;
+    cursor: pointer;
+}
+.drag-photo-container img{
+    width: 110%;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
 .right-notes-container{
     position: absolute;

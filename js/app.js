@@ -81,6 +81,7 @@ const app = (() =>{
     const fullMode = document.getElementById('full-mode');
     const inputNote = document.getElementById('input-note');
     const photoSection = document.getElementById('photo-section-full-mode')
+    const photosContainer = document.getElementById('photos-container-full-mode');
   
     let fullModeOn = false;
     let initialLoad = false;
@@ -92,7 +93,6 @@ const app = (() =>{
             notes.resetNoteView();
 
             menuCircle.classList.remove('inactive');
-            menuCircle.style.display('inactive');
             fullModeBtn.classList.remove('active');
             inputNote.classList.remove('inactive');
             fullModeNav.classList.remove('active');
@@ -162,7 +162,7 @@ const app = (() =>{
                     notes.showFullScreenNotes();
                     break;
                 case 'Photos':
-                    photoSection.style.display = 'block';
+                    showPhotoSection();
                     break;
                 case 'Play':        
                     break;
@@ -170,6 +170,36 @@ const app = (() =>{
         }
     }
 
+    const photosFragment = document.createDocumentFragment();
+    const showPhotoSection = () => {
+        photoSection.style.display = 'block';
+        
+        remote.getAlbumImages(0).then(
+            res => {
+                const images = res.data;
+                
+                const photoContainer = document.createElement("div");
+                photoContainer.className = 'drag-photo-container';
+                
+                const photo = document.createElement('img');
+                photo.className = 'drag-photo';
+
+                photoContainer.appendChild(photo);
+
+                images.forEach((image) => {
+                    const containerCopy = photoContainer.cloneNode(true);
+                    const photoCopy = containerCopy.children[0];
+
+                    photoCopy.id = image.id;
+                    photoCopy.src = 'http://localhost:8000/' + image.location;
+                    
+                    photosFragment.insertBefore(containerCopy, photosFragment.firstChild);
+                });
+                photosContainer.insertBefore(photosFragment, photosContainer.firstChild);
+
+            }
+        )
+    }
     const start = () => {
         initialAnimation();
 
