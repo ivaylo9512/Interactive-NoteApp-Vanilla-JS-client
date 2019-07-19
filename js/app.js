@@ -221,6 +221,8 @@ const app = (() =>{
             appendPlacePhotos(index);
 
         }else if (number){
+            clearPlacePhotos();
+
             albumNumbersContainer.classList.remove('active');
             number.classList.remove('slide-middle');
             number = null;
@@ -248,9 +250,11 @@ const app = (() =>{
 
                 images.forEach((image, i) => {
                     const photoCopy = photo.cloneNode(false);
+                    
+                    const base = remote.getBase
 
-                    photo.id = image.id;
-                    photo.src = image.location;
+                    photoCopy.id = image.id;
+                    photoCopy.src = base() + image.location;
                     
                     placePhotos[i].appendChild(photoCopy);
                     placePhotos[i].className = 'placed-photo';
@@ -258,6 +262,16 @@ const app = (() =>{
             }
         )
     }
+
+    const clearPlacePhotos = () => {
+        placePhotos.forEach(photo => {
+            if (photo.firstChild) {
+                photo.className = "place-photo";
+                photo.removeChild(photo.firstChild);
+            }
+        })
+    }
+
     const start = () => {
         initialAnimation();
 
