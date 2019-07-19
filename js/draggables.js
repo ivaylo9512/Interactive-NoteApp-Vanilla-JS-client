@@ -103,7 +103,7 @@ const draggables = (() =>{
         node.style.pointerEvents = 'auto';
     }
 
-    function choosePhoto(e) {
+    const choosePhoto = () => {
         node.parentElement.removeChild(node);
 
         const photo = node.children[0];
@@ -116,6 +116,13 @@ const draggables = (() =>{
 
     }
 
+    const resetPhoto = () => {
+        node.style.top = '0px';
+        node.style.left = '0px';
+        node.style.marginLeft = '2px';
+        node.style.marginTop = '2px';
+        node.style.position = 'relative';
+    }
 
     const resetNavPoint = () => {
         node.style.transition = '2s';
