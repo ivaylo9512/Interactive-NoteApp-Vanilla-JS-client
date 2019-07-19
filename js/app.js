@@ -191,7 +191,7 @@ const app = (() =>{
                     const photoCopy = containerCopy.children[0];
 
                     photoCopy.id = image.id;
-                    photoCopy.src = 'http://localhost:8000/' + image.location;
+                    photoCopy.src = remote.getBase() + image.location;
                     
                     photosFragment.insertBefore(containerCopy, photosFragment.firstChild);
                 });
