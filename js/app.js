@@ -80,6 +80,8 @@ const app = (() =>{
     const fullModeBtn = document.getElementById('full-mode-btn');
     const fullMode = document.getElementById('full-mode');
     const inputNote = document.getElementById('input-note');
+    const photoSection = document.getElementById('photo-section-full-mode')
+  
     let fullModeOn = false;
     let initialLoad = false;
     const fullModeToggle = () => {
@@ -89,6 +91,8 @@ const app = (() =>{
             notes.resetNote();
             notes.resetNoteView();
 
+            menuCircle.classList.remove('inactive');
+            menuCircle.style.display('inactive');
             fullModeBtn.classList.remove('active');
             inputNote.classList.remove('inactive');
             fullModeNav.classList.remove('active');
@@ -116,17 +120,18 @@ const app = (() =>{
 
     const menuCircle = document.getElementById('menu-circle');
     const fullModeNavToggle = () => {
-        if(menuCircle.classList.contains('inactive')){
-            menuCircle.classList.remove('inactive');
-            
-            fullMode.style.display = 'block';
-            fullModeReset();
-        }
+
+        if(menuCircle.classList.contains('inactive')) fullModeReset();
+        
         fullModeNav.classList.add('active');
         fullModeBtn.classList.add('active');
+   
     }
 
     const fullModeReset = () => {
+        menuCircle.classList.remove('inactive');
+        fullMode.style.display = 'block';
+        photoSection.style.display = 'none';
         notes.hideFullScreenNotes();
     }
 
@@ -137,6 +142,7 @@ const app = (() =>{
                     notes.showNote();
                     break;
                 case 'Photos':
+                    notes.hideNote();
                     break;
                 case 'Play':        
                     break;
@@ -156,6 +162,7 @@ const app = (() =>{
                     notes.showFullScreenNotes();
                     break;
                 case 'Photos':
+                    photoSection.style.display = 'block';
                     break;
                 case 'Play':        
                     break;

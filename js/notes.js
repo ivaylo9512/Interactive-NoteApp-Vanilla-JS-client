@@ -384,6 +384,10 @@ const notes = (() => {
     
     }
 
+    const hideNote = () => {
+        inputNote.style.display = 'none';
+    }
+
     const activateNote = () => {
         inputNote.classList.remove('inactive');
         inputNote.classList.add('bounce');
@@ -545,6 +549,7 @@ const notes = (() => {
         showMonths,
         showYears,
         showNote,
+        hideNote,
         activateNote,
         showFullScreenNotes,
         hideFullScreenNotes,
