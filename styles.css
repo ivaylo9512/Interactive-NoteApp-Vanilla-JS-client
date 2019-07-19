@@ -170,6 +170,7 @@ body.full-mode-active .play-mode > *{
 body.full-mode-active .play-nav {
     right: 0;
     top: 24px;
+    left: unset;
 }
 .gear {
     width: 8%;

@@ -266,10 +266,26 @@ const app = (() =>{
     const clearPlacePhotos = () => {
         placePhotos.forEach(photo => {
             if (photo.firstChild) {
-                photo.className = "place-photo";
+                photo.className = 'place-photo';
                 photo.removeChild(photo.firstChild);
             }
         })
+    }
+
+
+    const appendPhoto = () => {
+        const input = event.target;
+    
+        if (input.files && input.files[0]) {
+            const image = input.files[0];
+            
+            const imageData = new FormData();
+            imageData.append('photo', image);
+
+            remote.submitImage(imageData).then(
+                res => {
+            })
+        }
     }
 
     const start = () => {
@@ -316,6 +332,8 @@ const app = (() =>{
         document.getElementById('submit-note').addEventListener('click', notes.submitNote);
 
         albumNumbersContainer.addEventListener('click', chooseAlbumNumber);
+
+        document.getElementById('input-photo').addEventListener('input', appendPhoto);
 
     }
 
