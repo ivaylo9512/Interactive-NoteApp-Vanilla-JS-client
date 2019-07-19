@@ -106,6 +106,7 @@ const app = (() =>{
             inputNote.classList.add('inactive')
             document.body.classList.add('full-mode-active');
         }
+        currentAlbumNumber = 0;
         fullModeOn = !fullModeOn;
     }
 
@@ -216,7 +217,7 @@ const app = (() =>{
         
         if(event.target != event.currentTarget && !number){
             number = event.target;
-            const index = albumNumbers.indexOf(number); 
+            const index = albumNumbers.indexOf(number) + 1; 
             index == 1 ? albumNumbersContainer.classList.add('middle') : albumNumbersContainer.classList.remove('middle');
 
             albumNumbersContainer.classList.add('active');
@@ -240,12 +241,15 @@ const app = (() =>{
                 
                 switch(index){
                     case 1:
+                        currentAlbumNumber = 1;
                         firstAlbum = images;
                         break;
                     case 2:
+                        currentAlbumNumber = 2;
                         secondAlbum = images;
                         break;
                     case 3:
+                        currentAlbumNumber = 3;
                         thirdAlbum = images;
                         break;    
                 }
@@ -302,6 +306,31 @@ const app = (() =>{
         }
     }
 
+    const updateChosenPhoto = (id, elementFromPoint) => {
+        remote.updatePhotoAlbum(id, currentAlbum).then(
+            res => {
+
+                let index;
+                switch (currentAlbumNumber) {
+                    case 1:
+                        index = firstAlbum.length;
+                        firstAlbum.push(res);
+                        break;
+                    case 2:
+                        index = secondAlbum.length;
+                        secondAlbum.push(res);
+                        break;
+                    case 3:
+                        index = thirdAlbum.length;
+                        thirdAlbum.push(res);
+                        break
+                }
+                
+                placePhotos[placePhotos.indexOf(elementFromPoint)] = placePhotos[index];
+                placePhotos[index] = elementFromPoint;
+            })
+    }
+
     const start = () => {
         initialAnimation();
 
@@ -353,7 +382,8 @@ const app = (() =>{
 
     return {
         start,
-        getCurrentAlbumNumber
+        getCurrentAlbumNumber,
+        updateChosenPhoto
     }
 })();
 app.start();

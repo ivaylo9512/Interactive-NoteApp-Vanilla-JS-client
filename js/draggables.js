@@ -11,8 +11,10 @@ const draggables = (() =>{
 
     let className;
     let node;
+    let elementFromPoint;
+
     function onMouseDown(e) {
-        node = e.target;
+        node = e.currentTarget;
         e.preventDefault();
         pos3 = e.pageX;
         pos4 = e.pageY;            
@@ -39,20 +41,20 @@ const draggables = (() =>{
             case 'move-photo':
                 break;
             case 'drag-photo':
-                makeContainerDraggable(e);
+                makeContainerDraggable();
                 break;
             case 'nav-point':
-                checkPointPosition(e);
+                checkPointPosition();
                 break;
         }
     }
 
-    const makeContainerDraggable = (e) => {
-        node.style.marginLeft = "0px";
-        node.style.marginTop = "0px";
-        node.style.position = "absolute";
+    const makeContainerDraggable = () => {
+        node.style.marginLeft = '0px';
+        node.style.marginTop = '0px';
+        node.style.position = 'absolute';
         node.style.zIndex = 2;
-        node.style.pointerEvents = "none";
+        node.style.pointerEvents = 'none';
     }
 
     const checkPointPosition = () => {
@@ -65,21 +67,55 @@ const draggables = (() =>{
         }
     }
 
-    function closeDrag(e) {
-        mouseDown = false;
+    function closeDrag() {
+        let x = event.clientX;
+        let y = event.clientY;
+        elementFromPoint = document.elementFromPoint(x, y);
+        
         document.removeEventListener('mousemove', onDrag);
         document.removeEventListener('mouseup', closeDrag);
-
+        
         switch (className) {
             case 'move-photo':
                 break;
             case 'drag-photo':
+                photoEndDrag();
                 break;
             case 'nav-point':
                 resetNavPoint();
                 break;
         }
     }
+
+    function photoEndDrag() {
+        switch (elementFromPoint.className) {
+            case 'place-photo':
+                choosePhoto();
+                break;
+            case 'appended':
+                exchangePhotos();
+                break;
+            default:
+                resetPhoto();
+                break;
+        }
+        node.style.zIndex = 'auto';
+        node.style.pointerEvents = 'auto';
+    }
+
+    function choosePhoto(e) {
+        node.parentElement.removeChild(node);
+
+        const photo = node.children[0];
+        photo.className = 'appended';
+        photo.style.opacity = 1;
+        photo.style.transition = 'opacity 1s'
+       
+        elementFromPoint.appendChild(photo);
+        elementFromPoint.className = 'placed-photo';
+
+    }
+
 
     const resetNavPoint = () => {
         node.style.transition = '2s';
