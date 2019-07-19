@@ -218,7 +218,7 @@ const app = (() =>{
         if(event.target != event.currentTarget && !number){
             number = event.target;
             const index = albumNumbers.indexOf(number) + 1; 
-            index == 1 ? albumNumbersContainer.classList.add('middle') : albumNumbersContainer.classList.remove('middle');
+            index == 2 ? albumNumbersContainer.classList.add('middle') : albumNumbersContainer.classList.remove('middle');
 
             albumNumbersContainer.classList.add('active');
             number.classList.add('slide-middle');
@@ -306,8 +306,8 @@ const app = (() =>{
         }
     }
 
-    const updateChosenPhoto = (id, elementFromPoint) => {
-        remote.updatePhotoAlbum(id, currentAlbum).then(
+    const updateChosenPhoto = (id, elementFromPoint) => { 
+        return remote.updatePhotoAlbum(id, currentAlbumNumber).then(
             res => {
 
                 let index;
@@ -325,10 +325,30 @@ const app = (() =>{
                         thirdAlbum.push(res);
                         break
                 }
-                
                 placePhotos[placePhotos.indexOf(elementFromPoint)] = placePhotos[index];
                 placePhotos[index] = elementFromPoint;
-            })
+        })
+    }
+
+    const exchangePhotos = async (placedPhoto, currentPhoto, newPhoto) => {
+        const index = placePhotos.indexOf(placedPhoto);
+
+        return remote.exchangePhotos(currentPhoto, newPhoto).then(
+            res => {
+                const image = res.data;
+                switch (currentAlbumNumber) {
+                    case 1:
+                        firstAlbum[index] = image;
+                        break;
+                    case 2:
+                        secondAlbum[index] = image;
+                        break;
+                    case 3:
+                        thirdAlbum[index] = image;
+                        break;
+                }
+            }
+        )
     }
 
     const start = () => {
@@ -383,7 +403,8 @@ const app = (() =>{
     return {
         start,
         getCurrentAlbumNumber,
-        updateChosenPhoto
+        updateChosenPhoto,
+        exchangePhotos
     }
 })();
 app.start();

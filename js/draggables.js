@@ -103,10 +103,18 @@ const draggables = (() =>{
         node.style.pointerEvents = 'auto';
     }
 
-    const choosePhoto = () => {
+    const choosePhoto = async () => {
+        const photo = node.children[0];
+        try{
+            await app.updateChosenPhoto(photo.id, elementFromPoint);
+        }catch(e){
+            resetPhoto();
+            console.log(e);
+            return;
+        }
+        
         node.parentElement.removeChild(node);
 
-        const photo = node.children[0];
         photo.className = 'appended';
         photo.style.opacity = 1;
         photo.style.transition = 'opacity 1s'
@@ -124,40 +132,29 @@ const draggables = (() =>{
         node.style.position = 'relative';
     }
 
-    function exchangePhotos() {
-        let currentPhoto = elementFromPoint;
-        let currentPhotoId = Number(currentPhoto.id);
-        let currentPhotoSrc = currentPhoto.src;
-        let newPhotoId = Number(elmnt.id);
-        let newPhotoSrc = elmnt.src;
+    async function exchangePhotos() {
+        const currentPhoto = elementFromPoint;
+        const currentPhotoId = Number(currentPhoto.id);
+        const currentPhotoSrc = currentPhoto.src;
+
+        const photo = node.children[0];
+        const newPhotoId = Number(photo.id);
+        const newPhotoSrc = photo.src;
+
+        try{
+            await app.exchangePhotos(currentPhoto.parentElement, currentPhotoId, newPhotoId);
+        }catch(e){
+            console.log(e);
+            return;
+        }finally{
+            resetPhoto();
+        }
+
         currentPhoto.src = newPhotoSrc;
-        elmnt.src = currentPhotoSrc;
-        element.style.top = '0px';
-        element.style.left = '0px';
-        element.style.marginLeft = '2px';
-        element.style.marginTop = '2px';
-        element.style.position = 'relative';
-        let index = placePhotos.indexOf(currentPhoto.parentElement);
-        let photos = [];
-        photos.push(currentPhotoId);
-        photos.push(newPhotoId);
-        remote.exchangePhotos(photos).then(
-            res => {
-                elmnt.id = currentPhotoId;
-                currentPhoto.id = newPhotoId;
-                switch (currentAlbumNumber) {
-                    case 1:
-                        firstAlbum[index] = res;
-                        break;
-                    case 2:
-                        secondAlbum[index] = res;
-                        break;
-                    case 3:
-                        thirdAlbum[index] = res;
-                        break;
-                }
-            }
-        )
+        currentPhoto.id = newPhotoId;
+        photo.src = currentPhotoSrc;
+        photo.id = currentPhotoId;
+
     }
     
     const resetNavPoint = () => {
