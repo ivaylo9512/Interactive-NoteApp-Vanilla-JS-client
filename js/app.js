@@ -198,7 +198,8 @@ const app = (() =>{
 
                     photoCopy.id = image.id;
                     photoCopy.src = remote.getBase() + image.location;
-                    
+
+                    draggables.dragElement(photoCopy);                    
                     photosFragment.insertBefore(containerCopy, photosFragment.firstChild);
                 });
                 photosContainer.insertBefore(photosFragment, photosContainer.firstChild);
@@ -295,8 +296,8 @@ const app = (() =>{
                     photoCopy.id = image.id;
                     photoCopy.src = remote.getBase() + image.location;
                     
+                    draggables.dragElement(photoCopy);
                     photosContainer.insertBefore(containerCopy, photosContainer.firstChild);
-                    // dragElement(photo);
             })
         }
     }

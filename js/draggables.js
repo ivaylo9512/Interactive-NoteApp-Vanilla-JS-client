@@ -1,7 +1,7 @@
 const draggables = (() =>{
 
     const dragElement = (node) => {
-        node.addEventListener('mousedown', onMouseDown)
+        node.addEventListener('mousedown', onMouseDown);
         let pos1 = 0,
             pos2 = 0,
             pos3 = 0,
@@ -19,7 +19,7 @@ const draggables = (() =>{
             node.style.transition = '0s';
             className = node.className;
             
-            if (className == 'move-note') node = node.parentElement;
+            if (className == 'move-note' || className == 'drag-photo') node = node.parentElement;
         }
 
         function onDrag(e) {
@@ -36,11 +36,20 @@ const draggables = (() =>{
                 case 'move-photo':
                     break;
                 case 'drag-photo':
+                    makeContainerDraggable(e);
                     break;
                 case 'nav-point':
-                    checkPointPosition();
+                    checkPointPosition(e);
                     break;
             }
+        }
+
+        const makeContainerDraggable = (e) => {
+            node.style.marginLeft = "0px";
+            node.style.marginTop = "0px";
+            node.style.position = "absolute";
+            node.style.zIndex = 2;
+            node.style.pointerEvents = "none";
         }
 
         const checkPointPosition = () => {
