@@ -23,6 +23,14 @@ const draggables = (() =>{
             className = target.className;
             
             if (className == 'move-note' || className == 'drag-photo') node = target.parentElement;
+
+            if (className == 'appended') {
+                node = target.parentElement;
+
+                clearAppendedPhoto();
+                closeDrag();
+                return;
+            }
         }
 
         function onDrag(e) {
@@ -172,6 +180,10 @@ const draggables = (() =>{
             node.style.left = '24px';
             node.style.top = '33px';
         }    
+
+        const clearAppendedPhoto = () => {
+            app.clearPhoto(target, node);
+        }
     }
     return {
         dragElement

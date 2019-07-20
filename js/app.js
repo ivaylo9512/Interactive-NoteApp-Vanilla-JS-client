@@ -266,6 +266,8 @@ const app = (() =>{
                     
                     placePhotos[i].appendChild(photoCopy);
                     placePhotos[i].className = 'placed-photo';
+
+                    draggables.dragElement(photoCopy);
                 })
             }
         )
@@ -351,6 +353,50 @@ const app = (() =>{
         )
     }
 
+    const clearPhoto = (photo, node) => {
+        let photoContainer = document.createElement('DIV');
+        photoContainer.appendChild(photo);
+        
+        photoContainer.className = 'drag-photo-container';
+        node.className = 'place-photo';
+        photo.className = 'drag-photo';
+
+        remote.updatePhotoAlbum(photo.id, 0).then(
+            res => {
+                let album;
+                let index = placePhotos.indexOf(node);
+                
+                switch (currentAlbumNumber) {
+                    case 1:
+                        album = firstAlbum;
+                        break;
+                    case 2:
+                        album = secondAlbum;
+                        break;
+                    case 3:
+                        album = thirdAlbum;
+                        break;
+                }
+
+                const lastElement = album.pop();
+                placePhotos[index] = placePhotos[album.length - 1];
+                placePhotos[thirdAlbum.length - 1] = node;                            
+                album[index] = lastElement;
+
+                photosContainer.appendChild(photoContainer);
+        }).catch(
+            e =>{
+                photoContainer.removeChild(photo);
+                node.appendChild(photo);
+
+                photoContainer.className = 'drag-photo-container';
+                node.className = 'placed-photo';
+                photo.className = 'appended';
+
+                console.log(e);
+        })
+    }
+
     const start = () => {
         initialAnimation();
 
@@ -404,7 +450,8 @@ const app = (() =>{
         start,
         getCurrentAlbumNumber,
         updateChosenPhoto,
-        exchangePhotos
+        exchangePhotos,
+        clearPhoto
     }
 })();
 app.start();
