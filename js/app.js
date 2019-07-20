@@ -99,7 +99,26 @@ const app = (() =>{
             }
         }
     }
-    
+    function resetMovePhotoButtons() {
+        rotateButton.style.display = "block";
+        resizeButton.style.display = "block";
+        moving = false;
+        if (currentPhoto.parentElement.className == "user-note") {
+            rotateButton.style.height = currentPhotoHeight * 1.75 + "px";
+            rotateButton.style.left = currentPhotoLeft + focusedNoteContainer.offsetLeft + ((currentPhotoWidth - parseFloat(window.getComputedStyle(rotateButton).width)) / 2) + "px";
+            rotateButton.style.top = (currentPhotoTop + focusedNoteContainer.offsetTop - secondSection.offsetTop) + ((currentPhotoHeight - parseFloat(window.getComputedStyle(rotateButton).height)) / 2) + "px";
+
+            resizeButton.style.width = currentPhotoWidth + "px";
+            resizeButton.style.left = currentPhotoLeft + focusedNoteContainer.offsetLeft + "px";
+            resizeButton.style.top = (currentPhotoTop + focusedNoteContainer.offsetTop - secondSection.offsetTop) + ((currentPhotoHeight - parseFloat(window.getComputedStyle(resizeButton).height)) / 2) + "px";
+        } else {
+            rotateButton.style.height = parseFloat(window.getComputedStyle(currentPhoto).height) * 1.75 + "px";
+            rotateButton.style.left = currentPhoto.offsetLeft + ((parseFloat(window.getComputedStyle(currentPhoto).width) - parseFloat(window.getComputedStyle(rotateButton).width)) / 2) + "px";
+            rotateButton.style.top = currentPhoto.offsetTop + ((parseFloat(window.getComputedStyle(currentPhoto).height) - parseFloat(window.getComputedStyle(rotateButton).height)) / 2) + "px";
+            resizeButton.style.left = currentPhoto.offsetLeft + "px";
+            resizeButton.style.top = currentPhoto.offsetTop + ((parseFloat(window.getComputedStyle(currentPhoto).height) - parseFloat(window.getComputedStyle(resizeButton).height)) / 2) + "px";
+        }
+    }
     const hideAppendedPhotos = () => {
         appendedPhotos.forEach(photo => photo.style.display = 'none');
     }
