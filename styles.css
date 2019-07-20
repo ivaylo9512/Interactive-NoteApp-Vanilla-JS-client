@@ -322,6 +322,7 @@ body.full-mode-active .play-box{
 }
 .speech-bubble.scale{
     transform: scale(1);
+    display: block;
 }
 .speech-bubble.rotate{
     transform: rotate(20deg);

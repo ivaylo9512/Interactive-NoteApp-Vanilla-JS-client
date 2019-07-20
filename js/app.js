@@ -12,24 +12,23 @@ const app = (() =>{
         const id = e.target.id
 
         remote.getAlbumImages(id).then(res => {
+            let album;
             switch(+id){
                 case 1:
                     currentAlbumNumber = 1;
-                    firstAlbum = res.data;
-                    appendAlbumPhotos(firstAlbum);
+                    album = firstAlbum = res.data;
                     break;
                 case 2:
                     currentAlbumNumber = 2;
-                    secondAlbum = res.data;
-                    appendAlbumPhotos(secondAlbum);
+                    album = secondAlbum = res.data;
                     break;
                 case 3:
                     currentAlbumNumber = 3;
-                    thirdAlbum = res.data;
-                    appendAlbumPhotos(thirdAlbum);
+                    album = thirdAlbum = res.data;
                     break; 
             }
-            albumImages = response.data;
+            showButtons();
+            appendAlbumPhotos(album);
         })
         .catch(e => {
         })
@@ -72,7 +71,29 @@ const app = (() =>{
             }
         }
     }
+
+    let editMode = false;
+    const editButton = document.getElementById('speech-bubble-right');
+    const saveButton = document.getElementById('speech-bubble-left');
+    const editButtonLabel = editButton.children[0];
     
+    const changeLabels = () => {
+        if (!editMode) {
+            editButtonLabel.innerHTML = 'Cancel';
+        } else {
+            editButtonLabel.innerHTML = 'Edit';
+            rotateButton.style.display = 'none';
+            resizeButton.style.display = 'none';
+            movePhotoButton.style.display = 'none';
+        }
+        editMode = !editMode;
+    }
+
+    const showButtons = () => {
+        editButton.classList.add('scale');
+        saveButton.classList.add('scale');
+    }
+
     //https://css-tricks.com/get-value-of-css-rotation-through-javascript/
     const getRotation = () =>  {
         const styles = window.getComputedStyle(currentPhoto.node, null);
@@ -539,6 +560,9 @@ const app = (() =>{
 
         document.getElementById('input-photo').addEventListener('input', appendPhoto);
 
+        saveButton.addEventListener('mouseover', () => editButton.classList.add('moved'))
+        saveButton.addEventListener('mouseout', () => editButton.classList.remove('moved'))
+        editButton.addEventListener('mousedown', changeLabels) 
     }
 
     return {
