@@ -16,21 +16,22 @@ const draggables = (() =>{
             e.preventDefault();
             pos3 = e.pageX;
             pos4 = e.pageY;            
-            document.addEventListener('mousemove', onDrag);
-            document.addEventListener('mouseup', closeDrag);
             
-            node.style.transition = '0s';
             className = target.className;
+            if(className.includes('disabled')) return;
+
+            node.style.transition = '0s';
             
             if (className == 'move-note' || className == 'drag-photo') node = target.parentElement;
 
             if (className == 'appended') {
                 node = target.parentElement;
-
                 clearAppendedPhoto();
-                closeDrag();
                 return;
             }
+
+            document.addEventListener('mousemove', onDrag);
+            document.addEventListener('mouseup', closeDrag);
         }
 
         function onDrag(e) {
@@ -63,7 +64,6 @@ const draggables = (() =>{
             
             document.removeEventListener('mousemove', onDrag);
             document.removeEventListener('mouseup', closeDrag);
-            console.log(className);
             
             switch (className) {
                 case 'move-photo':
@@ -117,10 +117,12 @@ const draggables = (() =>{
 
             photo.style.opacity = 1;
             photo.style.transition = 'opacity 1s'
+            photo.classList.add('disabled');
         
             elementFromPoint.appendChild(photo);
             node.style.display = 'none';
 
+            
             try{
                 await app.updateChosenPhoto(photo.id, elementFromPoint);
             }catch(e){
@@ -130,6 +132,8 @@ const draggables = (() =>{
                 console.log(e);
                 resetPhoto(node);
                 return;
+            }finally{
+                photo.classList.remove('disabled');
             }
 
             photo.className = 'appended';
@@ -146,6 +150,9 @@ const draggables = (() =>{
             const newPhotoId = Number(photo.id);
             const newPhotoSrc = photo.src;
 
+            photo.classList.add('disabled');
+            currentPhoto.classList.add('disabled');
+
             resetPhoto();
             currentPhoto.src = newPhotoSrc;
             photo.src = currentPhotoSrc;
@@ -156,9 +163,11 @@ const draggables = (() =>{
             }catch(e){
                 photo.src = newPhotoSrc;
                 currentPhoto.src = currentPhotoSrc;
-
                 console.log(e);
                 return;
+            }finally{
+                photo.classList.remove('disabled');
+                currentPhoto.classList.remove('disabled');
             }
 
             currentPhoto.id = newPhotoId;

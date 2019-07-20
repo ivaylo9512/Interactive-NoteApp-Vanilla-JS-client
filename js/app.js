@@ -292,64 +292,60 @@ const app = (() =>{
             const imageData = new FormData();
             imageData.append('photo', image);
 
-            remote.submitImage(imageData).then(
-                res => {
-                    const image = res.data;
-                   
-                    const containerCopy = photoContainer.cloneNode(true);
-                    const photoCopy = containerCopy.children[0];
+            remote.submitImage(imageData).then(res => {
+                const image = res.data;
+                
+                const containerCopy = photoContainer.cloneNode(true);
+                const photoCopy = containerCopy.children[0];
 
-                    photoCopy.id = image.id;
-                    photoCopy.src = remote.getBase() + image.location;
-                    
-                    draggables.dragElement(photoCopy);
-                    photosContainer.insertBefore(containerCopy, photosContainer.firstChild);
+                photoCopy.id = image.id;
+                photoCopy.src = remote.getBase() + image.location;
+                
+                draggables.dragElement(photoCopy);
+                photosContainer.insertBefore(containerCopy, photosContainer.firstChild);
             })
         }
     }
 
     const updateChosenPhoto = (id, elementFromPoint) => { 
-        return remote.updatePhotoAlbum(id, currentAlbumNumber).then(
-            res => {
-
-                let index;
-                switch (currentAlbumNumber) {
-                    case 1:
-                        index = firstAlbum.length;
-                        firstAlbum.push(res);
-                        break;
-                    case 2:
-                        index = secondAlbum.length;
-                        secondAlbum.push(res);
-                        break;
-                    case 3:
-                        index = thirdAlbum.length;
-                        thirdAlbum.push(res);
-                        break
-                }
-                placePhotos[placePhotos.indexOf(elementFromPoint)] = placePhotos[index];
-                placePhotos[index] = elementFromPoint;
+        return remote.updatePhotoAlbum(id, currentAlbumNumber).then(res => {
+            let index;
+            switch (currentAlbumNumber) {
+                case 1:
+                    index = firstAlbum.length;
+                    firstAlbum.push(res);
+                    break;
+                case 2:
+                    index = secondAlbum.length;
+                    secondAlbum.push(res);
+                    break;
+                case 3:
+                    index = thirdAlbum.length;
+                    thirdAlbum.push(res);
+                    break
+            }
+            placePhotos[placePhotos.indexOf(elementFromPoint)] = placePhotos[index];
+            placePhotos[index] = elementFromPoint;
         })
     }
 
     const exchangePhotos = async (placedPhoto, currentPhoto, newPhoto) => {
         const index = placePhotos.indexOf(placedPhoto);
 
-        return remote.exchangePhotos(currentPhoto, newPhoto).then(
-            res => {
-                const image = res.data;
-                switch (currentAlbumNumber) {
-                    case 1:
-                        firstAlbum[index] = image;
-                        break;
-                    case 2:
-                        secondAlbum[index] = image;
-                        break;
-                    case 3:
-                        thirdAlbum[index] = image;
-                        break;
-                }
+        return remote.exchangePhotos(currentPhoto, newPhoto).then(res => {
+            const image = res.data;
+            switch (currentAlbumNumber) {
+                case 1:
+                    firstAlbum[index] = image;
+                    break;
+                case 2:
+                    secondAlbum[index] = image;
+                    break;
+                case 3:
+                    thirdAlbum[index] = image;
+                    break;
             }
+        }
         )
     }
 
@@ -358,42 +354,45 @@ const app = (() =>{
         photoContainer.appendChild(photo);
         
         photoContainer.className = 'drag-photo-container';
-        node.className = 'place-photo';
-        photo.className = 'drag-photo';
+        photo.className = 'drag-photo disabled';
+        node.className = 'place-photo disabled';
 
-        remote.updatePhotoAlbum(photo.id, 0).then(
-            res => {
-                let album;
-                let index = placePhotos.indexOf(node);
-                
-                switch (currentAlbumNumber) {
-                    case 1:
-                        album = firstAlbum;
-                        break;
-                    case 2:
-                        album = secondAlbum;
-                        break;
-                    case 3:
-                        album = thirdAlbum;
-                        break;
-                }
+        photosContainer.appendChild(photoContainer);
 
-                const lastElement = album.pop();
-                placePhotos[index] = placePhotos[album.length - 1];
-                placePhotos[thirdAlbum.length - 1] = node;                            
-                album[index] = lastElement;
+        remote.updatePhotoAlbum(photo.id, 0).then(res => {
+            let album;
+            let index = placePhotos.indexOf(node);
+            
+            switch (currentAlbumNumber) {
+                case 1:
+                    album = firstAlbum;
+                    break;
+                case 2:
+                    album = secondAlbum;
+                    break;
+                case 3:
+                    album = thirdAlbum;
+                    break;
+            }
+            
+            const lastElement = album.pop();
+            placePhotos[index] = placePhotos[album.length - 1];
+            placePhotos[thirdAlbum.length - 1] = node;                            
+            album[index] = lastElement;
+        })
+        .catch(e =>{
+            photosContainer.removeChild(photoContainer);
+            node.appendChild(photo);
 
-                photosContainer.appendChild(photoContainer);
-        }).catch(
-            e =>{
-                photoContainer.removeChild(photo);
-                node.appendChild(photo);
+            photoContainer.className = 'drag-photo-container';
+            node.className = 'placed-photo';
+            photo.className = 'appended';
+            console.log(e);
+        })
+        .finally(() =>{
+            node.classList.remove('disabled');
+            photo.classList.remove('disabled');
 
-                photoContainer.className = 'drag-photo-container';
-                node.className = 'placed-photo';
-                photo.className = 'appended';
-
-                console.log(e);
         })
     }
 
