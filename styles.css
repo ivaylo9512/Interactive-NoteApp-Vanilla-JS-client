@@ -295,6 +295,43 @@ body.full-mode-active .play-box{
     position: absolute;
     border-radius: 10px;
 }
+.speech-bubble{
+    cursor: pointer;
+    background-size:100%;
+    position:absolute;
+    height: 102px;
+    width: 102px;
+    -moz-animation: scaleIn 1s forwards;
+    -o-animation: scaleIn 1s forwards;
+    -webkit-animation: scaleIn 1s forwards;
+    animation: scaleIn 1s forwards;
+    display: none;
+    text-align: center;
+}
+.speech-bubble.right{
+    top: 481px;
+    left: 659px;
+    background-image: url('resources/speech-right.png');
+    transform-origin: 75% 95%;
+}
+.speech-bubble.left{
+    top: 491px;
+    left: 620px;
+    background-image: url('resources/speech-left.png');
+    transform-origin: 0 100%;
+}
+.speech-bubble.scale{
+    transform: scale(1);
+}
+.speech-bubble.rotate{
+    transform: rotate(20deg);
+    z-index:1;
+}
+.speech-bubble span{
+    margin-top: 40px;
+    display: inline-block;
+    font-size: 27px;
+}
 .onLoad-photo:nth-child(1){
     bottom: 5%;
     width: 10%;
@@ -438,35 +475,6 @@ body.full-mode-active .play-box{
     -o-animation: fadeIn .5s ease-in forwards;
     -webkit-animation: fadeIn .5s ease-in forwards;
     animation: fadeIn ease-in .5s forwards;
-}
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-@-webkit-keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-@-moz-keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
 }
 .circle1:before {
     bottom: 5%;
@@ -1418,6 +1426,36 @@ ol::after {
     color: #EAE9E5;
 }
 
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@-moz-keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
   /* Generated with Bounce.js. Edit at https://goo.gl/3nh2Tp */
   @-webkit-keyframes animation { 
     0% { -webkit-transform: matrix3d(0.6, 0, 0, 0, 0, 0.6, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)rotate(7deg); transform: matrix3d(0.6, 0, 0, 0, 0, 0.6, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)rotate(7deg); }
@@ -1478,3 +1516,33 @@ ol::after {
     90.69% { -webkit-transform: matrix3d(2.101, 0, 0, 0, 0, 2.101, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)rotate(7deg); transform: matrix3d(2.101, 0, 0, 0, 0, 2.101, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)rotate(7deg); }
     100% { -webkit-transform: matrix3d(2.1, 0, 0, 0, 0, 2.1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)rotate(7deg); transform: matrix3d(2.1, 0, 0, 0, 0, 2.1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)rotate(7deg); } 
   }
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0);
+    }
+
+    to {
+        transform: scale(1);
+    }
+}
+
+@-webkit-keyframes scaleIn {
+    from {
+        transform: scale(0);
+    }
+
+    to {
+        transform: scale(1);
+    }
+}
+
+@-moz-keyframes scaleIn {
+    from {
+        transform: scale(0);
+    }
+
+    to {
+        transform: scale(1);
+    }
+}

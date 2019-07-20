@@ -11,31 +11,27 @@ const app = (() =>{
     const getAlbumImages = (e) => {
         const id = e.target.id
 
-        remote.getAlbumImages(id).then(
-            res => {
-
-                switch(+id){
-                    case 1:
-                        currentAlbumNumber = 1;
-                        firstAlbum = response.data;
-                        appendAlbumPhotos(firstAlbum);
-                        break;
-                    case 2:
-                        currentAlbumNumber = 2;
-                        secondAlbum = response.data;
-                        appendAlbumPhotos(secondAlbum);
-                        break;
-                    case 3:
-                        currentAlbumNumber = 3;
-                        thirdAlbum = response.data;
-                        appendAlbumPhotos(thirdAlbum);
-                        break; 
-                }
-                albumImages = response.data;
+        remote.getAlbumImages(id).then(res => {
+            switch(+id){
+                case 1:
+                    currentAlbumNumber = 1;
+                    firstAlbum = response.data;
+                    appendAlbumPhotos(firstAlbum);
+                    break;
+                case 2:
+                    currentAlbumNumber = 2;
+                    secondAlbum = response.data;
+                    appendAlbumPhotos(secondAlbum);
+                    break;
+                case 3:
+                    currentAlbumNumber = 3;
+                    thirdAlbum = response.data;
+                    appendAlbumPhotos(thirdAlbum);
+                    break; 
             }
-        
-        ).catch(
-            e => {
+            albumImages = response.data;
+        })
+        .catch(e => {
         })
     }
 
@@ -106,7 +102,7 @@ const app = (() =>{
             inputNote.classList.add('inactive')
             document.body.classList.add('full-mode-active');
         }
-        currentAlbumNumber = 0;
+        currentAlbumNumber = null;
         fullModeOn = !fullModeOn;
     }
 
@@ -231,46 +227,45 @@ const app = (() =>{
             albumNumbersContainer.classList.remove('active');
             number.classList.remove('slide-middle');
             number = null;
+            currentAlbumNumber = null;
         }
     }
 
     const appendPlacePhotos = (index) => {
-        remote.getAlbumImages(index).then(
-            res => {
-                const images = res.data;
-                
-                switch(index){
-                    case 1:
-                        currentAlbumNumber = 1;
-                        firstAlbum = images;
-                        break;
-                    case 2:
-                        currentAlbumNumber = 2;
-                        secondAlbum = images;
-                        break;
-                    case 3:
-                        currentAlbumNumber = 3;
-                        thirdAlbum = images;
-                        break;    
-                }
-                let photo = document.createElement('img');
-                photo.className = 'appended';
-
-                images.forEach((image, i) => {
-                    const photoCopy = photo.cloneNode(false);
-                    
-                    const base = remote.getBase
-
-                    photoCopy.id = image.id;
-                    photoCopy.src = base() + image.location;
-                    
-                    placePhotos[i].appendChild(photoCopy);
-                    placePhotos[i].className = 'placed-photo';
-
-                    draggables.dragElement(photoCopy);
-                })
+        remote.getAlbumImages(index).then(res => {
+            const images = res.data;
+            
+            switch(index){
+                case 1:
+                    currentAlbumNumber = 1;
+                    firstAlbum = images;
+                    break;
+                case 2:
+                    currentAlbumNumber = 2;
+                    secondAlbum = images;
+                    break;
+                case 3:
+                    currentAlbumNumber = 3;
+                    thirdAlbum = images;
+                    break;    
             }
-        )
+            let photo = document.createElement('img');
+            photo.className = 'appended';
+
+            images.forEach((image, i) => {
+                const photoCopy = photo.cloneNode(false);
+                
+                const base = remote.getBase
+
+                photoCopy.id = image.id;
+                photoCopy.src = base() + image.location;
+                
+                placePhotos[i].appendChild(photoCopy);
+                placePhotos[i].className = 'placed-photo';
+
+                draggables.dragElement(photoCopy);
+            })
+        })
     }
 
     const clearPlacePhotos = () => {
@@ -329,7 +324,7 @@ const app = (() =>{
         })
     }
 
-    const exchangePhotos = async (placedPhoto, currentPhoto, newPhoto) => {
+    const exchangePhotos = (placedPhoto, currentPhoto, newPhoto) => {
         const index = placePhotos.indexOf(placedPhoto);
 
         return remote.exchangePhotos(currentPhoto, newPhoto).then(res => {

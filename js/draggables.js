@@ -113,6 +113,12 @@ const draggables = (() =>{
         }
 
         const choosePhoto = async () => {
+
+            if(!app.getCurrentAlbumNumber()){
+                resetPhoto();
+                return;
+            }
+
             const photo = target;
 
             photo.style.opacity = 1;
