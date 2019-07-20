@@ -15,17 +15,17 @@ const app = (() =>{
             switch(+id){
                 case 1:
                     currentAlbumNumber = 1;
-                    firstAlbum = response.data;
+                    firstAlbum = res.data;
                     appendAlbumPhotos(firstAlbum);
                     break;
                 case 2:
                     currentAlbumNumber = 2;
-                    secondAlbum = response.data;
+                    secondAlbum = res.data;
                     appendAlbumPhotos(secondAlbum);
                     break;
                 case 3:
                     currentAlbumNumber = 3;
-                    thirdAlbum = response.data;
+                    thirdAlbum = res.data;
                     appendAlbumPhotos(thirdAlbum);
                     break; 
             }
@@ -73,6 +73,29 @@ const app = (() =>{
         }
     }
 
+    //https://css-tricks.com/get-value-of-css-rotation-through-javascript/
+    const getRotation = () =>  {
+        const styles = window.getComputedStyle(currentPhoto, null);
+        const transform = styles.getPropertyValue('-webkit-transform') ||
+            styles.getPropertyValue('-moz-transform') ||
+            styles.getPropertyValue('-ms-transform') ||
+            styles.getPropertyValue('-o-transform') ||
+            styles.getPropertyValue('transform') ||
+            'none';
+
+        if (tr == 'none') return 0;
+
+        const values = transform.split('(')[1].split(')')[0].split(',');
+        const a = values[0];
+        const b = values[1];
+    
+        const scale = Math.sqrt(a * a + b * b);
+        const sin = b / scale;
+    
+        return Math.atan2(b, a) * (180 / Math.PI);
+    
+    }
+    
     const getCurrentAlbumNumber = () => currentAlbumNumber;
 
     const fullModeNav = document.getElementById('full-mode-nav');
@@ -96,12 +119,11 @@ const app = (() =>{
             fullModeBtn.classList.remove('active');
             inputNote.classList.remove('inactive');
             fullMode.style.display = 'none';
-            document.body.classList.remove('full-mode-active');
         }else{
             inputNote.style.display = 'none';
-            document.body.classList.add('full-mode-active');
             fullModeReset();
         }
+        document.body.classList.toggle('full-mode-active');
         currentAlbumNumber = null;
         fullModeOn = !fullModeOn;
     }
