@@ -70,6 +70,36 @@ const app = (() =>{
         }
     }
 
+    const moveEditablePhoto = () => {
+        if (editMode == true) {
+            moving = true;
+            resizeButton.style.display = 'none';
+            rotateButton.style.display = 'none';
+            currentPhotoTop = currentPhotoTop - pos2;
+            currentPhotoLeft = currentPhotoLeft - pos1;
+            currentPhoto.style.top = currentPhotoTop + 'px';
+            currentPhoto.style.left = currentPhotoLeft + 'px';
+            if (currentPhoto.parentElement.className == 'user-note') {
+                movePhotoButton.style.left = (currentPhotoLeft + focusedNoteContainer.offsetLeft + parseFloat(window.getComputedStyle(movePhotoButton).width)) + 'px';
+                movePhotoButton.style.top = (currentPhotoTop + focusedNoteContainer.offsetTop - secondSection.offsetTop) + ((currentPhotoHeight - parseFloat(window.getComputedStyle(movePhotoButton).height)) / 2) + 'px';
+            } else {
+                movePhotoButton.style.left = currentPhotoLeft + parseFloat(window.getComputedStyle(movePhotoButton).width) + 'px';
+                movePhotoButton.style.top = currentPhotoTop + ((currentPhotoHeight - parseFloat(window.getComputedStyle(movePhotoButton).height)) / 2) + 'px';
+            }
+            if (currentPhoto.parentElement.className == 'user-note' && (parseFloat(window.getComputedStyle(focusedNoteContainer.parentElement.parentElement).height) - (focusedNoteContainer.offsetTop + focusedNoteContainer.parentElement.offsetTop + currentPhotoTop) < 0)) {
+                currentPhotoTop = currentPhotoTop + focusedNoteContainer.offsetTop - secondSection.offsetTop;
+                currentPhotoLeft = currentPhotoLeft + focusedNoteContainer.offsetLeft;
+                currentPhoto.style.top = currentPhotoTop + 'px';
+                currentPhoto.style.left = currentPhotoLeft + 'px';
+                currentPhoto.style.width = (currentPhotoWidth / parseFloat(window.getComputedStyle(secondSection).width)) * 100 + '%';
+                currentPhoto.style.display = 'block'
+                currentPhoto.style.opacity = 1;
+                rotateButton.src = 'resources/rotate.png'
+                appendedPhotosSection.appendChild(currentPhoto);
+            }
+        }
+    }
+    
     const hideAppendedPhotos = () => {
         appendedPhotos.forEach(photo => photo.style.display = 'none');
     }
