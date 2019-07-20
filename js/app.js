@@ -91,16 +91,16 @@ const app = (() =>{
             notes.resetNote();
             notes.resetNoteView();
 
-            menuCircle.classList.remove('inactive');
+            clearPlacedPhotos();
+
             fullModeBtn.classList.remove('active');
             inputNote.classList.remove('inactive');
-            fullModeNav.classList.remove('active');
             fullMode.style.display = 'none';
             document.body.classList.remove('full-mode-active');
         }else{
-            fullMode.style.display = 'block';
-            inputNote.classList.add('inactive')
+            inputNote.style.display = 'none';
             document.body.classList.add('full-mode-active');
+            fullModeReset();
         }
         currentAlbumNumber = null;
         fullModeOn = !fullModeOn;
@@ -132,7 +132,9 @@ const app = (() =>{
         menuCircle.classList.remove('inactive');
         fullMode.style.display = 'block';
         photoSection.style.display = 'none';
+        inputNote.classList.add('inactive')
         notes.hideFullScreenNotes();
+        fullModeNav.classList.remove('active');
     }
 
     const navHoverAnimations = () => {
@@ -221,13 +223,24 @@ const app = (() =>{
 
             appendPlacePhotos(index);
 
-        }else if (number){
-            clearPlacePhotos();
+        }else {
+            clearPlacedPhotos();
+            currentAlbumNumber = null;
+        }
+    }
+
+    const clearPlacedPhotos = () => {
+        if(number){
+            placePhotos.forEach(photo => {
+                if (photo.firstChild) {
+                    photo.className = 'place-photo';
+                    photo.removeChild(photo.firstChild);
+                }
+            })
 
             albumNumbersContainer.classList.remove('active');
             number.classList.remove('slide-middle');
             number = null;
-            currentAlbumNumber = null;
         }
     }
 
@@ -267,16 +280,6 @@ const app = (() =>{
             })
         })
     }
-
-    const clearPlacePhotos = () => {
-        placePhotos.forEach(photo => {
-            if (photo.firstChild) {
-                photo.className = 'place-photo';
-                photo.removeChild(photo.firstChild);
-            }
-        })
-    }
-
 
     const appendPhoto = () => {
         const input = event.target;

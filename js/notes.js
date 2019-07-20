@@ -440,6 +440,7 @@ const notes = (() => {
             hideMonths();
 
         }
+        noteSection.style.display = 'block'; 
     } 
 
     let brushAnimated = false;
