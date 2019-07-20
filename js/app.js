@@ -12,23 +12,21 @@ const app = (() =>{
         const id = e.target.id
 
         remote.getAlbumImages(id).then(res => {
-            let album;
+            showButtons();
             switch(+id){
                 case 1:
                     currentAlbumNumber = 1;
-                    album = firstAlbum = res.data;
+                    appendAlbumPhotos(firstAlbum = res.data);
                     break;
                 case 2:
                     currentAlbumNumber = 2;
-                    album = secondAlbum = res.data;
+                    appendAlbumPhotos(secondAlbum = res.data);
                     break;
                 case 3:
                     currentAlbumNumber = 3;
-                    album = thirdAlbum = res.data;
+                    appendAlbumPhotos(thirdAlbum = res.data);
                     break; 
             }
-            showButtons();
-            appendAlbumPhotos(album);
         })
         .catch(e => {
         })
@@ -85,8 +83,39 @@ const app = (() =>{
             rotateButton.style.display = 'none';
             resizeButton.style.display = 'none';
             movePhotoButton.style.display = 'none';
+            resetEdits();
         }
         editMode = !editMode;
+    }
+
+    const resetEdits = () => {
+        let album;
+        switch (currentAlbumNumber) {
+            case 1:
+                album = firstAlbum;
+                break;
+            case 2:
+                album = secondAlbum;
+                break;
+            case 3:
+                album = thirdAlbum;
+                break;
+        }
+        album.forEach((photo, i) => resetPhoto(photo, i));
+    }
+
+    const resetPhoto = (photo, i) => {
+        appendedPhotos[i].style.width = photo.width;
+        appendedPhotos[i].style.left = photo.left;
+        appendedPhotos[i].style.top = photo.top;
+        appendedPhotos[i].style.transform = `rotate(${photo.rotation}deg)`;
+
+        let note = document.getElementById(photo.noteId + 'note')
+        if(note){
+            note.appendChild(appendedPhotos[i]);
+        }else if(appendedPhotos[i].parentElement.className == 'user-note' && photo['noteId'] == null){
+            secondSection.appendChild(appendedPhotos[i]);
+        }
     }
 
     const showButtons = () => {
