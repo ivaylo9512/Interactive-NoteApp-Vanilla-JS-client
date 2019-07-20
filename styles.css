@@ -455,6 +455,27 @@ body.full-mode-active .play-box{
     transform: rotate(34deg);
 }
 
+.move-btn{
+    display: none;
+    opacity: 0.9;
+    z-index: 9;
+    position: absolute;
+}
+.resize-btn{
+    display: none;
+    opacity: 0.9;
+    position: absolute;
+    pointer-events:none;
+    z-index: 9;
+}
+
+.rotate-btn{
+    display: none;
+    opacity: 1;
+    position: absolute;
+    z-index: 0;
+}
+
 .circles-container span:before{
     position: absolute;
     content: ' \25CF';
