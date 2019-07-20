@@ -1,166 +1,177 @@
 const draggables = (() =>{
 
-    const dragElement = (node) => {
-        node.addEventListener('mousedown', onMouseDown);
-    }
-
-    let pos1 = 0,
-        pos2 = 0,
-        pos3 = 0,
-        pos4 = 0;
-
-    let className;
-    let node;
-    let elementFromPoint;
-
-    function onMouseDown(e) {
-        node = e.currentTarget;
-        e.preventDefault();
-        pos3 = e.pageX;
-        pos4 = e.pageY;            
-        document.addEventListener('mousemove', onDrag);
-        document.addEventListener('mouseup', closeDrag);
+    const dragElement = (target) => {
+        target.addEventListener('mousedown', onMouseDown);
         
-        node.style.transition = '0s';
-        className = node.className;
-        
-        if (className == 'move-note' || className == 'drag-photo') node = node.parentElement;
-    }
+        let pos1 = 0,
+            pos2 = 0,
+            pos3 = 0,
+            pos4 = 0;
 
-    function onDrag(e) {
-        e.preventDefault();
-        pos1 = pos3 - e.pageX;
-        pos2 = pos4 - e.pageY;
-        pos3 = e.pageX;
-        pos4 = e.pageY;
+        let className;
+        let elementFromPoint;
 
-        node.style.top = node.offsetTop - pos2 + 'px';
-        node.style.left = node.offsetLeft - pos1 + 'px';
-
-        switch (className) {
-            case 'move-photo':
-                break;
-            case 'drag-photo':
-                makeContainerDraggable();
-                break;
-            case 'nav-point':
-                checkPointPosition();
-                break;
-        }
-    }
-
-    const makeContainerDraggable = () => {
-        node.style.marginLeft = '0px';
-        node.style.marginTop = '0px';
-        node.style.position = 'absolute';
-        node.style.zIndex = 2;
-        node.style.pointerEvents = 'none';
-    }
-
-    const checkPointPosition = () => {
-        if (pos3 > 100) {
-            notes.showMonths();
-            closeDrag();
-        } else if (node.parentElement.getBoundingClientRect().top - event.clientY > 35) {
-            notes.showYears();
-            closeDrag();
-        }
-    }
-
-    function closeDrag() {
-        let x = event.clientX;
-        let y = event.clientY;
-        elementFromPoint = document.elementFromPoint(x, y);
-        
-        document.removeEventListener('mousemove', onDrag);
-        document.removeEventListener('mouseup', closeDrag);
-        
-        switch (className) {
-            case 'move-photo':
-                break;
-            case 'drag-photo':
-                photoEndDrag();
-                break;
-            case 'nav-point':
-                resetNavPoint();
-                break;
-        }
-    }
-
-    function photoEndDrag() {
-        switch (elementFromPoint.className) {
-            case 'place-photo':
-                choosePhoto();
-                break;
-            case 'appended':
-                exchangePhotos();
-                break;
-            default:
-                resetPhoto();
-                break;
-        }
-        node.style.zIndex = 'auto';
-        node.style.pointerEvents = 'auto';
-    }
-
-    const choosePhoto = async () => {
-        const photo = node.children[0];
-        try{
-            await app.updateChosenPhoto(photo.id, elementFromPoint);
-        }catch(e){
-            resetPhoto();
-            console.log(e);
-            return;
-        }
-        
-        node.parentElement.removeChild(node);
-
-        photo.className = 'appended';
-        photo.style.opacity = 1;
-        photo.style.transition = 'opacity 1s'
-       
-        elementFromPoint.appendChild(photo);
-        elementFromPoint.className = 'placed-photo';
-
-    }
-
-    const resetPhoto = () => {
-        node.style.top = '0px';
-        node.style.left = '0px';
-        node.style.marginLeft = '2px';
-        node.style.marginTop = '2px';
-        node.style.position = 'relative';
-    }
-
-    async function exchangePhotos() {
-        const currentPhoto = elementFromPoint;
-        const currentPhotoId = Number(currentPhoto.id);
-        const currentPhotoSrc = currentPhoto.src;
-
-        const photo = node.children[0];
-        const newPhotoId = Number(photo.id);
-        const newPhotoSrc = photo.src;
-
-        try{
-            await app.exchangePhotos(currentPhoto.parentElement, currentPhotoId, newPhotoId);
-        }catch(e){
-            console.log(e);
-            return;
-        }finally{
-            resetPhoto();
+        let node = target;
+        function onMouseDown(e) {
+            e.preventDefault();
+            pos3 = e.pageX;
+            pos4 = e.pageY;            
+            document.addEventListener('mousemove', onDrag);
+            document.addEventListener('mouseup', closeDrag);
+            
+            node.style.transition = '0s';
+            className = target.className;
+            
+            if (className == 'move-note' || className == 'drag-photo') node = target.parentElement;
         }
 
-        currentPhoto.src = newPhotoSrc;
-        currentPhoto.id = newPhotoId;
-        photo.src = currentPhotoSrc;
-        photo.id = currentPhotoId;
-
-    }
+        function onDrag(e) {
+            e.preventDefault();
+            pos1 = pos3 - e.pageX;
+            pos2 = pos4 - e.pageY;
+            pos3 = e.pageX;
+            pos4 = e.pageY;
     
-    const resetNavPoint = () => {
-        node.style.transition = '2s';
-        node.style.left = '24px';
-        node.style.top = '33px';
+            node.style.top = node.offsetTop - pos2 + 'px';
+            node.style.left = node.offsetLeft - pos1 + 'px';
+    
+            switch (className) {
+                case 'move-photo':
+                    break;
+                case 'drag-photo':
+                    makeContainerDraggable();
+                    break;
+                case 'nav-point':
+                    checkPointPosition();
+                    break;
+            }
+            
+        }
+    
+        function closeDrag() {
+            let x = event.clientX;
+            let y = event.clientY;
+            elementFromPoint = document.elementFromPoint(x, y);
+            
+            document.removeEventListener('mousemove', onDrag);
+            document.removeEventListener('mouseup', closeDrag);
+            console.log(className);
+            
+            switch (className) {
+                case 'move-photo':
+                    break;
+                case 'drag-photo':
+
+                    photoEndDrag();
+                    break;
+                case 'nav-point':
+                    resetNavPoint();
+                    break;
+            }
+        }
+
+        function photoEndDrag() {
+            switch (elementFromPoint.className) {
+                case 'place-photo':
+                    choosePhoto();
+                    break;
+                case 'appended':
+                    exchangePhotos();
+                    break;
+                default:
+                    resetPhoto();
+                    break;
+            }
+            node.style.zIndex = 'auto';
+            node.style.pointerEvents = 'auto';
+        }
+
+        const makeContainerDraggable = () => {
+            node.style.marginLeft = '0px';
+            node.style.marginTop = '0px';
+            node.style.position = 'absolute';
+            node.style.zIndex = 2;
+            node.style.pointerEvents = 'none';
+        }
+
+        const checkPointPosition = () => {
+            if (pos3 > 100) {
+                notes.showMonths();
+                closeDrag();
+            } else if (node.parentElement.getBoundingClientRect().top - event.clientY > 35) {
+                notes.showYears();
+                closeDrag();
+            }
+        }
+
+        const choosePhoto = async () => {
+            const photo = target;
+
+            photo.style.opacity = 1;
+            photo.style.transition = 'opacity 1s'
+        
+            elementFromPoint.appendChild(photo);
+            node.style.display = 'none';
+
+            try{
+                await app.updateChosenPhoto(photo.id, elementFromPoint);
+            }catch(e){
+                node.appendChild(photo);
+                node.style.display = 'block';
+
+                console.log(e);
+                resetPhoto(node);
+                return;
+            }
+
+            photo.className = 'appended';
+            elementFromPoint.className = 'placed-photo';
+            node.parentElement.removeChild(node);
+        }
+        
+        async function exchangePhotos() {
+            const currentPhoto = elementFromPoint;
+            const currentPhotoId = Number(currentPhoto.id);
+            const currentPhotoSrc = currentPhoto.src;
+
+            const photo = target;
+            const newPhotoId = Number(photo.id);
+            const newPhotoSrc = photo.src;
+
+            resetPhoto();
+            currentPhoto.src = newPhotoSrc;
+            photo.src = currentPhotoSrc;
+
+
+            try{
+                await app.exchangePhotos(currentPhoto.parentElement, currentPhotoId, newPhotoId);
+            }catch(e){
+                photo.src = newPhotoSrc;
+                currentPhoto.src = currentPhotoSrc;
+
+                console.log(e);
+                return;
+            }
+
+            currentPhoto.id = newPhotoId;
+            photo.id = currentPhotoId;
+
+        }
+
+        const resetPhoto = () => {
+            node.style.top = '0px';
+            node.style.left = '0px';
+            node.style.marginLeft = '2px';
+            node.style.marginTop = '2px';
+            node.style.position = 'relative';
+        }
+
+        
+        const resetNavPoint = () => {
+            node.style.transition = '2s';
+            node.style.left = '24px';
+            node.style.top = '33px';
+        }    
     }
     return {
         dragElement
