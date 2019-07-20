@@ -70,6 +70,10 @@ const app = (() =>{
         }
     }
 
+    const hideAppendedPhotos = () => {
+        appendedPhotos.forEach(photo => photo.style.display = 'none');
+    }
+
     let editMode = false;
     const editButton = document.getElementById('speech-bubble-right');
     const saveButton = document.getElementById('speech-bubble-left');
@@ -246,6 +250,11 @@ const app = (() =>{
             inputNote.classList.remove('inactive');
             fullMode.style.display = 'none';
         }else{
+            if(currentAlbumNumber > 0){
+                editButton.classList.remove("speech-bubble-active");
+                saveButton.classList.remove("speech-bubble-active");
+                hideAppendedPhotos();
+            }
             inputNote.style.display = 'none';
             fullModeReset();
         }
