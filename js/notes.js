@@ -226,75 +226,7 @@ const notes = (() => {
     const leftNotesFragment = document.createDocumentFragment();
     const rightNotesFragment = document.createDocumentFragment();
 
-    let isTopNote = false;
-    let delay = 0;
-    let notesCount = 0;
-    const appendNotes = () => {
-        isTopNote = false;
-        notesCount = userNotes.length;
-        delay = notesCount * 0.2;
-
-        resetNotes();
-        addBuffers();
-
-        window.scrollTo(0, body.scrollHeight - 2749);
-
-        const noteContainer = createNote();
-
-        userNotes.forEach((userNote, i) => {
-            const containerCopy = noteContainer.cloneNode(true);
-            const note = containerCopy.children[0];
-            const noteText = note.children[0];
-            const noteName = note.children[2];
-            
-            noteText.innerHTML = userNote.note;
-            noteName.value = userNote.name;
-            note.id = userNote.id + 'note';
-
-            containerCopy.style.animationDelay = delay + 's';
-            noteText.style.marginTop = isTopNote ? '38px' : '-366px';   
-
-            delay -= 0.2;
-            if(i % 2 == 0) {
-                noteText.style.marginLeft = '280.5px';
-                leftNotesFragment.appendChild(containerCopy);
-            }else{
-                isTopNote = !isTopNote;
-                noteText.style.marginLeft = '-401.5px';
-                rightNotesFragment.appendChild(containerCopy);
-            }
-        })
-
-
-
-        rightNotesContainer.appendChild(rightNotesFragment);
-        leftNotesContainer.appendChild(leftNotesFragment);
-        
-    }
-
-    const resetNotes = () => {
-        while (cloudContainer.children.length > 1) {
-            cloudContainer.removeChild(cloudContainer.firstChild)
-
-        }
-        
-        while (buffersContainer.firstChild) {
-            buffersContainer.removeChild(buffersContainer.firstChild)
-        }
-
-        while (leftNotesContainer.firstChild) {
-            leftNotesContainer.removeChild(leftNotesContainer.firstChild)
-        }
-
-        while (rightNotesContainer.firstChild) {
-            rightNotesContainer.removeChild(rightNotesContainer.firstChild)
-        }
-
-        userNotes.length > 0 ? cloudHeader.style.marginBottom = '150px' : cloudHeader.style.marginBottom = '0px';
-        
-    }
-
-    const createNote = () =>{
+    const noteContainer = (() =>{
         const userNoteContainer = document.createElement('div');
         userNoteContainer.className = 'user-note-container';
         userNoteContainer.id = 'user-note-container';
@@ -320,6 +252,85 @@ const notes = (() => {
         userNoteContainer.appendChild(note);
 
         return userNoteContainer;
+    })();
+
+    let isTopNote = false;
+    let delay = 0;
+    let notesCount = 0;
+    const appendNotes = () => {
+        isTopNote = false;
+        notesCount = userNotes.length;
+        delay = notesCount * 0.2;
+
+        resetNotes();
+        addBuffers();
+
+        window.scrollTo(0, body.scrollHeight - 2749);
+
+
+        userNotes.forEach((userNote, i) => {
+            const containerCopy = noteContainer.cloneNode(true);
+            const note = containerCopy.children[0];
+            const noteText = note.children[0];
+            const noteName = note.children[2];
+            
+            noteText.innerHTML = userNote.note;
+            noteName.value = userNote.name;
+            note.id = userNote.id + 'note';
+
+            containerCopy.style.animationDelay = delay + 's';
+            noteText.style.marginTop = i > 2 ? '-366px' : '41px';   
+
+            delay -= 0.2;
+            if(i % 2 == 0) {
+                noteText.style.marginLeft = '280.5px';
+                leftNotesFragment.appendChild(containerCopy);
+            }else{
+                noteText.style.marginLeft = '-401.5px';
+                rightNotesFragment.appendChild(containerCopy);
+            }
+
+            containerCopy.addEventListener('click', () => showUserNote(containerCopy));
+        })
+        rightNotesContainer.appendChild(rightNotesFragment);
+        leftNotesContainer.appendChild(leftNotesFragment);
+        
+    }
+    
+    const showUserNote = (containerCopy) => {
+        containerCopy.classList.add('active');
+
+        document.addEventListener('click',  () => hideUserNote(containerCopy), {
+            once: true,
+            passive: true,
+            capture: true
+        });
+    }
+
+    const hideUserNote = (containerCopy) => {
+        containerCopy.classList.remove('active');
+    }
+
+    const resetNotes = () => {
+        while (cloudContainer.children.length > 1) {
+            cloudContainer.removeChild(cloudContainer.firstChild)
+
+        }
+        
+        while (buffersContainer.firstChild) {
+            buffersContainer.removeChild(buffersContainer.firstChild)
+        }
+
+        while (leftNotesContainer.firstChild) {
+            leftNotesContainer.removeChild(leftNotesContainer.firstChild)
+        }
+
+        while (rightNotesContainer.firstChild) {
+            rightNotesContainer.removeChild(rightNotesContainer.firstChild)
+        }
+
+        userNotes.length > 0 ? cloudHeader.style.marginBottom = '150px' : cloudHeader.style.marginBottom = '0px';
+        
     }
 
     const updateNote = () => {
