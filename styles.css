@@ -28,6 +28,7 @@ section{
     position: relative;
     overflow: hidden;
     z-index: 5;
+    margin: 0 auto;
 }
 
 .first-section {
@@ -141,7 +142,6 @@ body.full-mode-active .play-mode > *{
 }
 
 .full-mode-button img{
-    margin-right: 13px;
     width: 9%;
     cursor: pointer;
     float: right;
@@ -154,29 +154,29 @@ body.full-mode-active .play-mode > *{
 
 .play-nav{
     position: absolute;
-    bottom: 573px;
-    left: 868px;
     z-index: 9;
     height: 52px;
     width: 395px;
+    right: 1%;
+    bottom: 580px;
 }
 
 .play-nav.active{
     position: fixed;
-    right: 0;
     z-index: 9;
-    height: 8%;
+    top: 15px;
 }
 body.full-mode-active .play-nav {
-    right: 0;
-    top: 24px;
-    left: unset;
+    right: 1%;
+    bottom: unset;
+    top: 23px;
+    position: fixed;
 }
 .gear {
     width: 8%;
     margin-top: 5px;
     z-index: 7;
-    margin-right: 15px;
+    margin-right: 4px;
 }
 
 .play-box{
@@ -249,7 +249,7 @@ body.full-mode-active .play-box{
     border-bottom: 50px solid transparent;
     border-left: 60px solid #41291B;
     margin-top: -30px;
-    margin-left: -13px;
+    margin-right: -13px;
     z-index: 1;
     transform: scale(0.22);
     cursor: pointer;
@@ -1019,10 +1019,10 @@ body.full-mode-active .full-mode{
 .full-mode-circle {
     position: absolute;
     top: 50%;
-    left: 50%;
-    margin-left: -30px;
+    right: 50%;
+    margin-right: -30px;
     margin-top: -30px;
-    background: url('resources/menu-icon.png') no-repeat center center;
+    background: url(resources/menu-icon.png) no-repeat center center;
     background-size: 40%;
     border: 3px solid #41291B;
     border-radius: 90px;
@@ -1038,12 +1038,12 @@ body.full-mode-active .full-mode-circle {
 }
 .full-mode-circle.inactive {
     position: fixed;
-    left: 98.5%;
+    right: 1%;
+    margin-right: 0;
     top: 91px;
     width: 37px;
     height: 37px;
     z-index: 9;
-    border: 2.5px solid #41291B;
 }
 .timeline-months-container{
     float: left;
@@ -1241,7 +1241,8 @@ ol::after {
     text-align: center;
     padding: 0 12%;
     width: 947px;
-    display: inline-block;
+    display: block;
+    margin: 0 auto;
 }
 .album-container > div{
     height: 61px;
