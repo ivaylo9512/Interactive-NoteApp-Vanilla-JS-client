@@ -626,7 +626,6 @@ const app = (() =>{
                     if(placePhoto.children[0].id == currentPhoto) return placePhoto 
                 }
             })
-            console.log(photos)
             if(photos.length > 0){
                 photos[0].firstChild.src = image.src;
                 photos[0].firstChild.id = image.location;
@@ -684,6 +683,38 @@ const app = (() =>{
         })
     }
 
+    const savePhotos = () => {
+        const album = albums[currentAlbumString];
+            album.forEach((photo, i) => {
+                photo[i]['width'] = appendedPhotos[i].style.width;
+                photo[i]['left'] = appendedPhotos[i].style.left;
+                photo[i]['top'] = appendedPhotos[i].style.top;
+                let currentPhotoDisplay = appendedPhotos[i].style.display;
+                appendedPhotos[i].style.display = "block";
+                photo[i]['rotation'] = getRotation(appendedPhotos[i]);
+                appendedPhotos[i].style.display = currentPhotoDisplay;
+                if(appendedPhotos[i].style.display != "none"){
+                    photo[i]['noteId'] = null;
+                }
+                if(appendedPhotos[i].parentElement.className == "user-note"){
+                    let noteId = appendedPhotos[i].parentElement.id;
+                    photo[i]['noteId'] = noteId.substring(0, noteId.length - 4);
+                }
+                if(photo[i]['noteId'] == null && appendedPhotos[i].offsetTop < -1710){
+                    photo[i]['top'] = "-1710px";
+                    appendedPhotos[i].style.top = "-1710px";
+                }
+            
+            remote.updateAlbumPhotos(album).then(
+                res => {
+                    editButtonLabel.innerHTML = "Edit";
+                    rotateButton.style.display = "none";
+                    editMode = false;
+                }
+            );
+        
+    })
+
     const start = () => {
         initialAnimation();
 
@@ -732,9 +763,10 @@ const app = (() =>{
 
         document.getElementById('input-photo').addEventListener('input', appendPhoto);
 
-        saveButton.addEventListener('mouseover', () => editButton.classList.add('moved'));
-        saveButton.addEventListener('mouseout', () => editButton.classList.remove('moved'));
-        editButton.addEventListener('mousedown', changeLabels); 
+        saveButton.addEventListener('mouseover', () => editButton.classList.add('rotate'));
+        saveButton.addEventListener('mouseout', () => editButton.classList.remove('rotate'));
+        saveButton.addEventListener('click', savePhotos);
+        editButton.addEventListener('click', changeLabels); 
         
         moveButton.addEventListener('mouseover', focusMoveButton);
 
