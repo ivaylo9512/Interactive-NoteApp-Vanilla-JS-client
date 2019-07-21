@@ -3,33 +3,34 @@ const app = (() =>{
     const userPhotosContainer = document.getElementById('user-photos');
     const appendedPhotos = Array.from(userPhotosContainer.children);
     
-    let firstAlbum = [];
-    let secondAlbum = [];
-    let thirdAlbum = [];
+    const albums = {
+        firstAlbum: undefined,
+        secondAlbum: undefined,
+        thirdAlbum: undefined
+    }
 
     let currentAlbumNumber;
+    let currentAlbumString;
     const getAlbumImages = (e) => {
-        const id = e.target.id
+        const id = e.target.id.split(' ');
 
-        remote.getAlbumImages(id).then(res => {
-            showButtons();
-            switch(+id){
-                case 1:
-                    currentAlbumNumber = 1;
-                    appendAlbumPhotos(firstAlbum = res.data);
-                    break;
-                case 2:
-                    currentAlbumNumber = 2;
-                    appendAlbumPhotos(secondAlbum = res.data);
-                    break;
-                case 3:
-                    currentAlbumNumber = 3;
-                    appendAlbumPhotos(thirdAlbum = res.data);
-                    break; 
-            }
-        })
-        .catch(e => {
-        })
+        currentAlbumNumber = +id[0];
+        currentAlbumString = id[1];
+
+        if(!albums[currentAlbumString]){
+            
+            remote.getAlbumImages(currentAlbumNumber).then(res => {
+                showButtons();
+                albums[currentAlbumString] = res.data;
+                appendAlbumPhotos(albums[currentAlbumString]);
+            })
+            .catch(e => {
+                console.log(e);
+            })
+            
+        }else{
+            appendAlbumPhotos(albums[currentAlbumString])
+        }
     }
 
     const appendAlbumPhotos = (currentAlbum) => {
@@ -220,18 +221,7 @@ const app = (() =>{
     }
 
     const resetEdits = () => {
-        let album;
-        switch (currentAlbumNumber) {
-            case 1:
-                album = firstAlbum;
-                break;
-            case 2:
-                album = secondAlbum;
-                break;
-            case 3:
-                album = thirdAlbum;
-                break;
-        }
+        const album = albums[currentAlbumString];
         album.forEach((photo, i) => resetPhoto(photo, i));
     }
 
@@ -490,24 +480,26 @@ const app = (() =>{
     const showPhotoSection = () => {
         photoSection.style.display = 'block';
         
-        remote.getAlbumImages(0).then(
-            res => {
-                const images = res.data;
+        if(photosContainer.children.length == 0){
+            remote.getAlbumImages(0).then(
+                res => {
+                    const images = res.data;
 
-                images.forEach((image) => {
-                    const containerCopy = photoContainer.cloneNode(true);
-                    const photoCopy = containerCopy.children[0];
+                    images.forEach((image) => {
+                        const containerCopy = photoContainer.cloneNode(true);
+                        const photoCopy = containerCopy.children[0];
 
-                    photoCopy.id = image.id;
-                    photoCopy.src = remote.getBase() + image.location;
+                        photoCopy.id = image.id;
+                        photoCopy.src = remote.getBase() + image.location;
 
-                    draggables.dragElement(photoCopy);                    
-                    photosFragment.insertBefore(containerCopy, photosFragment.firstChild);
-                });
-                photosContainer.insertBefore(photosFragment, photosContainer.firstChild);
+                        draggables.dragElement(photoCopy);                    
+                        photosFragment.insertBefore(containerCopy, photosFragment.firstChild);
+                    });
+                    photosContainer.insertBefore(photosFragment, photosContainer.firstChild);
 
-            }
-        )
+                }
+            )
+        }
     }
 
     const placePhotos = Array.from(document.getElementsByClassName('place-photo'));
@@ -518,13 +510,17 @@ const app = (() =>{
         
         if(event.target != event.currentTarget && !number){
             number = event.target;
-            const index = albumNumbers.indexOf(number) + 1; 
-            index == 2 ? albumNumbersContainer.classList.add('middle') : albumNumbersContainer.classList.remove('middle');
+            
+            const id = number.id.split('-');
+            currentAlbumNumber = id[0];
+            currentAlbumString = id[1];
+
+            currentAlbumNumber == 2 ? albumNumbersContainer.classList.add('middle') : albumNumbersContainer.classList.remove('middle');
 
             albumNumbersContainer.classList.add('active');
             number.classList.add('slide-middle');
 
-            appendPlacePhotos(index);
+            appendPlacePhotos();
 
         }else {
             clearPlacedPhotos();
@@ -547,40 +543,33 @@ const app = (() =>{
         }
     }
 
-    const appendPlacePhotos = (index) => {
-        remote.getAlbumImages(index).then(res => {
-            const images = res.data;
-            
-            switch(index){
-                case 1:
-                    currentAlbumNumber = 1;
-                    firstAlbum = images;
-                    break;
-                case 2:
-                    currentAlbumNumber = 2;
-                    secondAlbum = images;
-                    break;
-                case 3:
-                    currentAlbumNumber = 3;
-                    thirdAlbum = images;
-                    break;    
-            }
-            let photo = document.createElement('img');
-            photo.className = 'appended';
+    const photo = document.createElement('img');
+    photo.className = 'appended';
+    const appendPlacePhotos = async() => {
+        
+        let album;
+        if(!albums[currentAlbumString]){
 
-            images.forEach((image, i) => {
-                const photoCopy = photo.cloneNode(false);
-                
-                const base = remote.getBase
-
-                photoCopy.id = image.id;
-                photoCopy.src = base() + image.location;
-                
-                placePhotos[i].appendChild(photoCopy);
-                placePhotos[i].className = 'placed-photo';
-
-                draggables.dragElement(photoCopy);
+            await remote.getAlbumImages(currentAlbumNumber).then(res => {
+                album = albums[currentAlbumString] = res.data;
+            }).catch(e => {
+                console.log(e);
             })
+        
+        }else{
+            album = albums[currentAlbumString];
+        }
+
+        album.forEach((image, i) => {
+            const photoCopy = photo.cloneNode(false);
+            
+            photoCopy.id = image.id;
+            photoCopy.src = remote.getBase() + image.location;
+            
+            placePhotos[i].appendChild(photoCopy);
+            placePhotos[i].className = 'placed-photo';
+
+            draggables.dragElement(photoCopy);
         })
     }
 
@@ -610,21 +599,10 @@ const app = (() =>{
 
     const updateChosenPhoto = (id, elementFromPoint) => { 
         return remote.updatePhotoAlbum(id, currentAlbumNumber).then(res => {
-            let index;
-            switch (currentAlbumNumber) {
-                case 1:
-                    index = firstAlbum.length;
-                    firstAlbum.push(res);
-                    break;
-                case 2:
-                    index = secondAlbum.length;
-                    secondAlbum.push(res);
-                    break;
-                case 3:
-                    index = thirdAlbum.length;
-                    thirdAlbum.push(res);
-                    break
-            }
+            const album = albums[currentAlbumString]
+            const index = album.length
+            album.push(res);
+
             placePhotos[placePhotos.indexOf(elementFromPoint)] = placePhotos[index];
             placePhotos[index] = elementFromPoint;
         })
@@ -635,19 +613,8 @@ const app = (() =>{
 
         return remote.exchangePhotos(currentPhoto, newPhoto).then(res => {
             const image = res.data;
-            switch (currentAlbumNumber) {
-                case 1:
-                    firstAlbum[index] = image;
-                    break;
-                case 2:
-                    secondAlbum[index] = image;
-                    break;
-                case 3:
-                    thirdAlbum[index] = image;
-                    break;
-            }
-        }
-        )
+            albums[currentAlbumString][index] = image
+        })
     }
 
     const clearPhoto = (photo, node) => {
@@ -661,24 +628,12 @@ const app = (() =>{
         photosContainer.appendChild(photoContainer);
 
         remote.updatePhotoAlbum(photo.id, 0).then(res => {
-            let album;
+            let album = albums[currentAlbumString];
             let index = placePhotos.indexOf(node);
-            
-            switch (currentAlbumNumber) {
-                case 1:
-                    album = firstAlbum;
-                    break;
-                case 2:
-                    album = secondAlbum;
-                    break;
-                case 3:
-                    album = thirdAlbum;
-                    break;
-            }
             
             const lastElement = album.pop();
             placePhotos[index] = placePhotos[album.length - 1];
-            placePhotos[thirdAlbum.length - 1] = node;                            
+            placePhotos[album.length - 1] = node;                            
             album[index] = lastElement;
         })
         .catch(e =>{
