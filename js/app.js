@@ -70,53 +70,54 @@ const app = (() =>{
         }
     }
 
-    const moveEditablePhoto = () => {
+    const moveEditablePhoto = (pos1, pos2) => {
         if (editMode == true) {
             moving = true;
             resizeButton.style.display = 'none';
             rotateButton.style.display = 'none';
-            currentPhotoTop = currentPhotoTop - pos2;
-            currentPhotoLeft = currentPhotoLeft - pos1;
-            currentPhoto.style.top = currentPhotoTop + 'px';
-            currentPhoto.style.left = currentPhotoLeft + 'px';
-            if (currentPhoto.parentElement.className == 'user-note') {
-                movePhotoButton.style.left = (currentPhotoLeft + focusedNoteContainer.offsetLeft + parseFloat(window.getComputedStyle(movePhotoButton).width)) + 'px';
-                movePhotoButton.style.top = (currentPhotoTop + focusedNoteContainer.offsetTop - secondSection.offsetTop) + ((currentPhotoHeight - parseFloat(window.getComputedStyle(movePhotoButton).height)) / 2) + 'px';
+            currentPhoto.top = currentPhoto.top - pos2;
+            currentPhoto.left = currentPhoto.left - pos1;
+            currentPhoto.node.style.top = currentPhoto.top + 'px';
+            currentPhoto.node.style.left = currentPhoto.left + 'px';
+            if (currentPhoto.node.parentElement.className == 'user-note') {
+                movePhotoButton.style.left = (currentPhoto.left + focusedNoteContainer.offsetLeft + parseFloat(window.getComputedStyle(movePhotoButton).width)) + 'px';
+                movePhotoButton.style.top = (currentPhoto.top + focusedNoteContainer.offsetTop - secondSection.offsetTop) + ((currentPhoto.height - parseFloat(window.getComputedStyle(movePhotoButton).height)) / 2) + 'px';
             } else {
-                movePhotoButton.style.left = currentPhotoLeft + parseFloat(window.getComputedStyle(movePhotoButton).width) + 'px';
-                movePhotoButton.style.top = currentPhotoTop + ((currentPhotoHeight - parseFloat(window.getComputedStyle(movePhotoButton).height)) / 2) + 'px';
+                movePhotoButton.style.left = currentPhoto.left + parseFloat(window.getComputedStyle(movePhotoButton).width) + 'px';
+                movePhotoButton.style.top = currentPhoto.top + ((currentPhoto.height - parseFloat(window.getComputedStyle(movePhotoButton).height)) / 2) + 'px';
             }
-            if (currentPhoto.parentElement.className == 'user-note' && (parseFloat(window.getComputedStyle(focusedNoteContainer.parentElement.parentElement).height) - (focusedNoteContainer.offsetTop + focusedNoteContainer.parentElement.offsetTop + currentPhotoTop) < 0)) {
-                currentPhotoTop = currentPhotoTop + focusedNoteContainer.offsetTop - secondSection.offsetTop;
-                currentPhotoLeft = currentPhotoLeft + focusedNoteContainer.offsetLeft;
-                currentPhoto.style.top = currentPhotoTop + 'px';
-                currentPhoto.style.left = currentPhotoLeft + 'px';
-                currentPhoto.style.width = (currentPhotoWidth / parseFloat(window.getComputedStyle(secondSection).width)) * 100 + '%';
-                currentPhoto.style.display = 'block'
-                currentPhoto.style.opacity = 1;
+            if (currentPhoto.node.parentElement.className == 'user-note' && (parseFloat(window.getComputedStyle(focusedNoteContainer.parentElement.parentElement).height) - (focusedNoteContainer.offsetTop + focusedNoteContainer.parentElement.offsetTop + currentPhoto.top) < 0)) {
+                currentPhoto.top = currentPhoto.top + focusedNoteContainer.offsetTop - secondSection.offsetTop;
+                currentPhoto.left = currentPhoto.left + focusedNoteContainer.offsetLeft;
+                currentPhoto.node.style.top = currentPhoto.top + 'px';
+                currentPhoto.node.style.left = currentPhoto.left + 'px';
+                currentPhoto.node.style.width = (currentPhoto.width / parseFloat(window.getComputedStyle(secondSection).width)) * 100 + '%';
+                currentPhoto.node.style.display = 'block'
+                currentPhoto.node.style.opacity = 1;
                 rotateButton.src = 'resources/rotate.png'
-                appendedPhotosSection.appendChild(currentPhoto);
+                appendedPhotosSection.appendChild(currentPhoto.node);
             }
         }
     }
-    function resetMovePhotoButtons() {
-        rotateButton.style.display = "block";
-        resizeButton.style.display = "block";
+    
+    const resetMovePhotoButtons = () => {
+        rotateButton.style.display = 'block';
+        resizeButton.style.display = 'block';
         moving = false;
-        if (currentPhoto.parentElement.className == "user-note") {
-            rotateButton.style.height = currentPhotoHeight * 1.75 + "px";
-            rotateButton.style.left = currentPhotoLeft + focusedNoteContainer.offsetLeft + ((currentPhotoWidth - parseFloat(window.getComputedStyle(rotateButton).width)) / 2) + "px";
-            rotateButton.style.top = (currentPhotoTop + focusedNoteContainer.offsetTop - secondSection.offsetTop) + ((currentPhotoHeight - parseFloat(window.getComputedStyle(rotateButton).height)) / 2) + "px";
+        if (currentPhoto.node.parentElement.className == 'user-note') {
+            rotateButton.style.height = currentPhoto.height * 1.75 + 'px';
+            rotateButton.style.left = currentPhoto.left + focusedNoteContainer.offsetLeft + ((currentPhoto.width - parseFloat(window.getComputedStyle(rotateButton).width)) / 2) + 'px';
+            rotateButton.style.top = (currentPhoto.top + focusedNoteContainer.offsetTop - secondSection.offsetTop) + ((currentPhoto.height - parseFloat(window.getComputedStyle(rotateButton).height)) / 2) + 'px';
 
-            resizeButton.style.width = currentPhotoWidth + "px";
-            resizeButton.style.left = currentPhotoLeft + focusedNoteContainer.offsetLeft + "px";
-            resizeButton.style.top = (currentPhotoTop + focusedNoteContainer.offsetTop - secondSection.offsetTop) + ((currentPhotoHeight - parseFloat(window.getComputedStyle(resizeButton).height)) / 2) + "px";
+            resizeButton.style.width = currentPhoto.width + 'px';
+            resizeButton.style.left = currentPhoto.left + focusedNoteContainer.offsetLeft + 'px';
+            resizeButton.style.top = (currentPhoto.top + focusedNoteContainer.offsetTop - secondSection.offsetTop) + ((currentPhoto.height - parseFloat(window.getComputedStyle(resizeButton).height)) / 2) + 'px';
         } else {
-            rotateButton.style.height = parseFloat(window.getComputedStyle(currentPhoto).height) * 1.75 + "px";
-            rotateButton.style.left = currentPhoto.offsetLeft + ((parseFloat(window.getComputedStyle(currentPhoto).width) - parseFloat(window.getComputedStyle(rotateButton).width)) / 2) + "px";
-            rotateButton.style.top = currentPhoto.offsetTop + ((parseFloat(window.getComputedStyle(currentPhoto).height) - parseFloat(window.getComputedStyle(rotateButton).height)) / 2) + "px";
-            resizeButton.style.left = currentPhoto.offsetLeft + "px";
-            resizeButton.style.top = currentPhoto.offsetTop + ((parseFloat(window.getComputedStyle(currentPhoto).height) - parseFloat(window.getComputedStyle(resizeButton).height)) / 2) + "px";
+            rotateButton.style.height = parseFloat(currentPhoto.height) * 1.75 + 'px';
+            rotateButton.style.left = currentPhoto.node.offsetLeft + ((parseFloat(currentPhoto.width) - parseFloat(window.getComputedStyle(rotateButton).width)) / 2) + 'px';
+            rotateButton.style.top = currentPhoto.node.offsetTop + ((parseFloat(currentPhoto.height) - parseFloat(window.getComputedStyle(rotateButton).height)) / 2) + 'px';
+            resizeButton.style.left = currentPhoto.node.offsetLeft + 'px';
+            resizeButton.style.top = currentPhoto.node.offsetTop + ((parseFloat(currentPhoto.height) - parseFloat(window.getComputedStyle(resizeButton).height)) / 2) + 'px';
         }
     }
     const hideAppendedPhotos = () => {
@@ -300,8 +301,8 @@ const app = (() =>{
             fullMode.style.display = 'none';
         }else{
             if(currentAlbumNumber > 0){
-                editButton.classList.remove("speech-bubble-active");
-                saveButton.classList.remove("speech-bubble-active");
+                editButton.classList.remove('speech-bubble-active');
+                saveButton.classList.remove('speech-bubble-active');
                 hideAppendedPhotos();
             }
             inputNote.style.display = 'none';
@@ -633,6 +634,7 @@ const app = (() =>{
 
         draggables.dragElement(document.getElementById('move-note'));
         draggables.dragElement(document.getElementById('point'));
+        draggables.dragElement(movePhotoButton);
 
         fullModeBtn.addEventListener('click', fullModeToggle);
         menuCircle.addEventListener('click', fullModeNavToggle);
@@ -657,7 +659,9 @@ const app = (() =>{
         getCurrentAlbumNumber,
         updateChosenPhoto,
         exchangePhotos,
-        clearPhoto
+        clearPhoto,
+        moveEditablePhoto,
+        resetMovePhotoButtons
     }
 })();
 app.start();

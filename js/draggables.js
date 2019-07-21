@@ -45,7 +45,8 @@ const draggables = (() =>{
             node.style.left = node.offsetLeft - pos1 + 'px';
     
             switch (className) {
-                case 'move-photo':
+                case 'move-btn':
+                    moveEditablePhoto(pos1, pos2);
                     break;
                 case 'drag-photo':
                     makeContainerDraggable();
@@ -66,7 +67,8 @@ const draggables = (() =>{
             document.removeEventListener('mouseup', closeDrag);
             
             switch (className) {
-                case 'move-photo':
+                case 'move-btn':
+                    app.resetMovePhotoButtons();
                     break;
                 case 'drag-photo':
 
@@ -198,6 +200,10 @@ const draggables = (() =>{
 
         const clearAppendedPhoto = () => {
             app.clearPhoto(target, node);
+        }
+
+        const moveEditablePhoto = () => {
+            app.moveEditablePhoto(pos1, pos2);
         }
     }
     return {
