@@ -68,7 +68,7 @@ const draggables = (() =>{
             
             switch (className) {
                 case 'move-btn':
-                    app.resetMovePhotoButtons();
+                    app.resetMoveButtons();
                     break;
                 case 'drag-photo':
 
