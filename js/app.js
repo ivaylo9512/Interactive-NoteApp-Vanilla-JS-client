@@ -137,7 +137,8 @@ const app = (() =>{
             currentMousePosition = e.clientX;
 
             if(resizable){
-                document.addEventListener('mousemove', resize)
+                document.addEventListener('mousemove', resize);
+                document.addEventListener('mouseup', stopResize)
             }
         }
     }
@@ -158,9 +159,51 @@ const app = (() =>{
             resizeButton.style.top = currentPhoto.node.offsetTop + ((currentPhoto.node.height - parseFloat(window.getComputedStyle(resizeButton).height)) / 2) + 'px';
     }
 
-    const hideAppendedPhotos = () => {
-        appendedPhotos.forEach(photo => photo.style.display = 'none');
+    function stopResize(e) {
+        resizing = false;
+        resizable = false;
+        currentPhoto.left = currentPhoto.node.offsetLeft;
+        currentPhoto.width = parseFloat(window.getComputedStyle(currentPhoto.node).width);
+        currentPhoto.height = parseFloat(window.getComputedStyle(currentPhoto.node).height);
+        console.log(currentPhoto.height)
+
+        movePhotoButton.style.display = 'block';
+        rotateButton.style.display = 'block';
+        currentPhoto.node.style.zIndex = currentPhoto.zIndex;
+        
+        if (currentPhoto.node.parentElement.className == 'user-note') {
+            movePhotoButton.style.display = 'block';
+            movePhotoButton.style.width = currentPhoto.width / 3 + 'px';
+            movePhotoButton.style.left = (currentPhoto.left + focusedNoteContainer.offsetLeft + parseFloat(window.getComputedStyle(movePhotoButton).width)) + 'px';
+            movePhotoButton.style.top = (currentPhoto.top + focusedNoteContainer.offsetTop - secondSection.offsetTop) + ((currentPhoto.height - parseFloat(window.getComputedStyle(movePhotoButton).height)) / 2) + 'px';
+
+            rotateButton.style.height = currentPhoto.height * 1.75 + 'px';
+            rotateButton.style.left = currentPhoto.left + focusedNoteContainer.offsetLeft + ((currentPhoto.width - parseFloat(window.getComputedStyle(rotateButton).width)) / 2) + 'px';
+            rotateButton.style.top = (currentPhoto.top + focusedNoteContainer.offsetTop - secondSection.offsetTop) + ((currentPhoto.height - parseFloat(window.getComputedStyle(rotateButton).height)) / 2) + 'px';
+
+            resizeButton.style.width = currentPhoto.width + 'px';
+            resizeButton.style.left = currentPhoto.left + focusedNoteContainer.offsetLeft + 'px';
+            resizeButton.style.top = (currentPhoto.top + focusedNoteContainer.offsetTop - secondSection.offsetTop) + ((currentPhoto.height - parseFloat(window.getComputedStyle(resizeButton).height)) / 2) + 'px';
+        } else {
+            movePhotoButton.style.width = currentPhoto.width / 3 + 'px';
+            movePhotoButton.style.left = currentPhoto.left + parseFloat(window.getComputedStyle(movePhotoButton).width) + 'px';
+            movePhotoButton.style.top = currentPhoto.top + ((currentPhoto.height - parseFloat(window.getComputedStyle(movePhotoButton).height)) / 2) + 'px';
+            rotateButton.style.height = currentPhoto.height * 1.75 + 'px';
+            rotateButton.style.left = currentPhoto.left + ((currentPhoto.width - parseFloat(window.getComputedStyle(rotateButton).width)) / 2) + 'px';
+            rotateButton.style.top = currentPhoto.top + ((currentPhoto.height - parseFloat(window.getComputedStyle(rotateButton).height)) / 2) + 'px';
+        }
+        console.log(e.target)
+        if (e.target != currentPhoto.node) {
+            movePhotoButtonFocused = false;
+            movePhotoButton.style.display = 'none';
+            resizeButton.style.display = 'none'
+        }
+        document.removeEventListener('mousemove', resize);
+        document.removeEventListener('mouseup', stopResize);
     }
+
+    const hideAppendedPhotos = () => appendedPhotos.forEach(photo => photo.style.display = 'none');
+    
 
     let editMode = false;
     const editButton = document.getElementById('speech-bubble-right');
@@ -239,9 +282,8 @@ const app = (() =>{
     }
 
     const userPhotoListeners = (photo) => {
-        photo.ondragstart = function () {
-            return false;
-        };
+        photo.ondragstart = () => false;
+
         photo.addEventListener('mousedown', checkIfResizable);
         photo.addEventListener('mouseover', () => arrangePhotoButtons(photo));
 
