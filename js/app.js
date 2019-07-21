@@ -33,41 +33,32 @@ const app = (() =>{
     }
 
     const appendAlbumPhotos = (currentAlbum) => {
-        for (let i = 0; i < appendedPhotos.length; i++) {
-            appendedPhotos[i].style.display = 'none';
-
+        appendedPhotos.forEach((photo, i) =>{
+            photo.style.display = 'none';
             if(i < currentAlbum.length){
-                setTimeout(() => {
-                    appendedPhotos[i].style.display = 'block';
-                    appendedPhotos[i].style.opacity = 1;
-                    appendedPhotos[i].id = currentAlbum[i]['id'];
-                    appendedPhotos[i].src = 'http://localhost:8000/' + currentAlbum[i]['location'];
-                    appendedPhotos[i].style.width = currentAlbum[i]['width'];
-                    appendedPhotos[i].style.transform = 'rotate(' + currentAlbum[i]['rotation'] + 'deg)';
-                    appendedPhotos[i].style.left = currentAlbum[i]['left'];
-                    appendedPhotos[i].style.top = currentAlbum[i]['top'];
+                photo.style.display = 'block';
+                photo.style.opacity = 1;
+                photo.id = currentAlbum[i].id;
+                photo.src = 'http://localhost:8000/' + currentAlbum[i].location;
+                photo.style.width = currentAlbum[i].width;
+                photo.style.transform = `rotate(${currentAlbum[i].rotation}deg)`;
+                photo.style.right = currentAlbum[i].rightPosition;
+                photo.style.bottom = currentAlbum[i].bottomPosition;
 
-                    let noteId = currentAlbum[i]['noteId'] + 'note';
-                    if(currentAlbum[i]['noteId'] != null){
-                        appendedPhotos[i].style.display = 'none';
-                    }
+                let noteId = currentAlbum[i]['noteId'] + 'note';
+                if(currentAlbum[i]['noteId'] != null){
+                    photo.style.display = 'none';
+                }
 
-                    if(appendedPhotos[i].parentElement.className == 'user-note' && appendedPhotos[i].parentElement.id != noteId){
-                        appendedPhotosSection.appendChild(appendedPhotos[i]);
-                    }
+                if(photo.parentElement.className == 'user-note' && photo.parentElement.id != noteId){
+                    appendedPhotosSection.appendChild(photo);
+                }
+                if(document.getElementById(noteId)){
+                    document.getElementById(noteId).appendChild(photo);
+                }
 
-                    if(document.getElementById(noteId)){
-                        document.getElementById(noteId).appendChild(appendedPhotos[i]);
-                    }
-        
-                    setTimeout(() => {
-                        currentAlbum[i]['left'] = window.getComputedStyle(appendedPhotos[i]).left;
-                        currentAlbum[i]['top'] = window.getComputedStyle(appendedPhotos[i]).top;
-                    }, 40)
-
-                }, i * 80)
             }
-        }
+        })
     }
 
     let moving = false;
@@ -246,8 +237,8 @@ const app = (() =>{
 
     const resetPhoto = (photo, i) => {
         appendedPhotos[i].style.width = photo.width;
-        appendedPhotos[i].style.left = photo.left;
-        appendedPhotos[i].style.top = photo.top;
+        appendedPhotos[i].style.right = photo.right;
+        appendedPhotos[i].style.bottom = photo.bottom;
         appendedPhotos[i].style.transform = `rotate(${photo.rotation}deg)`;
 
         let note = document.getElementById(photo.noteId + 'note')
