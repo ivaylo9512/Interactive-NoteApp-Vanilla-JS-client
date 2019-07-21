@@ -30,8 +30,8 @@ const draggables = (() =>{
                 return;
             }
 
-            document.addEventListener('mousemove', onDrag);
-            document.addEventListener('mouseup', closeDrag);
+            window.addEventListener('mousemove', onDrag);
+            window.addEventListener('mouseup', closeDrag);
         }
 
         function onDrag(e) {
@@ -63,8 +63,8 @@ const draggables = (() =>{
             let y = event.clientY;
             elementFromPoint = document.elementFromPoint(x, y);
             
-            document.removeEventListener('mousemove', onDrag);
-            document.removeEventListener('mouseup', closeDrag);
+            window.removeEventListener('mousemove', onDrag);
+            window.removeEventListener('mouseup', closeDrag);
             
             switch (className) {
                 case 'move-btn':

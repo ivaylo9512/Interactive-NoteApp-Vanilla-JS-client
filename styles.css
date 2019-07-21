@@ -183,6 +183,7 @@ body.full-mode-active .play-nav {
     width: 395px;
     z-index: 9;
     height: 75%;
+    overflow: hidden;
 }
 
 .play-box > *:not(:first-child) {
@@ -301,12 +302,10 @@ body.full-mode-active .play-box{
     position:absolute;
     height: 102px;
     width: 102px;
-    -moz-animation: scaleIn 1s forwards;
-    -o-animation: scaleIn 1s forwards;
-    -webkit-animation: scaleIn 1s forwards;
-    animation: scaleIn 1s forwards;
-    display: none;
+    display: block;
     text-align: center;
+    transform: scale(0);
+    transition: all 1s;
 }
 .speech-bubble.right{
     top: 481px;
@@ -322,10 +321,9 @@ body.full-mode-active .play-box{
 }
 .speech-bubble.scale{
     transform: scale(1);
-    display: block;
 }
 .speech-bubble.rotate{
-    transform: rotate(20deg);
+    transform: scale(1) rotate(20deg);
     z-index:1;
 }
 .speech-bubble span{
@@ -376,6 +374,11 @@ body.full-mode-active .play-box{
 }
 .user-photo{
     position: absolute;
+    -moz-animation: opacity 2.5s forwards;
+    -o-animation: opacity 2.5s forwards;
+    -webkit-animation: opacity 2.5s forwards;
+    animation: opacity 2.5s forwards;
+    display: none;
 }
 .user-photo:nth-child(1){
     bottom: 19%;
@@ -1548,32 +1551,32 @@ ol::after {
     100% { -webkit-transform: matrix3d(2.1, 0, 0, 0, 0, 2.1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)rotate(7deg); transform: matrix3d(2.1, 0, 0, 0, 0, 2.1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)rotate(7deg); } 
   }
 
-@keyframes scaleIn {
+  @keyframes opacity {
     from {
-        transform: scale(0);
+        opacity:0;
     }
 
     to {
-        transform: scale(1);
+        opacity:1;
     }
 }
 
-@-webkit-keyframes scaleIn {
+@-webkit-keyframes opacity {
     from {
-        transform: scale(0);
+        opacity:0;
     }
 
     to {
-        transform: scale(1);
+        opacity:1;
     }
 }
 
-@-moz-keyframes scaleIn {
+@-moz-keyframes opacity {
     from {
-        transform: scale(0);
+        opacity:0;
     }
 
     to {
-        transform: scale(1);
+        opacity:1;
     }
 }

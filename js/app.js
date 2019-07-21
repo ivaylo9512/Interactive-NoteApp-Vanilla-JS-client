@@ -20,8 +20,9 @@ const app = (() =>{
         if(!albums[currentAlbumString]){
             
             remote.getAlbumImages(currentAlbumNumber).then(res => {
-                showButtons();
+                animate.smoothScroll(document.body.offsetHeight - window.pageYOffset - window.innerHeight - 450, 1500);
                 albums[currentAlbumString] = res.data;
+                showButtons();
                 appendAlbumPhotos(albums[currentAlbumString]);
             })
             .catch(e => {
@@ -29,6 +30,8 @@ const app = (() =>{
             })
             
         }else{
+            showButtons();            
+            animate.smoothScroll(document.body.offsetHeight - window.pageYOffset - window.innerHeight - 450, 1500);
             appendAlbumPhotos(albums[currentAlbumString])
         }
     }
@@ -46,18 +49,18 @@ const app = (() =>{
                 photo.style.right = currentAlbum[i].rightPosition;
                 photo.style.bottom = currentAlbum[i].bottomPosition;
 
-                let noteId = currentAlbum[i]['noteId'] + 'note';
-                if(currentAlbum[i]['noteId'] != null){
+                let noteId = currentAlbum[i].noteId + 'note';
+                if(currentAlbum[i].noteId != null){
                     photo.style.display = 'none';
                 }
 
                 if(photo.parentElement.className == 'user-note' && photo.parentElement.id != noteId){
                     appendedPhotosSection.appendChild(photo);
                 }
+
                 if(document.getElementById(noteId)){
                     document.getElementById(noteId).appendChild(photo);
                 }
-
             }
         })
     }
@@ -133,8 +136,8 @@ const app = (() =>{
             currentMousePosition = e.clientX;
 
             if(resizable){
-                document.addEventListener('mousemove', resize);
-                document.addEventListener('mouseup', stopResize)
+                window.addEventListener('mousemove', resize);
+                window.addEventListener('mouseup', stopResize)
             }
         }
     }
@@ -195,8 +198,8 @@ const app = (() =>{
             resizeButton.style.display = 'none'
         }
 
-        document.removeEventListener('mousemove', resize);
-        document.removeEventListener('mouseup', stopResize);
+        window.removeEventListener('mousemove', resize);
+        window.removeEventListener('mouseup', stopResize);
     }
 
     const hideAppendedPhotos = () => appendedPhotos.forEach(photo => photo.style.display = 'none');
@@ -229,6 +232,8 @@ const app = (() =>{
         appendedPhotos[i].style.width = photo.width;
         appendedPhotos[i].style.right = photo.right;
         appendedPhotos[i].style.bottom = photo.bottom;
+        appendedPhotos[i].style.left = null;
+        appendedPhotos[i].style.top = null;
         appendedPhotos[i].style.transform = `rotate(${photo.rotation}deg)`;
 
         let note = document.getElementById(photo.noteId + 'note')
@@ -242,6 +247,11 @@ const app = (() =>{
     const showButtons = () => {
         editButton.classList.add('scale');
         saveButton.classList.add('scale');
+    }
+
+    const hideButtons = () => {
+        editButton.classList.remove('scale');
+        saveButton.classList.remove('scale');
     }
 
     //https://css-tricks.com/get-value-of-css-rotation-through-javascript/
@@ -387,8 +397,7 @@ const app = (() =>{
             fullMode.style.display = 'none';
         }else{
             if(currentAlbumNumber){
-                editButton.classList.remove('speech-bubble-active');
-                saveButton.classList.remove('speech-bubble-active');
+                hideButtons();
                 hideAppendedPhotos();
             }
             inputNote.style.display = 'none';
@@ -685,36 +694,36 @@ const app = (() =>{
 
     const savePhotos = () => {
         const album = albums[currentAlbumString];
-            album.forEach((photo, i) => {
-                photo[i]['width'] = appendedPhotos[i].style.width;
-                photo[i]['left'] = appendedPhotos[i].style.left;
-                photo[i]['top'] = appendedPhotos[i].style.top;
-                let currentPhotoDisplay = appendedPhotos[i].style.display;
-                appendedPhotos[i].style.display = "block";
-                photo[i]['rotation'] = getRotation(appendedPhotos[i]);
-                appendedPhotos[i].style.display = currentPhotoDisplay;
-                if(appendedPhotos[i].style.display != "none"){
-                    photo[i]['noteId'] = null;
-                }
-                if(appendedPhotos[i].parentElement.className == "user-note"){
-                    let noteId = appendedPhotos[i].parentElement.id;
-                    photo[i]['noteId'] = noteId.substring(0, noteId.length - 4);
-                }
-                if(photo[i]['noteId'] == null && appendedPhotos[i].offsetTop < -1710){
-                    photo[i]['top'] = "-1710px";
-                    appendedPhotos[i].style.top = "-1710px";
-                }
-            
-            remote.updateAlbumPhotos(album).then(
-                res => {
-                    editButtonLabel.innerHTML = "Edit";
-                    rotateButton.style.display = "none";
-                    editMode = false;
-                }
-            );
+        album.forEach((photo, i) => {
+            album[i]['width'] = appendedPhotos[i].style.width;
+            album[i]['left'] = appendedPhotos[i].style.left;
+            album[i]['top'] = appendedPhotos[i].style.top;
+            let currentPhotoDisplay = appendedPhotos[i].style.display;
+            appendedPhotos[i].style.display = "block";
+            album[i]['rotation'] = getRotation(appendedPhotos[i]);
+            appendedPhotos[i].style.display = currentPhotoDisplay;
+            if(appendedPhotos[i].style.display != "none"){
+                album[i]['noteId'] = null;
+            }
+            if(appendedPhotos[i].parentElement.className == "user-note"){
+                let noteId = appendedPhotos[i].parentElement.id;
+                album[i]['noteId'] = noteId.substring(0, noteId.length - 4);
+            }
+            if(album[i]['noteId'] == null && appendedPhotos[i].offsetTop < -1710){
+                album[i]['top'] = "-1710px";
+                appendedPhotos[i].style.top = "-1710px";
+            }
+        })
         
-    })
-
+        remote.updateAlbumPhotos(album).then(
+            res => {
+                editButtonLabel.innerHTML = "Edit";
+                rotateButton.style.display = "none";
+                editMode = false;
+            }
+        );
+    }
+        
     const start = () => {
         initialAnimation();
 

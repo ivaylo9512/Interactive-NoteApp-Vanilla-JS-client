@@ -300,7 +300,7 @@ const notes = (() => {
     const showUserNote = (containerCopy) => {
         containerCopy.classList.add('active');
 
-        document.addEventListener('click',  () => hideUserNote(containerCopy), {
+        window.addEventListener('click',  () => hideUserNote(containerCopy), {
             once: true,
             passive: true,
             capture: true
@@ -452,6 +452,8 @@ const notes = (() => {
 
         }
         noteSection.style.display = 'block'; 
+        buffersContainer.style.display = 'block';
+
     } 
 
     let brushAnimated = false;

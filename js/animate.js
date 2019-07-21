@@ -222,6 +222,7 @@ const animate = (() => {
         setDelta,
         createCircles,
         scrollToProfile,
-        scrollToAlbum
+        scrollToAlbum,
+        smoothScroll
     };
 })();
