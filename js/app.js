@@ -615,10 +615,24 @@ const app = (() =>{
 
     const exchangePhotos = (placedPhoto, currentPhoto, newPhoto) => {
         const index = placePhotos.indexOf(placedPhoto);
+        const album = albums[currentAlbumString];
 
         return remote.exchangePhotos(currentPhoto, newPhoto).then(res => {
             const image = res.data;
-            albums[currentAlbumString][index] = image
+            album[index] = image
+            
+            const photos = placePhotos.filter(placePhoto => {
+                if(placePhoto.children[0]) {
+                    if(placePhoto.children[0].id == currentPhoto) return placePhoto 
+                }
+            })
+            console.log(photos)
+            if(photos.length > 0){
+                photos[0].firstChild.src = image.src;
+                photos[0].firstChild.id = image.location;
+                photos[0].className = 'place-photo';
+            }
+
         })
     }
 
@@ -650,8 +664,9 @@ const app = (() =>{
             })
             if(photos.length > 0){
                 photos[0].removeChild(photos[0].firstChild);
+                photos[0].className = 'place-photo';
             }
-            
+
         })
         .catch(e =>{
             photosContainer.removeChild(photoContainer);
