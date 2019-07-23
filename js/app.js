@@ -37,7 +37,11 @@ const app = (() =>{
     }
 
     const appendAlbumPhotos = (currentAlbum) => {
-        appendedPhotos.forEach((photo, i) =>{
+        for(const [i, photo] of appendedPhotos.entries()) {
+            if(fullModeOn){
+                return;
+            }
+
             photo.style.display = 'none';
             if(i < currentAlbum.length){
                 photo.style.display = 'block';
@@ -49,20 +53,22 @@ const app = (() =>{
                 photo.style.right = currentAlbum[i].rightPosition;
                 photo.style.bottom = currentAlbum[i].bottomPosition;
 
-                let noteId = currentAlbum[i].noteId + 'note';
-                if(currentAlbum[i].noteId != null){
+                let noteId = currentAlbum[i].note + 'note';
+
+                if(currentAlbum[i].note){
                     photo.style.display = 'none';
+                }
+
+                if(document.getElementById(noteId)){
+                    document.getElementById(noteId).appendChild(photo);
                 }
 
                 if(photo.parentElement.className == 'user-note' && photo.parentElement.id != noteId){
                     appendedPhotosSection.appendChild(photo);
                 }
 
-                if(document.getElementById(noteId)){
-                    document.getElementById(noteId).appendChild(photo);
-                }
             }
-        })
+        }
     }
 
     let moving = false;
@@ -212,9 +218,9 @@ const app = (() =>{
     
     const changeLabels = () => {
         if (!editMode) {
-            editButtonLabel.innerHTML = 'Cancel';
+            editButtonLabel.textContent = 'Cancel';
         } else {
-            editButtonLabel.innerHTML = 'Edit';
+            editButtonLabel.textContent = 'Edit';
             rotateButton.style.display = 'none';
             resizeButton.style.display = 'none';
             moveButton.style.display = 'none';
@@ -442,7 +448,7 @@ const app = (() =>{
 
     const navHoverAnimations = () => {
         if(event.target.tagName == 'LI'){
-            switch(event.target.innerHTML){
+            switch(event.target.textContent){
                 case 'Notes':
                     notes.showNote();
                     break;
@@ -461,7 +467,7 @@ const app = (() =>{
             fullModeNav.classList.remove('active')
             fullModeBtn.classList.remove('active');
             
-            switch(event.target.innerHTML){
+            switch(event.target.textContent){
                 case 'Notes':
                     fullMode.style.display = 'none';
                     notes.showFullScreenNotes();
@@ -717,7 +723,7 @@ const app = (() =>{
         
         remote.updateAlbumPhotos(album).then(
             res => {
-                editButtonLabel.innerHTML = "Edit";
+                editButtonLabel.textContent = "Edit";
                 rotateButton.style.display = "none";
                 editMode = false;
             }

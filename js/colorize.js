@@ -33,7 +33,7 @@ const colorize = (() => {
     let colorizables = [];
     const getElements = () => {
         colorizables = Array.from(document.getElementsByClassName('colorize'));
-        maxScore.innerHTML = colorizables.length - 1;
+        maxScore.textContent = colorizables.length - 1;
     }
 
     let colorMode = false;
@@ -73,7 +73,7 @@ const colorize = (() => {
             colorizeable.removeAttribute('value');
         })
         amountCounted = 0;
-        score.innerHTML = 0;
+        score.textContent = 0;
 
     }
     const changeColor = () => {
@@ -105,7 +105,7 @@ const colorize = (() => {
             amountCounted++;
             node.setAttribute('value', 'marked');
         }
-        score.innerHTML = amountCounted;
+        score.textContent = amountCounted;
     }
     
     return {

@@ -14,7 +14,7 @@ const notes = (() => {
         const yearLabel = document.createElement('P');
         const point = document.createElement('SPAN');
         point.className = 'point';
-        yearLabel.innerHTML = maxYear + i;
+        yearLabel.textContent = maxYear + i;
 
         year.appendChild(yearLabel);
         year.appendChild(point);
@@ -93,7 +93,7 @@ const notes = (() => {
     const getMonth = (clickedMonth) => {
             if (clickedMonth != '') {
                 
-                chosenMonth.innerHTML = clickedMonth;
+                chosenMonth.textContent = clickedMonth;
                 cloud.src = 'resources/cloud-filled.png';
 
                 switch (clickedMonth) {
@@ -161,7 +161,7 @@ const notes = (() => {
 
         for (i = 1; i <= daysCount; i++) {
             const dayCopy = dayNode.cloneNode(true);
-            dayCopy.innerHTML = i;
+            dayCopy.textContent = i;
 
             daysFragment.appendChild(dayCopy);
         }
@@ -172,7 +172,7 @@ const notes = (() => {
     const getYear = (clickedYear) => {
 
             year = clickedYear;
-            chosenYear.innerHTML = clickedYear;
+            chosenYear.textContent = clickedYear;
             cloud2.src = 'resources/cloud-filled.png';
 
             yearsHiding = true;
@@ -185,8 +185,8 @@ const notes = (() => {
     function getDay() {
         if (event.target.tagName == 'A') {
             cloud1.src = 'resources/cloud-filled.png';
-            day = event.target.innerHTML;
-            chosenDay.innerHTML = day;
+            day = event.target.textContent;
+            chosenDay.textContent = day;
 
             checkDate();
         }
@@ -265,16 +265,17 @@ const notes = (() => {
         resetNotes();
         addBuffers();
 
-        window.scrollTo(0, body.scrollHeight - 2749);
-
-
+        document.body.className == 'full-mode-active' ?
+            window.scrollTo(0, body.scrollHeight - 849) :
+                window.scrollTo(0, body.scrollHeight - 2749);
+                
         userNotes.forEach((userNote, i) => {
             const containerCopy = noteContainer.cloneNode(true);
             const note = containerCopy.children[0];
             const noteText = note.children[0];
             const noteName = note.children[2];
             
-            noteText.innerHTML = userNote.note;
+            noteText.textContent = userNote.note;
             noteName.value = userNote.name;
             note.id = userNote.id + 'note';
 
@@ -439,9 +440,9 @@ const notes = (() => {
             timelineMonths.parentElement.style.display = 'none';
             timelineYears.style.display = 'none';
 
-            chosenMonth.innerHTML = '';
-            chosenYear.innerHTML = '';
-            chosenDay.innerHTML = '';
+            chosenMonth.textContent = '';
+            chosenYear.textContent = '';
+            chosenDay.textContent = '';
 
             cloud.src = 'resources/cloud.png';
             cloud1.src = 'resources/cloud.png';
@@ -555,8 +556,8 @@ const notes = (() => {
         )
     }
     
-    months.forEach(month => month.addEventListener('click',() => getMonth(month.children[0].innerHTML)));
-    years.forEach(year => year.addEventListener('click', () => getYear(year.children[0].innerHTML)));
+    months.forEach(month => month.addEventListener('click',() => getMonth(month.children[0].textContent)));
+    years.forEach(year => year.addEventListener('click', () => getYear(year.children[0].textContent)));
     daysContainer.addEventListener('click', getDay);
     
     return {

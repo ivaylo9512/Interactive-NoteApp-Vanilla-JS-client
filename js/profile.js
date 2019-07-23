@@ -11,10 +11,10 @@ const profile = (() =>{
     //     inputs[1].value = localStorage.getItem('lastName');
     //     inputs[2].value = localStorage.getItem('age');
     //     inputs[3].value = localStorage.getItem('country');
-    //     profilePhoto.src = localStorage.getItem('profilePic') != 'undefined' ? localStorage.getItem('profilePic') : '#'; 
+    //     profilePhoto.src = localStorage.getItem('profilePic') != 'undefined' ? remote.getBase() + localStorage.getItem('profilePic') : '#'; 
 
     //     userBtn.style.display = 'block';
-    //     userBtn.innerHTML = 'logout';
+    //     userBtn.textContent = 'logout';
     // }
 
     const labelsTexts = [
@@ -30,7 +30,7 @@ const profile = (() =>{
         newState.classList.add('active');
         
         userBtn.style.display = 'block';
-        userBtn.innerHTML = newState.id == 'login-btn' ? 'login' : 'next';
+        userBtn.textContent = newState.id == 'login-btn' ? 'login' : 'next';
         currentLabels = newState.id == 'login-btn' ? labelsTexts[0] : labelsTexts[1];
         currentBtn = newState;
 
@@ -45,7 +45,7 @@ const profile = (() =>{
             } else {
                 labels[i].style.display = 'block';
                 inputs[i].style.display = 'block';
-                labels[i].innerHTML = currentLabels[i];
+                labels[i].textContent = currentLabels[i];
                 inputs[i].value = '';
                 inputs[i].type = 'text';
     
@@ -58,7 +58,7 @@ const profile = (() =>{
 
     const userAction = (e) => {
         e.preventDefault();
-        switch(userBtn.innerHTML){
+        switch(userBtn.textContent){
             case 'login':
                 login();
                 break;
@@ -79,7 +79,7 @@ const profile = (() =>{
         
         profilePhoto.src = '';
         userBtn.style.display =  'none';
-        userBtn.innerHTML = '';
+        userBtn.textContent = '';
 
         currentLabels = labelsTexts[2];
         resetInputs();  
@@ -94,29 +94,30 @@ const profile = (() =>{
         }
         remote.login(user).then(
             res => {
+                const user = res.data;
                 currentLabels = labelsTexts[2];
                 resetInputs(currentLabels)
 
-                userBtn.innerHTML = 'logout';
-                inputs[0].value = res['firstname'];
-                inputs[1].value = res['lastname'];
-                inputs[2].value = res['age'];
-                inputs[3].value = res['country'];
-                profilePhoto.src = res['profilePicture'] ? localStorage.getItem('profilePicture') : '#'; 
+                userBtn.textContent = 'logout';
+                inputs[0].value = user.firstName;
+                inputs[1].value = user.lastName;
+                inputs[2].value = user.age;
+                inputs[3].value = user.country;
+                profilePhoto.src = user.profilePicture ? remote.getBase() + user.profilePicture : '#'; 
     
-                localStorage.setItem('Authorization', res['token']);
-                localStorage.setItem('firstName', res['firstname']);
-                localStorage.setItem('profilePic', res['profilePicture']);
-                localStorage.setItem('lastName', res['lastname']);
-                localStorage.setItem('age', res['age']);
-                localStorage.setItem('country', res['country']);
+                localStorage.setItem('Authorization', user.token);
+                localStorage.setItem('firstName', user.firstMame);
+                localStorage.setItem('profilePic', user.profilePicture);
+                localStorage.setItem('lastName', user.lastName);
+                localStorage.setItem('age', user.age);
+                localStorage.setItem('country', user.country);
                 currentBtn.classList.remove('active');
             })
     }
 
     const nextInputs = () => {
         currentLabels = labelsTexts[2];
-        userBtn.innerHTML = 'register';
+        userBtn.textContent = 'register';
         resetInputs(); 
     }
 

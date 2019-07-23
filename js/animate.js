@@ -74,11 +74,11 @@ const animate = (() => {
     }
 
     const circles = [];
+    const circle = document.createElement('span');
+    const circlesFragment = document.createDocumentFragment();
+    const circleContainer = document.getElementById('circles-container');
+    const maxCircles = 25;
     const createCircles = () => {
-        const circleContainer = document.getElementById('circles-container');
-        const circlesFragment = document.createDocumentFragment();
-        const circle = document.createElement('span');
-        const maxCircles = 25;
         for (let i = 1; i < maxCircles; i++) {
             const circleCopy = circle.cloneNode(true);
             circleCopy.className = `colorize circle${i}`;
