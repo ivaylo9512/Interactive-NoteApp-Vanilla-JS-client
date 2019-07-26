@@ -2,7 +2,7 @@ const profile = (() =>{
 
     let labels = document.getElementById('labels-container').children;
     let inputs = document.getElementById('inputs-container').children;
-    let profilePhoto = document.getElementById('choosen-image');
+    let profilePhoto = document.getElementById('chosen-image');
     let userBtn = document.getElementById('user-btn');
 
     let isAuth = () => localStorage.getItem('Authorization') != null;
@@ -63,6 +63,7 @@ const profile = (() =>{
                 login();
                 break;
             case 'register':
+                register()
                 break;
             case 'logout':
                 logout();
@@ -115,16 +116,61 @@ const profile = (() =>{
             })
     }
 
+    const userRegister = {
+        username: undefined,
+        password: undefined,
+        repeatPassword: undefined,
+        firstName: undefined,
+        lastName: undefined,
+        country: undefined,
+        age: undefined
+    }
+    const register = () => {
+        userRegister.firstName =  inputs[0].value;
+        userRegister.lastName =  inputs[1].value;
+        userRegister.age =  inputs[2].value;
+        userRegister.country =  inputs[3].value;
+        formData.append('user', JSON.stringify(userRegister));
+
+        remote.register(formData);
+    }
+
     const nextInputs = () => {
+        userRegister.username =  inputs[0].value;
+        userRegister.password =  inputs[1].value;
+        userRegister.repeatPassword =  inputs[2].value;
+
         currentLabels = labelsTexts[2];
         userBtn.textContent = 'register';
+
         resetInputs(); 
     }
+
+    const reader = new FileReader();
+    reader.addEventListener('load', () => profilePhoto.src = event.target.result);
+    
+    const formData = new FormData();
+    const addProfilePhoto = () => {
+        const input = event.target;
+    
+        if (input.files && input.files[0]) {
+            const image = input.files[0];
+            reader.readAsDataURL(image);
+
+            formData.append('photo', image);
+            if(isAuth()){
+                remote.setProfilePicture(formData);
+            }
+        }
+    }
+
 
     return{
         changeInputView,
         userAction,
-        isAuth
+        isAuth,
+        register,
+        addProfilePhoto
     }
 
 })();

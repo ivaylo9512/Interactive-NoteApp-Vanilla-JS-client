@@ -447,16 +447,20 @@ const app = (() =>{
     }
 
     const navHoverAnimations = () => {
-        if(event.target.tagName == 'LI'){
-            switch(event.target.textContent){
-                case 'Notes':
-                    notes.showNote();
-                    break;
-                case 'Photos':
-                    notes.hideNote();
-                    break;
-                case 'Play':        
-                    break;
+        if(fullModeNav.classList.contains('active')){
+            if(event.target.tagName == 'LI'){
+                
+                switch(event.target.textContent){
+                    case 'Notes':
+                        notes.showNote();
+                        break;
+                    case 'Photos':
+                        notes.hideNote();
+                        break;
+                    case 'Play':        
+                        break;
+                }
+            
             }
         }
     }
@@ -777,6 +781,7 @@ const app = (() =>{
         albumNumbersContainer.addEventListener('click', chooseAlbumNumber);
 
         document.getElementById('input-photo').addEventListener('input', appendPhoto);
+        document.getElementById('profile-photo').addEventListener('input', profile.addProfilePhoto);
 
         saveButton.addEventListener('mouseover', () => editButton.classList.add('rotate'));
         saveButton.addEventListener('mouseout', () => editButton.classList.remove('rotate'));

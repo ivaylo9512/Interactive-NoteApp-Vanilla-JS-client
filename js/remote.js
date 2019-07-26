@@ -8,7 +8,15 @@ const remote = (() => {
         }
     })
 
-    const login = (user) => axios.post(`${base}api/login`, user)
+    const login = (user) => axios.post(base+ 'api/login', user)
+
+    const register = (user) => axios.post(base + 'api/register', user)
+
+    const setProfilePicture = (photo) => axios.post(base + 'api/images/setProfilePicture', photo, {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('Authorization')
+        }
+    });
 
     const getNotes = (date, album) => axios.get(`${base}api/notes/findByDate/${album}`,{
         headers: {
@@ -16,8 +24,7 @@ const remote = (() => {
         },
         params: {
             date
-        }
-        
+        }  
     });
 
     const updateNote = (note) => axios.patch(base +'api/notes/updateNote/', note);
@@ -60,6 +67,8 @@ const remote = (() => {
         getBase,
         submitImage,
         updatePhotoAlbum,
-        exchangePhotos
+        exchangePhotos,
+        register,
+        setProfilePicture
     })
 })();
