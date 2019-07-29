@@ -279,7 +279,7 @@ const notes = (() => {
             note.id = userNote.id + 'note';
 
             containerCopy.style.animationDelay = delay + 's';
-            noteText.style.marginTop = i > 2 ? '-366px' : '41px';   
+            noteText.style.marginTop = (i == 0 && userNotes.length > 2) || (i == 1 && userNotes.length > 3) ? '41px' : '-366px';   
 
             delay -= 0.2;
             if(i % 2 == 0) {
@@ -310,7 +310,7 @@ const notes = (() => {
 
     const hideUserNote = (containerCopy) => {
         const className = event.target.className;
-        if(className == 'move-btn' || className == 'resize-btn' || className == 'rotate-btn'){
+        if(className == 'move-btn' || className == 'resize-btn' || className == 'rotate-btn' || className.includes('user-photo')){
             window.addEventListener('mousedown',  () => hideUserNote(containerCopy), {
                 once: true,
                 passive: true,

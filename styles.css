@@ -374,18 +374,21 @@ body.full-mode-active .play-box{
 }
 .user-photo{
     position: absolute;
-    opacity: 0;
-    -moz-animation: opacity 2.5s forwards;
-    -o-animation: opacity 2.5s forwards;
-    -webkit-animation: opacity 2.5s forwards;
-    animation: opacity 2.5s forwards;
     display: none;
+    border-radius: 10px;
 }
 .user-photo.first{
     bottom: 19%;
     width: 10%;
     right: 65%;
     transform: rotate(32deg);
+}
+.user-photos .user-photo{
+    opacity: 0;
+    -moz-animation: opacity 2.5s forwards;
+    -o-animation: opacity 2.5s forwards;
+    -webkit-animation: opacity 2.5s forwards;
+    animation: opacity 2.5s forwards;
 }
 .photo1{
     bottom: 24%;
@@ -394,7 +397,6 @@ body.full-mode-active .play-box{
     transform: rotate(16deg);
     z-index: 1;
 }
-
 .photo2{
     bottom: 17%;
     width: 10%;
@@ -404,7 +406,7 @@ body.full-mode-active .play-box{
 
 .photo3{
     bottom: 38%;
-    width: 10%;
+    width: 50%;
     right: 55%;
     transform: rotate(48deg);
     z-index: 1;
@@ -1123,7 +1125,7 @@ ol {
     width: 10%;
     position: absolute;
     margin-left: -5px;
-    z-index: 7;
+    z-index: 6;
     display: none;
 }
 .timeline-years ol {
@@ -1459,6 +1461,7 @@ ol::after {
     border: 0px;
     outline: none;
     text-align: center;
+    position: relative;
 }
 .user-note button{
     width: 80%;

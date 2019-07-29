@@ -44,8 +44,10 @@ const app = (() =>{
             photo.style.display = 'none';
             photo.style.width = null;
             photo.style.transform = null;
-            photo.style.right = null;
+            photo.style.top = null;
+            photo.style.left = null;
             photo.style.bottom = null;
+            photo.style.right = null;
 
             if(i < currentAlbum.length){
                 photo.style.display = 'block';
@@ -90,8 +92,8 @@ const app = (() =>{
             currentPhoto.node.style.top = currentPhoto.top + 'px';
             currentPhoto.node.style.left = currentPhoto.left + 'px';
             if (currentPhoto.node.parentElement.className == 'user-note') {
-                moveButton.style.left = currentPhoto.left + focusedNote.offsetLeft + parseFloat(window.getComputedStyle(moveButton).width) + 'px';
-                moveButton.style.top = currentPhoto.top + focusedNote.offsetTop - secondSection.offsetTop + ((currentPhoto.height - parseFloat(window.getComputedStyle(moveButton).height)) / 2) + 'px';
+                moveButton.style.left = currentPhoto.left + focusedNote.offsetLeft + parseFloat(window.getComputedStyle(moveButton).width) + parseFloat(window.getComputedStyle(leftNotesContainer).marginLeft) - secondSection.offsetLeft + 'px';
+                moveButton.style.top = currentPhoto.top + focusedNote.offsetTop - secondSection.offsetTop + noteContainer.offsetTop + noteSection.offsetTop + leftNotesContainer.offsetTop + ((currentPhoto.height - parseFloat(window.getComputedStyle(moveButton).height)) / 2) + 'px';
             } else {
                 moveButton.style.left = currentPhoto.left + parseFloat(window.getComputedStyle(moveButton).width) + 'px';
                 moveButton.style.top = currentPhoto.top + ((currentPhoto.height - parseFloat(window.getComputedStyle(moveButton).height)) / 2) + 'px';
@@ -120,7 +122,6 @@ const app = (() =>{
     let currentMousePosition;
     const checkIfResizable = (e) => {
         if (editMode) {
-
             if (e.offsetX < currentPhoto.width / 7) {
                 resizable = true;
                 leftResize = true;
@@ -129,7 +130,6 @@ const app = (() =>{
                 leftResize = false;
             }
             currentMousePosition = e.clientX;
-
             if(resizable){
                 window.addEventListener('mousemove', resize);
                 window.addEventListener('mouseup', stopResize)
@@ -148,9 +148,16 @@ const app = (() =>{
                 currentPhoto.node.style.width = currentPhoto.width + (e.clientX - currentMousePosition) + 'px';
                 currentPhoto.node.style.left = currentPhoto.left + 'px';
             }
-            resizeButton.style.width = currentPhoto.node.width + 'px';
-            resizeButton.style.left = currentPhoto.node.offsetLeft + 'px';
-            resizeButton.style.top = currentPhoto.node.offsetTop + ((currentPhoto.node.height - parseFloat(window.getComputedStyle(resizeButton).height)) / 2) + 'px';
+            
+            if(e.target.parentElement.className == 'user-note'){
+                resizeButton.style.width = currentPhoto.node.width + 'px';
+                resizeButton.style.left = currentPhoto.node.offsetLeft + focusedNote.offsetLeft + parseFloat(window.getComputedStyle(leftNotesContainer).marginLeft) - secondSection.offsetLeft + 'px';
+                resizeButton.style.top = currentPhoto.node.offsetTop + focusedNote.offsetTop - secondSection.offsetTop + noteContainer.offsetTop + noteSection.offsetTop + leftNotesContainer.offsetTop + ((currentPhoto.node.height - parseFloat(window.getComputedStyle(resizeButton).height)) / 2) + 'px';
+            }else{
+                resizeButton.style.width = currentPhoto.node.width + 'px';
+                resizeButton.style.left = currentPhoto.node.offsetLeft + 'px';
+                resizeButton.style.top = currentPhoto.node.offsetTop + ((currentPhoto.node.height - parseFloat(window.getComputedStyle(resizeButton).height)) / 2) + 'px';
+            }
     }
 
     function stopResize(e) {
@@ -214,10 +221,10 @@ const app = (() =>{
         appendedPhotos[i].style.top = null;
         appendedPhotos[i].style.transform = `rotate(${photo.rotation}deg)`;
 
-        let note = document.getElementById(photo.noteId + 'note')
+        let note = document.getElementById(photo.note + 'note')
         if(note){
             note.appendChild(appendedPhotos[i]);
-        }else if(appendedPhotos[i].parentElement.className == 'user-note' && photo['noteId'] == null){
+        }else if(appendedPhotos[i].parentElement.className == 'user-note' && !photo.note){
             secondSection.appendChild(appendedPhotos[i]);
         }
     }
@@ -258,7 +265,7 @@ const app = (() =>{
     const userPhotoListeners = (photo) => {
         photo.ondragstart = () => false;
 
-        photo.addEventListener('mousedown', checkIfResizable);
+        photo.addEventListener('mousedown', checkIfResizable, true);
         photo.addEventListener('mouseover', () => arrangePhotoButtons(photo));
         photo.addEventListener('mouseout', resetPhotoButtons);
 
@@ -326,7 +333,7 @@ const app = (() =>{
 
             resizeButton.style.width = currentPhoto.width + 'px';
             resizeButton.style.left = currentPhoto.left + focusedNote.offsetLeft + parseFloat(window.getComputedStyle(leftNotesContainer).marginLeft) - secondSection.offsetLeft + 'px';
-            resizeButton.style.top = currentPhoto.top + focusedNote.offsetTop - secondSection.offsetTop + noteContainer.offsetTop + noteSection.offsetTop - leftNotesContainer.offsetTop + ((currentPhoto.height - parseFloat(window.getComputedStyle(resizeButton).height)) / 2) + 'px';
+            resizeButton.style.top = currentPhoto.top + focusedNote.offsetTop - secondSection.offsetTop + noteContainer.offsetTop + noteSection.offsetTop + leftNotesContainer.offsetTop + ((currentPhoto.height - parseFloat(window.getComputedStyle(resizeButton).height)) / 2) + 'px';
         } else {
             moveButton.style.display = 'block';
             moveButton.style.width = currentPhoto.width / 3 + 'px';
