@@ -61,8 +61,8 @@ const app = (() =>{
                 photo.src = 'http://localhost:8000/' + currentAlbum[i].location;
                 photo.style.width = currentAlbum[i].width + 'px';
                 photo.style.transform = `rotate(${currentAlbum[i].rotation}deg)`;
-                photo.style.left = currentAlbum[i].rightPosition + 'px';
-                photo.style.top = currentAlbum[i].bottomPosition + 'px';
+                photo.style.left = currentAlbum[i].leftPosition + 'px';
+                photo.style.top = currentAlbum[i].topPosition + 'px';
 
                 let noteId = currentAlbum[i].note + 'note';
 
@@ -232,8 +232,8 @@ const app = (() =>{
         const appendedPhoto = appendedPhotos[i];
 
         appendedPhoto.style.width = photo.width;
-        appendedPhoto.style.left = photo.rightPosition + 'px';
-        appendedPhoto.style.top = photo.bottomPosition + 'px';
+        appendedPhoto.style.left = photo.leftPosition + 'px';
+        appendedPhoto.style.top = photo.topPosition + 'px';
         appendedPhoto.style.transform = `rotate(${photo.rotation}deg)`;
 
         let note = document.getElementById(photo.note + 'note')
@@ -732,24 +732,35 @@ const app = (() =>{
         const album = albums[currentAlbumString];
         album.forEach((photo, i) => {
             photo.width = appendedPhotos[i].style.width;
-            photo.left = appendedPhotos[i].style.left;
-            photo.top = appendedPhotos[i].style.top;
+            photo.leftPosition = appendedPhotos[i].style.left;
+            photo.topPosition = appendedPhotos[i].style.top;
 
             const photoDisplay = appendedPhotos[i].style.display;
             appendedPhotos[i].style.display = 'block';
             photo.rotation = getRotation(appendedPhotos[i]);
             appendedPhotos[i].style.display = photoDisplay;
+            
+            if(appendedPhotos[i].style.display != 'none'){
+                photo.note = null;
+            }
             if(appendedPhotos[i].parentElement.className == 'user-note'){
                 const noteId = appendedPhotos[i].parentElement.id;
-                photo.noteId = noteId.substring(0, noteId.length - 4);
-            }else{
-                photo.noteId = null;
-                if(appendedPhotos[i].offsetTop < -1710){
-                    photo.top = '-1710px';
-                    appendedPhotos[i].style.top = '-1710px';
-                }
+                photo.note = noteId.substring(0, noteId.length - 4);
+            }
+            if(!photo.note && appendedPhotos[i].offsetTop < -1710){
+                photo.topPosition = '-1710px';
+                appendedPhotos[i].style.top = '-1710px';
             }
         })
+
+        console.log(album)
+        remote.updateAlbumPhotos(album).then(
+            res => {
+                editButtonLabel.textContent = 'Edit';
+                rotateButton.style.display = 'none';
+                editMode = false;
+            }
+        );
     }
         
     const start = () => {

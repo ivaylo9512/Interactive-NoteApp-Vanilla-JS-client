@@ -56,6 +56,12 @@ const remote = (() => {
         }
     });
 
+    const updateAlbumPhotos = (images) => axios.post(base + 'api/images/updateAlbumPhotos', {images},{
+        headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('Authorization')
+        }
+    });
+
     const getBase = () => base; 
 
     return({
@@ -69,6 +75,7 @@ const remote = (() => {
         updatePhotoAlbum,
         exchangePhotos,
         register,
-        setProfilePicture
+        setProfilePicture,
+        updateAlbumPhotos
     })
 })();
