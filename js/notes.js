@@ -254,7 +254,6 @@ const notes = (() => {
         return userNoteContainer;
     })();
 
-    let isTopNote = false;
     let delay = 0;
     let notesCount = 0;
     const appendNotes = () => {
@@ -291,7 +290,7 @@ const notes = (() => {
                 rightNotesFragment.appendChild(containerCopy);
             }
 
-            containerCopy.addEventListener('click', () => showUserNote(containerCopy));
+            containerCopy.addEventListener('mousedown', () => showUserNote(containerCopy));
         })
         rightNotesContainer.appendChild(rightNotesFragment);
         leftNotesContainer.appendChild(leftNotesFragment);
@@ -300,8 +299,9 @@ const notes = (() => {
     
     const showUserNote = (containerCopy) => {
         containerCopy.classList.add('active');
+        app.setfocusedNote(containerCopy);
 
-        window.addEventListener('click',  () => hideUserNote(containerCopy), {
+        window.addEventListener('mousedown',  () => hideUserNote(containerCopy), {
             once: true,
             passive: true,
             capture: true
@@ -309,7 +309,16 @@ const notes = (() => {
     }
 
     const hideUserNote = (containerCopy) => {
-        containerCopy.classList.remove('active');
+        const className = event.target.className;
+        if(className == 'move-btn' || className == 'resize-btn' || className == 'rotate-btn'){
+            window.addEventListener('mousedown',  () => hideUserNote(containerCopy), {
+                once: true,
+                passive: true,
+                capture: true
+            }); 
+        }else{
+            containerCopy.classList.remove('active');
+        }
     }
 
     const resetNotes = () => {
@@ -415,9 +424,6 @@ const notes = (() => {
     }
 
     const hideFullScreenNotes = () => {
-        timelineYears.style.display = 'none';
-        timelineMonths.parentElement.style.display = 'none';
-
         buffersContainer.style.display = 'none';
         noteSection.style.display = 'none';     
     }
@@ -512,7 +518,8 @@ const notes = (() => {
             noteHolders.classList.remove('show');
             brushAnimation.classList.add('hide');
             inputNote.classList.add('hide');
-            
+            cloudContainer.parentElement.style.zIndex = 5;
+
             const noteHeader = document.getElementById('notes-header');
             noteHeader.removeEventListener('mouseout', hideTopAnimations);
             noteHeader.removeEventListener('mouseout', showTopAnimations);

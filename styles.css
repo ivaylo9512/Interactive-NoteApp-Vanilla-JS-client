@@ -374,6 +374,7 @@ body.full-mode-active .play-box{
 }
 .user-photo{
     position: absolute;
+    opacity: 0;
     -moz-animation: opacity 2.5s forwards;
     -o-animation: opacity 2.5s forwards;
     -webkit-animation: opacity 2.5s forwards;
@@ -800,8 +801,11 @@ body.full-mode-active .note-animation {
     width: 20%;
     height: 320px;
     position: relative;
-    z-index: 5;
+    z-index: 6;
     margin-top: 50px;
+}
+body.full-mode-active .cloud-container {
+    z-index: 5;
 }
 .cloud-header {
     height: 300px;
@@ -890,7 +894,7 @@ body.full-mode-active .cloud-header img{
     width: 40%;
     height: 320px;
     margin-top: 120px;
-    z-index: 6;
+    z-index: 5;
 }
 .brush-animation {
     width: 71%;
@@ -1443,7 +1447,10 @@ ol::after {
 .user-note-container.active textarea {
     display: block;
 }
-
+.user-note-container.active img {
+    display: block!important;
+    opacity: 1;
+}
 .user-note {
     height: 100%;
     width: 70%;

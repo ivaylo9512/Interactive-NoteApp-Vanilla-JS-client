@@ -2,7 +2,6 @@ const app = (() =>{
 
     const userPhotosContainer = document.getElementById('user-photos');
     const appendedPhotos = Array.from(userPhotosContainer.children);
-    
     const albums = {
         firstAlbum: undefined,
         secondAlbum: undefined,
@@ -43,9 +42,13 @@ const app = (() =>{
             }
 
             photo.style.display = 'none';
+            photo.style.width = null;
+            photo.style.transform = null;
+            photo.style.right = null;
+            photo.style.bottom = null;
+            
             if(i < currentAlbum.length){
                 photo.style.display = 'block';
-                photo.style.opacity = 1;
                 photo.id = currentAlbum[i].id;
                 photo.src = 'http://localhost:8000/' + currentAlbum[i].location;
                 photo.style.width = currentAlbum[i].width;
@@ -64,7 +67,7 @@ const app = (() =>{
                 }
 
                 if(photo.parentElement.className == 'user-note' && photo.parentElement.id != noteId){
-                    appendedPhotosSection.appendChild(photo);
+                    userPhotosContainer.appendChild(photo);
                 }
 
             }
@@ -87,22 +90,22 @@ const app = (() =>{
             currentPhoto.node.style.top = currentPhoto.top + 'px';
             currentPhoto.node.style.left = currentPhoto.left + 'px';
             if (currentPhoto.node.parentElement.className == 'user-note') {
-                moveButton.style.left = currentPhoto.left + focusedNoteContainer.offsetLeft + parseFloat(window.getComputedStyle(moveButton).width) + 'px';
-                moveButton.style.top = currentPhoto.top + focusedNoteContainer.offsetTop - secondSection.offsetTop + ((currentPhoto.height - parseFloat(window.getComputedStyle(moveButton).height)) / 2) + 'px';
+                moveButton.style.left = currentPhoto.left + focusedNote.offsetLeft + parseFloat(window.getComputedStyle(moveButton).width) + 'px';
+                moveButton.style.top = currentPhoto.top + focusedNote.offsetTop - secondSection.offsetTop + ((currentPhoto.height - parseFloat(window.getComputedStyle(moveButton).height)) / 2) + 'px';
             } else {
                 moveButton.style.left = currentPhoto.left + parseFloat(window.getComputedStyle(moveButton).width) + 'px';
                 moveButton.style.top = currentPhoto.top + ((currentPhoto.height - parseFloat(window.getComputedStyle(moveButton).height)) / 2) + 'px';
             }
-            if (currentPhoto.node.parentElement.className == 'user-note' && (parseFloat(window.getComputedStyle(focusedNoteContainer.parentElement.parentElement).height) - (focusedNoteContainer.offsetTop + focusedNoteContainer.parentElement.offsetTop + currentPhoto.top) < 0)) {
-                currentPhoto.top = currentPhoto.top + focusedNoteContainer.offsetTop - secondSection.offsetTop;
-                currentPhoto.left = currentPhoto.left + focusedNoteContainer.offsetLeft;
+            if (currentPhoto.node.parentElement.className == 'user-note' && (parseFloat(window.getComputedStyle(focusedNote.parentElement.parentElement).height) - (focusedNote.offsetTop + focusedNote.parentElement.offsetTop + currentPhoto.top) < 0)) {
+                currentPhoto.top = currentPhoto.top + focusedNote.offsetTop - secondSection.offsetTop;
+                currentPhoto.left = currentPhoto.left + focusedNote.offsetLeft;
                 currentPhoto.node.style.top = currentPhoto.top + 'px';
                 currentPhoto.node.style.left = currentPhoto.left + 'px';
                 currentPhoto.node.style.width = (currentPhoto.width / parseFloat(window.getComputedStyle(secondSection).width)) * 100 + '%';
                 currentPhoto.node.style.display = 'block'
                 currentPhoto.node.style.opacity = 1;
                 rotateButton.src = 'resources/rotate.png'
-                appendedPhotosSection.appendChild(currentPhoto.node);
+                userPhotosContainer.appendChild(currentPhoto.node);
             }
         }
     }
@@ -113,12 +116,12 @@ const app = (() =>{
         moving = false;
         if (currentPhoto.node.parentElement.className == 'user-note') {
             rotateButton.style.height = currentPhoto.height * 1.75 + 'px';
-            rotateButton.style.left = currentPhoto.left + focusedNoteContainer.offsetLeft + ((currentPhoto.width - parseFloat(window.getComputedStyle(rotateButton).width)) / 2) + 'px';
-            rotateButton.style.top = currentPhoto.top + focusedNoteContainer.offsetTop - secondSection.offsetTop + ((currentPhoto.height - parseFloat(window.getComputedStyle(rotateButton).height)) / 2) + 'px';
+            rotateButton.style.left = currentPhoto.left + focusedNote.offsetLeft + ((currentPhoto.width - parseFloat(window.getComputedStyle(rotateButton).width)) / 2) + 'px';
+            rotateButton.style.top = currentPhoto.top + focusedNote.offsetTop - secondSection.offsetTop + ((currentPhoto.height - parseFloat(window.getComputedStyle(rotateButton).height)) / 2) + 'px';
 
             resizeButton.style.width = currentPhoto.width + 'px';
-            resizeButton.style.left = currentPhoto.left + focusedNoteContainer.offsetLeft + 'px';
-            resizeButton.style.top = currentPhoto.top + focusedNoteContainer.offsetTop - secondSection.offsetTop + ((currentPhoto.height - parseFloat(window.getComputedStyle(resizeButton).height)) / 2) + 'px';
+            resizeButton.style.left = currentPhoto.left + focusedNote.offsetLeft + 'px';
+            resizeButton.style.top = currentPhoto.top + focusedNote.offsetTop - secondSection.offsetTop + ((currentPhoto.height - parseFloat(window.getComputedStyle(resizeButton).height)) / 2) + 'px';
         } else {
             rotateButton.style.height = parseFloat(currentPhoto.height) * 1.75 + 'px';
             rotateButton.style.left = currentPhoto.node.offsetLeft + ((currentPhoto.width - parseFloat(window.getComputedStyle(rotateButton).width)) / 2) + 'px';
@@ -179,16 +182,16 @@ const app = (() =>{
         if (currentPhoto.node.parentElement.className == 'user-note') {
             moveButton.style.display = 'block';
             moveButton.style.width = currentPhoto.width / 3 + 'px';
-            moveButton.style.left = (currentPhoto.left + focusedNoteContainer.offsetLeft + parseFloat(window.getComputedStyle(moveButton).width)) + 'px';
-            moveButton.style.top = (currentPhoto.top + focusedNoteContainer.offsetTop - secondSection.offsetTop) + ((currentPhoto.height - parseFloat(window.getComputedStyle(moveButton).height)) / 2) + 'px';
+            moveButton.style.left = (currentPhoto.left + focusedNote.offsetLeft + parseFloat(window.getComputedStyle(moveButton).width)) + 'px';
+            moveButton.style.top = (currentPhoto.top + focusedNote.offsetTop - secondSection.offsetTop) + ((currentPhoto.height - parseFloat(window.getComputedStyle(moveButton).height)) / 2) + 'px';
 
             rotateButton.style.height = currentPhoto.height * 1.75 + 'px';
-            rotateButton.style.left = currentPhoto.left + focusedNoteContainer.offsetLeft + ((currentPhoto.width - parseFloat(window.getComputedStyle(rotateButton).width)) / 2) + 'px';
-            rotateButton.style.top = (currentPhoto.top + focusedNoteContainer.offsetTop - secondSection.offsetTop) + ((currentPhoto.height - parseFloat(window.getComputedStyle(rotateButton).height)) / 2) + 'px';
+            rotateButton.style.left = currentPhoto.left + focusedNote.offsetLeft + ((currentPhoto.width - parseFloat(window.getComputedStyle(rotateButton).width)) / 2) + 'px';
+            rotateButton.style.top = (currentPhoto.top + focusedNote.offsetTop - secondSection.offsetTop) + ((currentPhoto.height - parseFloat(window.getComputedStyle(rotateButton).height)) / 2) + 'px';
 
             resizeButton.style.width = currentPhoto.width + 'px';
-            resizeButton.style.left = currentPhoto.left + focusedNoteContainer.offsetLeft + 'px';
-            resizeButton.style.top = (currentPhoto.top + focusedNoteContainer.offsetTop - secondSection.offsetTop) + ((currentPhoto.height - parseFloat(window.getComputedStyle(resizeButton).height)) / 2) + 'px';
+            resizeButton.style.left = currentPhoto.left + focusedNote.offsetLeft + 'px';
+            resizeButton.style.top = (currentPhoto.top + focusedNote.offsetTop - secondSection.offsetTop) + ((currentPhoto.height - parseFloat(window.getComputedStyle(resizeButton).height)) / 2) + 'px';
         } else {
             moveButton.style.width = currentPhoto.width / 3 + 'px';
             moveButton.style.left = currentPhoto.left + parseFloat(window.getComputedStyle(moveButton).width) + 'px';
@@ -210,6 +213,9 @@ const app = (() =>{
 
     const hideAppendedPhotos = () => appendedPhotos.forEach(photo => photo.style.display = 'none');
     
+    let focusedNote;
+    const setfocusedNote = (note) => 
+        focusedNote = note;
 
     let editMode = false;
     const editButton = document.getElementById('speech-bubble-right');
@@ -296,7 +302,7 @@ const app = (() =>{
     const moveButton = document.getElementById('move-btn');
     const resizeButton = document.getElementById('resize-btn');
     const rotateButton = document.getElementById('rotate-btn');
-    const secondSection = document.getElementById('second-section-btn');
+    const secondSection = document.getElementById('second-section');
 
     let currentPhoto = {
         node: undefined,
@@ -308,9 +314,12 @@ const app = (() =>{
         top: undefined,
     };
     
+    let leftNotesContainer;
+    let noteContainer;
+    let noteSection;
     const arrangePhotoButtons = (photo) => {
-        if (!moving && !resizing && editMode && !rotating && !moveButtonFocused) {
 
+        if (!moving && !resizing && editMode && !rotating && !moveButtonFocused) {
             currentPhoto.node = photo;
             currentPhoto.zIndex = window.getComputedStyle(photo).zIndex;
             currentPhoto.rotation = getRotation();
@@ -325,29 +334,33 @@ const app = (() =>{
             resizeButton.style.display = 'block';
 
             if (currentPhoto.node.parentElement.className == 'user-note') {
+                leftNotesContainer = focusedNote.parentElement;
+                noteContainer = leftNotesContainer.parentElement;
+                noteSection = noteContainer.parentElement;
+
                 moveButton.style.display = 'block';
                 moveButton.style.width = currentPhoto.width / 3 + 'px';
-                moveButton.style.left = (currentPhoto.left + focusedNoteContainer.offsetLeft + parseFloat(window.getComputedStyle(moveButton).width)) + 'px';
-                moveButton.style.top = (currentPhoto.top + focusedNoteContainer.offsetTop - secondSection.offsetTop) + ((currentPhoto.height - parseFloat(window.getComputedStyle(moveButton).height)) / 2) + 'px';
+                moveButton.style.left = currentPhoto.left + focusedNote.offsetLeft + parseFloat(window.getComputedStyle(moveButton).width) + parseFloat(window.getComputedStyle(leftNotesContainer).marginLeft) - secondSection.offsetLeft + 'px';
+                moveButton.style.top = currentPhoto.top + focusedNote.offsetTop - secondSection.offsetTop + noteContainer.offsetTop + noteSection.offsetTop + leftNotesContainer.offsetTop + ((currentPhoto.height - parseFloat(window.getComputedStyle(moveButton).height)) / 2) + 'px';
 
                 rotateButton.style.height = currentPhoto.height * 1.75 + 'px';
-                rotateButton.style.left = currentPhoto.left + focusedNoteContainer.offsetLeft + ((currentPhoto.width - parseFloat(window.getComputedStyle(rotateButton).width)) / 2) + 'px';
-                rotateButton.style.top = (currentPhoto.top + focusedNoteContainer.offsetTop - secondSection.offsetTop) + ((currentPhoto.height - parseFloat(window.getComputedStyle(rotateButton).height)) / 2) + 'px';
-                rotateButton.src = 'resources-finale/rotate-pinned.png';
+                rotateButton.style.left = currentPhoto.left + focusedNote.offsetLeft + parseFloat(window.getComputedStyle(leftNotesContainer).marginLeft) - secondSection.offsetLeft + ((currentPhoto.width - parseFloat(window.getComputedStyle(rotateButton).width)) / 2) + 'px';
+                rotateButton.style.top = currentPhoto.top + focusedNote.offsetTop - secondSection.offsetTop + noteContainer.offsetTop + noteSection.offsetTop + leftNotesContainer.offsetTop + ((currentPhoto.height - parseFloat(window.getComputedStyle(rotateButton).height)) / 2) + 'px';
+                rotateButton.src = 'resources/rotate-pinned.png';
 
                 resizeButton.style.width = currentPhoto.width + 'px';
-                resizeButton.style.left = currentPhoto.left + focusedNoteContainer.offsetLeft + 'px';
-                resizeButton.style.top = (currentPhoto.top + focusedNoteContainer.offsetTop - secondSection.offsetTop) + ((currentPhoto.height - parseFloat(window.getComputedStyle(resizeButton).height)) / 2) + 'px';
+                resizeButton.style.left = currentPhoto.left + focusedNote.offsetLeft + parseFloat(window.getComputedStyle(leftNotesContainer).marginLeft) - secondSection.offsetLeft + 'px';
+                resizeButton.style.top = currentPhoto.top + focusedNote.offsetTop - secondSection.offsetTop + noteContainer.offsetTop + noteSection.offsetTop - leftNotesContainer.offsetTop + ((currentPhoto.height - parseFloat(window.getComputedStyle(resizeButton).height)) / 2) + 'px';
             } else {
                 moveButton.style.display = 'block';
                 moveButton.style.width = currentPhoto.width / 3 + 'px';
-                moveButton.style.left = (currentPhoto.left + parseFloat(window.getComputedStyle(moveButton).width)) + 'px';
+                moveButton.style.left = currentPhoto.left + parseFloat(window.getComputedStyle(moveButton).width) + 'px';
                 moveButton.style.top = currentPhoto.top + ((currentPhoto.height - parseFloat(window.getComputedStyle(moveButton).height)) / 2) + 'px';
-
+                
+                rotateButton.src = 'resources/rotate.png';
                 rotateButton.style.height = currentPhoto.height * 1.75 + 'px';
                 rotateButton.style.left = currentPhoto.left + ((currentPhoto.width - parseFloat(window.getComputedStyle(rotateButton).width)) / 2) + 'px';
                 rotateButton.style.top = currentPhoto.top + ((currentPhoto.height - parseFloat(window.getComputedStyle(rotateButton).height)) / 2) + 'px';
-                rotateButton.src = 'resources/rotate.png';
 
                 resizeButton.style.width = currentPhoto.width + 'px';
                 resizeButton.style.left = currentPhoto.left + 'px';
@@ -802,7 +815,8 @@ const app = (() =>{
         exchangePhotos,
         clearPhoto,
         moveEditablePhoto,
-        resetMoveButtons
+        resetMoveButtons,
+        setfocusedNote
     }
 })();
 app.start();
