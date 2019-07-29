@@ -321,6 +321,7 @@ const notes = (() => {
             }); 
         }else{
             containerCopy.classList.remove('active');
+            app.setfocusedNote(null);
         }
     }
 
