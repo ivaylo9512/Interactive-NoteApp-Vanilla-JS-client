@@ -278,6 +278,10 @@ const notes = (() => {
             noteName.value = userNote.name;
             note.id = userNote.id + 'note';
 
+            userNote.files.forEach(file => {
+                note.appendChild(app.findUserPhoto(file.id));
+            });
+
             containerCopy.style.animationDelay = delay + 's';
             noteText.style.marginTop = (i == 0 && userNotes.length > 2) || (i == 1 && userNotes.length > 3) ? '41px' : '-366px';   
 

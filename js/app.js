@@ -76,6 +76,8 @@ const app = (() =>{
         }
     }
 
+    const findUserPhoto = (id) => appendedPhotos.find(photo => photo.id == id);
+
     let moving = false;
     let resizable = false;
     let resizing = false;
@@ -794,7 +796,8 @@ const app = (() =>{
         clearPhoto,
         moveEditablePhoto,
         resetMoveButtons,
-        setfocusedNote
+        setfocusedNote,
+        findUserPhoto
     }
 })();
 app.start();
