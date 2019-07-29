@@ -381,13 +381,13 @@ body.full-mode-active .play-box{
     animation: opacity 2.5s forwards;
     display: none;
 }
-.user-photo:nth-child(1){
+.user-photo.first{
     bottom: 19%;
     width: 10%;
     right: 65%;
     transform: rotate(32deg);
 }
-.user-photo:nth-child(2){
+.photo1{
     bottom: 24%;
     width: 10%;
     right: 60%;
@@ -395,56 +395,56 @@ body.full-mode-active .play-box{
     z-index: 1;
 }
 
-.user-photo:nth-child(3){
+.photo2{
     bottom: 17%;
     width: 10%;
     right: 55%;
     transform: rotate(-33deg);
 }
 
-.user-photo:nth-child(4){
+.photo3{
     bottom: 38%;
     width: 10%;
     right: 55%;
     transform: rotate(48deg);
     z-index: 1;
 }
-.user-photo:nth-child(5){
+.photo4{
     bottom: 29%;
     width: 10%;
     right: 68%;
     transform: rotate(-17deg);
 }
 
-.user-photo:nth-child(6){
+.photo5{
     bottom: 32%;
     width: 12%;
     right: 57%;
     transform: rotate(28deg);
 }
 
-.user-photo:nth-child(7){
+.photo6{
     bottom: 40%;
     width: 10%;
     right: 67%;
     transform: rotate(28deg);
 }
 
-.user-photo:nth-child(8){
+.photo7{
     bottom: 75%;
     width: 16%;
     right: 62%;
     transform: rotate(-32deg);
 }
 
-.user-photo:nth-child(9){
+.photo8{
     bottom: 62%;
     width: 16%;
     right: 56%;
     z-index: 1;
 }
 
-.user-photo:nth-child(10){
+.photo9{
     bottom: 62%;
     width: 15%;
     right: 64%;
@@ -452,7 +452,7 @@ body.full-mode-active .play-box{
     transform: rotate(25deg);
 }
 
-.user-photo:nth-child(11){
+.photo10{
     bottom: 75%;
     width: 16%;
     right: 54%;
