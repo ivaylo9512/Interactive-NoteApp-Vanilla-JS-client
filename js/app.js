@@ -373,6 +373,16 @@ const app = (() =>{
         }
     }
 
+    const unfocusRotate = () => {
+        movePhotoButton.style.display = 'block';
+        resizeButton.style.display = 'block';
+        movePhotoButtonFocused = false;
+    }
+
+    const focusRotate = () => {
+        movePhotoButton.style.display = 'none';
+        resizeButton.style.display = 'none';
+    }
     const focusMoveButton = () => {
         moveButton.style.display = 'block';
         resizeButton.style.display = 'block';
@@ -819,6 +829,8 @@ const app = (() =>{
         
         moveButton.addEventListener('mouseover', focusMoveButton);
         moveButton.addEventListener('click', attachPhoto);
+        rotateButton.addEventListener('mouseover', focusRotate);
+        rotateButton.addEventListener('mouseout', unfocusRotate);
 
         appendedPhotos.forEach(photo =>{
             userPhotoListeners(photo);
