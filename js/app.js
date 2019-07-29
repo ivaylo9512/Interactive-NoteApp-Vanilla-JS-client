@@ -216,18 +216,21 @@ const app = (() =>{
     }
 
     const resetPhoto = (photo, i) => {
-        appendedPhotos[i].style.width = photo.width;
-        appendedPhotos[i].style.right = photo.right;
-        appendedPhotos[i].style.bottom = photo.bottom;
-        appendedPhotos[i].style.left = null;
-        appendedPhotos[i].style.top = null;
-        appendedPhotos[i].style.transform = `rotate(${photo.rotation}deg)`;
+        const appendedPhoto = appendedPhotos[i];
+
+        appendedPhoto.style.width = photo.width;
+        appendedPhoto.style.right = photo.right;
+        appendedPhoto.style.bottom = photo.bottom;
+        appendedPhoto.style.left = null;
+        appendedPhoto.style.top = null;
+        appendedPhoto.style.transform = `rotate(${photo.rotation}deg)`;
 
         let note = document.getElementById(photo.note + 'note')
         if(note){
-            note.appendChild(appendedPhotos[i]);
-        }else if(appendedPhotos[i].parentElement.className == 'user-note' && !photo.note){
-            secondSection.appendChild(appendedPhotos[i]);
+            note.appendChild(appendedPhoto);
+            appendedPhoto.style.display = 'none';
+        }else if(appendedPhoto.parentElement.className == 'user-note' && !photo.note){
+            secondSection.appendChild(appendedPhoto);
         }
     }
 

@@ -38,7 +38,7 @@ const colorize = (() => {
 
     let colorMode = false;
     const manageListeners = (e) => {
-        const playNav = e.target.parentElement.parentElement;
+        const playNav = e.target.parentElement.parentElement.parentElement;
 
         if(colorMode){
             colorMode = false;
