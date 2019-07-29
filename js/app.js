@@ -13,25 +13,31 @@ const app = (() =>{
     const getAlbumImages = (e) => {
         const id = e.target.id.split(' ');
 
-        currentAlbumNumber = +id[0];
-        currentAlbumString = id[1];
+        const albumNumber = +id[0];
+        const albumString = id[1];
 
-        if(!albums[currentAlbumString]){
+        if(!albums[albumNumber]){
             
-            remote.getAlbumImages(currentAlbumNumber).then(res => {
+            remote.getAlbumImages(albumNumber).then(res => {
                 animate.smoothScroll(document.body.offsetHeight - window.pageYOffset - window.innerHeight - 450, 1500);
-                albums[currentAlbumString] = res.data;
+                albums[albumString] = res.data;
+
+                currentAlbumNumber = albumNumber
+                currentAlbumString = albumString
+                
                 showButtons();
-                appendAlbumPhotos(albums[currentAlbumString]);
+                appendAlbumPhotos(albums[albumString]);
             })
             .catch(e => {
                 console.log(e);
             })
-            
         }else{
+            currentAlbumNumber = albumNumber
+            currentAlbumString = albumString
+
             showButtons();            
             animate.smoothScroll(document.body.offsetHeight - window.pageYOffset - window.innerHeight - 450, 1500);
-            appendAlbumPhotos(albums[currentAlbumString])
+            appendAlbumPhotos(albums[albumString])
         }
     }
 
@@ -53,10 +59,10 @@ const app = (() =>{
                 photo.style.display = 'block';
                 photo.id = currentAlbum[i].id;
                 photo.src = 'http://localhost:8000/' + currentAlbum[i].location;
-                photo.style.width = currentAlbum[i].width;
+                photo.style.width = currentAlbum[i].width + 'px';
                 photo.style.transform = `rotate(${currentAlbum[i].rotation}deg)`;
-                photo.style.right = currentAlbum[i].rightPosition;
-                photo.style.bottom = currentAlbum[i].bottomPosition;
+                photo.style.left = currentAlbum[i].rightPosition + 'px';
+                photo.style.top = currentAlbum[i].bottomPosition + 'px';
 
                 let noteId = currentAlbum[i].note + 'note';
 
@@ -226,10 +232,8 @@ const app = (() =>{
         const appendedPhoto = appendedPhotos[i];
 
         appendedPhoto.style.width = photo.width;
-        appendedPhoto.style.right = photo.right;
-        appendedPhoto.style.bottom = photo.bottom;
-        appendedPhoto.style.left = null;
-        appendedPhoto.style.top = null;
+        appendedPhoto.style.left = photo.rightPosition + 'px';
+        appendedPhoto.style.top = photo.bottomPosition + 'px';
         appendedPhoto.style.transform = `rotate(${photo.rotation}deg)`;
 
         let note = document.getElementById(photo.note + 'note')
@@ -252,8 +256,8 @@ const app = (() =>{
     }
 
     //https://css-tricks.com/get-value-of-css-rotation-through-javascript/
-    const getRotation = () =>  {
-        const styles = window.getComputedStyle(currentPhoto.node, null);
+    const getRotation = (photo) =>  {
+        const styles = window.getComputedStyle(photo, null);
         const transform = styles.getPropertyValue('-webkit-transform') ||
             styles.getPropertyValue('-moz-transform') ||
             styles.getPropertyValue('-ms-transform') ||
@@ -307,7 +311,7 @@ const app = (() =>{
         if (!moving && !resizing && editMode && !rotating && !moveButtonFocused) {
             currentPhoto.node = photo;
             currentPhoto.zIndex = window.getComputedStyle(photo).zIndex;
-            currentPhoto.rotation = getRotation();
+            currentPhoto.rotation = getRotation(currentPhoto.node);
             currentPhoto.width = parseFloat(window.getComputedStyle(photo).width);
             currentPhoto.height = parseFloat(window.getComputedStyle(photo).height);
             currentPhoto.left = photo.offsetLeft;
@@ -727,33 +731,25 @@ const app = (() =>{
     const savePhotos = () => {
         const album = albums[currentAlbumString];
         album.forEach((photo, i) => {
-            album[i]['width'] = appendedPhotos[i].style.width;
-            album[i]['left'] = appendedPhotos[i].style.left;
-            album[i]['top'] = appendedPhotos[i].style.top;
-            let currentPhotoDisplay = appendedPhotos[i].style.display;
+            photo.width = appendedPhotos[i].style.width;
+            photo.left = appendedPhotos[i].style.left;
+            photo.top = appendedPhotos[i].style.top;
+
+            const photoDisplay = appendedPhotos[i].style.display;
             appendedPhotos[i].style.display = 'block';
-            album[i]['rotation'] = getRotation(appendedPhotos[i]);
-            appendedPhotos[i].style.display = currentPhotoDisplay;
-            if(appendedPhotos[i].style.display != 'none'){
-                album[i]['noteId'] = null;
-            }
+            photo.rotation = getRotation(appendedPhotos[i]);
+            appendedPhotos[i].style.display = photoDisplay;
             if(appendedPhotos[i].parentElement.className == 'user-note'){
-                let noteId = appendedPhotos[i].parentElement.id;
-                album[i]['noteId'] = noteId.substring(0, noteId.length - 4);
-            }
-            if(album[i]['noteId'] == null && appendedPhotos[i].offsetTop < -1710){
-                album[i]['top'] = '-1710px';
-                appendedPhotos[i].style.top = '-1710px';
+                const noteId = appendedPhotos[i].parentElement.id;
+                photo.noteId = noteId.substring(0, noteId.length - 4);
+            }else{
+                photo.noteId = null;
+                if(appendedPhotos[i].offsetTop < -1710){
+                    photo.top = '-1710px';
+                    appendedPhotos[i].style.top = '-1710px';
+                }
             }
         })
-        
-        remote.updateAlbumPhotos(album).then(
-            res => {
-                editButtonLabel.textContent = 'Edit';
-                rotateButton.style.display = 'none';
-                editMode = false;
-            }
-        );
     }
         
     const start = () => {
