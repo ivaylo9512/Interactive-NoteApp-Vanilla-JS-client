@@ -214,6 +214,25 @@ const notes = (() => {
         })
     }
 
+    const updateNote = (e) => {
+        const userNote = focusedNote.children[0];
+            noteText = userNote.children[0],
+            noteName = userNote.children[2],
+            name = noteName.value,
+            note = noteText.value
+            
+        const id = userNote.id.substring(0, userNote.id.length - 4);    
+        const updateNote = {
+            id,
+            name,
+            note,
+        }
+        remote.updateNote(updateNote);
+        
+        e.target.style.transform = 'rotate(' + rotate + 'deg)';
+        rotate = rotate + 360;
+    }
+
     const body = document.body;
     const buffersContainer = document.getElementById('buffers-container');
 
@@ -242,12 +261,12 @@ const notes = (() => {
         noteName.name = 'user-note-name';
         noteName.id = 'user-note-name';
 
-        const noteUpdateButton = document.createElement('button');
-        noteUpdateButton.className = 'note-update-button';
-        noteUpdateButton.id = 'note-update-button';
+        const updateBtn = document.createElement('button');
+        updateBtn.className = 'note-update-btn';
+        updateBtn.id = 'note-update-btn';
 
         note.appendChild(noteInput);
-        note.appendChild(noteUpdateButton);
+        note.appendChild(updateBtn);
         note.appendChild(noteName);
         userNoteContainer.appendChild(note);
 
@@ -272,6 +291,7 @@ const notes = (() => {
             const containerCopy = noteContainer.cloneNode(true);
             const note = containerCopy.children[0];
             const noteText = note.children[0];
+            const updateBtn = note.children[1];
             const noteName = note.children[2];
             
             noteText.textContent = userNote.note;
@@ -293,6 +313,7 @@ const notes = (() => {
                 rightNotesFragment.appendChild(containerCopy);
             }
 
+            updateBtn.addEventListener('mouseover', updateNote);
             containerCopy.addEventListener('mousedown', () => showUserNote(containerCopy));
         })
         rightNotesContainer.appendChild(rightNotesFragment);
@@ -300,9 +321,13 @@ const notes = (() => {
         
     }
     
+    let rotate;
+    let focusedNote;
     const showUserNote = (containerCopy) => {
         containerCopy.classList.add('active');
+        focusedNote = containerCopy;
         app.setfocusedNote(containerCopy);
+        rotate = 360;
 
         window.addEventListener('mousedown',  () => hideUserNote(containerCopy), {
             once: true,
@@ -321,6 +346,7 @@ const notes = (() => {
             }); 
         }else{
             containerCopy.classList.remove('active');
+            focusedNote = null;
             app.setfocusedNote(null);
         }
     }
@@ -345,29 +371,6 @@ const notes = (() => {
 
         userNotes.length > 0 ? cloudHeader.style.marginBottom = '150px' : cloudHeader.style.marginBottom = '0px';
         
-    }
-
-    const updateNote = () => {
-        const id = userNotes[i]['id'],
-            name = noteName.value,
-            note = noteInput.value,
-            owner = userNotes[i]['owner'],
-            date = userNotes[i]['date']
-
-        const updateNote = {
-            id,
-            name,
-            note,
-            owner,
-            date
-        }
-        remote.updateNote(updateNote).then(
-            res => {
-
-            }
-        )
-        updateButton.style.transform = "rotate(" + rotate + "deg)";
-        rotate = rotate + 360;
     }
 
     const bufferFragment = document.createDocumentFragment();

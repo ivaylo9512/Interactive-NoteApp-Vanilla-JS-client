@@ -393,6 +393,9 @@ body.full-mode-active .play-box{
     display: none;
     border-radius: 10px;
 }
+.user-photo.visible{
+    display: block;
+}
 .user-photo.first{
     bottom: 19%;
     width: 10%;
@@ -1518,11 +1521,11 @@ ol::after {
     display: block;
 }
 .user-note-container img {
-    display: none!important;
+    display: none;
     opacity: 1;
 }
 .user-note-container.active img {
-    display: block!important;
+    display: block;
     opacity: 1;
 }
 .user-note {
@@ -1535,27 +1538,23 @@ ol::after {
     text-align: center;
     position: relative;
 }
-.user-note button{
-    width: 80%;
-    text-align: center;
-    margin-top: 22px;
-    color: #EAE9E5;
-}
-
-.note-update-button{
+.note-update-btn{
     background: url(resources/update.png) no-repeat;
-    background-size: 80%;
+    background-size: 100%;
     position: absolute;
-    top: 75px;
+    top: -6px;
     width: 10%;
     border: 0px;
-    height: 10%;
-    right: 165px;
+    height: 15%;
+    right: 20px;
     outline: none;
     display: none;
     transition: transform 3s;
 }
-.note-update-button-rotate{
+.user-note-container.active .note-update-btn {
+    display: block;
+}
+.note-update-btn.rotate{
     transform: rotate(360deg);
     transition: transform 3s;
 }

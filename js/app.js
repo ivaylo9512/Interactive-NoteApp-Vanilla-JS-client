@@ -47,7 +47,7 @@ const app = (() =>{
                 return;
             }
 
-            photo.style.display = 'none';
+            photo.classList.remove('visible');
             photo.style.width = null;
             photo.style.transform = null;
             photo.style.top = null;
@@ -56,7 +56,7 @@ const app = (() =>{
             photo.style.right = null;
 
             if(i < currentAlbum.length){
-                photo.style.display = 'block';
+                photo.classList.add('visible');
                 photo.id = currentAlbum[i].id;
                 photo.src = 'http://localhost:8000/' + currentAlbum[i].location;
                 photo.style.width = currentAlbum[i].width + 'px';
@@ -67,7 +67,7 @@ const app = (() =>{
                 let noteId = currentAlbum[i].note + 'note';
 
                 if(currentAlbum[i].note){
-                    photo.style.display = 'none';
+                    photo.classList.remove('visible');
                 }
 
                 if(document.getElementById(noteId)){
@@ -112,7 +112,7 @@ const app = (() =>{
                 currentPhoto.node.style.top = currentPhoto.top + 'px';
                 currentPhoto.node.style.left = currentPhoto.left + 'px';
                 currentPhoto.node.style.width = (currentPhoto.width / parseFloat(window.getComputedStyle(secondSection).width)) * 100 + '%';
-                currentPhoto.node.style.display = 'block'
+                currentPhoto.node.classList.add('visible');
                 currentPhoto.node.style.opacity = 1;
                 rotateButton.src = 'resources/rotate.png'
                 userPhotosContainer.appendChild(currentPhoto.node);
@@ -192,7 +192,7 @@ const app = (() =>{
         window.removeEventListener('mouseup', stopResize);
     }
 
-    const hideAppendedPhotos = () => appendedPhotos.forEach(photo => photo.style.display = 'none');
+    const hideAppendedPhotos = () => appendedPhotos.forEach(photo => photo.classList.remove('visible'));
     
     let focusedNote;
     const setfocusedNote = (note) => {
@@ -239,8 +239,9 @@ const app = (() =>{
         let note = document.getElementById(photo.note + 'note')
         if(note){
             note.appendChild(appendedPhoto);
-            appendedPhoto.style.display = 'none';
+            appendedPhoto.classList.remove('visible');
         }else if(appendedPhoto.parentElement.className == 'user-note' && !photo.note){
+            appendedPhoto.classList.add('visible');
             secondSection.appendChild(appendedPhoto);
         }
     }
@@ -283,7 +284,7 @@ const app = (() =>{
 
         photo.addEventListener('mousedown', checkIfResizable, true);
         photo.addEventListener('mouseover', () => arrangePhotoButtons(photo));
-        photo.addEventListener('mouseout', resetPhotoButtons);
+        photo.addEventListener('mouseout', resetPhotoButtons, true, true);
 
     }
 
@@ -318,7 +319,6 @@ const app = (() =>{
             currentPhoto.top = photo.offsetTop;
             
             photo.style.zIndex = 4;
-            rotateButton.style.pointerEvents = 'none';
             rotateButton.style.display = 'block';
             resizeButton.style.display = 'block';
 
@@ -367,6 +367,7 @@ const app = (() =>{
         if (!moving && !resizing && editMode) {
             moveButton.style.display = 'none';
             resizeButton.style.display = 'none';
+            rotateButton.style.display = 'none';
             currentPhoto.node.style.zIndex = currentPhoto.zIndex;
             moveButtonFocused = false;
             rotateButton.style.pointerEvents = 'all';
@@ -374,21 +375,21 @@ const app = (() =>{
     }
 
     const unfocusRotate = () => {
-        movePhotoButton.style.display = 'block';
-        resizeButton.style.display = 'block';
-        movePhotoButtonFocused = false;
+        rotateButton.style.display = 'none';
     }
 
     const focusRotate = () => {
-        movePhotoButton.style.display = 'none';
+        moveButton.style.display = 'none';
+        rotateButton.style.display = 'block';
         resizeButton.style.display = 'none';
+        moveButtonFocused = false;
     }
     const focusMoveButton = () => {
         moveButton.style.display = 'block';
+        rotateButton.style.display = 'block';
         resizeButton.style.display = 'block';
-        rotateButton.style.pointerEvents = 'none';
         currentPhoto.node.style.zIndex = 4;
-        movePhotoButtonFocused = true;
+        moveButtonFocused = true;
     }
     
     const attachPhoto = (e) => {
@@ -402,7 +403,7 @@ const app = (() =>{
                 focusedNote.children[0].appendChild(currentPhoto.node);
                 rotateButton.src = 'resources/rotate-pinned.png'
             }else if(focusedNote && currentPhoto.node.parentElement.className == 'user-note'){
-                currentPhoto.node.style.display = 'block';
+                currentPhoto.node.classList.add('visible');
                 rotateButton.src = 'resources/rotate.png'
                 currentPhoto.top = currentPhoto.top + focusedNote.offsetTop - secondSection.offsetTop + noteContainer.offsetTop + noteSection.offsetTop + notesContainer.offsetTop;
                 currentPhoto.left = currentPhoto.left + focusedNote.offsetLeft + parseFloat(window.getComputedStyle(notesContainer).marginLeft) - secondSection.offsetLeft + noteContainer.offsetLeft;
@@ -745,12 +746,13 @@ const app = (() =>{
             photo.leftPosition = appendedPhotos[i].style.left;
             photo.topPosition = appendedPhotos[i].style.top;
 
-            const photoDisplay = appendedPhotos[i].style.display;
-            appendedPhotos[i].style.display = 'block';
+            const className = appendedPhotos[i].className;
+            appendedPhotos[i].classList.add('visible');
             photo.rotation = getRotation(appendedPhotos[i]);
-            appendedPhotos[i].style.display = photoDisplay;
+            appendedPhotos[i].className = className;
             
-            if(appendedPhotos[i].style.display != 'none'){
+            if(!appendedPhotos[i].classList.contains('visible')){
+                console.log('hey');
                 photo.note = null;
             }
             if(appendedPhotos[i].parentElement.className == 'user-note'){

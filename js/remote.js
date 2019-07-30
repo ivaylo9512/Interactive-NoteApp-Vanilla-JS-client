@@ -27,7 +27,11 @@ const remote = (() => {
         }  
     });
 
-    const updateNote = (note) => axios.patch(base +'api/notes/updateNote/', note);
+    const updateNote = (note) => axios.patch(base +'api/notes/update/', note,{
+        headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('Authorization')
+        }
+    });
 
     const submitNote = (name, note) => axios.post(base + 'api/notes/create', {
         name,
@@ -56,7 +60,7 @@ const remote = (() => {
         }
     });
 
-    const updateAlbumPhotos = (images) => axios.post(base + 'api/images/updateAlbumPhotos', {images},{
+    const updateAlbumPhotos = (images) => axios.patch(base + 'api/images/updateAlbumPhotos', {images},{
         headers: {
             Authorization: 'Bearer ' + localStorage.getItem('Authorization')
         }
