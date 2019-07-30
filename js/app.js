@@ -280,7 +280,7 @@ const app = (() =>{
     }
 
     const userPhotoListeners = (photo) => {
-        photo.ondragstart = () => false;
+        photo.addEventListener('dragstart', (e) => e.preventDefault());
 
         photo.addEventListener('mousedown', checkIfResizable, true);
         photo.addEventListener('mouseover', () => arrangePhotoButtons(photo));
@@ -374,14 +374,44 @@ const app = (() =>{
         }
     }
 
+    const startRotate = () => {
+        window.addEventListener('mousemove', rotate);
+        window.addEventListener('mouseup', () => {
+            rotating = false;
+            currentPhoto.node.style.zIndex = currentPhoto.zIndex;
+
+            window.removeEventListener('mousemove', rotate);
+        })
+    }
+    const rotate = () => {
+        if (editMode) {
+            rotating = true;
+            rotateButton.style.display = 'block';
+            rotateButton.style.pointerEvents = 'none';
+            var centerX = rotateButton.offsetLeft + parseFloat(window.getComputedStyle(secondSection).marginLeft) + parseFloat(window.getComputedStyle(rotateButton).width) / 2;
+            var centerY = rotateButton.offsetTop + secondSection.offsetTop + parseFloat(window.getComputedStyle(rotateButton).height) / 2;
+            var mouseX = event.pageX;
+            var mouseY = event.pageY;
+
+            var radians = Math.atan2(mouseX - centerX, mouseY - centerY);
+            var degree = (radians * (180 / Math.PI) * -1) + 190;
+    
+            rotateButton.style.transform = `rotate(${degree}deg)`;
+            currentPhoto.node.style.transform = `rotate(${degree}deg)`;
+            currentPhoto.node.style.zIndex = 4;
+        }
+    }
+    
     const unfocusRotate = () => {
         rotateButton.style.display = 'none';
+        currentPhoto.node.style.zIndex = currentPhoto.zIndex;
     }
 
     const focusRotate = () => {
         moveButton.style.display = 'none';
         rotateButton.style.display = 'block';
         resizeButton.style.display = 'none';
+        currentPhoto.node.style.zIndex = 4;
         moveButtonFocused = false;
     }
     const focusMoveButton = () => {
@@ -834,6 +864,8 @@ const app = (() =>{
         moveButton.addEventListener('click', attachPhoto);
         rotateButton.addEventListener('mouseover', focusRotate);
         rotateButton.addEventListener('mouseout', unfocusRotate);
+        rotateButton.addEventListener('dragstart', (e) => e.preventDefault());
+        rotateButton.addEventListener('mousedown', startRotate);
 
         appendedPhotos.forEach(photo =>{
             userPhotoListeners(photo);

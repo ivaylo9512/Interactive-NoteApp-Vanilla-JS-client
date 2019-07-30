@@ -1520,7 +1520,7 @@ ol::after {
 .user-note-container.active textarea {
     display: block;
 }
-.user-note-container img {
+.user-note-container .user-photo {
     display: none;
     opacity: 1;
 }
