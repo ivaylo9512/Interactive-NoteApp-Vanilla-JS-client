@@ -26,7 +26,7 @@ const draggables = (() =>{
 
             if (className == 'appended') {
                 node = target.parentElement;
-                clearAppendedPhoto();
+                app.clearPhoto(target, node);
                 return;
             }
 
@@ -40,19 +40,24 @@ const draggables = (() =>{
             pos2 = pos4 - e.pageY;
             pos3 = e.pageX;
             pos4 = e.pageY;
-    
-            node.style.top = node.offsetTop - pos2 + 'px';
-            node.style.left = node.offsetLeft - pos1 + 'px';
-    
+
+            if(className != 'timeline-years'){
+                node.style.top = node.offsetTop - pos2 + 'px';
+                node.style.left = node.offsetLeft - pos1 + 'px';
+            }
+            
             switch (className) {
                 case 'move-btn':
-                    moveEditablePhoto(pos1, pos2);
+                    app.moveEditablePhoto(pos1, pos2);
                     break;
                 case 'drag-photo':
                     makeContainerDraggable();
                     break;
                 case 'nav-point':
                     checkPointPosition();
+                    break;
+                case 'timeline-years':
+                    notes.slideYears(pos2);
                     break;
             }
             
@@ -191,20 +196,11 @@ const draggables = (() =>{
             node.style.position = 'relative';
         }
 
-        
         const resetNavPoint = () => {
             node.style.transition = '2s';
             node.style.left = '24px';
             node.style.top = '33px';
         }    
-
-        const clearAppendedPhoto = () => {
-            app.clearPhoto(target, node);
-        }
-
-        const moveEditablePhoto = () => {
-            app.moveEditablePhoto(pos1, pos2);
-        }
     }
     return {
         dragElement

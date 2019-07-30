@@ -808,6 +808,7 @@ const app = (() =>{
 
         draggables.dragElement(document.getElementById('move-note'));
         draggables.dragElement(document.getElementById('point'));
+        draggables.dragElement(document.getElementById('timeline-years'))
         draggables.dragElement(moveButton);
 
         fullModeBtn.addEventListener('click', fullModeToggle);

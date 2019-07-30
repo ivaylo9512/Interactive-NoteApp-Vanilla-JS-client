@@ -21,16 +21,37 @@ const notes = (() => {
         years.push(year);
         timelineYears.children[0].appendChild(year);
         
-        if(i < yearsCount - 7){
-            year.style.marginTop = '-69px';
+        if(i < yearsCount - 7) year.style.marginTop = '-69px';
+        else if(i == yearsCount - 7) year.style.marginTop = '-32px';
+    }
+
+    let slideYear = yearsCount - 7;
+    const slideYears = (pos) => {
+        const currentYear = years[slideYear];
+        yearMargin = parseFloat(window.getComputedStyle(currentYear).marginTop);
+        const nextMargin = yearMargin - pos;
+
+        if(slideYear == yearsCount - 7 && nextMargin < -32){
+            currentYear.style.marginTop = '-32px';
+            return;
         }
-        if(i == yearsCount - 7){
-            year.style.marginTop = '-49px';
+        if(slideYear == 0 && nextMargin > 32){
+            currentYear.style.marginTop = '32px'
+            return;
+        }
+
+        if(nextMargin > 0 && slideYear != 0){
+            currentYear.style.marginTop = '0px';
+            slideYear--;
+        }else if(nextMargin < -69){
+            currentYear.style.marginTop = '-69px';
+            slideYear++;
+        }else{
+            currentYear.style.marginTop = nextMargin + 'px';
         }
     }
 
     yearsHiding = false;
-
     const showMonths = () => {
         yearsHiding = true;
         hideYears();
@@ -228,7 +249,7 @@ const notes = (() => {
             note,
         }
         remote.updateNote(updateNote);
-        
+
         e.target.style.transform = 'rotate(' + rotate + 'deg)';
         rotate = rotate + 360;
     }
@@ -577,6 +598,7 @@ const notes = (() => {
     return {
         showMonths,
         showYears,
+        slideYears,
         showNote,
         hideNote,
         activateNote,
@@ -590,6 +612,6 @@ const notes = (() => {
         hideTopAnimations,
         showNoteView,
         setBrushAnimated,
-        submitNote
+        submitNote,
     }
 })();
