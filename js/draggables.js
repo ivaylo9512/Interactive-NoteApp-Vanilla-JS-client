@@ -76,7 +76,6 @@ const draggables = (() =>{
                     app.resetMoveButtons();
                     break;
                 case 'drag-photo':
-
                     photoEndDrag();
                     break;
                 case 'nav-point':

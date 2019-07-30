@@ -169,16 +169,17 @@ body.full-mode-active .play-nav {
     position: fixed;
 }
 .gear {
-    width: 8%;
+    width: 11%;
     margin-top: 5px;
     z-index: 7;
     margin-right: 4px;
 }
 
 .play-box{
-    width: 395px;
+    width: 270px;
     z-index: 9;
     height: 75%;
+    float: right;
 }
 
 .play-box > *:not(:first-child) {
@@ -229,12 +230,12 @@ body.full-mode-active .play-box{
 }
 
 .play-box .pink-bulb{
-    width: 15%;
+    width: 21%;
     margin-top: -10px;
 }
 
 .play-box .blue-bulb{
-    width: 12%;
+    width: 16.5%;
     margin-top: -3px;
     margin-right: 8px;
 }
@@ -1184,7 +1185,7 @@ ol {
     width: 10%;
     position: absolute;
     margin-left: -5px;
-    z-index: 6;
+    z-index: 7;
     display: none;
 }
 .timeline-years ol {
