@@ -107,7 +107,7 @@ const profile = (() =>{
                 profilePhoto.src = user.profilePicture ? remote.getBase() + user.profilePicture : '#'; 
     
                 localStorage.setItem('Authorization', user.token);
-                localStorage.setItem('firstName', user.firstMame);
+                localStorage.setItem('firstName', user.firstName);
                 localStorage.setItem('profilePic', user.profilePicture);
                 localStorage.setItem('lastName', user.lastName);
                 localStorage.setItem('age', user.age);

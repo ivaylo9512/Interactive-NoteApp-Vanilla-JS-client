@@ -809,7 +809,9 @@ body.full-mode-active .play-box{
     opacity: 0;
     z-index: 9;
 }
-
+.chosen-profile-photo{
+    left: 5px;
+}
 .note-section{
     position: relative;
     height: 649px;
@@ -1055,8 +1057,8 @@ body.full-mode-active .input-note .sticky-note {
 }
 .full-mode{
     display: none;
-    min-height: calc(100vh - 16px);
-    border: 8px solid;
+    min-height: calc(100vh - 12px);
+    border: 6px solid;
     min-width: 1247px;
     text-align: center;
     position: relative;
@@ -1122,7 +1124,7 @@ body.full-mode-active .full-mode{
     margin-top: -30px;
     background: url(resources/menu-icon.png) no-repeat center center;
     background-size: 40%;
-    border: 3px solid #41291B;
+    border: 0.5px solid #41291B;
     border-radius: 90px;
     height: 60px;
     width: 60px;
@@ -1131,7 +1133,11 @@ body.full-mode-active .full-mode{
     transform: scale(1);
     z-index: 5;
     cursor: pointer;
+    box-shadow: 0px 0px 2px 1px rgba(0,0,0,0.25);
     display: none;
+}
+.full-mode-circle:hover {
+    box-shadow: none;
 }
 body.full-mode-active .full-mode-circle {
     display: block;
@@ -1351,14 +1357,14 @@ ol::after {
     margin: 0 auto;
 }
 .album-container > div{
-    height: 61px;
-    width: 121px;
+    height: 72px;
+    width: 125px;
     position: relative;
-    border: 3px solid #41291B;
-    border-style: double;
+    border: 0.5px solid #41291B;
     display: inline-block;
     overflow: hidden;
     border-radius: 5px;
+    box-shadow: 0px 0px 2px 1px rgba(0,0,0,0.25);
 }
 .album-container div img{
     width: 110%;
@@ -1373,16 +1379,17 @@ ol::after {
     -webkit-animation: fadeIn 1s ease-in forwards;
     animation: fadeIn ease-in 1s forwards;
 }
-.album-numbers{
+.album-container .album-numbers{
     background-color: #41291B;
     background-size: 100%;
-}
-.album-numbers div:hover{
-    border: 1px solid #41291B;
+    -moz-box-shadow: 0px 0px 4px 2px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 3px 1.5px rgba(0,0,0,0.75);
+    border: 1px solid #EAE9E5;
 }
 .album-numbers div{
     background-size: 100%;
     width: 33.3%;
+    background: no-repeat center center / cover;
     height: 100%;
     position: absolute;
     display: inline-block;
@@ -1391,7 +1398,9 @@ ol::after {
     transform: scale(1);
     transition: all 0.95s, transform 0.4s 0.9s;
     cursor: pointer;
-
+}
+.album-numbers div:hover{
+    border: 1px solid #41291B;
 }
 .album-numbers.middle div{
     transition: all 0.95s, transform 0.4s;
@@ -1423,27 +1432,44 @@ ol::after {
     left: 33%;
 }
 .add-photo {
-    background: url('resources/add-photo.png') no-repeat;
     background-size: 100%;
     width: 37px;
-    height: 53px;
+    height: 37px;
     position: fixed;
     right: 1%;
     top: 104px;
-    border: 0px;
+    border: 0.5px solid;
+    border-radius: 50%;
     outline: none;
-    cursor: pointer;
+    box-shadow: 0px 0px 2px 1px rgba(0,0,0,0.25);
+}
+.add-photo span{
+    position: absolute;
+    background: #41291B;
+    border-radius: 13px;
+    z-index: -1;
+}
+.add-photo span:nth-child(1){
+    height: 50%;
+    left: calc(50% - 3.5%);
+    top: 25%;
+    width: 7%;
+}
+.add-photo span:nth-child(2){
+    width: 50%;
+    top: calc(50% - 3.5%);
+    left: 25%;
+    height: 7%;
 }
 .add-photo input {
-    overflow: hidden;
     width: 110%;
-    height: 80%;
-    margin-left: -4.5px;
-    margin-bottom: 1.9px;
+    height: 110%;
     border-radius: 90px;
-    outline: none;
     opacity: 0;
     cursor: pointer;
+}
+.add-photo input::-webkit-file-upload-button {
+    cursor: pointer; 
 }
 .photos-container-full-mode{
     margin-top: 40px;

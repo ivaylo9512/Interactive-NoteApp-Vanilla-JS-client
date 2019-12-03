@@ -506,10 +506,11 @@ const app = (() =>{
     const fullModeNavToggle = () => {
 
         if(menuCircle.classList.contains('inactive')) fullModeReset();
-        
-        fullModeNav.classList.add('active');
         fullModeBtn.classList.add('active');
-   
+        setTimeout(() => 
+            fullModeNav.classList.add('active')
+        , 0);
+        
     }
 
     const fullModeReset = () => {

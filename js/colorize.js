@@ -70,7 +70,7 @@ const colorize = (() => {
 
         colorizables.forEach(colorizeable => {
             colorizeable.style.color = '#41291B';
-            colorizeable.removeAttribute('value');
+            colorizeable.removeAttribute('color');
         })
         amountCounted = 0;
         score.textContent = 0;
@@ -98,12 +98,12 @@ const colorize = (() => {
     let amountCounted = 0;
     let score = document.getElementById('score');
     const calculate = (node) => {
-        if (node.getAttribute('value') == 'marked' && !matched) {
+        if (node.getAttribute('color') == 'marked' && !matched) {
             amountCounted--;
-            node.setAttribute('value', 'unmarked');
-        } else if (matched && (node.getAttribute('value') == 'unmarked' || node.getAttribute('value') === null)) {
+            node.setAttribute('color', 'unmarked');
+        } else if (matched && (node.getAttribute('color') == 'unmarked' || node.getAttribute('color') === null)) {
             amountCounted++;
-            node.setAttribute('value', 'marked');
+            node.setAttribute('color', 'marked');
         }
         score.textContent = amountCounted;
     }

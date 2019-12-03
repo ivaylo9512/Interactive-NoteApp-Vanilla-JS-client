@@ -215,7 +215,7 @@ const notes = (() => {
 
     const checkDate = () => {
         if (month && year && day) {
-            month = month.length > 1 ? month : '0' + month;
+            month = month.toString().length > 1 ? month : '0' + month;
             day = day.length > 1 ? day : '0' + day;
 
             let date = year + '-' + month + '-' + day;
@@ -498,7 +498,7 @@ const notes = (() => {
     }
 
     const resetNote = () => {
-        if(noteIsAnimated){
+        if(noteIsAnimated && !noteViewActivated){
             inputNote.style.display = 'block';
         }else{
             inputNote.style.display = 'none';
