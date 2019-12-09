@@ -18,7 +18,7 @@ const draggables = (() =>{
             pos4 = e.pageY;            
             
             className = target.className;
-            if(className.includes('disabled')) return;
+            if(className.includes('loading')) return;
 
             node.style.transition = '0s';
             
@@ -129,7 +129,7 @@ const draggables = (() =>{
 
             photo.style.opacity = 1;
             photo.style.transition = 'opacity 1s'
-            photo.classList.add('disabled');
+            photo.classList.add('loading');
         
             elementFromPoint.appendChild(photo);
             node.style.display = 'none';
@@ -145,7 +145,7 @@ const draggables = (() =>{
                 resetPhoto(node);
                 return;
             }finally{
-                photo.classList.remove('disabled');
+                photo.classList.remove('loading');
             }
 
             photo.className = 'appended';
@@ -162,8 +162,8 @@ const draggables = (() =>{
             const newPhotoId = Number(photo.id);
             const newPhotoSrc = photo.src;
 
-            photo.classList.add('disabled');
-            currentPhoto.classList.add('disabled');
+            photo.classList.add('loading');
+            currentPhoto.classList.add('loading');
 
             resetPhoto();
             currentPhoto.src = newPhotoSrc;
@@ -178,8 +178,8 @@ const draggables = (() =>{
                 console.log(e);
                 return;
             }finally{
-                photo.classList.remove('disabled');
-                currentPhoto.classList.remove('disabled');
+                photo.classList.remove('loading');
+                currentPhoto.classList.remove('loading');
             }
 
             currentPhoto.id = newPhotoId;
@@ -190,7 +190,8 @@ const draggables = (() =>{
         const resetPhoto = () => {
             node.style.top = '0px';
             node.style.left = '0px';
-            node.style.marginLeft = '2px';
+            node.style.marginLeft = '1px';
+            node.style.marginRight = '1px';
             node.style.marginTop = '2px';
             node.style.position = 'relative';
         }

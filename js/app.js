@@ -735,8 +735,8 @@ const app = (() =>{
         photoContainer.appendChild(photo);
         
         photoContainer.className = 'drag-photo-container';
-        photo.className = 'drag-photo disabled';
-        node.className = 'place-photo disabled';
+        photo.className = 'drag-photo loading';
+        node.className = 'place-photo loading';
 
         photosContainer.appendChild(photoContainer);
 
@@ -772,8 +772,8 @@ const app = (() =>{
             console.log(e);
         })
         .finally(() =>{
-            node.classList.remove('disabled');
-            photo.classList.remove('disabled');
+            node.classList.remove('loading');
+            photo.classList.remove('loading');
 
         })
     }

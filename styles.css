@@ -530,6 +530,7 @@ body.full-mode-active .play-box{
 .circles-container img {
     display: none;
     opacity: 0;
+    outline: 1px solid transparent;
 }
 
 .circles-container span.animate,
@@ -721,10 +722,11 @@ body.full-mode-active .play-box{
 }
 .labels-container{
     margin-left: 17%;
-    width: 150px;
+    width: 31%;
 }
 .labels-container label{
-    display: block;
+    display: inline-block;
+    width: 42%;
     font-weight: bold;
     margin-bottom: 21px;
     text-align: center;
@@ -734,14 +736,11 @@ body.full-mode-active .play-box{
     width: 16%;
     height: 20%;
 }
-.inputs-container input{
+.labels-container input{
+    width: 48%;
     background: transparent;
-    width: 82%;
-    margin-top: -7px;
-    margin-bottom: 28px;
-    font: normal 21px/1 "Aladin", Helvetica, sans-serif;
+    font: normal 24px/1 "Aladin", Helvetica, sans-serif;
     text-align: center;
-    display: block;
     border: 0px;
     border-bottom: 2px solid #41291B;
 }
@@ -1062,6 +1061,7 @@ body.full-mode-active .input-note .sticky-note {
     min-width: 1247px;
     text-align: center;
     position: relative;
+    overflow: hidden;
 }
 
 body.full-mode-active .full-mode{
@@ -1133,7 +1133,7 @@ body.full-mode-active .full-mode{
     transform: scale(1);
     z-index: 5;
     cursor: pointer;
-    box-shadow: 0px 0px 2px 1px rgba(0,0,0,0.25);
+    box-shadow: 0px 0px 3px 1.5px rgba(0,0,0,0.3);
     display: none;
 }
 .full-mode-circle:hover {
@@ -1238,6 +1238,8 @@ ol li .point {
     height: 0;
     border-radius: 10px;
     border: 8px solid #41291B;
+    cursor: pointer;
+
 }
 .days-container {
     width: 72px;
@@ -1290,6 +1292,7 @@ button.days-container:focus{
     display: inline-block;
     font: normal 19px/1 "Aladin", Helvetica, sans-serif;
     color: #41291B;
+    cursor: pointer;
 }
 .timeline-months p {
     margin-top: 40px;
@@ -1337,6 +1340,7 @@ ol::after {
 .photo-section-full-mode{
     display: none;
     width: 100%;
+    height: calc(100vh - 62px);
     margin-top: 50px;
     position:relative;
     z-index: 2;
@@ -1433,15 +1437,16 @@ ol::after {
 }
 .add-photo {
     background-size: 100%;
-    width: 37px;
-    height: 37px;
+    width: calc(2.8% + 1px);
+    height: 0;
+    padding-bottom: 2.8%;
     position: fixed;
     right: 1%;
     top: 104px;
     border: 0.5px solid;
     border-radius: 50%;
     outline: none;
-    box-shadow: 0px 0px 2px 1px rgba(0,0,0,0.25);
+    box-shadow: 0px 0px 2px 1px rgba(0,0,0,0.4);
 }
 .add-photo span{
     position: absolute;
@@ -1463,7 +1468,7 @@ ol::after {
 }
 .add-photo input {
     width: 110%;
-    height: 110%;
+    padding-bottom: 110%;
     border-radius: 90px;
     opacity: 0;
     cursor: pointer;
@@ -1474,17 +1479,20 @@ ol::after {
 .photos-container-full-mode{
     margin-top: 40px;
     display: inline-block;
+    padding: 0 4px;
 }
 .drag-photo-container{
     height: 75px;
-    width: 151.1px;
-    position: relative;
-    float: left;
+    width: calc(12.5vw - 5.5px);
+    display: inline-block;
     overflow: hidden;
-    border: 1px solid rgb(65, 41, 27);
-    margin-left : 2px;
+    border: 0.5px solid rgb(65, 41, 27);
     margin-top: 2px;
+    margin-left: 1px;
     cursor: pointer;
+    margin-right: 1px;
+    position: relative;
+    border-radius: 1px;
 }
 .drag-photo-container img{
     width: 110%;
@@ -1494,6 +1502,9 @@ ol::after {
     left: 0;
     right: 0;
     bottom: 0;
+}
+.drag-photo.loading{
+    opacity: 0.2;
 }
 .right-notes-container{
     position: absolute;
