@@ -717,14 +717,14 @@ body.full-mode-active .play-box{
     z-index: 1;
     width: 684px;
 }
-.user-info > div{
+.profile > div{
     float: left;
 }
-.labels-container{
+.user-info{
     margin-left: 17%;
     width: 31%;
 }
-.labels-container label{
+.user-info label{
     display: inline-block;
     width: 42%;
     font-weight: bold;
@@ -736,13 +736,15 @@ body.full-mode-active .play-box{
     width: 16%;
     height: 20%;
 }
-.labels-container input{
+.user-info input{
     width: 48%;
     background: transparent;
     font: normal 24px/1 "Aladin", Helvetica, sans-serif;
     text-align: center;
     border: 0px;
     border-bottom: 2px solid #41291B;
+    position: relative;
+    top: -5px;
 }
 .buttons-container {
     height: 60px;

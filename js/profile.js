@@ -1,29 +1,29 @@
 const profile = (() =>{
 
-    let labels = document.getElementById('labels-container').children;
-    let inputs = document.getElementById('inputs-container').children;
+    let userInfo = document.getElementById('user-info');
+    let labelNodes = userInfo.getElementsByTagName('label');
+    let inputNodes = userInfo.getElementsByTagName('input');
     let profilePhoto = document.getElementById('chosen-image');
     let userBtn = document.getElementById('user-btn');
 
     let isAuth = () => localStorage.getItem('Authorization') != null;
     // if (isAuth()) {
-    //     inputs[0].value = localStorage.getItem('firstName')
-    //     inputs[1].value = localStorage.getItem('lastName');
-    //     inputs[2].value = localStorage.getItem('age');
-    //     inputs[3].value = localStorage.getItem('country');
+    //     inputNodes[0].value = localStorage.getItem('firstName')
+    //     inputNodes[1].value = localStorage.getItem('lastName');
+    //     inputNodes[2].value = localStorage.getItem('age');
+    //     inputNodes[3].value = localStorage.getItem('country');
     //     profilePhoto.src = localStorage.getItem('profilePic') != 'undefined' ? remote.getBase() + localStorage.getItem('profilePic') : '#'; 
 
     //     userBtn.style.display = 'block';
     //     userBtn.textContent = 'logout';
     // }
 
-    const labelsTexts = [
-        ['Username', 'Password'], 
-        ['Username', 'Password', 'Repeat'],
-        ['First Name', 'Last Name', 'Age', 'Country'],
+    const labels = [
+        [{label:'Username', display:'block'}, {label:'Password', display:'block'},{label:'', display:'none'}, {label:'', display:'none'}], 
+        [{label:'Username', display:'block'}, {label:'Password', display:'none'}, {label:'Repeat', display:'block'},{label:'', display:'none'}],
+        [{label:'First Name', display:'block'},{label:'Age', display:'block'},{label:'Last Name', display:'block'}, {label:'Country', display:'block'}],
     ];
     
-    let currentLabels;
     let currentBtn;
     const changeInputView = (newState, oldState) => {
         oldState.classList.remove('active');
@@ -31,29 +31,33 @@ const profile = (() =>{
         
         userBtn.style.display = 'block';
         userBtn.textContent = newState.id == 'login-btn' ? 'login' : 'next';
-        currentLabels = newState.id == 'login-btn' ? labelsTexts[0] : labelsTexts[1];
+        currentLabels = newState.id == 'login-btn' ? ()=> {resetInputs(labels[0]) } : ()=> {resetInputs(labels[0]) };
         currentBtn = newState;
 
         resetInputs();
     }
 
-    const resetInputs = () => {
-        for (let i = 0; i < 4; i++) {
-            if (currentLabels.length <= i) {
-                labels[i].style.display = 'none';
-                inputs[i].style.display = 'none';
-            } else {
-                labels[i].style.display = 'block';
-                inputs[i].style.display = 'block';
-                labels[i].textContent = currentLabels[i];
-                inputs[i].value = '';
-                inputs[i].type = 'text';
-    
-                if (currentLabels[i] == 'Password' || currentLabels[i] == 'Repeat') {
-                    inputs[i].type = 'password'
-                }
-            }
-        }
+    const resetInputs = (currentLabels) => {
+        inputNodes[0].value = '';
+        inputNodes[1].value = '';
+        inputNodes[2].value = '';
+        inputNodes[3].value = '';
+
+        inputNodes[0].display = currentLabels[0].display;
+        inputNodes[1].display = currentLabels[1].display;
+        inputNodes[2].display = currentLabels[2].display;
+        inputNodes[3].display = currentLabels[3].display;
+
+        labelNodes[0].textContent = currentLabels[0].label;
+        labelNodes[1].textContent = currentLabels[1].label;
+        labelNodes[2].textContent = currentLabels[2].label;
+        labelNodes[3].textContent = currentLabels[3].label;
+
+        labelNodes[0].style.display = currentLabels[0].display;
+        labelNodes[1].style.display = currentLabels[1].display;
+        labelNodes[2].style.display = currentLabels[2].display;
+        labelNodes[3].style.display = currentLabels[3].display;
+
     }
 
     const userAction = (e) => {
@@ -86,6 +90,11 @@ const profile = (() =>{
         resetInputs();  
     }
 
+    const setInputs = (inputs) => {
+
+        inputs = inputs[0][display];
+        inputs
+    }
     const login = () => {
         let username = inputs[0].value;
         let password = inputs[1].value;
