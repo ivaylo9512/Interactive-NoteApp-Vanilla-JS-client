@@ -18,10 +18,19 @@ const profile = (() =>{
     //     userBtn.textContent = 'logout';
     // }
 
-    const labels = [
-        [{label:'Username', display:'block'}, {label:'Password', display:'block'},{label:'', display:'none'}, {label:'', display:'none'}], 
-        [{label:'Username', display:'block'}, {label:'Password', display:'none'}, {label:'Repeat', display:'block'},{label:'', display:'none'}],
-        [{label:'First Name', display:'block'},{label:'Age', display:'block'},{label:'Last Name', display:'block'}, {label:'Country', display:'block'}],
+    const view = [
+        {
+            labels:[{label:'Username', display: 'inline-block'}, {label:'Password', display:'inline-block'},{label:'', display:'none'}, {label:'', display:'none'}],
+            button:{label:'login', display: 'block'}   
+        }, 
+        {
+            labels:[{label:'Username', display:'inline-block'}, {label:'Password', display:'none'}, {label:'Repeat', display:'inline-block'},{label:'', display:'none'}],
+            button:{labels:'next', display: 'block'}
+        },
+        {
+            labels:[{label:'First Name', display:'inline-block'},{label:'Age', display:'inline-block'},{label:'Last Name', display:'inline-block'}, {label:'Country', display:'inline-block'}],
+            button:{labels:'', display: 'none'}        
+        }
     ];
     
     let currentBtn;
@@ -31,33 +40,22 @@ const profile = (() =>{
         
         userBtn.style.display = 'block';
         userBtn.textContent = newState.id == 'login-btn' ? 'login' : 'next';
-        currentLabels = newState.id == 'login-btn' ? ()=> {resetInputs(labels[0]) } : ()=> {resetInputs(labels[0]) };
+        currentLabels = newState.id == 'login-btn' ? ()=> {resetView(view[0]) } : ()=> {resetView(view[0]) };
         currentBtn = newState;
 
-        resetInputs();
+        resetView(view[0]);
     }
 
-    const resetInputs = (currentLabels) => {
-        inputNodes[0].value = '';
-        inputNodes[1].value = '';
-        inputNodes[2].value = '';
-        inputNodes[3].value = '';
-
-        inputNodes[0].display = currentLabels[0].display;
-        inputNodes[1].display = currentLabels[1].display;
-        inputNodes[2].display = currentLabels[2].display;
-        inputNodes[3].display = currentLabels[3].display;
-
-        labelNodes[0].textContent = currentLabels[0].label;
-        labelNodes[1].textContent = currentLabels[1].label;
-        labelNodes[2].textContent = currentLabels[2].label;
-        labelNodes[3].textContent = currentLabels[3].label;
-
-        labelNodes[0].style.display = currentLabels[0].display;
-        labelNodes[1].style.display = currentLabels[1].display;
-        labelNodes[2].style.display = currentLabels[2].display;
-        labelNodes[3].style.display = currentLabels[3].display;
-
+    const resetView = (currentLabels, newBtn) => {
+        for(let i = 0; i < inputNodes.length; i++){
+            inputNodes[i].value = '';
+            inputNodes[i].style.display = currentLabels.labels[i].display;
+            labelNodes[i].textContent = currentLabels.labels[i].label;
+            labelNodes[i].style.display = currentLabels.labels[i].display;
+        }
+        currentBtn.classList.remove('active');
+        newBtn.classList.add('active');
+        currentBtn = newBtn;
     }
 
     const userAction = (e) => {
@@ -76,7 +74,6 @@ const profile = (() =>{
                 nextInputs();
                 break;    
         }
-        
     }
 
     const logout = () => {
@@ -86,15 +83,9 @@ const profile = (() =>{
         userBtn.style.display =  'none';
         userBtn.textContent = '';
 
-        currentLabels = labelsTexts[2];
-        resetInputs();  
+        resetView(view[2]);  
     }
 
-    const setInputs = (inputs) => {
-
-        inputs = inputs[0][display];
-        inputs
-    }
     const login = () => {
         let username = inputs[0].value;
         let password = inputs[1].value;
@@ -105,8 +96,7 @@ const profile = (() =>{
         remote.login(user).then(
             res => {
                 const user = res.data;
-                currentLabels = labelsTexts[2];
-                resetInputs(currentLabels)
+                resetView(view[2])
 
                 userBtn.textContent = 'logout';
                 inputs[0].value = user.firstName;
@@ -152,7 +142,7 @@ const profile = (() =>{
         currentLabels = labelsTexts[2];
         userBtn.textContent = 'register';
 
-        resetInputs(); 
+        resetView(); 
     }
 
     const reader = new FileReader();
