@@ -838,12 +838,6 @@ const app = (() =>{
         document.getElementById('pink-bulb-btn').addEventListener('click', () => colorize.setCurrentColor('#E2007A'));
         document.getElementById('blue-bulb-btn').addEventListener('click', () => colorize.setCurrentColor('#7398CA'));
 
-        const loginBtn = document.getElementById('login-btn');
-        const registerBtn = document.getElementById('register-btn');
-        loginBtn.addEventListener('click', () => profile.changeInputView(loginBtn, registerBtn));
-        registerBtn.addEventListener('click', () => profile.changeInputView(registerBtn, loginBtn));
-        document.getElementById('user-btn').addEventListener('click', profile.userAction);
-
         const noteAnimation = document.getElementById('note-animation');
         const noteHeader = document.getElementById('notes-header');
         noteAnimation.addEventListener('mouseover', notes.noteAnimation);
@@ -869,7 +863,6 @@ const app = (() =>{
         albumNumbersContainer.addEventListener('click', chooseAlbumNumber);
 
         document.getElementById('input-photo').addEventListener('input', appendPhoto);
-        document.getElementById('profile-photo').addEventListener('input', profile.addProfilePhoto);
 
         saveButton.addEventListener('mouseover', () => editButton.classList.add('rotate'));
         saveButton.addEventListener('mouseout', () => editButton.classList.remove('rotate'));

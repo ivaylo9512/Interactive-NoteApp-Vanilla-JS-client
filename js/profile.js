@@ -1,4 +1,7 @@
-const profile = (() =>{
+const profile = (() => {
+
+    const loginBtn = document.getElementById('login-btn');
+    const registerBtn = document.getElementById('register-btn');
 
     let userInfo = document.getElementById('user-info');
     let labelNodes = userInfo.getElementsByTagName('label');
@@ -34,21 +37,9 @@ const profile = (() =>{
     ];
     
     let currentBtn;
-    const changeInputView = (newState, oldState) => {
-        oldState.classList.remove('active');
-        newState.classList.add('active');
-        
-        userBtn.style.display = 'block';
-        userBtn.textContent = newState.id == 'login-btn' ? 'login' : 'next';
-        currentLabels = newState.id == 'login-btn' ? ()=> {resetView(view[0]) } : ()=> {resetView(view[0]) };
-        currentBtn = newState;
-
-        resetView(view[0]);
-    }
-
-    const resetView = (currentLabels, newBtn) => {
+    const resetView = (currentLabels, inputs) => {
         for(let i = 0; i < inputNodes.length; i++){
-            inputNodes[i].value = '';
+            inputNodes[i].value = inputs == undefined ? '' : inputs[i];
             inputNodes[i].style.display = currentLabels.labels[i].display;
             labelNodes[i].textContent = currentLabels.labels[i].label;
             labelNodes[i].style.display = currentLabels.labels[i].display;
@@ -86,9 +77,9 @@ const profile = (() =>{
         resetView(view[2]);  
     }
 
-    const login = () => {
-        let username = inputs[0].value;
-        let password = inputs[1].value;
+    function login() {
+        let username = inputNodes[0].value;
+        let password = inputNodes[1].value;
         let user = {
             username,
             password,
@@ -146,7 +137,7 @@ const profile = (() =>{
     }
 
     const reader = new FileReader();
-    reader.addEventListener('load', () => profilePhoto.src = event.target.result);
+    reader.addEventListener('load', () => profilePhoto.src = event.target.result);    
     
     const formData = new FormData();
     const addProfilePhoto = () => {
@@ -163,13 +154,15 @@ const profile = (() =>{
         }
     }
 
+    (function addListeners(){
+        loginBtn.addEventListener('click', userAction);
+        registerBtn.addEventListener('click', userAction);
+        document.getElementById('user-btn').addEventListener('click', userAction);
+        document.getElementById('profile-photo').addEventListener('input', addProfilePhoto);    
+    })();
 
     return{
-        changeInputView,
-        userAction,
         isAuth,
-        register,
-        addProfilePhoto
     }
 
 })();
