@@ -14,11 +14,11 @@ const profile = (() => {
             action: 'next'   
         },
         {
-            labels:['First Name','Age','Last Name','Country'],
+            labels:['First Name','Last Name','Age','Country'],
             action: 'logout'   
         },
         {
-            labels:['First Name','Age','Last Name','Country'],
+            labels:['First Name','Last Name','Age','Country'],
             menuBtn: registerBtn,
             action: 'register'   
         }
@@ -41,14 +41,14 @@ const profile = (() => {
             case 'login':
                 login().then(res => {
                     setUserInfo(res.data);
-                    resetView(view[2], Object.values(res.data));
+                    resetView(view[2], Object.values(userInfo));
                 });
                 break;
             case 'register':
                 saveInputs();
                 register().then(res => {
                     setUserInfo(res.data);
-                    resetView(view[2], Object.values(res.data));
+                    resetView(view[2], Object.values(userRegister));
                 });
                 break;
             case 'next':
@@ -58,37 +58,12 @@ const profile = (() => {
         }
     }
 
-    function setUserInfo(user) {
-        userBtn.textContent = 'logout';
-
-        profilePhoto.src = user.profilePicture ? remote.getBase() + user.profilePicture : '#'; 
-        
-        localStorage.setItem('Authorization', user.token);
-        localStorage.setItem('firstName', user.firstName);
-        localStorage.setItem('profilePic', user.profilePicture);
-        localStorage.setItem('lastName', user.lastName);
-        localStorage.setItem('age', user.age);
-        localStorage.setItem('country', user.country);
-    }
-
     let profilePhoto = document.getElementById('chosen-image');
-    let userInfo = document.getElementById('user-info');
-    let labelNodes = userInfo.getElementsByTagName('label');
-    let inputNodes = userInfo.getElementsByTagName('input');
+    let userContainer = document.getElementById('user-info');
+    let labelNodes = userContainer.getElementsByTagName('label');
+    let inputNodes = userContainer.getElementsByTagName('input');
     let userBtn = document.getElementById('user-btn');
     
-    let isAuth = () => localStorage.getItem('Authorization') != null;
-    // if (isAuth()) {
-    //     inputNodes[0].value = localStorage.getItem('firstName')
-    //     inputNodes[1].value = localStorage.getItem('lastName');
-    //     inputNodes[2].value = localStorage.getItem('age');
-    //     inputNodes[3].value = localStorage.getItem('country');
-    //     profilePhoto.src = localStorage.getItem('profilePic') != 'undefined' ? remote.getBase() + localStorage.getItem('profilePic') : '#'; 
-
-    //     userBtn.style.display = 'block';
-    //     userBtn.textContent = 'logout';
-    // }
-
     let currentBtn;
     const resetView = (view, inputs) => {
         for(let i = 0; i < inputNodes.length; i++){
@@ -124,12 +99,32 @@ const profile = (() => {
         }
     }
 
-    const logout = () => {
-        localStorage.removeItem('Authorization');
-        profilePhoto.src = '';
+    let userInfo;
+    function setUserInfo(user) {
+        userBtn.textContent = 'logout';
 
-        userBtn.style.display = 'none';
-        userBtn.textContent = '';
+        userInfo = {
+            firstName: user.firstName,
+            lastName: user.lastName,
+            age: user.age,
+            country: user.country,
+            profilePicture : user.profilePicture
+        }
+        profilePhoto.src = user.profilePicture ? remote.getBase() + user.profilePicture : '#'; 
+        localStorage.setItem('Authorization', user.token);
+        localStorage.setItem('User', JSON.stringify(userInfo));
+    }
+
+    let isAuth = () => {}; // localStorage.getItem('Authorization') != null //;
+    if (isAuth()) {
+        console.log('hey');
+        userInfo = Object.values(JSON.parse(localStorage.getItem('User')));
+        
+        resetView(view[2], userInfo);
+        profilePhoto.src = user.profilePic != 'undefined' ? remote.getBase() + localStorage.getItem('profilePic') : '#'; 
+    }else{
+        resetView(view[2]);
+
     }
 
     function login() {
@@ -142,14 +137,23 @@ const profile = (() => {
         return remote.login(user);
     }
 
+    const logout = () => {
+        localStorage.removeItem('Authorization');
+        localStorage.removeItem('User');
+        profilePhoto.src = '';
+
+        userBtn.style.display = 'none';
+        userBtn.textContent = '';
+    }
+
     const userRegister = {
-        username: undefined,
-        password: undefined,
-        repeat: undefined,
         firstName: undefined,
         lastName: undefined,
         country: undefined,
-        age: undefined
+        age: undefined,
+        username: undefined,
+        password: undefined,
+        repeat: undefined,
     }
 
     const saveInputs = () => {
@@ -164,11 +168,6 @@ const profile = (() => {
     }
 
     const register = () => {
-        userRegister.firstName =  inputs[0].value;
-        userRegister.lastName =  inputs[1].value;
-        userRegister.age =  inputs[2].value;
-        userRegister.country =  inputs[3].value;
-
         formData.append('user', JSON.stringify(userRegister));
         return remote.register(formData);
     }

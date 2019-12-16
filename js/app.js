@@ -491,10 +491,10 @@ const app = (() =>{
     }
 
     const initialAnimation = () => {
+        document.getElementById('user-form').reset();
         setTimeout(() => {
-            window.scrollTo(0, document.body.scrollHeight);
-        },800);
-        
+            window.scrollTo(0, document.body.scrollHeight);   
+        }, 100);
         setTimeout(() => {
             document.getElementById('pink-bulb').src = 'resources/pink-bulb.gif';
             document.getElementById('blue-bulb').src = 'resources/blue-bulb.gif';
@@ -822,7 +822,7 @@ const app = (() =>{
     }
         
     const start = () => {
-        initialAnimation();
+        window.addEventListener('load', initialAnimation);
 
         animate.createCircles();
         window.addEventListener('scroll', () => !fullModeOn && initialLoad && animate.decideEvent());
