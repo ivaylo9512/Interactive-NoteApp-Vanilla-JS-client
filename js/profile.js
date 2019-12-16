@@ -1,14 +1,82 @@
 const profile = (() => {
 
-    const loginBtn = document.getElementById('login-btn');
-    const registerBtn = document.getElementById('register-btn');
+    const loginBtn = document.getElementById('login-view');
+    const registerBtn = document.getElementById('register-view');
+    const view = [
+        {
+            labels:['Username', 'Password'],
+            menuBtn: loginBtn,
+            action: 'login'   
+        }, 
+        {
+            labels:['Username', 'Password', 'Repeat'],
+            menuBtn: registerBtn,
+            action: 'next'   
+        },
+        {
+            labels:['First Name','Age','Last Name','Country'],
+            action: 'logout'   
+        },
+        {
+            labels:['First Name','Age','Last Name','Country'],
+            menuBtn: registerBtn,
+            action: 'register'   
+        }
+    ];
 
+    const userAction = (e) => {
+        e.preventDefault();
+        const action = e.target == userBtn ? userBtn.textContent : e.target.id; 
+        switch(action){
+            case 'login-view':
+                resetView(view[0]);
+                break;
+            case 'register-view':
+                resetView(view[1]);
+                break;
+            case 'logout':
+                logout();
+                resetView(view[2]);  
+                break; 
+            case 'login':
+                login().then(res => {
+                    setUserInfo(res.data);
+                    resetView(view[2], Object.values(res.data));
+                });
+                break;
+            case 'register':
+                saveInputs();
+                register().then(res => {
+                    setUserInfo(res.data);
+                    resetView(view[2], Object.values(res.data));
+                });
+                break;
+            case 'next':
+                saveInputs();
+                resetView(view[3]);  
+                break;    
+        }
+    }
+
+    function setUserInfo(user) {
+        userBtn.textContent = 'logout';
+
+        profilePhoto.src = user.profilePicture ? remote.getBase() + user.profilePicture : '#'; 
+        
+        localStorage.setItem('Authorization', user.token);
+        localStorage.setItem('firstName', user.firstName);
+        localStorage.setItem('profilePic', user.profilePicture);
+        localStorage.setItem('lastName', user.lastName);
+        localStorage.setItem('age', user.age);
+        localStorage.setItem('country', user.country);
+    }
+
+    let profilePhoto = document.getElementById('chosen-image');
     let userInfo = document.getElementById('user-info');
     let labelNodes = userInfo.getElementsByTagName('label');
     let inputNodes = userInfo.getElementsByTagName('input');
-    let profilePhoto = document.getElementById('chosen-image');
     let userBtn = document.getElementById('user-btn');
-
+    
     let isAuth = () => localStorage.getItem('Authorization') != null;
     // if (isAuth()) {
     //     inputNodes[0].value = localStorage.getItem('firstName')
@@ -21,60 +89,47 @@ const profile = (() => {
     //     userBtn.textContent = 'logout';
     // }
 
-    const view = [
-        {
-            labels:[{label:'Username', display: 'inline-block'}, {label:'Password', display:'inline-block'},{label:'', display:'none'}, {label:'', display:'none'}],
-            button:{label:'login', display: 'block'}   
-        }, 
-        {
-            labels:[{label:'Username', display:'inline-block'}, {label:'Password', display:'none'}, {label:'Repeat', display:'inline-block'},{label:'', display:'none'}],
-            button:{labels:'next', display: 'block'}
-        },
-        {
-            labels:[{label:'First Name', display:'inline-block'},{label:'Age', display:'inline-block'},{label:'Last Name', display:'inline-block'}, {label:'Country', display:'inline-block'}],
-            button:{labels:'', display: 'none'}        
-        }
-    ];
-    
     let currentBtn;
-    const resetView = (currentLabels, inputs) => {
+    const resetView = (view, inputs) => {
         for(let i = 0; i < inputNodes.length; i++){
-            inputNodes[i].value = inputs == undefined ? '' : inputs[i];
-            inputNodes[i].style.display = currentLabels.labels[i].display;
-            labelNodes[i].textContent = currentLabels.labels[i].label;
-            labelNodes[i].style.display = currentLabels.labels[i].display;
-        }
-        currentBtn.classList.remove('active');
-        newBtn.classList.add('active');
-        currentBtn = newBtn;
-    }
+            const labelInfo = view.labels[i];
+            const input = inputNodes[i]; 
+            const label = labelNodes[i];
 
-    const userAction = (e) => {
-        e.preventDefault();
-        switch(userBtn.textContent){
-            case 'login':
-                login();
-                break;
-            case 'register':
-                register()
-                break;
-            case 'logout':
-                logout();
-                break;  
-            case 'next':
-                nextInputs();
-                break;    
+            if(labelInfo){
+                input.value = inputs == undefined ? '' : inputs[i];
+                input.style.display = 'inline-block';
+                label.textContent = labelInfo;
+                label.style.display = 'inline-block';
+            }else{
+                input.value = '';
+                input.style.display = 'none';
+                label.textContent = '';
+                label.style.display = 'none';
+            }
+        }
+
+        const newBtn = view.menuBtn;
+        currentBtn && currentBtn.classList.remove('active');        
+        newBtn && newBtn.classList.add('active');
+        currentBtn = newBtn;
+
+        if(view.action){
+            userBtn.textContent = view.action;
+            userBtn.style.display = 'block'
+        }else{
+            userBtn.textContent = '';
+            userBtn.style.display = 'none'
+
         }
     }
 
     const logout = () => {
         localStorage.removeItem('Authorization');
-        
         profilePhoto.src = '';
-        userBtn.style.display =  'none';
-        userBtn.textContent = '';
 
-        resetView(view[2]);  
+        userBtn.style.display = 'none';
+        userBtn.textContent = '';
     }
 
     function login() {
@@ -84,56 +139,38 @@ const profile = (() => {
             username,
             password,
         }
-        remote.login(user).then(
-            res => {
-                const user = res.data;
-                resetView(view[2])
-
-                userBtn.textContent = 'logout';
-                inputs[0].value = user.firstName;
-                inputs[1].value = user.lastName;
-                inputs[2].value = user.age;
-                inputs[3].value = user.country;
-                profilePhoto.src = user.profilePicture ? remote.getBase() + user.profilePicture : '#'; 
-    
-                localStorage.setItem('Authorization', user.token);
-                localStorage.setItem('firstName', user.firstName);
-                localStorage.setItem('profilePic', user.profilePicture);
-                localStorage.setItem('lastName', user.lastName);
-                localStorage.setItem('age', user.age);
-                localStorage.setItem('country', user.country);
-                currentBtn.classList.remove('active');
-            })
+        return remote.login(user);
     }
 
     const userRegister = {
         username: undefined,
         password: undefined,
-        repeatPassword: undefined,
+        repeat: undefined,
         firstName: undefined,
         lastName: undefined,
         country: undefined,
         age: undefined
     }
+
+    const saveInputs = () => {
+        for(let i = 0; i < inputNodes.length; i++){
+            if(labelNodes[i].style.display == 'none')
+                break;
+
+            const label = labelNodes[i].textContent.toLowerCase();
+            const input = inputNodes[i].value;                
+            userRegister[label] = input; 
+        }
+    }
+
     const register = () => {
         userRegister.firstName =  inputs[0].value;
         userRegister.lastName =  inputs[1].value;
         userRegister.age =  inputs[2].value;
         userRegister.country =  inputs[3].value;
+
         formData.append('user', JSON.stringify(userRegister));
-
-        remote.register(formData);
-    }
-
-    const nextInputs = () => {
-        userRegister.username =  inputs[0].value;
-        userRegister.password =  inputs[1].value;
-        userRegister.repeatPassword =  inputs[2].value;
-
-        currentLabels = labelsTexts[2];
-        userBtn.textContent = 'register';
-
-        resetView(); 
+        return remote.register(formData);
     }
 
     const reader = new FileReader();

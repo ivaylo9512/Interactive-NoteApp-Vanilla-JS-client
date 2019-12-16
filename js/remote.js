@@ -8,9 +8,9 @@ const remote = (() => {
         }
     })
 
-    const login = (user) => axios.post(base+ 'api/login', user)
+    const login = (user) => axios.post(base+ 'api/login', user);
 
-    const register = (user) => axios.post(base + 'api/register', user)
+    const register = (user) => axios.post(base + 'api/register', user);
 
     const setProfilePicture = (photo) => axios.post(base + 'api/images/setProfilePicture', photo, {
         headers: {
