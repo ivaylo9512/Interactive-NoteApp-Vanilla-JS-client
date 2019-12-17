@@ -117,14 +117,10 @@ const profile = (() => {
 
     let isAuth = () => {}; // localStorage.getItem('Authorization') != null //;
     if (isAuth()) {
-        console.log('hey');
         userInfo = Object.values(JSON.parse(localStorage.getItem('User')));
         
         resetView(view[2], userInfo);
         profilePhoto.src = user.profilePic != 'undefined' ? remote.getBase() + localStorage.getItem('profilePic') : '#'; 
-    }else{
-        resetView(view[2]);
-
     }
 
     function login() {

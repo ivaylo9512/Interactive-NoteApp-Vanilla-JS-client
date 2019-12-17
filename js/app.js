@@ -858,7 +858,7 @@ const app = (() =>{
         fullModeNav.addEventListener('click', fullScreenNavEvents);
 
         inputNote.addEventListener('mousedown', notes.activateNote);
-        document.getElementById('submit-note').addEventListener('click', notes.submitNote);
+        // document.getElementById('submit-note').addEventListener('click', notes.submitNote);
 
         albumNumbersContainer.addEventListener('click', chooseAlbumNumber);
 
