@@ -467,15 +467,18 @@ const app = (() =>{
     const fullModeToggle = () => {
         if(fullModeOn){ 
             initialLoad = false;
-            initialAnimation();
             notes.resetNote();
             notes.resetNoteView();
+            animate.skipAnimations();
 
             clearPlacedPhotos();
 
             fullModeBtn.classList.remove('active');
             inputNote.classList.remove('inactive');
             fullMode.style.display = 'none';
+
+            setTimeout(() => window.scrollTo(0, document.body.scrollHeight),0);   
+            
         }else{
             if(currentAlbumNumber){
                 hideButtons();
@@ -492,9 +495,9 @@ const app = (() =>{
 
     const initialAnimation = () => {
         document.getElementById('user-form').reset();
-        setTimeout(() => {
-            window.scrollTo(0, document.body.scrollHeight);   
-        }, 100);
+        
+        setTimeout(() => window.scrollTo(0, document.body.scrollHeight), 100);
+
         setTimeout(() => {
             document.getElementById('pink-bulb').src = 'resources/pink-bulb.gif';
             document.getElementById('blue-bulb').src = 'resources/blue-bulb.gif';

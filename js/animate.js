@@ -182,7 +182,7 @@ const animate = (() => {
             smoothScroll(100, 3100);
             setTimeout(() => smoothScroll(-900, 3500), 3100);
 
-            balloon.src = 'resources/balloon.gif';
+            balloon.style.display = 'block';
             setTimeout(() => {
                 balloonLeft.style.display = 'block';
                 balloonRight.style.display = 'block';
@@ -190,39 +190,65 @@ const animate = (() => {
 
             setTimeout(() => {
                 balloonLeft.src = 'resources/first-balloon-second-animation.gif';
-                setTimeout(() => {
-                    animationIsPlaying = false;
-                    noteHolders.classList.add('show');
-                    balloonLeft.classList.add('hide');
-
-                    cloud.classList.add('hide');
-                    setTimeout(() => {
-                        cloud2.classList.add('hide');
-                    }, 150);
-
-                    setTimeout(() => {
-                        cloud1.classList.add('hide');
-                    }, 300);
-
-                    setTimeout(() => {
-                        brushAnimation.style.display = 'block';
-                        brushAnimationContainer.appendChild(brushAnimation);
-                        notes.setBrushAnimated();
-                        balloonLeft.style.display = 'none';
-                    }, 1100);
-
-                }, 5050);
+                noteSectionAnimation();
             }, 3500);
         }
+    }
 
+    const noteSectionAnimation = () => {
+        setTimeout(() => {
+            animationIsPlaying = false;
+            noteHolders.classList.add('show');
+            balloonLeft.classList.add('hide');
+
+            cloud.classList.add('hide');
+            setTimeout(() => {
+                cloud2.classList.add('hide');
+            }, 150);
+
+            setTimeout(() => {
+                cloud1.classList.add('hide');
+            }, 300);
+
+            setTimeout(() => {
+                brushAnimation.style.display = 'block';
+                brushAnimationContainer.appendChild(brushAnimation);
+                notes.setBrushAnimated();
+                balloonLeft.style.display = 'none';
+            }, 1100);
+
+        }, 5050);
     }
     
+    const skipAnimations = () => {
+        if(!balloonPlayed){
+            balloonPlayed = true;
+
+            balloon.style.display = 'block';
+            balloonRight.style.display = 'block';
+
+            cloud.classList.add('hide');
+            cloud1.classList.add('hide');
+            cloud2.classList.add('hide');
+
+
+            noteHolders.classList.add('show');
+            brushAnimation.style.display = 'block';
+            brushAnimationContainer.appendChild(brushAnimation);
+            notes.setBrushAnimated();
+
+            treeAnimation();
+            hidePointer();
+        }
+    }
+
     return {
         decideEvent,
         setDelta,
         createCircles,
         scrollToProfile,
         scrollToAlbum,
-        smoothScroll
+        smoothScroll,
+        skipAnimations
     };
 })();
