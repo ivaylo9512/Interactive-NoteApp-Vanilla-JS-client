@@ -1060,6 +1060,28 @@ body.full-mode-active .input-note-container{
 .close-btn span:nth-child(3){
     top: 66%;
 }
+.submit-btn span{
+    height: 14%;
+    background: yellow;
+    position: absolute;
+    border-radius: 5px;
+}
+.submit-btn span:nth-child(1){
+    width: 34%;
+    right: 50%;
+    top: 43%;
+    transform: rotate(40deg);
+    top: 57%;
+    transform-origin: 100%;
+}
+.submit-btn span:nth-child(2){
+    width: 50%;
+    left: 50%;
+    transform: rotate(-49deg);
+    transform-origin: 0;
+    margin-left: -10%;
+    top: 57%;
+}
 .input-note > span{
     width: 43%;
     height: 12%;
