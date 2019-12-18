@@ -63,16 +63,34 @@ body.full-mode-active .play-mode > *{
     width: 184px;
     margin-bottom: 100px;
 }
-
-.pointer {
+.pointer{
     position: absolute;
     width: 200px;
-    margin-left: 222px;
+    margin-left: 388px;
+    display: block;
+    text-align: center;
+    bottom: 385px;
+    animation: translatePointer 1.6s infinite;
+}
+.pointer span{
+    width: 11px;
+    height: 28px;
+    background: #41291B;
+    border-radius: 5px;
+    display: inline-block;
+    position: relative;
+
+}
+.pointer span:nth-child(1){
+    transform: rotate(45deg);
+}
+.pointer span:nth-child(2){
+    transform: rotate(-45deg);
+    margin-left: -4px;
 }
 .onload-animation {
     text-align: center;
 }
-
 .first-section nav {
     height: 20%;
     position: relative;
@@ -1704,5 +1722,34 @@ ol::after {
 
     to {
         opacity:1;
+    }
+}
+@keyframes translatePointer {
+    from {
+        transform:translatey(0);
+    }
+
+    to {
+        transform:translatey(-6px);
+    }
+}
+
+@-webkit-keyframes translatePointer {
+    from {
+        transform:translatey(0);
+    }
+
+    to {
+        transform:translatey(-6px);
+    }
+}
+
+@-moz-keyframes translatePointer {
+    from {
+        transform:translatey(0);
+    }
+
+    to {
+        transform:translatey(-6px);
     }
 }
