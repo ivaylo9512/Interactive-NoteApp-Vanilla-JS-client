@@ -565,7 +565,7 @@ const app = (() =>{
         const container = document.createElement('div');
         container.className = 'drag-photo-container';
 
-        const photo = document.createElement('img');
+        const photo = document.createElement('div');
         photo.className = 'drag-photo';
         
         container.appendChild(photo);
@@ -586,8 +586,8 @@ const app = (() =>{
                         const photoCopy = containerCopy.children[0];
 
                         photoCopy.id = image.id;
-                        photoCopy.src = remote.getBase() + image.location;
-
+                        photoCopy.style.backgroundImage = `url('${remote.getBase() + image.location}')`;
+                        
                         draggables.dragElement(photoCopy);                    
                         photosFragment.insertBefore(containerCopy, photosFragment.firstChild);
                     });
@@ -639,7 +639,7 @@ const app = (() =>{
         }
     }
 
-    const photo = document.createElement('img');
+    const photo = document.createElement('div');
     photo.className = 'appended';
     const appendPlacePhotos = async() => {
         
@@ -661,11 +661,11 @@ const app = (() =>{
                 const photoCopy = photo.cloneNode(false);
                 
                 photoCopy.id = image.id;
-                photoCopy.src = remote.getBase() + image.location;
+                photoCopy.style.backgroundImage = `url('${remote.getBase() + image.location}')`;
                 
                 placePhotos[i].appendChild(photoCopy);
                 placePhotos[i].className = 'placed-photo';
-
+                
                 draggables.dragElement(photoCopy);
             }
         })
@@ -858,7 +858,6 @@ const app = (() =>{
         fullModeNav.addEventListener('click', fullScreenNavEvents);
 
         inputNote.addEventListener('mousedown', notes.activateNote);
-        // document.getElementById('submit-note').addEventListener('click', notes.submitNote);
 
         albumNumbersContainer.addEventListener('click', chooseAlbumNumber);
 

@@ -981,7 +981,7 @@ body.full-mode-active .input-note-container{
     transition: opacity 1.5s ease-in-out;
     pointer-events: all;
 }
-.input-note span{
+.input-note > span{
     width: 43%;
     height: 12%;
     background: black;
@@ -1343,19 +1343,25 @@ ol::after {
     width: 125px;
     position: relative;
     border: 0.5px solid #41291B;
-    display: inline-block;
     overflow: hidden;
     border-radius: 5px;
     box-shadow: 0px 0px 2px 1px rgba(0,0,0,0.25);
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    display: -webkit-inline-box;
+    display: -moz-inline-box;
+    display: -ms-inline-flexbox;
+    display: -webkit-inline-flex;
+    display: inline-flex;
 }
-.album-container div img{
-    width: 110%;
+.album-container .placed-photo div,
+.place-photo div{
     position: absolute;
-    margin: auto;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    height: 105%;
+    width: 105%;
+    background: no-repeat center center / cover;
     -moz-animation: fadeIn 1s ease-in forwards;
     -o-animation: fadeIn 1s ease-in forwards;
     -webkit-animation: fadeIn 1s ease-in forwards;
@@ -1462,7 +1468,6 @@ ol::after {
 .drag-photo-container{
     height: 75px;
     width: calc(12.5vw - 5.5px);
-    display: inline-block;
     overflow: hidden;
     border: 0.5px solid rgb(65, 41, 27);
     margin-top: 2px;
@@ -1471,15 +1476,20 @@ ol::after {
     margin-right: 1px;
     position: relative;
     border-radius: 1px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    
+    display: -webkit-inline-box;
+    display: -moz-inline-box;
+    display: -ms-inline-flexbox;
+    display: -webkit-inline-flex;
+    display: inline-flex;
 }
-.drag-photo-container img{
-    width: 110%;
-    position: absolute;
-    margin: auto;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+.drag-photo-container div{
+    height: 105%;
+    width: 105%;
+    background: no-repeat center center / cover;
 }
 .drag-photo.loading{
     opacity: 0.2;
