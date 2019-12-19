@@ -849,6 +849,8 @@ const app = (() =>{
         noteHeader.addEventListener('mouseout', notes.hideTopAnimations);
         noteHeader.addEventListener('click', notes.showNoteView);
 
+        document.getElementById('submit-btn').addEventListener('click', notes.submitNote);
+
         draggables.dragElement(document.getElementById('move-note'));
         draggables.dragElement(document.getElementById('point'));
         draggables.dragElement(document.getElementById('timeline-years'))

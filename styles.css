@@ -994,22 +994,44 @@ body.full-mode-active .input-note-container{
     width: 26.5%;
     height: 27vw;
     text-align: center;
-    background: yellow;
     z-index: 9;
-    box-shadow: -5.5px 5.5px 4px 0px rgba(0, 0, 0, 0.2);
-    transition: opacity 1.5s ease-in-out;
     pointer-events: all;
 }
-.input-note > div{
+.input-note *{
+    position: relative;
+    z-index: 3;
+}
+.input-note .note{
     position: absolute;
+    height: 100%;
+    width: 100%;
+    background: yellow;
+    box-shadow: -5.5px 5.5px 4px 0px rgba(0, 0, 0, 0.2);
+    transition: opacity 1.5s ease-in-out;
+    z-index: 2;
+
+}
+.input-note .note-buttons{
+    position: absolute;
+    z-index: 1;
     height: 35%;
     width: 30%;
     right: -17%;
+    top: 0;
     margin-top: -9.5%;
     text-align: center;
     transition: transform 1s;
+
+    -webkit-transform: translate(-50%, 50%);
+    -moz-transform: translate(-50%, 50%);
+    transform: translate(-50%, 50%);
 }
-.input-note div button{
+.input-note:hover .note-buttons {
+    -webkit-transform: translate(0%, 0%);
+    -moz-transform: translate(0%, 0%);
+    transform: translate(0%, 0%);
+}
+.input-note .note-buttons button{
     position: absolute;
     transition: 1s;
     width: 25%;
@@ -1025,13 +1047,19 @@ body.full-mode-active .input-note-container{
     border-radius: 50%;
 }
 .input-note div:hover .close-btn{
+    -webkit-transform: translateY(130%);
+    -moz-transform: translateY(130%);
     transform: translateY(130%);
 }
 .input-note div:hover .submit-btn{
+    -webkit-transform: translateX(-130%);
+    -moz-transform: translateX(-130%);
     transform: translateX(-130%);
 }
 .input-note div:hover .close-btn span:nth-child(1){
     top: 43%; 
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
     transform: rotate(-45deg);
 }
 .input-note div:hover .close-btn span:nth-child(2){
@@ -1039,6 +1067,8 @@ body.full-mode-active .input-note-container{
 }
 .input-note div:hover .close-btn span:nth-child(3){
     top: 43%; 
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
     transform: rotate(45deg);
 }
 .close-btn span{
@@ -1066,6 +1096,8 @@ body.full-mode-active .input-note-container{
     position: absolute;
     left: 34%;
     top: 17%;
+    -webkit-transform: rotate(38deg);
+    -moz-transform: rotate(38deg);
     transform: rotate(38deg);
 }
 .submit-btn span{
@@ -1080,7 +1112,9 @@ body.full-mode-active .input-note-container{
     top: 0;
 }
 .submit-btn span:nth-child(2){
-    transform: rotate(0deg);
+    -webkit-transform: rotate(0);
+    -moz-transform: rotate(0);
+    transform: rotate(0);
     width: 75%;
     height: 28%;
     right: 35%;
@@ -1092,6 +1126,8 @@ body.full-mode-active .input-note-container{
     height: 12%;
     background: black;
     opacity: 0.1;
+    -webkit-transform: rotate(-40deg);
+    -moz-transform: rotate(-40deg);
     transform: rotate(-40deg);
     position: absolute;
     left: -15%;
@@ -1107,7 +1143,6 @@ body.full-mode-active .input-note-container{
     margin-top: 6px;
 }
 .input-note input{
-    z-index: 8;
     width: 90%;
     margin-top: 9px;
     font: bold 45px/1 "Aladin", Helvetica, sans-serif;
@@ -1125,6 +1160,9 @@ body.full-mode-active .input-note-container{
 }
 .input-note.inactive > * {
     display: none;
+}
+.input-note.inactive > .note {
+    display: block;
 }
 body.full-mode-active .input-note.bounce {
     transform: none;
