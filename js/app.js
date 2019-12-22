@@ -52,8 +52,6 @@ const app = (() =>{
             photo.style.transform = null;
             photo.style.top = null;
             photo.style.left = null;
-            photo.style.bottom = null;
-            photo.style.right = null;
 
             if(i < currentAlbum.length){
                 photo.classList.add('visible');
@@ -226,7 +224,12 @@ const app = (() =>{
     const resetPhoto = (photo, i) => {
         const appendedPhoto = appendedPhotos[i];
 
-        appendedPhoto.style.width = photo.width;
+        appendedPhoto.style.width = null;
+        appendedPhoto.style.transform = null;
+        appendedPhoto.style.top = null;
+        appendedPhoto.style.left = null;
+
+        appendedPhoto.style.width = photo.width + '%';
         appendedPhoto.style.left = photo.leftPosition + 'px';
         appendedPhoto.style.top = photo.topPosition + 'px';
         appendedPhoto.style.transform = `rotate(${photo.rotation}deg)`;
