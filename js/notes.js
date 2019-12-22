@@ -585,10 +585,17 @@ const notes = (() => {
     const submitNote = () => {
         remote.submitNote(inputName.value, inputText.value).then(
             res =>{
+                inputName.classList.remove('error');
                 inputName.value = '';
                 inputText.value = '';
             }
-        )
+            
+        ).catch(e => {
+            if(e.response.message == 'Note must have a name'){
+                inputName.classList.add('error');
+                inputName.placeholder = 'Note must have a name';
+            }
+        });
     }
     
     months.forEach(month => month.addEventListener('click',() => getMonth(month.children[0].textContent)));

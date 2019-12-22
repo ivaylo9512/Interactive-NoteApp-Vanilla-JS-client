@@ -1155,6 +1155,9 @@ body.full-mode-active .input-note-container{
     font: bold 45px/1 "Aladin", Helvetica, sans-serif;
     border-bottom: 1px solid transparent;
 }
+.input input.error{
+    border-bottom: 1px solid red;
+}
 .input-note:hover input {
     border-bottom: 1px solid #41291B;
 }
