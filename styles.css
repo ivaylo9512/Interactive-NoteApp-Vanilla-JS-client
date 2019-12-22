@@ -45,7 +45,9 @@ section{
 body.full-mode-active .play-mode > *{
     display: none;
 }
-
+body.full-mode-active .play-mode > .play-nav{
+    display: block;
+}
 .tree{
     width: 240px;
     margin-right: 37px;
@@ -162,18 +164,14 @@ body.full-mode-active .play-mode > *{
     z-index: 9;
     display: block;
 }
-.full-mode-button img.active{
-    transition: all 1.5s 0.15s;
-    margin-top: 9%;
-}
-
 .play-nav{
     position: absolute;
     z-index: 9;
     height: 10%;
-    width: 2.6%;
+    width: 33px;
     right: 1%;
     bottom: 14%;
+    transition: all 1.5s 0.15s;
 }
 .play-nav.active{
     position: fixed;
@@ -181,10 +179,13 @@ body.full-mode-active .play-mode > *{
     top: 15px;
 }
 body.full-mode-active .play-nav {
-    right: 1%;
     bottom: unset;
-    top: 23px;
+    top: 2.5vh;
+    width: 2.6%;
     position: fixed;
+}
+body.full-mode-active .play-nav.active {
+    top: calc(7.5vh + 0.5vw);
 }
 .gear {
     width: 100%;
@@ -1240,7 +1241,7 @@ body.full-mode-active .full-mode{
     border-left: 0.1vw solid #EAE9E5;
 }
 .full-mode-circle {
-    position: absolute;
+    position: fixed;
     top: 50%;
     right: 50%;
     margin-right: -2.5%;
@@ -1266,13 +1267,16 @@ body.full-mode-active .full-mode-circle {
     display: block;
 }
 .full-mode-circle.inactive {
-    position: fixed;
-    right: 1%;
+    position: relative;
+    right: 0;
     margin-right: 0;
-    top: 91px;
-    width: 37px;
-    height: 37px;
+    top: 0;
+    width: 110%;
+    margin-top: 0.2vh;
+    padding-bottom: calc(110% - 0.2vw);
+    border-width: 0.1vw;
     z-index: 9;
+    margin-left: -5%;
 }
 .timeline-months-container{
     float: left;
@@ -1572,16 +1576,17 @@ ol::after {
 }
 .add-photo {
     background-size: 100%;
-    width: calc(2.8% + 1px);
-    height: 0;
-    padding-bottom: 2.8%;
-    position: fixed;
-    right: 1%;
-    top: 104px;
-    border: 0.5px solid;
+    border: 0.1vw solid #41291B;
     border-radius: 50%;
     outline: none;
-    box-shadow: 0px 0px 2px 1px rgba(0,0,0,0.4);
+    position: relative;
+    display: none;
+    width: 110%;
+    padding-bottom: calc(110% - 0.2vw);
+    z-index: 9;
+    margin-left: -5%;
+    margin-top: 0.5vh;
+    box-shadow: 0px 0px 3px 1.5px rgba(0,0,0,0.3);
 }
 .add-photo span{
     position: absolute;
@@ -1607,16 +1612,16 @@ ol::after {
     border-radius: 90px;
     opacity: 0;
     cursor: pointer;
+    position: absolute;
 }
 .add-photo input::-webkit-file-upload-button {
     cursor: pointer; 
 }
 .photos-container-full-mode{
-    margin-top: 2vh;
-    display: flex;
     width: 99%;
     flex-wrap: wrap;
     margin: auto;
+    margin-top: 2vh;
     display: -webkit-box;
     display: -moz-box;
     display: -ms-flexbox;
@@ -1628,7 +1633,7 @@ ol::after {
     overflow: hidden;
     width: calc(12.5% - 0.3vw);
     border: 0.05vw solid rgb(65, 41, 27);
-    margin-top: 0.2vw;
+    margin-bottom: 0.2vw;
     margin-left: 0.1vw;
     cursor: pointer;
     margin-right: 0.1vw;

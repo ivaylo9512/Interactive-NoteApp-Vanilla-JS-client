@@ -456,12 +456,13 @@ const app = (() =>{
     const getCurrentAlbumNumber = () => currentAlbumNumber;
 
     const fullModeNav = document.getElementById('full-mode-nav');
-    const fullModeBtn = document.getElementById('full-mode-btn');
     const fullMode = document.getElementById('full-mode');
     const inputNote = document.getElementById('input-note');
     const photoSection = document.getElementById('photo-section-full-mode')
     const photosContainer = document.getElementById('photos-container-full-mode');
-  
+    const playNav = document.getElementById('play-nav');
+    const addPhoto = document.getElementById('add-photo');
+
     let fullModeOn = false;
     let initialLoad = false;
     const fullModeToggle = () => {
@@ -473,7 +474,8 @@ const app = (() =>{
 
             clearPlacedPhotos();
 
-            fullModeBtn.classList.remove('active');
+            playNav.classList.remove('active');
+            addPhoto.style.display = 'none';
             inputNote.classList.remove('inactive');
             fullMode.style.display = 'none';
 
@@ -509,7 +511,7 @@ const app = (() =>{
     const fullModeNavToggle = () => {
 
         if(menuCircle.classList.contains('inactive')) fullModeReset();
-        fullModeBtn.classList.add('active');
+        playNav.classList.add('active');
         setTimeout(() => 
             fullModeNav.classList.add('active')
         , 0);
@@ -519,6 +521,7 @@ const app = (() =>{
     const fullModeReset = () => {
         menuCircle.classList.remove('inactive');
         fullMode.style.display = 'block';
+        addPhoto.style.display = 'none';
         photoSection.style.display = 'none';
         inputNote.classList.add('inactive')
         notes.hideFullScreenNotes();
@@ -548,7 +551,7 @@ const app = (() =>{
         if(event.target.tagName == 'LI'){
             menuCircle.classList.add('inactive');
             fullModeNav.classList.remove('active')
-            fullModeBtn.classList.remove('active');
+            playNav.classList.remove('active');
             
             switch(event.target.textContent){
                 case 'Notes':
@@ -578,6 +581,7 @@ const app = (() =>{
     const photosFragment = document.createDocumentFragment();
     const showPhotoSection = () => {
         photoSection.style.display = 'block';
+        addPhoto.style.display = 'block';
         
         if(photosContainer.children.length == 0){
             remote.getAlbumImages(0).then(
@@ -856,7 +860,7 @@ const app = (() =>{
         draggables.dragElement(document.getElementById('timeline-years'))
         draggables.dragElement(moveButton);
 
-        fullModeBtn.addEventListener('click', fullModeToggle);
+        document.getElementById('full-mode-btn').addEventListener('click', fullModeToggle);
         menuCircle.addEventListener('click', fullModeNavToggle);
 
         fullModeNav.addEventListener('mouseover', navHoverAnimations);

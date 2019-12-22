@@ -190,9 +190,9 @@ const draggables = (() =>{
         const resetPhoto = () => {
             node.style.top = '0px';
             node.style.left = '0px';
-            node.style.marginLeft = '1px';
-            node.style.marginRight = '1px';
-            node.style.marginTop = '2px';
+            node.style.marginLeft = '0.1vw';
+            node.style.marginRight = '0.1vw';
+            node.style.marginBottom = '0.2vw';
             node.style.position = 'relative';
         }
 

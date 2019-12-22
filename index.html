@@ -9,32 +9,6 @@
         <link rel="stylesheet" type="text/css" media="screen" href="styles.css" />
     </head>
     <body>
-        <div class="play-nav" id="play-nav">
-            <button class="full-mode-button">
-                <img src="resources/full-mode.png" id="full-mode-btn">
-            </button>
-            <div id="play-box" class="play-box">
-                <img src="resources/settings.png" class="gear" id="gear">
-                <div class="play-btn-container">
-                    <a class="play-btn" id="play-btn"></a>
-                    <img src="resources/left-bulb-pink.png" class="pink-bulb" id="pink-bulb-btn">
-                    <img src="resources/right-bulb-blue.png" class="blue-bulb" id="blue-bulb-btn">
-                    <div class="score">
-                        <li class="colorize" id="score">0</li>
-                        <li class="colorize">/</li>
-                        <li class="colorize" id="max-score">100</li>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <button class="full-mode-circle" id="menu-circle">
-            <div class="photos-button-animation" id="full-mode-photos-animations-container">
-                <!-- <img class="photo1-full-mode" id="show-photo1-full-mode" src="resources/photo1.jpg">
-                <img class="photo2-full-mode " id="show-photo2-full-mode" src="resources/photo2.jpg">
-                <img class="photo3-full-mode " id="show-photo3-full-mode" src="resources/photo3.jpg">
-                <img class="photo4-full-mode " id="show-photo4-full-mode" src="resources/photo4.jpg"> -->
-            </div>
-        </button>
         <div class="full-mode" id="full-mode">
             <nav id="full-mode-nav">
                 <li id="notes-full-mode-btn">Notes</li>
@@ -42,11 +16,6 @@
                 <li id="play-full-mode-btn">Play</li>
             </nav>
             <div class="photo-section-full-mode" id="photo-section-full-mode">
-                <button class="add-photo" id="add-photo">
-                    <span></span>
-                    <span></span>
-                    <input class="input-photo" id="input-photo" type="file" />
-                </button>
                 <div class="album-container">
                     <div class="place-photo"></div>
                     <div class="place-photo"></div>
@@ -79,6 +48,31 @@
         </div>
         <div class="play-mode" id="play-mode">
             <div id="buffers-container"></div>
+
+            <div class="play-nav" id="play-nav">
+                <button class="full-mode-button">
+                    <img src="resources/full-mode.png" id="full-mode-btn">
+                </button>
+                <div id="play-box" class="play-box">
+                    <img src="resources/settings.png" class="gear" id="gear">
+                    <div class="play-btn-container">
+                        <a class="play-btn" id="play-btn"></a>
+                        <img src="resources/left-bulb-pink.png" class="pink-bulb" id="pink-bulb-btn">
+                        <img src="resources/right-bulb-blue.png" class="blue-bulb" id="blue-bulb-btn">
+                        <div class="score">
+                            <li class="colorize" id="score">0</li>
+                            <li class="colorize">/</li>
+                            <li class="colorize" id="max-score">100</li>
+                        </div>
+                    </div>
+                </div>
+                <button class="full-mode-circle" id="menu-circle"></button>
+                <button class="add-photo" id="add-photo">
+                    <span></span>
+                    <span></span>
+                    <input class="input-photo" id="input-photo" type="file" />
+                </button>
+            </div>
 
             <div class="input-note-container">
                 <div class="input-note" id="input-note">
