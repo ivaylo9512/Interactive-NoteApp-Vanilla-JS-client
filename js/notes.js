@@ -586,12 +586,14 @@ const notes = (() => {
         remote.submitNote(inputName.value, inputText.value).then(
             res =>{
                 inputName.classList.remove('error');
+                inputName.placeholder = '';
+
                 inputName.value = '';
                 inputText.value = '';
             }
             
         ).catch(e => {
-            if(e.response.message == 'Note must have a name'){
+            if(e.response.data.message == 'Note must have a name'){
                 inputName.classList.add('error');
                 inputName.placeholder = 'Note must have a name';
             }

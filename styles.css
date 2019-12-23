@@ -994,6 +994,7 @@ body.full-mode-active .input-note-container{
     left: 0;
     width: 100%;
     pointer-events: none;
+    z-index: 9;
 }
 .input-note{
     display: none;
@@ -1010,13 +1011,13 @@ body.full-mode-active .input-note-container{
 }
 .input-note .note{
     position: absolute;
+    top: 0;
     height: 100%;
     width: 100%;
     background: yellow;
     box-shadow: -5.5px 5.5px 4px 0px rgba(0, 0, 0, 0.2);
     transition: opacity 1.5s ease-in-out;
     z-index: 2;
-
 }
 .input-note .note-buttons{
     position: absolute;
@@ -1155,11 +1156,27 @@ body.full-mode-active .input-note-container{
     font: bold 45px/1 "Aladin", Helvetica, sans-serif;
     border-bottom: 1px solid transparent;
 }
-.input input.error{
-    border-bottom: 1px solid red;
+.input-note input::-webkit-input-placeholder {
+    font-size: 25px;
+    color: red;
+  }
+.input-note input::-moz-placeholder { 
+    font-size: 25px;
+    color: red;
+}
+.input-note input:-ms-input-placeholder {
+    font-size: 25px;
+    color: red;
+}
+.input-note input:-moz-placeholder {
+    font-size: 25px;
+    color: red;
 }
 .input-note:hover input {
     border-bottom: 1px solid #41291B;
+}
+.input-note input.error{
+    border-bottom: 1px solid red;
 }
 .input-note b{
     position: absolute;
