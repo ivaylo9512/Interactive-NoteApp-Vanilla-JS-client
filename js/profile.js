@@ -42,14 +42,14 @@ const profile = (() => {
                 login().then(res => {
                     setUserInfo(res.data);
                     resetView(view[2], Object.values(userInfo));
-                }).catch(e => handleError(JSON.parse(e.response.data)));
+                })
                 break;
             case 'register':
                 saveInputs();
                 register().then(res => {
                     setUserInfo(res.data);
                     resetView(view[2], Object.values(userRegister));
-                }).catch(e => handleError(JSON.parse(e.response.data)));
+                })
                 break;
             case 'next':
                 saveInputs();
@@ -58,24 +58,6 @@ const profile = (() => {
         }
     }
 
-    const handleError = (errors) => {
-        let i = 0;
-        let key = Object.keys(errors)[i];
-        while(key == 'username' || key == 'password' || key == 'repeat'){
-            resetView(view[1]);  
-            key = Object.keys(errors)[++i];
-            if(key != 'username' && key != 'password' && key != 'repeat'){
-                return;
-            }
-        }
-
-        while(key == 'firstName' || key == 'lastName' || key == 'country' || key == 'age'){
-            resetView(view[3]);  
-            key = Object.keys(errors)[++i];
-            if(key == 'firstName' && key == 'lastName' && key == 'country' && key == 'age'){
-                return;
-            }
-        }
     }
 
     let profilePhoto = document.getElementById('chosen-image');
