@@ -541,6 +541,7 @@ const notes = (() => {
         }
     }
 
+    const noteHeader = document.getElementById('notes-header');
     const showNoteView = () => {
         if (brushAnimated && document.body.className != 'full-mode-active') {
             noteHolders.classList.remove('show');
@@ -548,7 +549,6 @@ const notes = (() => {
             inputNote.classList.add('hide');
             cloudContainer.parentElement.style.zIndex = 5;
 
-            const noteHeader = document.getElementById('notes-header');
             noteHeader.removeEventListener('mouseout', hideTopAnimations);
             noteHeader.removeEventListener('mouseout', showTopAnimations);
 
@@ -604,23 +604,27 @@ const notes = (() => {
     years.forEach(year => year.addEventListener('click', () => getYear(year.children[0].textContent)));
     daysContainer.addEventListener('click', getDay);
     
+    const start = () => {
+        noteHolders.addEventListener('mouseover', noteAnimation);
+        noteHolders.addEventListener('click', noteAppend);
+        noteHeader.addEventListener('mouseover', showTopAnimations);
+        noteHeader.addEventListener('mouseout', hideTopAnimations);
+        noteHeader.addEventListener('click', showNoteView);
+        inputNote.addEventListener('mousedown', activateNote);
+        document.getElementById('submit-btn').addEventListener('click', submitNote);
+    }
+
     return {
+        start,
         showMonths,
         showYears,
         slideYears,
         showNote,
         hideNote,
-        activateNote,
         showFullScreenNotes,
         hideFullScreenNotes,
         resetNoteView,
         resetNote,
-        noteAnimation,
-        noteAppend,
-        showTopAnimations,
-        hideTopAnimations,
-        showNoteView,
         setBrushAnimated,
-        submitNote,
     }
 })();

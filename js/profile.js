@@ -58,8 +58,6 @@ const profile = (() => {
         }
     }
 
-    }
-
     let profilePhoto = document.getElementById('chosen-image');
     let userContainer = document.getElementById('user-info');
     let labelNodes = userContainer.getElementsByTagName('label');

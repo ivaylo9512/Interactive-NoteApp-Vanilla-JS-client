@@ -36,10 +36,10 @@ const colorize = (() => {
         maxScore.textContent = colorizables.length - 1;
     }
 
+    const playBtn = document.getElementById('play-btn'); 
+    const playNav = document.getElementById('play-nav');
     let colorMode = false;
     const manageListeners = (e) => {
-        const playNav = e.target.parentElement.parentElement.parentElement;
-
         if(colorMode){
             colorMode = false;
             colorizables.forEach(colorizable => {
@@ -107,10 +107,14 @@ const colorize = (() => {
         }
         score.textContent = amountCounted;
     }
-    
+    const start = () => {
+        getElements();
+        playBtn.addEventListener('click', manageListeners);
+        document.getElementById('pink-bulb-btn').addEventListener('click', () => setCurrentColor('#E2007A'));
+        document.getElementById('blue-bulb-btn').addEventListener('click', () => setCurrentColor('#7398CA'));   
+    }
+
     return {
-        manageListeners,
-        setCurrentColor,
-        getElements
+        start
     };
 })();

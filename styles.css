@@ -224,7 +224,8 @@ body.full-mode-active .play-box{
     display: block;
 }
 
-.play-box * {
+.play-box > *,
+.score * {
     float: right;
 }
 

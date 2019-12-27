@@ -242,12 +242,16 @@ const animate = (() => {
         }
     }
 
+    const start = () => {
+        createCircles();
+        window.addEventListener('scroll', () => !app.isFullMode() && decideEvent());
+        window.addEventListener('wheel', setDelta, {passive: false});
+        document.getElementById('profile-btn').addEventListener('click', scrollToProfile);
+        document.getElementById('album-btn').addEventListener('click', scrollToAlbum);
+    }
+
     return {
-        decideEvent,
-        setDelta,
-        createCircles,
-        scrollToProfile,
-        scrollToAlbum,
+        start,
         smoothScroll,
         skipAnimations
     };

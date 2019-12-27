@@ -473,7 +473,6 @@ const app = (() =>{
             initialLoad = false;
             notes.resetNote();
             notes.resetNoteView();
-            animate.skipAnimations();
 
             clearPlacedPhotos();
 
@@ -485,6 +484,7 @@ const app = (() =>{
             setTimeout(() => window.scrollTo(0, document.body.scrollHeight),0);   
             
         }else{
+            animate.skipAnimations();
             if(currentAlbumNumber){
                 hideButtons();
                 hideAppendedPhotos();
@@ -497,6 +497,9 @@ const app = (() =>{
         currentAlbumString = null;
         fullModeOn = !fullModeOn;
     }
+
+    const isFullMode = () => fullModeOn;
+    const isInitialLoad = () => initialLoad;
 
     const initialAnimation = () => {
         document.getElementById('user-form').reset();
@@ -834,42 +837,20 @@ const app = (() =>{
     const start = () => {
         window.addEventListener('load', initialAnimation);
 
-        animate.createCircles();
-        window.addEventListener('scroll', () => !fullModeOn && initialLoad && animate.decideEvent());
-
-        window.addEventListener('wheel', animate.setDelta, {passive: false});
-
-        document.getElementById('profile-btn').addEventListener('click', animate.scrollToProfile);
-        document.getElementById('album-btn').addEventListener('click', animate.scrollToAlbum);
-        document.getElementById('album-btns').addEventListener('click', getAlbumImages);
-
-        colorize.getElements();
-        document.getElementById('play-btn').addEventListener('click', colorize.manageListeners);
-        document.getElementById('pink-bulb-btn').addEventListener('click', () => colorize.setCurrentColor('#E2007A'));
-        document.getElementById('blue-bulb-btn').addEventListener('click', () => colorize.setCurrentColor('#7398CA'));
-
-        const noteAnimation = document.getElementById('note-animation');
-        const noteHeader = document.getElementById('notes-header');
-        noteAnimation.addEventListener('mouseover', notes.noteAnimation);
-        noteAnimation.addEventListener('click', notes.noteAppend);
-        noteHeader.addEventListener('mouseover', notes.showTopAnimations);
-        noteHeader.addEventListener('mouseout', notes.hideTopAnimations);
-        noteHeader.addEventListener('click', notes.showNoteView);
-
-        document.getElementById('submit-btn').addEventListener('click', notes.submitNote);
+        animate.start();
+        colorize.start();
+        notes.start();
 
         draggables.dragElement(document.getElementById('move-note'));
         draggables.dragElement(document.getElementById('point'));
         draggables.dragElement(document.getElementById('timeline-years'))
         draggables.dragElement(moveButton);
 
+        document.getElementById('album-btns').addEventListener('click', getAlbumImages);
         document.getElementById('full-mode-btn').addEventListener('click', fullModeToggle);
         menuCircle.addEventListener('click', fullModeNavToggle);
-
         fullModeNav.addEventListener('mouseover', navHoverAnimations);
         fullModeNav.addEventListener('click', fullScreenNavEvents);
-
-        inputNote.addEventListener('mousedown', notes.activateNote);
 
         albumNumbersContainer.addEventListener('click', chooseAlbumNumber);
 
@@ -901,7 +882,9 @@ const app = (() =>{
         moveEditablePhoto,
         resetMoveButtons,
         setfocusedNote,
-        findUserPhoto
+        findUserPhoto,
+        isFullMode,
+        isInitialLoad
     }
 })();
 app.start();
