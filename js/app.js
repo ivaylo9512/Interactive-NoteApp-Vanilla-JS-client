@@ -477,7 +477,6 @@ const app = (() =>{
             clearPlacedPhotos();
 
             playNav.classList.remove('active');
-            playNav.classList.remove('play');
             addPhoto.style.display = 'none';
             inputNote.classList.remove('inactive');
             fullMode.style.display = 'none';
@@ -491,6 +490,7 @@ const app = (() =>{
                 hideAppendedPhotos();
             }
             inputNote.style.display = 'none';
+            playNav.classList.remove('active');
             fullModeReset();
         }
         document.body.classList.toggle('full-mode-active');

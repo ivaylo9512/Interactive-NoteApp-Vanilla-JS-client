@@ -296,6 +296,7 @@ body.full-mode-active .play-box{
 }
 .fixate-btn{
     display: block;
+    margin-top: -3px;
 }
 .fixate-btn span{
     width: 3px;
