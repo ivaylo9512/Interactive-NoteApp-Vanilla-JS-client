@@ -46,14 +46,14 @@ const colorize = (() => {
                 colorizable.removeEventListener('mouseover', changeColor);
             });
 
-            playNav.classList.remove('active');
+            playNav.classList.remove('play');
         }else{
             colorMode = true;
             colorizables.forEach(colorizable => {
                 colorizable.addEventListener('mouseover', changeColor);
             });
 
-            playNav.classList.add('active');
+            playNav.classList.add('play');
         }
     }
 

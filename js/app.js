@@ -477,6 +477,7 @@ const app = (() =>{
             clearPlacedPhotos();
 
             playNav.classList.remove('active');
+            playNav.classList.remove('play');
             addPhoto.style.display = 'none';
             inputNote.classList.remove('inactive');
             fullMode.style.display = 'none';
@@ -572,6 +573,9 @@ const app = (() =>{
             }
         }
     }
+
+    const fixatePlayNav = () => playNav.classList.toggle('active');
+    
 
     const photoContainer = (() => { 
         const container = document.createElement('div');
@@ -836,16 +840,17 @@ const app = (() =>{
         
     const start = () => {
         window.addEventListener('load', initialAnimation);
-
+        
         animate.start();
         colorize.start();
         notes.start();
-
+        
         draggables.dragElement(document.getElementById('move-note'));
         draggables.dragElement(document.getElementById('point'));
         draggables.dragElement(document.getElementById('timeline-years'))
         draggables.dragElement(moveButton);
 
+        document.getElementById('fixate-btn').addEventListener('click', fixatePlayNav)
         document.getElementById('album-btns').addEventListener('click', getAlbumImages);
         document.getElementById('full-mode-btn').addEventListener('click', fullModeToggle);
         menuCircle.addEventListener('click', fullModeNavToggle);
