@@ -541,7 +541,7 @@ const app = (() =>{
                 
                 switch(event.target.textContent){
                     case 'Notes':
-                        notes.showNote();
+                        notes.bindNote();
                         break;
                     case 'Photos':
                         notes.hideNote();

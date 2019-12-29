@@ -169,8 +169,8 @@ body.full-mode-active .play-mode > .play-nav{
     z-index: 9;
     width: 33px;
     right: 1%;
-    height: 155px;
-    bottom: 71vh;
+    height: 215px;
+    bottom: 62vh;
     transition: all 1.5s 0.15s;
 }
 .play-nav.active,
@@ -1005,23 +1005,43 @@ body.full-mode-active .cloud-header img{
 body.full-mode-active .brush-animation {
     display: none!important;
 }
+.input-note-container{
+    position: absolute;
+    height: 100vh;
+    width: 100%;
+    z-index: 9;
+    pointer-events: none;
+}
 body.full-mode-active .input-note-container{
     position: fixed;
     height: 100%;
     top: 0;
     left: 0;
     width: 100%;
-    pointer-events: none;
     z-index: 9;
 }
 .input-note{
     display: none;
     position: absolute;
-    width: 26.5%;
-    height: 27vw;
     text-align: center;
     z-index: 9;
     pointer-events: all;
+}
+.input-note-container .input-note{
+    width: 26.5%;
+    height: 27vw;
+    left: calc(50% - 13.25%);
+    top: calc(50% - 13.5vw);
+}
+.play-nav .input-note{
+    position: relative;
+    width: 110%;
+    padding-bottom: 110%;
+    margin-top: 13px;
+    height: 0;
+    -webkit-transform: rotate(7deg);
+    -moz-transform: rotate(7deg);
+    transform: rotate(7deg);
 }
 .input-note *{
     position: relative;
@@ -1036,6 +1056,9 @@ body.full-mode-active .input-note-container{
     box-shadow: -5.5px 5.5px 4px 0px rgba(0, 0, 0, 0.2);
     transition: opacity 1.5s ease-in-out;
     z-index: 2;
+}
+.play-nav .input-note .note{
+    box-shadow: -3px 3px 4px 0px rgba(0, 0, 0, 0.2);
 }
 .input-note .note-buttons{
     position: absolute;
@@ -1097,56 +1120,6 @@ body.full-mode-active .input-note-container{
     -moz-transform: rotate(45deg);
     transform: rotate(45deg);
 }
-.close-btn span{
-    width: 50%;
-    height: 14%;
-    background: yellow;
-    position: absolute;
-    left: 50%;
-    margin-left: -25%;
-    border-radius: 5px;
-    transition: 1s all;
-}
-.close-btn span:nth-child(1){
-    top: 20%;
-}
-.close-btn span:nth-child(2){
-    top: 43%;
-}
-.close-btn span:nth-child(3){
-    top: 66%;
-}
-.submit-btn div{
-    width: 34%;
-    height: 50%;
-    position: absolute;
-    left: 34%;
-    top: 17%;
-    -webkit-transform: rotate(38deg);
-    -moz-transform: rotate(38deg);
-    transform: rotate(38deg);
-}
-.submit-btn span{
-    background: yellow;
-    position: absolute;
-}
-.submit-btn span:nth-child(1){
-    height: 100%;
-    width: 45%;
-    right: 0;
-    border-radius: 5px 5px 5px 0px;
-    top: 0;
-}
-.submit-btn span:nth-child(2){
-    -webkit-transform: rotate(0);
-    -moz-transform: rotate(0);
-    transform: rotate(0);
-    width: 75%;
-    height: 28%;
-    right: 35%;
-    border-radius: 5px 0px 0px 5px;
-    bottom: 0;
-}
 .input-note > span{
     width: 43%;
     height: 12%;
@@ -1158,6 +1131,12 @@ body.full-mode-active .input-note-container{
     position: absolute;
     left: -15%;
     top: 0%;
+}
+.play-nav .input-note > span{
+    width: 80%;
+    height: 22%;
+    left: -25%;
+    top: 6%;
 }
 .input-note textarea{
     height: 78%;
@@ -1209,6 +1188,56 @@ body.full-mode-active .input-note-container{
 .input-note.inactive > .note {
     display: block;
 }
+.close-btn span{
+    width: 50%;
+    height: 14%;
+    background: yellow;
+    position: absolute;
+    left: 50%;
+    margin-left: -25%;
+    border-radius: 5px;
+    transition: 1s all;
+}
+.close-btn span:nth-child(1){
+    top: 20%;
+}
+.close-btn span:nth-child(2){
+    top: 43%;
+}
+.close-btn span:nth-child(3){
+    top: 66%;
+}
+.submit-btn div{
+    width: 34%;
+    height: 50%;
+    position: absolute;
+    left: 34%;
+    top: 17%;
+    -webkit-transform: rotate(38deg);
+    -moz-transform: rotate(38deg);
+    transform: rotate(38deg);
+}
+.submit-btn span{
+    background: yellow;
+    position: absolute;
+}
+.submit-btn span:nth-child(1){
+    height: 100%;
+    width: 45%;
+    right: 0;
+    border-radius: 5px 5px 5px 0px;
+    top: 0;
+}
+.submit-btn span:nth-child(2){
+    -webkit-transform: rotate(0);
+    -moz-transform: rotate(0);
+    transform: rotate(0);
+    width: 75%;
+    height: 28%;
+    right: 35%;
+    border-radius: 5px 0px 0px 5px;
+    bottom: 0;
+}
 body.full-mode-active .input-note.bounce {
     transform: none;
     -moz-animation: animation 1000ms linear both;
@@ -1218,8 +1247,6 @@ body.full-mode-active .input-note.bounce {
 }
 body.full-mode-active .input-note{
     transform: scale(0.5) rotate(-9deg);
-    left: calc(50% - 13.25%);
-    top: calc(50% - 13.5vw);
 }
 .full-mode {
     display: none;

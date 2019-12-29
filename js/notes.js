@@ -422,7 +422,7 @@ const notes = (() => {
     }
 
     const inputNote = document.getElementById('input-note');
-    const showNote = () => {
+    const bindNote = () => {
         inputNote.style.display = 'block';
         inputNote.classList.add('inactive');
         inputNote.classList.remove('bounce');    
@@ -433,9 +433,32 @@ const notes = (() => {
     
     }
 
+    function popNote(e){
+        noteAppend(e.currentTarget.id);
+
+        const windowWidth = window.innerWidth;     
+        inputNote.style.top = window.innerHeight / 2 - windowWidth * 0.1325 + window.pageYOffset + 'px';
+        inputNote.style.left = window.innerWidth / 2 - windowWidth * 0.135 + 'px';
+    }
+
+    const unpopNote = () => {
+        if(app.isFullMode()){
+            bindNote();
+        }else{
+            noteIsAnimated = false;
+            inputNote.style.left = null;
+            inputNote.style.top = null;
+            inputNote.style.display = 'none';
+            noteHolders.src = 'resources/note-animation-static.png';
+            noteHolders.addEventListener('mouseover', noteAnimation);
+            noteHolders.addEventListener('click', noteAppend);
+        }   
+    }
+
     const hideNote = () => {
         inputNote.style.display = 'none';
     }
+
 
     const activateNote = () => {
         inputNote.classList.remove('inactive');
@@ -498,11 +521,9 @@ const notes = (() => {
     }
 
     const resetNote = () => {
-        if(noteIsAnimated && !noteViewActivated){
-            inputNote.style.display = 'block';
-        }else{
-            inputNote.style.display = 'none';
-        }
+        noteIsAnimated && !noteViewActivated 
+            ? inputNote.style.display = 'block'
+            : inputNote.style.display = 'none';
     }
 
     
@@ -515,8 +536,8 @@ const notes = (() => {
         }
     }
 
-    const noteAppend = () => {
-        if (brushAnimated) {
+    const noteAppend = (target) => {
+        if (brushAnimated || target == 'input-note-btn') {
             noteIsAnimated = true;
             inputNote.style.display = 'block';
             noteHolders.src = 'resources/note-animation-static-open.png';
@@ -612,6 +633,8 @@ const notes = (() => {
         noteHeader.addEventListener('click', showNoteView);
         inputNote.addEventListener('mousedown', activateNote);
         document.getElementById('submit-btn').addEventListener('click', submitNote);
+        document.getElementById('input-note-btn').addEventListener('click', popNote)
+        document.getElementById('close-btn').addEventListener('click', unpopNote)
     }
 
     return {
@@ -619,7 +642,7 @@ const notes = (() => {
         showMonths,
         showYears,
         slideYears,
-        showNote,
+        bindNote,
         hideNote,
         showFullScreenNotes,
         hideFullScreenNotes,
