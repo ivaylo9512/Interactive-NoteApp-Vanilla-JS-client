@@ -472,6 +472,7 @@ const notes = (() => {
         inputNote.style.display = 'none';
         buffersContainer.style.display = 'block';
         noteSection.style.display = 'block';
+        window.scrollTo(0, document.body.scrollHeight);
     }
 
     const hideFullScreenNotes = () => {

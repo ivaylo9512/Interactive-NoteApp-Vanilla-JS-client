@@ -85,17 +85,17 @@ const app = (() =>{
     let resizable = false;
     let resizing = false;
     let rotating = false;
-    let moveButtonFocused = false;
     
     const moveEditablePhoto = (pos1, pos2) => {
         if (editMode) {
             moving = true;
             rotateButton.style.display = 'none';
+            resizeButton.style.display = 'none';
 
-            currentPhoto.bottom = currentPhoto.bottom + pos2;
-            currentPhoto.right = currentPhoto.right + pos1;
-            currentPhoto.node.style.bottom = currentPhoto.bottom + 'px';
-            currentPhoto.node.style.right = currentPhoto.right + 'px';
+            currentPhoto.top = currentPhoto.top - pos2;
+            currentPhoto.left = currentPhoto.left - pos1;
+            currentPhoto.node.style.top = currentPhoto.top + 'px';
+            currentPhoto.node.style.left = currentPhoto.left + 'px';
 
             if (currentPhoto.node.parentElement.className == 'user-note' && (parseFloat(window.getComputedStyle(focusedNote.parentElement.parentElement).height) - (focusedNote.offsetTop + focusedNote.parentElement.offsetTop + currentPhoto.top) < 0)) {
                 currentPhoto.top = currentPhoto.top + focusedNote.offsetTop - secondSection.offsetTop;
@@ -138,7 +138,6 @@ const app = (() =>{
     const resize = (e) => {
             moveButton.style.display = 'none';
             rotateButton.style.display = 'none';
-            resizeButton.style.display = 'none';
             resizing = true;
 
             if (leftResize && currentPhoto.width + (currentMousePosition - e.clientX) > 80) {
@@ -146,7 +145,6 @@ const app = (() =>{
                 currentPhoto.node.style.left = currentPhoto.left + (e.clientX - currentMousePosition) + 'px';
             } else if (leftResize == false && currentPhoto.width + (e.clientX - currentMousePosition) > 80) {
                 currentPhoto.node.style.width = currentPhoto.width + (e.clientX - currentMousePosition) + 'px';
-                currentPhoto.node.style.left = currentPhoto.left + 'px';
             }
     }
 
@@ -158,16 +156,12 @@ const app = (() =>{
         currentPhoto.width = parseFloat(window.getComputedStyle(currentPhoto.node).width);
         currentPhoto.height = parseFloat(window.getComputedStyle(currentPhoto.node).height);
 
-        moveButton.style.display = 'block';
-        rotateButton.style.display = 'block';
-        resizeButton.style.display = 'block';        
-        moveButtons();
-
-        if (e.target != currentPhoto.node) {
-            moveButtonFocused = false;
-            moveButton.style.display = 'none';
+        if (e.target != currentPhoto.node && e.target.parentElement != currentPhoto.node) {
             resizeButton.style.display = 'none'
             currentPhoto.node.style.zIndex = currentPhoto.zIndex;
+        }else{
+            moveButton.style.display = 'block';
+            rotateButton.style.display = 'block';
         }
 
         window.removeEventListener('mousemove', resize);
@@ -270,8 +264,8 @@ const app = (() =>{
         photo.addEventListener('dragstart', (e) => e.preventDefault());
 
         photo.addEventListener('mousedown', checkIfResizable);
-        photo.addEventListener('mouseover', () => arrangePhotoButtons(photo));
-        photo.addEventListener('mouseout', resetPhotoButtons, true, true);
+        photo.addEventListener('mouseenter', () => arrangePhotoButtons(photo));
+        photo.addEventListener('mouseleave', resetPhotoButtons);
 
     }
 
@@ -295,8 +289,7 @@ const app = (() =>{
     let noteContainer;
     let noteSection;
     const arrangePhotoButtons = (photo) => {
-        
-        if (!moving && !resizing && editMode && !rotating && !moveButtonFocused) {
+        if (!moving && !resizing && editMode && !rotating) {
             currentPhoto.node = photo;
             currentPhoto.zIndex = window.getComputedStyle(photo).zIndex;
             currentPhoto.rotation = getRotation(currentPhoto.node);
@@ -322,74 +315,56 @@ const app = (() =>{
     }
 
     const resetPhotoButtons = () => {
-        if (!moving && !resizing && editMode) {
+        if (!moving && !resizing && !rotating && editMode) {
             moveButton.style.display = 'none';
             resizeButton.style.display = 'none';
             rotateButton.style.display = 'none';
             currentPhoto.node.style.zIndex = currentPhoto.zIndex;
-            moveButtonFocused = false;
             rotateButton.style.pointerEvents = 'all';
         }
     }
 
-    const startRotate = () => {
+    const startRotate = (e) => {
+        e.stopPropagation();
+        rotating = true;
+        resizeButton.style.display = 'none';
+        moveButton.style.display = 'none';
+
         window.addEventListener('mousemove', rotate);
-        window.addEventListener('mouseup', (e) => {
-            rotating = false;
-            currentPhoto.node.style.zIndex = currentPhoto.zIndex;
-            rotateButton.style.display = 'none';
-            rotateButton.style.pointerEvents = 'all';
-
-            if(e.target == currentPhoto.node){
-                moveButton.style.display = 'block';
-                resizeButton.style.display = 'block';
-                rotateButton.style.display = 'block';
-            }
-
-            window.removeEventListener('mousemove', rotate);
-        })
+        window.addEventListener('mouseup', stopRotate);
     }
+
     const rotate = () => {
         if (editMode) {
-            rotating = true;
-            rotateButton.style.display = 'block';
-            rotateButton.style.pointerEvents = 'none';
-            var centerX = rotateButton.offsetLeft + parseFloat(window.getComputedStyle(secondSection).marginLeft) + parseFloat(window.getComputedStyle(rotateButton).width) / 2;
-            var centerY = rotateButton.offsetTop + secondSection.offsetTop + parseFloat(window.getComputedStyle(rotateButton).height) / 2;
+            const photo = currentPhoto.node;
+            var centerX = photo.offsetLeft + secondSection.offsetLeft + parseFloat(window.getComputedStyle(secondSection).marginLeft) + parseFloat(window.getComputedStyle(photo).width) / 2;
+            var centerY = photo.offsetTop + secondSection.offsetTop + parseFloat(window.getComputedStyle(photo).height) / 2;
             var mouseX = event.pageX;
             var mouseY = event.pageY;
 
             var radians = Math.atan2(mouseX - centerX, mouseY - centerY);
-            var degree = (radians * (180 / Math.PI) * -1) + 190;
+            var degree = (radians * (180 / Math.PI) * -1) + 180;
     
-            rotateButton.style.transform = `rotate(${degree}deg)`;
-            currentPhoto.node.style.transform = `rotate(${degree}deg)`;
-            moveButton.style.transform = `rotate(${degree}deg)`;
-            resizeButton.style.transform = `rotate(${degree}deg)`;
-            currentPhoto.node.style.zIndex = 4;
+            photo.style.transform = `rotate(${degree}deg)`;
         }
     }
     
-    const unfocusRotate = () => {
-        rotateButton.style.display = 'none';
-        currentPhoto.node.style.zIndex = currentPhoto.zIndex;
+    const stopRotate = (e) => {
+        rotating = false;
+
+        if(e.target != currentPhoto.node && e.target.parentElement != currentPhoto.node){
+            rotateButton.style.display = 'none';
+            currentPhoto.node.style.zIndex = currentPhoto.zIndex;
+        }else{
+            moveButton.style.display = 'block';
+            resizeButton.style.display = 'block';
+            rotateButton.style.display = 'block';
+            currentPhoto.node.style.zIndex = 4;
+        }
+
+        window.removeEventListener('mousemove', rotate);
     }
 
-    const focusRotate = () => {
-        moveButton.style.display = 'none';
-        rotateButton.style.display = 'block';
-        resizeButton.style.display = 'none';
-        currentPhoto.node.style.zIndex = 4;
-        moveButtonFocused = false;
-    }
-    const focusMoveButton = () => {
-        moveButton.style.display = 'block';
-        rotateButton.style.display = 'block';
-        resizeButton.style.display = 'block';
-        currentPhoto.node.style.zIndex = 4;
-        moveButtonFocused = true;
-    }
-    
     const attachPhoto = (e) => {
         if(e.ctrlKey){
             if (focusedNote && currentPhoto.node.parentElement.className != 'user-note' && currentPhoto.top < -900) {
@@ -536,7 +511,6 @@ const app = (() =>{
 
     const fixatePlayNav = () => playNav.classList.toggle('active');
     
-
     const photoContainer = (() => { 
         const container = document.createElement('div');
         container.className = 'drag-photo-container';
@@ -826,10 +800,7 @@ const app = (() =>{
         saveButton.addEventListener('click', savePhotos);
         editButton.addEventListener('click', changeLabels); 
         
-        moveButton.addEventListener('mouseover', focusMoveButton);
         moveButton.addEventListener('click', attachPhoto);
-        rotateButton.addEventListener('mouseover', focusRotate);
-        rotateButton.addEventListener('mouseout', unfocusRotate);
         rotateButton.addEventListener('dragstart', (e) => e.preventDefault());
         rotateButton.addEventListener('mousedown', startRotate);
 
