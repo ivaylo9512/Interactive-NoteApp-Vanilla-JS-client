@@ -13,16 +13,18 @@ const draggables = (() =>{
 
         let node = target;
         function onMouseDown(e) {
+            className = target.className;
             e.preventDefault();
+
+            if(className == 'move-btn') e.stopPropagation();
             pos3 = e.pageX;
             pos4 = e.pageY;            
             
-            className = target.className;
             if(className.includes('loading')) return;
 
             node.style.transition = '0s';
             
-            if (className == 'move-note' || className == 'drag-photo') node = target.parentElement;
+            if (className == 'move-note' || className == 'drag-photo' || className == 'move-btn') node = target.parentElement;
 
             if (className == 'appended') {
                 node = target.parentElement;

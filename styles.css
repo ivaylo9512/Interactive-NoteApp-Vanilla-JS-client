@@ -333,10 +333,6 @@ body.full-mode-active .play-box{
     background-attachment: local;
     z-index: 8;
 }
-.second-section img {
-    position: absolute;
-    border-radius: 10px;
-}
 .speech-bubble{
     cursor: pointer;
     background-size:100%;
@@ -377,6 +373,10 @@ body.full-mode-active .play-box{
     margin-top: 40px;
     display: inline-block;
     font-size: 27px;
+}
+.onLoad-photo{
+    position: absolute;
+    border-radius: 10px;
 }
 .onLoad-photo:nth-child(1){
     bottom: 5%;
@@ -436,6 +436,11 @@ body.full-mode-active .play-box{
     display: none;
     border-radius: 10px;
 }
+.user-photo img:first-child {
+    width: 100%;
+    border-radius: 10px;
+    display: block;
+}
 .user-photo.visible{
     display: block;
 }
@@ -455,79 +460,79 @@ body.full-mode-active .play-box{
     animation: opacity 2.5s forwards;
 }
 .photo1{
-    bottom: 24%;
+    top: 76%;
     width: 10%;
-    right: 60%;
+    left: 30%;
     -webkit-transform: rotate(16deg);
     -moz-transform: rotate(16deg);
     transform: rotate(16deg);
     z-index: 1;
 }
 .photo2{
-    bottom: 17%;
+    top: 83%;
     width: 10%;
-    right: 55%;
+    left: 35%;
     -webkit-transform: rotate(-33deg);
     -moz-transform: rotate(-33deg);
     transform: rotate(-33deg);
 }
 
 .photo3{
-    bottom: 38%;
+    top: 62%;
     width: 50%;
-    right: 55%;
+    left: 35%;
     -webkit-transform: rotate(48deg);
     -moz-transform: rotate(48deg);
     transform: rotate(48deg);
     z-index: 1;
 }
 .photo4{
-    bottom: 29%;
+    top: 71%;
     width: 10%;
-    right: 68%;
+    left: 22%;
     -webkit-transform: rotate(-17deg);
     -moz-transform: rotate(-17deg);
     transform: rotate(-17deg);
 }
 
 .photo5{
-    bottom: 32%;
+    top: 68%;
     width: 12%;
-    right: 57%;
+    left: 33%;
     -webkit-transform: rotate(28deg);
     -moz-transform: rotate(28deg);
     transform: rotate(28deg);
 }
 
 .photo6{
-    bottom: 40%;
+    top: 60%;
     width: 10%;
-    right: 67%;
+    left: 23%;
     -webkit-transform: rotate(28deg);
     -moz-transform: rotate(28deg);
     transform: rotate(28deg);
 }
 
 .photo7{
-    bottom: 75%;
+    top: 25%;
     width: 16%;
-    right: 62%;
+    left: 28%;
     -webkit-transform: rotate(-32deg);
     -moz-transform: rotate(-32deg);
     transform: rotate(-32deg);
 }
 
 .photo8{
-    bottom: 62%;
+    top: 38%;
     width: 16%;
-    right: 56%;
+    left: 34%;
     z-index: 1;
 }
 
 .photo9{
-    bottom: 62%;
+    top: 38%;
     width: 15%;
-    right: 64%;
+    left: 26%;
     z-index: 2;
     -webkit-transform: rotate(25deg);
     -moz-transform: rotate(25deg);
@@ -535,9 +540,9 @@ body.full-mode-active .play-box{
 }
 
 .photo10{
-    bottom: 75%;
+    top: 25%;
     width: 16%;
-    right: 54%;
+    left: 36%;
     z-index: 1;
     transform: rotate(34deg);
 }
@@ -547,12 +552,21 @@ body.full-mode-active .play-box{
     opacity: 0.9;
     z-index: 9;
     position: absolute;
+    width: 35%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 .resize-btn{
     display: none;
     opacity: 0.9;
     position: absolute;
-    pointer-events:none;
+    top: 50%;
+    width: 100%;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    transform: translateY(-50%);
+    pointer-events: none;
     z-index: 9;
 }
 
@@ -561,6 +575,10 @@ body.full-mode-active .play-box{
     opacity: 1;
     position: absolute;
     z-index: 0;
+    height: 125%;
+    left: 50%;
+    top: -25%;
+    transform: translateX(-50%);
 }
 
 .circles-container span:before{
