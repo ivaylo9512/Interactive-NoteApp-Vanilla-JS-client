@@ -1799,7 +1799,8 @@ ol::after {
     display: none;
     opacity: 1;
 }
-.user-note-container.active img {
+.user-note-container.active img,
+.user-note-container.active .user-photo {
     display: block;
     opacity: 1;
 }

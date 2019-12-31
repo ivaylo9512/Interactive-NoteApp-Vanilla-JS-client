@@ -140,11 +140,11 @@ const app = (() =>{
             rotateButton.style.display = 'none';
             resizing = true;
 
-            if (leftResize && currentPhoto.width + (currentMousePosition - e.clientX) > 80) {
-                currentPhoto.node.style.width = ((currentPhoto.width + currentMousePosition - e.clientX) / parseFloat(window.getComputedStyle(currentPhoto.node.parentElement).width)) * 100 + '%';
-                currentPhoto.node.style.left = currentPhoto.left + (e.clientX - currentMousePosition) + 'px';
-            } else if (leftResize == false && currentPhoto.width + (e.clientX - currentMousePosition) > 80) {
-                currentPhoto.node.style.width = currentPhoto.width + (e.clientX - currentMousePosition) + 'px';
+            if (leftResize && currentPhoto.width + currentMousePosition - e.clientX > 80) {
+                currentPhoto.node.style.width = (currentPhoto.width + currentMousePosition - e.clientX) / parseFloat(window.getComputedStyle(currentPhoto.node.parentElement).width) * 100 + '%';
+                currentPhoto.node.style.left = currentPhoto.left + e.clientX - currentMousePosition + 'px';
+            } else if (!leftResize && currentPhoto.width + e.clientX - currentMousePosition > 80) {
+                currentPhoto.node.style.width = currentPhoto.width + e.clientX - currentMousePosition + 'px';
             }
     }
 
@@ -324,11 +324,17 @@ const app = (() =>{
         }
     }
 
+    let centerX;
+    let centerY;
     const startRotate = (e) => {
         e.stopPropagation();
         rotating = true;
         resizeButton.style.display = 'none';
         moveButton.style.display = 'none';
+
+        const photo = currentPhoto.node;
+        centerX = photo.getBoundingClientRect().left + (photo.getBoundingClientRect().right - photo.getBoundingClientRect().left) /2;
+        centerY = photo.getBoundingClientRect().top + window.scrollY + (photo.getBoundingClientRect().bottom - photo.getBoundingClientRect().top) /2;
 
         window.addEventListener('mousemove', rotate);
         window.addEventListener('mouseup', stopRotate);
@@ -336,16 +342,13 @@ const app = (() =>{
 
     const rotate = () => {
         if (editMode) {
-            const photo = currentPhoto.node;
-            var centerX = photo.offsetLeft + secondSection.offsetLeft + parseFloat(window.getComputedStyle(secondSection).marginLeft) + parseFloat(window.getComputedStyle(photo).width) / 2;
-            var centerY = photo.offsetTop + secondSection.offsetTop + parseFloat(window.getComputedStyle(photo).height) / 2;
             var mouseX = event.pageX;
             var mouseY = event.pageY;
 
             var radians = Math.atan2(mouseX - centerX, mouseY - centerY);
             var degree = (radians * (180 / Math.PI) * -1) + 180;
     
-            photo.style.transform = `rotate(${degree}deg)`;
+            currentPhoto.node.style.transform = `rotate(${degree}deg)`;
         }
     }
     
