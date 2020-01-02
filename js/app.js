@@ -94,12 +94,9 @@ const app = (() =>{
 
             currentPhoto.top = currentPhoto.top - pos2;
             currentPhoto.left = currentPhoto.left - pos1;
-            currentPhoto.node.style.top = currentPhoto.top + 'px';
-            currentPhoto.node.style.left = currentPhoto.left + 'px';
-
-            if (currentPhoto.node.parentElement.className == 'user-note' && (parseFloat(window.getComputedStyle(focusedNote.parentElement.parentElement).height) - (focusedNote.offsetTop + focusedNote.parentElement.offsetTop + currentPhoto.top) < 0)) {
-                currentPhoto.top = currentPhoto.top + focusedNote.offsetTop - secondSection.offsetTop;
-                currentPhoto.left = currentPhoto.left + focusedNote.offsetLeft;
+            if (currentPhoto.node.parentElement.className == 'user-note' && currentPhoto.node.getBoundingClientRect().top + window.pageYOffset > 30000) {
+                currentPhoto.top = currentPhoto.node.getBoundingClientRect().top + window.pageYOffset - secondSection.offsetTop;
+                currentPhoto.left = currentPhoto.left + focusedNote.offsetLeft + parseFloat(window.getComputedStyle(notesContainer).marginLeft) - secondSection.offsetLeft + noteContainer.offsetLeft;
                 currentPhoto.node.style.top = currentPhoto.top + 'px';
                 currentPhoto.node.style.left = currentPhoto.left + 'px';
                 currentPhoto.node.style.width = (currentPhoto.width / parseFloat(window.getComputedStyle(secondSection).width)) * 100 + '%';
@@ -135,6 +132,7 @@ const app = (() =>{
             }
         }
     }
+    // TODO: max(x,y)
     const resize = (e) => {
             moveButton.style.display = 'none';
             rotateButton.style.display = 'none';
@@ -237,6 +235,7 @@ const app = (() =>{
         saveButton.classList.remove('scale');
     }
 
+    //TODO:
     //https://css-tricks.com/get-value-of-css-rotation-through-javascript/
     const getRotation = (photo) =>  {
         const styles = window.getComputedStyle(photo, null);
@@ -257,14 +256,13 @@ const app = (() =>{
         const sin = b / scale;
     
         return Math.atan2(b, a) * (180 / Math.PI);
-    
     }
 
     const userPhotoListeners = (photo) => {
         photo.addEventListener('dragstart', (e) => e.preventDefault());
 
         photo.addEventListener('mousedown', checkIfResizable);
-        photo.addEventListener('mouseenter', () => arrangePhotoButtons(photo));
+        photo.addEventListener('mouseenter', () => focusPhoto(photo));
         photo.addEventListener('mouseleave', resetPhotoButtons);
 
     }
@@ -288,7 +286,7 @@ const app = (() =>{
     let notesContainer;
     let noteContainer;
     let noteSection;
-    const arrangePhotoButtons = (photo) => {
+    const focusPhoto = (photo) => {
         if (!moving && !resizing && editMode && !rotating) {
             currentPhoto.node = photo;
             currentPhoto.zIndex = window.getComputedStyle(photo).zIndex;
@@ -367,7 +365,7 @@ const app = (() =>{
 
         window.removeEventListener('mousemove', rotate);
     }
-
+    // TODO:
     const attachPhoto = (e) => {
         if(e.ctrlKey){
             if (focusedNote && currentPhoto.node.parentElement.className != 'user-note' && currentPhoto.top < -900) {
@@ -382,7 +380,7 @@ const app = (() =>{
                 focusedNote.children[0].appendChild(currentPhoto.node);
             }else if(focusedNote && currentPhoto.node.parentElement.className == 'user-note'){
                 currentPhoto.node.classList.add('visible');
-                currentPhoto.top = currentPhoto.top + focusedNote.offsetTop - secondSection.offsetTop + noteContainer.offsetTop + noteSection.offsetTop + notesContainer.offsetTop;
+                currentPhoto.top = currentPhoto.node.getBoundingClientRect().top + window.pageYOffset - secondSection.offsetTop;
                 currentPhoto.left = currentPhoto.left + focusedNote.offsetLeft + parseFloat(window.getComputedStyle(notesContainer).marginLeft) - secondSection.offsetLeft + noteContainer.offsetLeft;
                 currentPhoto.node.style.top = currentPhoto.top + 'px';
                 currentPhoto.node.style.left = currentPhoto.left + 'px';
@@ -734,6 +732,7 @@ const app = (() =>{
 
     const savePhotos = () => {
         const album = albums[currentAlbumString];
+
         album.forEach((photo, i) => {
             const appendedPhoto = appendedPhotos[i];
             const className = appendedPhoto.className;
@@ -741,7 +740,6 @@ const app = (() =>{
 
             appendedPhoto.classList.add('visible');
             
-        
             if(appendedPhoto.style.width){
                 const computedWidth = computedStyles.width
                 photo.width = computedWidth.includes('%') ? parseFloat(computedWidth) : parseFloat(computedWidth) / parseFloat(window.getComputedStyle(appendedPhoto.parentElement).width) * 100;
@@ -753,9 +751,8 @@ const app = (() =>{
             photo.rotation = getRotation(appendedPhoto);
             appendedPhoto.className = className;
             
-            if(appendedPhoto.classList.contains('visible')){
-                photo.note = null;
-            }
+            if(appendedPhoto.classList.contains('visible')) photo.note = null;
+            
             if(appendedPhoto.parentElement.className == 'user-note'){
                 const noteId = appendedPhoto.parentElement.id;
                 photo.note = noteId.substring(0, noteId.length - 4);

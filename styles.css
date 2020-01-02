@@ -440,8 +440,13 @@ body.full-mode-active .play-box{
     width: 100%;
     border-radius: 10px;
     display: block;
+    position: relative;
+    z-index: 2;
 }
 .user-photo.visible{
+    display: block;
+}
+.user-note-container .user-photo.visible{
     display: block;
 }
 .user-photo.first{
@@ -574,7 +579,6 @@ body.full-mode-active .play-box{
     display: none;
     opacity: 1;
     position: absolute;
-    z-index: 0;
     height: 125%;
     left: 50%;
     top: -25%;

@@ -12,6 +12,8 @@ const draggables = (() =>{
         let elementFromPoint;
 
         let node = target;
+        let offsetTop;
+        let offsetLeft;
         function onMouseDown(e) {
             className = target.className;
             e.preventDefault();
@@ -19,13 +21,15 @@ const draggables = (() =>{
             if(className == 'move-btn') e.stopPropagation();
             pos3 = e.pageX;
             pos4 = e.pageY;            
-            
-            if(className.includes('loading')) return;
 
-            node.style.transition = '0s';
+            if(className.includes('loading')) return;
             
             if (className == 'move-note' || className == 'drag-photo' || className == 'move-btn') node = target.parentElement;
 
+            node.style.transition = '0s';
+            offsetTop = node.offsetTop;
+            offsetLeft = node.offsetLeft;
+            
             if (className == 'appended') {
                 node = target.parentElement;
                 app.clearPhoto(target, node);
@@ -35,7 +39,6 @@ const draggables = (() =>{
             window.addEventListener('mousemove', onDrag);
             window.addEventListener('mouseup', closeDrag);
         }
-
         function onDrag(e) {
             e.preventDefault();
             pos1 = pos3 - e.pageX;
@@ -44,8 +47,10 @@ const draggables = (() =>{
             pos4 = e.pageY;
 
             if(className != 'timeline-years'){
-                node.style.top = node.offsetTop - pos2 + 'px';
-                node.style.left = node.offsetLeft - pos1 + 'px';
+                offsetTop -= pos2;
+                offsetLeft -= pos1;
+                node.style.top = offsetTop + 'px';
+                node.style.left = offsetLeft + 'px';
             }
             
             switch (className) {
@@ -68,7 +73,6 @@ const draggables = (() =>{
         function closeDrag() {
             let x = event.clientX;
             let y = event.clientY;
-            elementFromPoint = document.elementFromPoint(x, y);
             
             window.removeEventListener('mousemove', onDrag);
             window.removeEventListener('mouseup', closeDrag);
@@ -78,6 +82,7 @@ const draggables = (() =>{
                     app.resetMoveButtons();
                     break;
                 case 'drag-photo':
+                    elementFromPoint = document.elementFromPoint(x, y);
                     photoEndDrag();
                     break;
                 case 'nav-point':

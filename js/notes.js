@@ -355,11 +355,12 @@ const notes = (() => {
             passive: true,
             capture: true
         });
-    }
-
-    const hideUserNote = (containerCopy) => {
-        const className = event.target.className;
-        if(className == 'move-btn' || className == 'resize-btn' || className == 'rotate-btn' || className.includes('user-photo')){
+    } 
+    // TODO:
+    const hideUserNote = (containerCopy) => { 
+        const parent = event.target.parentElement;
+        const className = parent && parent.className;
+        if(className.includes('user-photo')){
             window.addEventListener('mousedown',  () => hideUserNote(containerCopy), {
                 once: true,
                 passive: true,
