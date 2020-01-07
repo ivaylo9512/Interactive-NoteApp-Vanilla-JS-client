@@ -1,7 +1,10 @@
 const animate = (() => {
+    let scrollY;
+    const getScrollY = () => scrollY;
+
     const decideEvent = () => {
         const height = document.body.scrollHeight;
-        const scrollY = window.pageYOffset;
+        scrollY = window.pageYOffset;
 
         if (scrollY < 800) {
             balloonAnimation();
@@ -30,7 +33,7 @@ const animate = (() => {
 
     const scrollToProfile = () => {
         const height = document.body.scrollHeight;
-        const scroll = height - 1400 - window.pageYOffset;
+        const scroll = height - 1400 - scrollY;
         deltaDir = -1;
         
         smoothScroll(scroll, 1000);
@@ -39,7 +42,7 @@ const animate = (() => {
 
     const scrollToAlbum = () => {
         const height = document.body.scrollHeight;
-        const scroll = height - 1100 - window.pageYOffset;
+        const scroll = height - 1100 - scrollY;
         deltaDir = -1;        
 
         smoothScroll(scroll, 1000);
@@ -47,7 +50,7 @@ const animate = (() => {
     }
 
     const smoothScroll = (y, durration) => {
-        const startPos = window.pageYOffset;
+        const startPos = scrollY;
         let startTime = null;
 
         const scroll = (currentTime) => {
@@ -194,25 +197,16 @@ const animate = (() => {
             }, 3500);
         }
     }
+    const noteSection = document.getElementById('note-section');
 
     const noteSectionAnimation = () => {
         setTimeout(() => {
             animationIsPlaying = false;
-            noteHolders.classList.add('show');
             balloonLeft.classList.add('hide');
-
-            cloud.classList.add('hide');
-            setTimeout(() => {
-                cloud2.classList.add('hide');
-            }, 150);
-
-            setTimeout(() => {
-                cloud1.classList.add('hide');
-            }, 300);
+            noteSection.classList.add('animate');
 
             setTimeout(() => {
                 brushAnimation.style.display = 'block';
-                brushAnimationContainer.appendChild(brushAnimation);
                 notes.setBrushAnimated();
                 balloonLeft.style.display = 'none';
             }, 1100);
@@ -227,14 +221,8 @@ const animate = (() => {
             balloon.style.display = 'block';
             balloonRight.style.display = 'block';
 
-            cloud.classList.add('hide');
-            cloud1.classList.add('hide');
-            cloud2.classList.add('hide');
-
-
-            noteHolders.classList.add('show');
             brushAnimation.style.display = 'block';
-            brushAnimationContainer.appendChild(brushAnimation);
+            noteSection.classList.add('animate');
             notes.setBrushAnimated();
 
             treeAnimation();
@@ -253,6 +241,7 @@ const animate = (() => {
     return {
         start,
         smoothScroll,
-        skipAnimations
+        skipAnimations,
+        getScrollY
     };
 })();

@@ -260,8 +260,8 @@ const notes = (() => {
     const noteSection = document.getElementById('note-section');
     const cloudContainer = document.getElementById('cloud-headers');
     const cloudHeader = document.getElementById('cloud-header');
-    const leftNotesContainer = document.getElementById('left-notes-container');
-    const rightNotesContainer = document.getElementById('right-notes-container');
+    const leftNotesContainer = document.getElementById('left-notes');
+    const rightNotesContainer = document.getElementById('right-notes');
 
     const leftNotesFragment = document.createDocumentFragment();
     const rightNotesFragment = document.createDocumentFragment();
@@ -301,8 +301,10 @@ const notes = (() => {
         notesCount = userNotes.length;
         delay = notesCount * 0.2;
 
+        noteSection.classList.add('appended');
+
         resetNotes();
-        addBuffers();
+        addHeaders();
 
         document.body.className == 'full-mode-active' ?
             window.scrollTo(0, body.scrollHeight - 849) :
@@ -344,30 +346,29 @@ const notes = (() => {
     
     let rotate;
     let focusedNote;
-    const showUserNote = (containerCopy) => {
-        containerCopy.classList.add('active');
-        focusedNote = containerCopy;
-        app.setfocusedNote(containerCopy);
+    const showUserNote = (note) => {
+        focusedNote = note;
+        focusedNote.classList.add('active');
+        app.setfocusedNote(focusedNote);
         rotate = 360;
-
-        window.addEventListener('mousedown',  () => hideUserNote(containerCopy), {
+        window.addEventListener('mousedown',  () => hideUserNote(), {
             once: true,
             passive: true,
             capture: true
         });
     } 
     // TODO:
-    const hideUserNote = (containerCopy) => { 
+    const hideUserNote = () => { 
         const parent = event.target.parentElement;
         const className = parent && parent.className;
         if(className.includes('user-photo')){
-            window.addEventListener('mousedown',  () => hideUserNote(containerCopy), {
+            window.addEventListener('mousedown',  () => hideUserNote(), {
                 once: true,
                 passive: true,
                 capture: true
             }); 
         }else{
-            containerCopy.classList.remove('active');
+            focusedNote.classList.remove('active');
             focusedNote = null;
             app.setfocusedNote(null);
         }
@@ -395,30 +396,15 @@ const notes = (() => {
         
     }
 
-    const bufferFragment = document.createDocumentFragment();
     const cloudsFragment = document.createDocumentFragment();
 
-    const addBuffers = () => {
-
-        if(notesCount > 0){
-            const buffer = document.createElement('div');
-            buffer.className = 'buffer';
-            buffer.style.height = '210px';
-            bufferFragment.appendChild(buffer);
-
-            for (let i = 0; i < (notesCount - 4) / 2; i++) {
-                const bufferCopy = buffer.cloneNode(true);
+    const addHeaders = () => {
+        const cloudsCount = (notesCount - 4) / 2
+            for (let i = 0; i < cloudsCount; i++) {
                 const cloudHeaderCopy = cloudHeader.cloneNode(true);
-                
-                bufferCopy.style.height = '400px';                    
-                cloudHeader.style.marginBottom = '120px';
-
                 cloudsFragment.appendChild(cloudHeaderCopy);
-                bufferFragment.appendChild(bufferCopy);
-            }
         }
 
-        buffersContainer.insertBefore(bufferFragment, buffersContainer.firstChild);
         cloudContainer.insertBefore(cloudsFragment, cloudContainer.firstChild);
     }
 
@@ -467,17 +453,12 @@ const notes = (() => {
     }
 
     const showFullScreenNotes = () => {
-        timelineYears.style.display = 'block';
-        timelineMonths.parentElement.style.display = 'block';  
-        
         inputNote.style.display = 'none';
-        buffersContainer.style.display = 'block';
         noteSection.style.display = 'block';
         window.scrollTo(0, document.body.scrollHeight);
     }
 
     const hideFullScreenNotes = () => {
-        buffersContainer.style.display = 'none';
         noteSection.style.display = 'none';     
     }
 
@@ -496,16 +477,9 @@ const notes = (() => {
             resetNotes();
             resetDays();
 
-            timelineMonths.parentElement.style.display = 'none';
-            timelineYears.style.display = 'none';
-
             chosenMonth.textContent = '';
             chosenYear.textContent = '';
             chosenDay.textContent = '';
-
-            cloud.src = 'resources/cloud.png';
-            cloud1.src = 'resources/cloud.png';
-            cloud2.src = 'resources/cloud.png';
 
             hideYears();
             hideMonths();
@@ -523,14 +497,13 @@ const notes = (() => {
     }
 
     const resetNote = () => {
-        noteIsAnimated && !noteViewActivated 
+        noteIsAnimated 
             ? inputNote.style.display = 'block'
             : inputNote.style.display = 'none';
     }
 
     
     const noteHolders = document.getElementById('note-animation');
-    const brushAnimation = document.getElementById('brush-animation');
 
     const noteAnimation = () => {
         if (brushAnimated) {
@@ -550,56 +523,29 @@ const notes = (() => {
 
     const showTopAnimations = () => {
         if (brushAnimated) {
-            noteHolders.classList.remove('show');
-            brushAnimation.classList.add('hide');
-            inputNote.classList.add('hide');
+            noteSection.classList.remove('animate');
         }
     }
 
     const hideTopAnimations = () => {
         if (brushAnimated) {
-            noteHolders.classList.add('show');
-            brushAnimation.classList.remove('hide');
-            inputNote.classList.remove('hide');
+            noteSection.classList.add('animate');
         }
     }
 
     const noteHeader = document.getElementById('notes-header');
     const showNoteView = () => {
         if (brushAnimated && document.body.className != 'full-mode-active') {
+            noteSection.classList.remove('animate');
             noteHolders.classList.remove('show');
-            brushAnimation.classList.add('hide');
-            inputNote.classList.add('hide');
-            cloudContainer.parentElement.style.zIndex = 5;
 
             noteHeader.removeEventListener('mouseout', hideTopAnimations);
             noteHeader.removeEventListener('mouseout', showTopAnimations);
 
             noteViewActivated = true;
             setTimeout(() => {
-
-                setTimeout(() => {
-                    cloud2.classList.add('show');
-                }, 200);
-
-                setTimeout(() => {
-                    cloud.classList.add('show');
-                }, 400);
-
-                setTimeout(() => {
-                    cloud1.classList.add('show');
-                }, 600);
-
-                setTimeout(() => {
-                    inputNote.style.display = 'none';
-                    noteHolders.style.display = 'none';
-                    brushAnimation.style.display = 'none';
-
-                    document.getElementById('timeline-months-container').style.display = 'block';
-                    document.getElementById('timeline-years').style.display = 'block';
-                }, 1500);
-
-            }, 100);
+                noteSection.classList.add('animated');
+            }, 1600);
         }
     }
 

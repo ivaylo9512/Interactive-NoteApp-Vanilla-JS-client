@@ -10,6 +10,7 @@ const app = (() =>{
 
     let currentAlbumNumber;
     let currentAlbumString;
+    const windowHeight = window.innerHeight;
     const getAlbumImages = (e) => {
         const id = e.target.id.split(' ');
 
@@ -19,7 +20,7 @@ const app = (() =>{
         if(!albums[albumNumber]){
             
             remote.getAlbumImages(albumNumber).then(res => {
-                animate.smoothScroll(document.body.offsetHeight - window.pageYOffset - window.innerHeight - 450, 1500);
+                animate.smoothScroll(document.body.offsetHeight - animate.getScrollY() - windowHeight - 450, 1500);
                 albums[albumString] = res.data;
 
                 currentAlbumNumber = albumNumber
@@ -36,7 +37,7 @@ const app = (() =>{
             currentAlbumString = albumString
 
             showButtons();            
-            animate.smoothScroll(document.body.offsetHeight - window.pageYOffset - window.innerHeight - 450, 1500);
+            animate.smoothScroll(document.body.offsetHeight - animate.getScrollY() - windowHeight - 450, 1500);
             appendAlbumPhotos(albums[albumString])
         }
     }
