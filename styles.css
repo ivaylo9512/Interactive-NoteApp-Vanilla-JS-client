@@ -889,7 +889,7 @@ body.full-mode-active .play-box{
     position: relative;
     display: inline-block;
     width: 40%;
-    height: 428px;
+    height: 400px;
     z-index: 6;
     vertical-align: bottom;
     transition: opacity 1.15s ease-in-out;
@@ -917,6 +917,7 @@ body.full-mode-active .note-animation-container{
     align-items: center;
     justify-content: center;
     margin-top: 176px;
+    flex-direction: column;
 
     display: -webkit-box; 
     display: -ms-flexbox;
@@ -931,11 +932,11 @@ body.full-mode-active .note-animation-container{
     vertical-align: bottom;
     margin-top: 60px;
 }
-.note-section .cloud-headers div:last-child{
-    height: 428px;
+.note-section .cloud-headers > div:last-child{
+    height: 400px;
     margin-top: 0px
 }
-.note-section.appended .cloud-headers div:last-child{
+.note-section.appended .cloud-headers > div:last-child{
     margin: 176px 0;
     height: 245px;
 }
@@ -944,68 +945,63 @@ body.full-mode-active .cloud-headers,
     z-index: 5;
     width: 31%;
 }
+.clouds-container{
+    display: none;
+    font: bold 40px/1 "Aladin", Helvetica, sans-serif;
+    margin-bottom: -23px;
+}
+body.full-mode-active .clouds-container,
+.note-section.animated .clouds-container{
+    display: inline-block;
+}
+.clouds-container > div{
+    display: inline-block;
+    position: relative;
+}
+.clouds-container > div > img{
+    display: block;
+}
 .cloud {
-    position: absolute;
-    width: 160px;
-    left: 60%;
-    top: 40%;
+    margin-bottom: -20px;
+    margin-left: -27px;
     opacity: 1;
 }
+.cloud img{
+    width: 160px;
+}
 .cloud1 {
-    position: absolute;
-    width: 88px;
-    left: 32%;
-    top: 32%;
+    margin-bottom: 66px;
+    font-size: 30px;
+
     -webkit-transform: rotate(10.97deg);
     -moz-transform: rotate(10.97deg);
     transform: rotate(10.97deg);
     opacity: 1;
 }
-
+.cloud1 img{
+    width: 88px;
+}
+.cloud1 .date-container{
+    margin-top: calc(-0.5em + 9%);
+}
 .cloud2 {
-    position: absolute;
-    width: 128px;
-    left: -15%;
-    top: 46.5%;
     -webkit-transform: rotate(-22.91deg);
     -moz-transform: rotate(-22.91deg);
     transform: rotate(-22.91deg);
     opacity: 1;
 }
-
+.cloud2 img{
+    width: 128px;
+}
 .cloud-headers p{
     color: #EAE9E5;
-    font: bold 40px/1 "Aladin", Helvetica, sans-serif;
     text-align: center;
 }
-.chosen-day-container{
+.date-container{
     position: absolute;
-    top: 43%;
-    left: 37%;
-    width: 26%;
-    -webkit-transform: rotate(12deg);
-    -moz-transform: rotate(12deg);
-    transform: rotate(12deg);
-    font-size: 30px;
-}
-.chosen-day-container p {
-    font-size: 30px;
-}
-.chosen-month-container{
-    left: 61%;
-    position: absolute;
-    z-index: 5;
-    top: 64.7%;
-    width: 60%;
-}
-.chosen-year-container{
-    position: absolute;
-    top: 64%;
-    left: -12%;
-    width: 50%;
-    -webkit-transform: rotate(-22.91deg);
-    -moz-transform: rotate(-22.91deg);
-    transform: rotate(-22.91deg);
+    top: 50%;
+    width: 100%;
+    margin-top: calc(-0.5em + 10%);
 }
 body.full-mode-active .cloud-header img{
     opacity: 1;
@@ -1023,7 +1019,7 @@ body.full-mode-active .cloud-header img{
     position: relative;
     display: inline-block;
     width: 40%;
-    height: 428px;
+    height: 400 px;
     z-index: 5;
     vertical-align: bottom;
     opacity: 0;
@@ -1391,14 +1387,14 @@ body.full-mode-active .full-mode-circle {
 }
 .timeline-months-container{
     width: 100%;
-    margin-top: 60px;
+    margin-top: 80px;
     position: relative;
     display: none;
     z-index: 5;
 }
 .timeline-months{
     width: 0%;
-    height: 200px;
+    height: 100px;
     position: relative;
     overflow: hidden;
     transition: all 2.5s;
@@ -1406,9 +1402,6 @@ body.full-mode-active .full-mode-circle {
 .note-section.animated .timeline-months-container,
 body.full-mode-active .timeline-months-container{
     display: block;
-}
-body.full-mode-active .timeline-months {
-    height: 100px;
 }
 .timeline-months.show{
     width: 100%;
@@ -1434,6 +1427,7 @@ ol {
     margin-left: -5px;
     z-index: 7;
     display: none;
+    bottom: 100px;
 }
 body.full-mode-active .timeline-years,
 .note-section.animated .timeline-years{
@@ -1504,7 +1498,7 @@ button.days-container {
     -webkit-transform: translate(-50%, -50%);
     -moz-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-    bottom: 67.95%;
+    bottom: 36.95%;
     left: 50.35%;
     overflow: hidden;
     opacity: 0;
@@ -1778,9 +1772,16 @@ ol::after {
     display: none;
     width: 22%;
 }
+
+body.full-mode-active .left-notes-container,
+body.full-mode-active .right-notes-container,
 .note-section.animated .left-notes-container,
 .note-section.animated .right-notes-container{
     display: inline-block;
+}
+.right-notes-container div:first-child,
+.left-notes-container div:first-child{
+    margin-top: 0;
 }
 .user-note-container {
     width: 100%;

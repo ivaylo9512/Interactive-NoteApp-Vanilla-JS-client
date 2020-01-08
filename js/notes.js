@@ -3,7 +3,6 @@ const notes = (() => {
     const timelineMonths = document.getElementById('timeline-months');
     const timelineYears = document.getElementById('timeline-years');
     const months = Array.from(timelineMonths.getElementsByTagName('LI'));
-    let noteViewActivated = false;
 
     const maxYear = 1995;
     const currentYear = new Date().getFullYear();
@@ -255,7 +254,6 @@ const notes = (() => {
     }
 
     const body = document.body;
-    const buffersContainer = document.getElementById('buffers-container');
 
     const noteSection = document.getElementById('note-section');
     const cloudContainer = document.getElementById('cloud-headers');
@@ -379,10 +377,6 @@ const notes = (() => {
             cloudContainer.removeChild(cloudContainer.firstChild)
 
         }
-        
-        while (buffersContainer.firstChild) {
-            buffersContainer.removeChild(buffersContainer.firstChild)
-        }
 
         while (leftNotesContainer.firstChild) {
             leftNotesContainer.removeChild(leftNotesContainer.firstChild)
@@ -391,9 +385,6 @@ const notes = (() => {
         while (rightNotesContainer.firstChild) {
             rightNotesContainer.removeChild(rightNotesContainer.firstChild)
         }
-
-        userNotes.length > 0 ? cloudHeader.style.marginBottom = '150px' : cloudHeader.style.marginBottom = '0px';
-        
     }
 
     const cloudsFragment = document.createDocumentFragment();
@@ -462,6 +453,7 @@ const notes = (() => {
         noteSection.style.display = 'none';     
     }
 
+    let noteViewActivated = false;
     const resetNoteView = () => {
         if(!noteViewActivated){
             daysCount = 0;
@@ -486,7 +478,6 @@ const notes = (() => {
 
         }
         noteSection.style.display = 'block'; 
-        buffersContainer.style.display = 'block';
 
     } 
 

@@ -47,7 +47,6 @@
             </div>
         </div>
         <div class="play-mode" id="play-mode">
-            <div id="buffers-container"></div>
             <div class="play-nav" id="play-nav">
                 <button class="full-mode-button">
                     <img src="resources/full-mode.png" id="full-mode-btn">
@@ -117,19 +116,27 @@
                 </div>
                 <div class="cloud-headers" id="cloud-headers">
                     <div class="cloud-header" id="cloud-header">
+                        <div class="clouds-container">
+                            <div class="cloud2">
+                                <img id="cloud2" src="resources/cloud.png" alt="">
+                                <div class="date-container">
+                                    <p class="chosen-year" id="chosen-year">2018</p>
+                                </div>
+                            </div>
+                            <div class="cloud1">
+                                <img id="cloud1" src="resources/cloud.png" alt="">
+                                <div class="date-container">
+                                    <p id="chosen-day"></p>
+                                </div>
+                            </div>
+                            <div class="cloud">
+                                <img id="cloud" src="resources/cloud.png" alt="">
+                                <div class="date-container">
+                                    <p id="chosen-month"></p>
+                                </div>
+                            </div>
+                        </div>
                         <h1 id="notes-header">Notes</h1>
-                        <div class="chosen-month-container">
-                            <p id="chosen-month"></p>
-                        </div>
-                        <img class="cloud" id="cloud" src="resources/cloud.png" alt="">
-                        <img class="cloud1" id="cloud1" src="resources/cloud.png" alt="">
-                        <img class="cloud2" id="cloud2" src="resources/cloud.png" alt="">
-                        <div class="chosen-day-container">
-                            <p id="chosen-day"></p>
-                        </div>
-                        <div class="chosen-year-container">
-                            <p class="chosen-year" id="chosen-year">2018</p>
-                        </div>
                     </div>
                 </div>
                 <div id="right-notes" class="right-notes-container">
