@@ -1,12 +1,14 @@
 const notes = (() => {
 
     const timelineMonths = document.getElementById('timeline-months');
-    const timelineYears = document.getElementById('timeline-years');
+    const timelineYears = document.getElementById('timeline-years').children[0];
     const months = Array.from(timelineMonths.getElementsByTagName('LI'));
 
     const maxYear = 1995;
     const currentYear = new Date().getFullYear();
     const yearsCount = currentYear - maxYear;
+    
+    const yearsFragment = document.createDocumentFragment();
     const years = [];
     for(let i = 0; i <= yearsCount ; i++){
         const year = document.createElement('LI');
@@ -18,11 +20,12 @@ const notes = (() => {
         year.appendChild(yearLabel);
         year.appendChild(point);
         years.push(year);
-        timelineYears.children[0].appendChild(year);
+        yearsFragment.appendChild(year)
         
         if(i < yearsCount - 7) year.style.marginTop = '-69px';
         else if(i == yearsCount - 7) year.style.marginTop = '-32px';
     }
+    timelineYears.appendChild(yearsFragment);
 
     let slideYear = yearsCount - 7;
     const slideYears = (pos) => {
