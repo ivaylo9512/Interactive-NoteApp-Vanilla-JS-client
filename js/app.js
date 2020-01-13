@@ -442,7 +442,7 @@ const app = (() =>{
     const isFullMode = () => fullModeOn;
     const isInitialLoad = () => initialLoad;
 
-    const initialAnimation = () => {
+    const initialLoading = () => {
         document.getElementById('user-form').reset();
         
         setTimeout(() => window.scrollTo(0, document.body.scrollHeight), 100);
@@ -779,7 +779,10 @@ const app = (() =>{
     }
         
     const start = () => {
-        window.addEventListener('load', initialAnimation);
+        window.addEventListener('load', () => {
+            initialLoading();   
+            profile.start();
+        });
         
         animate.start();
         colorize.start();

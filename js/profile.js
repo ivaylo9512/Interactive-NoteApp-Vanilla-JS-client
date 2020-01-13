@@ -124,13 +124,6 @@ const profile = (() => {
         }
     };
 
-    if (isAuth()) {
-        userInfo = JSON.parse(localStorage.getItem('User'));
-        resetView(view[2], Object.values(userInfo));
-
-        profilePhoto.src = userInfo.profilePicture != 'undefined' ? remote.getBase() + userInfo.profilePicture : '#'; 
-    }
-
     function login() {
         let username = inputNodes[0].value;
         let password = inputNodes[1].value;
@@ -185,15 +178,24 @@ const profile = (() => {
         }
     }
 
-    (function addListeners(){
+    const start = () => { 
+
+        if (isAuth()) {
+            userInfo = JSON.parse(localStorage.getItem('User'));
+            resetView(view[2], Object.values(userInfo));
+    
+            profilePhoto.src = userInfo.profilePicture != 'undefined' ? remote.getBase() + userInfo.profilePicture : '#'; 
+        }
+        
         loginBtn.addEventListener('click', userAction);
         registerBtn.addEventListener('click', userAction);
         document.getElementById('user-btn').addEventListener('click', userAction);
         document.getElementById('profile-photo').addEventListener('input', addProfilePhoto);    
-    })();
+    }
 
     return{
         isAuth,
+        start
     }
 
 })();
