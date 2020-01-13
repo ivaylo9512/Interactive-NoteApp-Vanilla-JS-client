@@ -110,17 +110,25 @@ const profile = (() => {
             country: user.country,
             profilePicture : user.profilePicture
         }
+
         profilePhoto.src = user.profilePicture ? remote.getBase() + user.profilePicture : '#'; 
         localStorage.setItem('Authorization', user.token);
         localStorage.setItem('User', JSON.stringify(userInfo));
     }
 
-    let isAuth = () => {}; // localStorage.getItem('Authorization') != null //;
+    let isAuth = () => {
+        try{
+            return localStorage.getItem('Authorization') != null
+        }catch(e){ //Gives me error in Edge and IE when server is on localHost 
+            return false;
+        }
+    };
+
     if (isAuth()) {
-        userInfo = Object.values(JSON.parse(localStorage.getItem('User')));
-        
-        resetView(view[2], userInfo);
-        profilePhoto.src = user.profilePic != 'undefined' ? remote.getBase() + localStorage.getItem('profilePic') : '#'; 
+        userInfo = JSON.parse(localStorage.getItem('User'));
+        resetView(view[2], Object.values(userInfo));
+
+        profilePhoto.src = userInfo.profilePicture != 'undefined' ? remote.getBase() + userInfo.profilePicture : '#'; 
     }
 
     function login() {
@@ -142,16 +150,7 @@ const profile = (() => {
         userBtn.textContent = '';
     }
 
-    const userRegister = {
-        firstName: undefined,
-        lastName: undefined,
-        country: undefined,
-        age: undefined,
-        username: undefined,
-        password: undefined,
-        repeat: undefined,
-    }
-
+    const userRegister = {};
     const saveInputs = () => {
         for(let i = 0; i < inputNodes.length; i++){
             if(labelNodes[i].style.display == 'none')
