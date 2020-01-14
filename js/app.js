@@ -7,10 +7,7 @@ const app = (() =>{
     let currentAlbumNumber;
     const windowHeight = window.innerHeight;
     const getAlbumImages = (e) => {
-        const id = e.target.id.split(' ');
-
-        const albumNumber = +id[0];
-        const albumString = id[1];
+        const albumNumber = +e.target.id;;
 
         if(!albums[albumNumber]){
             
@@ -54,8 +51,8 @@ const app = (() =>{
                 photo.style.transform = `rotate(${currentAlbum[i].rotation}deg)`;
                 photo.style.left = currentAlbum[i].leftPosition + 'px';
                 photo.style.top = currentAlbum[i].topPosition + 'px';
-                photo.style.width = currentAlbum[i].width + '%';
-                currentAlbum[i].widthUnits = '%';
+                currentAlbum[i].widthUnits == currentAlbum.widthUnits == undefined ? '%' : 'px';
+                photo.style.width = currentAlbum[i].width + currentAlbum.widthUnits;
 
                 let noteId = currentAlbum[i].note + 'note';
 
@@ -553,9 +550,7 @@ const app = (() =>{
         
         if(event.target != event.currentTarget && !number){
             number = event.target;
-            
-            const id = number.id.split('-');
-            currentAlbumNumber = id[0];
+            currentAlbumNumber = +number.id;
 
             currentAlbumNumber == 2 ? albumNumbersContainer.classList.add('middle') : albumNumbersContainer.classList.remove('middle');
 
