@@ -501,7 +501,7 @@ const notes = (() => {
 
     const noteAnimation = () => {
         if (brushAnimated) {
-            noteHolders.src = 'resources/note-animation.gif';
+            noteHolders.classList.add('rotate');
         }
     }
 

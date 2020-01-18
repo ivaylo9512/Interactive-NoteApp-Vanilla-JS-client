@@ -894,14 +894,77 @@ body.full-mode-active .play-box{
     vertical-align: bottom;
     transition: opacity 1.15s ease-in-out;
     opacity: 0;
-}
+    justify-content: center;
+    align-items: center;
 
-.note-animation {
-    width: 100%;
-    transition: all 1.5s ease-in-out;
+    display: -webkit-inline-box;
+    display: -moz-inline-box;
+    display: -ms-inline-flexbox;
+    display: -webkit-inline-flex;
+    display: inline-flex;
+}
+.big-note{
+    height: 57%;
+    top: 393px;
+    left: 184px;
+    width: 47%;
+    transform: rotate(-19deg);
+    background: #432717;
+    box-shadow: -4px 6px 18px -6px rgba(0, 0, 0, 0.75), -2px 3px 19px -2px rgba(0, 0, 0, 0.75);
+    align-items: center;
+    justify-content: center;
+
+    display: -webkit-box; 
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+}
+.big-note img{
+    width: 134px;
+}
+.small-note{
+    width: 125px;
+    height: 125px;
     position: relative;
-    z-index: 1;
-    cursor: pointer;
+    z-index: 5;
+    margin-left: -10%;
+    margin-top: 41px;
+    background: white;
+    border: 2px solid transparent;
+
+}
+.small-note div{
+    height: 100%;
+    width: 100%;
+    position: relative;
+    background: #432717;
+    border-left: 1px solid #a3a098;
+    border-bottom: 1px solid #a3a098;
+    border-top: 1px solid #432717;
+    justify-content: center;
+    border-right: 1px solid #432717;
+    top: -2px;
+    transition: 1.5s;
+    transform-origin: top right;
+    box-shadow: -4px 6px 18px -6px rgba(0, 0, 0, 0.75), -2px 3px 19px -2px rgba(0, 0, 0, 0.75);
+
+    display: flex;
+    align-items: center;
+
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+}
+.small-note:hover {
+    border: 2px solid #41291B;
+}
+.small-note:hover div{
+    -webkit-transform: rotate(-51deg);
+    -moz-transform: rotate(-51deg);
+    transform: rotate(-51deg);
+}
+.small-note img{
+    width: 50%;
 }
 .note-section.animate .note-animation-container{
     opacity: 1;

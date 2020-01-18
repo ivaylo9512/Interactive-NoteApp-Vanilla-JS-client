@@ -167,17 +167,12 @@ const animate = (() => {
     let animationIsPlaying = false;
 
     const brushAnimation = document.getElementById('brush-animation');
-    const cloud = document.getElementById('cloud');
-    const cloud1 = document.getElementById('cloud1');
-    const cloud2 = document.getElementById('cloud2');
     const balloon = document.getElementById('balloon');
     const balloonLeft = document.getElementById('balloon-left');
     const balloonRight = document.getElementById('balloon-right');
-    const noteHolders = document.getElementById('note-animation');
-    const brushAnimationContainer = document.getElementById('right-notes');
 
     const balloonAnimation = () => {
-        if (!balloonPlayed) {
+        if (!balloonPlayed && app.isInitialLoad()) {
             balloonPlayed = true;
             animationIsPlaying = true;
 
