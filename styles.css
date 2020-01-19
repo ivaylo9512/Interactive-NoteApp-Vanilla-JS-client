@@ -913,6 +913,7 @@ body.full-mode-active .play-box{
     box-shadow: -4px 6px 18px -6px rgba(0, 0, 0, 0.75), -2px 3px 19px -2px rgba(0, 0, 0, 0.75);
     align-items: center;
     justify-content: center;
+    cursor: pointer;
 
     display: -webkit-box; 
     display: -ms-flexbox;
@@ -929,39 +930,55 @@ body.full-mode-active .play-box{
     z-index: 5;
     margin-left: -10%;
     margin-top: 41px;
-    background: white;
-    border: 2px solid transparent;
-
+    cursor: pointer;
 }
-.small-note div{
+.small-note > div{
     height: 100%;
     width: 100%;
+}
+.small-note > div:first-child {
     position: relative;
     background: #432717;
     border-left: 1px solid #a3a098;
     border-bottom: 1px solid #a3a098;
-    border-top: 1px solid #432717;
+    border-top: 3px solid #432717;
     justify-content: center;
-    border-right: 1px solid #432717;
-    top: -2px;
-    transition: 1.5s;
+    border-right: 3px solid #432717;
+    transition: rotate 1.5s;
     transform-origin: top right;
     box-shadow: -4px 6px 18px -6px rgba(0, 0, 0, 0.75), -2px 3px 19px -2px rgba(0, 0, 0, 0.75);
-
     display: flex;
     align-items: center;
 
     display: -webkit-box;
     display: -ms-flexbox;
     display: -webkit-flex;
+    z-index: 2;
 }
-.small-note:hover {
+.small-note > div:last-child{
+    position: absolute;
+    top: 0;
     border: 2px solid #41291B;
+    background-color: white;
+    z-index: 1;
 }
-.small-note:hover div{
-    -webkit-transform: rotate(-51deg);
-    -moz-transform: rotate(-51deg);
-    transform: rotate(-51deg);
+.small-note:hover > div:last-child, 
+.big-note:hover + .small-note > div:last-child {
+    box-shadow: -4px 6px 18px -6px rgba(0, 0, 0, 0.75), -2px 3px 19px -2px rgba(0, 0, 0, 0.75);
+}
+.small-note:hover > div:first-child,
+.big-note:hover + .small-note > div:first-child{
+    animation: note-rotate 2800ms linear both;
+    border-left: 1px solid transparent;
+    border-bottom: 1px solid transparent;
+}
+.small-note .input-note{
+    width: 65%;
+    height: 65%;
+    left: 15%;
+    top: 10%;
+    transform: rotate(-8deg);
+    display: block;
 }
 .small-note img{
     width: 50%;
@@ -996,13 +1013,13 @@ body.full-mode-active .note-animation-container{
     -webkit-transform: translateY(-50%);
     -moz-transform: translateY(-50%);
     transform: translateY(-50%);
-    transition: 1.5s;
 }
 body.full-mode-active .cloud-header h1,
 .note-section.animated .cloud-header h1{
     -webkit-transform: translateY(0);
     -moz-transform: translateY(0);
     transform: translateY(0);
+    transition: 1.5s;
 }
 .cloud-headers {
     display: inline-block;
@@ -1068,9 +1085,7 @@ body.full-mode-active .clouds-container > div:nth-child(3),
     width: 0;
     margin: 0;
     margin-bottom: 66px;
-    transition: 2s 1.5s;
     transform-origin: 40% 60%;
-
 }
 body.full-mode-active .clouds-container > div:nth-child(2),
 .note-section.animated .clouds-container > div:nth-child(2){
@@ -1080,6 +1095,7 @@ body.full-mode-active .clouds-container > div:nth-child(2),
     -webkit-transform: scale(1) rotate(10.97deg);
     -moz-transform: scale(1) rotate(10.97deg);
     transform: scale(1) rotate(10.97deg);
+    transition: 2s 1.5s;
 }
 .clouds-container > div:nth-child(2) img{
     width: 88px;
@@ -1093,7 +1109,6 @@ body.full-mode-active .clouds-container > div:nth-child(2),
     transform: scale(0) rotate(0);
     opacity: 1;
     width: 0;
-    transition: 1s 1s;
     margin-bottom: -5px;
 }
 body.full-mode-active .clouds-container > div:nth-child(1),
@@ -1102,6 +1117,7 @@ body.full-mode-active .clouds-container > div:nth-child(1),
     -webkit-transform: scale(1) rotate(-22.91deg);
     -moz-transform: scale(1) rotate(-22.91deg);
     transform: scale(1) rotate(-22.91deg);
+    transition: 1s 1s;
 }
 .clouds-container > div:nth-child(1) img{
     width: 128px;
@@ -1998,7 +2014,74 @@ body.full-mode-active .right-notes-container,
         opacity: 1;
     }
 }
+@keyframes note-rotate {
+    0%{    
+        -webkit-transform: rotate(0);
+        -moz-transform: rotate(0);
+        transform: rotate(0);
+    }
+    32%{
+        -webkit-transform: rotate(-69deg);
+        -moz-transform: rotate(-69deg);
+        transform: rotate(-69deg);
+    }
+    64%{
+        -webkit-transform: rotate(-35deg);
+        -moz-transform: rotate(-35deg);
+        transform: rotate(-35deg); 
+    }
+    100%{
+        -webkit-transform: rotate(-51deg);
+        -moz-transform: rotate(-51deg);
+        transform: rotate(-51deg);
+    }
+}
 
+@-webkit-keyframes note-rotate {
+    0%{    
+        -webkit-transform: rotate(0);
+        -moz-transform: rotate(0);
+        transform: rotate(0);
+    }
+    32%{
+        -webkit-transform: rotate(-69deg);
+        -moz-transform: rotate(-69deg);
+        transform: rotate(-69deg);
+    }
+    64%{
+        -webkit-transform: rotate(-35deg);
+        -moz-transform: rotate(-35deg);
+        transform: rotate(-35deg); 
+    }
+    100%{
+        -webkit-transform: rotate(-51deg);
+        -moz-transform: rotate(-51deg);
+        transform: rotate(-51deg);
+    }
+}
+
+@-moz-keyframes note-rotate {
+    0%{    
+        -webkit-transform: rotate(0);
+        -moz-transform: rotate(0);
+        transform: rotate(0);
+    }
+    32%{
+        -webkit-transform: rotate(-69deg);
+        -moz-transform: rotate(-69deg);
+        transform: rotate(-69deg);
+    }
+    64%{
+        -webkit-transform: rotate(-35deg);
+        -moz-transform: rotate(-35deg);
+        transform: rotate(-35deg); 
+    }
+    100%{
+        -webkit-transform: rotate(-51deg);
+        -moz-transform: rotate(-51deg);
+        transform: rotate(-51deg);
+    }
+}
   /* Generated with Bounce.js. Edit at https://goo.gl/3nh2Tp */
   @-webkit-keyframes animation { 
     0% { -webkit-transform: matrix3d(0.6, 0, 0, 0, 0, 0.6, 0, 0, 0, 0, 1, 0, 0, 0, 0, 2.1)rotate(0deg); transform: matrix3d(0.6, 0, 0, 0, 0, 0.6, 0, 0, 0, 0, 1, 0, 0, 0, 0, 2.1)rotate(0deg); }

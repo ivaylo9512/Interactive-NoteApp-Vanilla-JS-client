@@ -403,6 +403,7 @@ const notes = (() => {
     }
 
     const inputNote = document.getElementById('input-note');
+    const animationNote = document.getElementById('animation-note');
     const bindNote = () => {
         inputNote.style.display = 'block';
         inputNote.classList.add('inactive');
@@ -430,8 +431,7 @@ const notes = (() => {
             inputNote.style.left = null;
             inputNote.style.top = null;
             inputNote.style.display = 'none';
-            noteHolders.src = 'resources/note-animation-static.png';
-            noteHolders.addEventListener('mouseover', noteAnimation);
+            animationNote.style.display = 'block';
             noteHolders.addEventListener('click', noteAppend);
         }   
     }
@@ -497,20 +497,14 @@ const notes = (() => {
     }
 
     
-    const noteHolders = document.getElementById('note-animation');
+    const noteHolders = document.getElementById('note-animation-container');
 
-    const noteAnimation = () => {
-        if (brushAnimated) {
-            noteHolders.classList.add('rotate');
-        }
-    }
-
-    const noteAppend = (target) => {
-        if (brushAnimated || target == 'input-note-btn') {
+    const noteAppend = (currentTarget) => {
+        
+        if ((brushAnimated && event.target.id != 'note-animation-container') || currentTarget == 'input-note-btn') {
             noteIsAnimated = true;
             inputNote.style.display = 'block';
-            noteHolders.src = 'resources/note-animation-static-open.png';
-            noteHolders.removeEventListener('mouseover', noteAnimation);
+            animationNote.style.display = 'none';
             noteHolders.removeEventListener('click', noteAppend);
         }
     }
@@ -531,7 +525,6 @@ const notes = (() => {
     const showNoteView = () => {
         if (brushAnimated && document.body.className != 'full-mode-active') {
             noteSection.classList.remove('animate');
-            noteHolders.classList.remove('show');
 
             noteHeader.removeEventListener('mouseout', hideTopAnimations);
             noteHeader.removeEventListener('mouseout', showTopAnimations);
@@ -568,7 +561,6 @@ const notes = (() => {
     daysContainer.addEventListener('click', getDay);
     
     const start = () => {
-        noteHolders.addEventListener('mouseover', noteAnimation);
         noteHolders.addEventListener('click', noteAppend);
         noteHeader.addEventListener('mouseover', showTopAnimations);
         noteHeader.addEventListener('mouseout', hideTopAnimations);
