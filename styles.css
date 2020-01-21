@@ -1017,19 +1017,44 @@ body.full-mode-active .play-box{
 body.full-mode-active .note-animation-container{
     display: none;
 }
-.cloud-header {
+.cloud-header > div {
     text-align: center;
+    position: relative;
     width: 100%;
     height: 245px;
     align-items: center;
     justify-content: center;
     margin-top: 176px;
+    z-index: 2;
     flex-direction: column;
+    transition-duration: 1.5s;
+    transition-property: border-radius, transform, box-shadow;
 
-    display: -webkit-box; 
+    display: -webkit-box;
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
+}
+.cloud-header.border-radius > div{
+    border-radius: 50%;
+    transition-delay: 2s;
+}
+.cloud-header.translate > div{
+    -webkit-transform: translateY(-8px);
+    -moz-transform: translateY(-8px);
+    transform: translateY(-8px);
+}
+.cloud-header.box-shadow > div{
+    transition-delay: 0s;
+    box-shadow: 1px 0px 3px;
+}
+.cloud-header textarea{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: #41291B;
+    border-radius: 50%;
+    display: none;
 }
 .cloud-header h1{
     font: bold 80px "Aladin", Helvetica, sans-serif;
@@ -1040,6 +1065,10 @@ body.full-mode-active .note-animation-container{
     -webkit-transform: translateY(-50%);
     -moz-transform: translateY(-50%);
     transform: translateY(-50%);
+}
+body.full-mode-active .cloud-header > div,
+.note-section.animated .cloud-header > div{
+    background: #EAE9E5;
 }
 body.full-mode-active .cloud-header h1,
 .note-section.animated .cloud-header h1{
@@ -1056,11 +1085,17 @@ body.full-mode-active .cloud-header h1,
     vertical-align: bottom;
     margin-top: 60px;
 }
-.note-section .cloud-headers > div:last-child{
+.cloud-header{
+    position: relative;
+}
+.note-section .cloud-headers > div:last-child > div{
     height: 400px;
     margin-top: 0px
 }
-.note-section.appended .cloud-headers > div:last-child{
+.note-section.appended .cloud-headers textarea{
+    display: block;
+}
+.note-section.appended .cloud-headers > div:last-child > div{
     margin: 176px 0;
     height: 245px;
 }
@@ -1926,17 +1961,19 @@ body.full-mode-active .right-notes-container,
 .note-section.animated .right-notes-container{
     display: inline-block;
 }
-.right-notes-container div:first-child,
-.left-notes-container div:first-child{
+.right-notes-container button:first-child,
+.left-notes-container button:first-child{
     margin-top: 0;
 }
 .user-note-container {
     width: 100%;
     position: relative;
     height: 176px;
-    bottom: 0%;
     opacity: 0;
     margin-top: 245px;
+    background: url(resources/cloud-note.png) no-repeat center;
+    background-size: 100%;
+    text-align: center;
     z-index: 7;
     -moz-animation: fadeIn 1s ease-in forwards;
     -o-animation: fadeIn 1s ease-in forwards;
@@ -1952,26 +1989,10 @@ body.full-mode-active .right-notes-container,
     margin-top: 22%;
 }
 
-.user-note-container textarea {
-    height: 361px;
-    width: 391px;
-    color: #EAE9E5;
-    background-color: #442818;
-    display: none;
-    border-radius: 10px;
-    border: 5px double #442818;
-    margin-left: 279.5px;
-    margin-top: -366px;
-    position: absolute;
-}
-
 .user-note-container.active input {
     pointer-events: all;
 }
 
-.user-note-container.active textarea {
-    display: block;
-}
 .user-note-container .user-photo {
     display: none;
     opacity: 1;
@@ -1980,16 +2001,6 @@ body.full-mode-active .right-notes-container,
 .user-note-container.active .user-photo {
     display: block;
     opacity: 1;
-}
-.user-note {
-    height: 100%;
-    width: 100%;
-    background: url(resources/cloud-note.png) no-repeat center;
-    background-size: 100%;
-    border: 0px;
-    outline: none;
-    text-align: center;
-    position: relative;
 }
 .note-update-btn{
     background: url(resources/update.png) no-repeat;

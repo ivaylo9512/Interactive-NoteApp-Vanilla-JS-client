@@ -234,10 +234,12 @@ const notes = (() => {
                 userNotes = res.data;
                 appendNotes();
             }).catch(e => {
+                console.log(e);
         })
     }
 
     const updateNote = (e) => {
+        //TODO: 
         const userNote = focusedNote.children[0];
             noteText = userNote.children[0],
             noteName = userNote.children[2],
@@ -268,16 +270,9 @@ const notes = (() => {
     const rightNotesFragment = document.createDocumentFragment();
 
     const noteContainer = (() =>{
-        const userNoteContainer = document.createElement('div');
-        userNoteContainer.className = 'user-note-container';
-        userNoteContainer.id = 'user-note-container';
-
-        const note = document.createElement('button');
-        note.className = 'user-note';
-
-        const noteInput = document.createElement('textarea');
-        noteInput.name = 'user-note-input';
-        noteInput.id = 'user-note-input';
+        const container = document.createElement('button');
+        container.className = 'user-note-container';
+        container.id = 'user-note-container';
 
         const noteName = document.createElement('input');
         noteName.name = 'user-note-name';
@@ -287,12 +282,10 @@ const notes = (() => {
         updateBtn.className = 'note-update-btn';
         updateBtn.id = 'note-update-btn';
 
-        note.appendChild(noteInput);
-        note.appendChild(updateBtn);
-        note.appendChild(noteName);
-        userNoteContainer.appendChild(note);
+        container.appendChild(noteName);
+        container.appendChild(updateBtn);
 
-        return userNoteContainer;
+        return container;
     })();
 
     let delay = 0;
@@ -312,63 +305,74 @@ const notes = (() => {
                 window.scrollTo(0, body.scrollHeight - 2749);
                 
         userNotes.forEach((userNote, i) => {
-            const containerCopy = noteContainer.cloneNode(true);
-            const note = containerCopy.children[0];
-            const noteText = note.children[0];
+            const note = noteContainer.cloneNode(true);
+            const noteName = note.children[0];
             const updateBtn = note.children[1];
-            const noteName = note.children[2];
             
-            noteText.textContent = userNote.note;
             noteName.value = userNote.name;
             note.id = userNote.id + 'note';
 
+            //TODO:
             userNote.files.forEach(file => 
                 note.appendChild(app.findUserPhoto(file.id)));
 
-            containerCopy.style.animationDelay = delay + 's';
-            noteText.style.marginTop = (i == 0 && userNotes.length > 2) || (i == 1 && userNotes.length > 3) ? '41px' : '-366px';   
+            note.style.animationDelay = delay + 's';
 
             delay -= 0.2;
             if(i % 2 == 0) {
-                noteText.style.marginLeft = '280.5px';
-                leftNotesFragment.appendChild(containerCopy);
+                leftNotesFragment.appendChild(note);
             }else{
-                noteText.style.marginLeft = '-401.5px';
-                rightNotesFragment.appendChild(containerCopy);
+                rightNotesFragment.appendChild(note);
             }
 
+            //TODO: 
             updateBtn.addEventListener('mouseover', updateNote);
-            containerCopy.addEventListener('mousedown', () => showUserNote(containerCopy));
+            note.addEventListener('mousedown', () => showUserNote(i, note));
         })
         rightNotesContainer.appendChild(rightNotesFragment);
         leftNotesContainer.appendChild(leftNotesFragment);
-        
     }
-    
+
     let rotate;
     let focusedNote;
-    const showUserNote = (note) => {
-        focusedNote = note;
-        focusedNote.classList.add('active');
-        app.setfocusedNote(focusedNote);
-        rotate = 360;
-        window.addEventListener('mousedown',  () => hideUserNote(), {
-            once: true,
-            passive: true,
-            capture: true
-        });
+    const showUserNote = (index, note) => {
+        if(note != focusedNote){
+            const parent = note.parentElement;
+            let cloudIndex = Math.floor(index / 2);
+            if(index >= userNotes.length - 2){
+                cloudIndex = cloudHeaders.length - 1;
+            }else if(userNotes.length % 2 != 0 && parent == rightNotesContainer){
+                cloudIndex++;
+            }
+
+            const cloud = cloudHeaders[cloudIndex];
+            const draggedCloud = cloud.children[1];
+            draggedCloud.id = 'dragCloud';
+
+            let removeDrag;
+            cloud.classList.add('translate');        
+            setTimeout(() => cloud.classList.add('border-radius'), 0);
+            setTimeout(() => {
+                cloud.addEventListener('mouseover', () => cloud.classList.add('box-shadow'), {
+                    once: true,
+                })
+                removeDrag = dragElement(draggedCloud);
+            }, 4500);
+            
+            focusedNote = note;
+            focusedNote.classList.add('active');
+            app.setfocusedNote(focusedNote);
+            rotate = 360;
+
+            event.stopPropagation();
+            window.addEventListener('mousedown',  () => hideUserNote(removeDrag));
+        }
     } 
     // TODO:
     const hideUserNote = () => { 
         const parent = event.target.parentElement;
         const className = parent && parent.className;
-        if(className.includes('user-photo')){
-            window.addEventListener('mousedown',  () => hideUserNote(), {
-                once: true,
-                passive: true,
-                capture: true
-            }); 
-        }else{
+        if(event.currentTarget != focusedNote && !className.includes('user-photo')){
             focusedNote.classList.remove('active');
             focusedNote = null;
             app.setfocusedNote(null);
@@ -378,7 +382,6 @@ const notes = (() => {
     const resetNotes = () => {
         while (cloudContainer.children.length > 1) {
             cloudContainer.removeChild(cloudContainer.firstChild)
-
         }
 
         while (leftNotesContainer.firstChild) {
@@ -388,17 +391,20 @@ const notes = (() => {
         while (rightNotesContainer.firstChild) {
             rightNotesContainer.removeChild(rightNotesContainer.firstChild)
         }
+
+        cloudHeaders = [];
     }
 
     const cloudsFragment = document.createDocumentFragment();
-
+    let cloudHeaders = [cloudHeader];
     const addHeaders = () => {
         const cloudsCount = (notesCount - 4) / 2
-            for (let i = 0; i < cloudsCount; i++) {
-                const cloudHeaderCopy = cloudHeader.cloneNode(true);
-                cloudsFragment.appendChild(cloudHeaderCopy);
+        for (let i = 0; i < cloudsCount; i++) {
+            const cloudHeaderCopy = cloudHeader.cloneNode(true);
+            cloudHeaders.push(cloudHeaderCopy);
+            cloudsFragment.appendChild(cloudHeaderCopy);
         }
-
+        cloudHeaders.push(cloudHeader)
         cloudContainer.insertBefore(cloudsFragment, cloudContainer.firstChild);
     }
 
