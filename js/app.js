@@ -533,7 +533,7 @@ const app = (() =>{
                         photoCopy.id = image.id;
                         photoCopy.style.backgroundImage = `url('${remote.getBase() + image.location}')`;
                         
-                        draggables.dragElement(photoCopy);                    
+                        dragElement(photoCopy);                    
                         photosFragment.insertBefore(containerCopy, photosFragment.firstChild);
                     });
                     photosContainer.insertBefore(photosFragment, photosContainer.firstChild);
@@ -584,19 +584,13 @@ const app = (() =>{
     photo.className = 'appended';
     const appendPlacePhotos = async() => {
         
-        let album;
-        if(!albums[currentAlbumNumber]){
-            console.log('hey');
+        let album = albums[currentAlbumNumber];
+        if(!album){
             await remote.getAlbumImages(currentAlbumNumber).then(res => {
                 album = albums[currentAlbumNumber] = res.data;
             }).catch(e => {
                 console.log(e);
             })
-        
-        }else{
-            console.log('hey1');
-
-            album = albums[currentAlbumNumber];
         }
 
         album.forEach((image, i) => {
@@ -609,7 +603,7 @@ const app = (() =>{
                 placePhotos[i].appendChild(photoCopy);
                 placePhotos[i].className = 'placed-photo';
                 
-                draggables.dragElement(photoCopy);
+                dragElement(photoCopy);
             }
         })
     }
@@ -632,7 +626,7 @@ const app = (() =>{
                 photoCopy.id = image.id;
                 photoCopy.src = remote.getBase() + image.location;
                 
-                draggables.dragElement(photoCopy);
+                dragElement(photoCopy);
                 photosContainer.insertBefore(containerCopy, photosContainer.firstChild);
             })
         }
@@ -775,10 +769,10 @@ const app = (() =>{
         colorize.start();
         notes.start();
         
-        draggables.dragElement(document.getElementById('move-note'));
-        draggables.dragElement(document.getElementById('point'));
-        draggables.dragElement(document.getElementById('timeline-years'))
-        draggables.dragElement(moveButton);
+        dragElement(document.getElementById('move-note'));
+        dragElement(document.getElementById('point'));
+        dragElement(document.getElementById('timeline-years'))
+        dragElement(moveButton);
 
         document.getElementById('fixate-btn').addEventListener('click', fixatePlayNav)
         document.getElementById('album-btns').addEventListener('click', getAlbumImages);

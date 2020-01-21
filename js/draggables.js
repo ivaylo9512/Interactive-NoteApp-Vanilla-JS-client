@@ -1,216 +1,213 @@
-const draggables = (() =>{
-
-    const dragElement = (target) => {
-        target.addEventListener('mousedown', onMouseDown);
-        
-        let pos1 = 0,
-            pos2 = 0,
-            pos3 = 0,
-            pos4 = 0;
-
-        let className;
-        let elementFromPoint;
-
-        let node = target;
-        let offsetTop;
-        let offsetLeft;
-        function onMouseDown(e) {
-            className = target.className;
-            e.preventDefault();
-
-            if(className == 'move-btn') e.stopPropagation();
-            pos3 = e.pageX;
-            pos4 = e.pageY;            
-
-            if(className.includes('loading')) return;
-            
-            if (className == 'move-note' || className == 'drag-photo' || className == 'move-btn') node = target.parentElement;
-
-            node.style.transition = '0s';
-            offsetTop = node.offsetTop;
-            offsetLeft = node.offsetLeft;
-            
-            if (className == 'appended') {
-                node = target.parentElement;
-                app.clearPhoto(target, node);
-                return;
-            }
-
-            window.addEventListener('mousemove', onDrag);
-            window.addEventListener('mouseup', closeDrag);
-        }
-        function onDrag(e) {
-            e.preventDefault();
-            pos1 = pos3 - e.pageX;
-            pos2 = pos4 - e.pageY;
-            pos3 = e.pageX;
-            pos4 = e.pageY;
-
-            if(className != 'timeline-years'){
-                offsetTop -= pos2;
-                offsetLeft -= pos1;
-                node.style.top = offsetTop + 'px';
-                node.style.left = offsetLeft + 'px';
-            }
-            
-            switch (className) {
-                case 'move-btn':
-                    app.moveEditablePhoto(pos1, pos2);
-                    break;
-                case 'drag-photo':
-                    makeContainerDraggable();
-                    break;
-                case 'nav-point':
-                    checkPointPosition();
-                    break;
-                case 'timeline-years':
-                    notes.slideYears(pos2);
-                    break;
-            }
-            
-        }
+const dragElement = (target) => {
+    target.addEventListener('mousedown', onMouseDown);
     
-        function closeDrag() {
-            let x = event.clientX;
-            let y = event.clientY;
-            
-            window.removeEventListener('mousemove', onDrag);
-            window.removeEventListener('mouseup', closeDrag);
-            
-            switch (className) {
-                case 'move-btn':
-                    app.resetMoveButtons();
-                    break;
-                case 'drag-photo':
-                    elementFromPoint = document.elementFromPoint(x, y);
-                    photoEndDrag();
-                    break;
-                case 'nav-point':
-                    resetNavPoint();
-                    break;
-            }
+    let pos1 = 0,
+        pos2 = 0,
+        pos3 = 0,
+        pos4 = 0;
+
+    let className;
+    let elementFromPoint;
+
+    let node = target;
+    let offsetTop;
+    let offsetLeft;
+    function onMouseDown(e) {
+        className = target.className;
+        e.preventDefault();
+
+        if(className == 'move-btn') e.stopPropagation();
+        pos3 = e.pageX;
+        pos4 = e.pageY;            
+
+        if(className.includes('loading')) return;
+        
+        if (className == 'move-note' || className == 'drag-photo' || className == 'move-btn') node = target.parentElement;
+
+        node.style.transition = '0s';
+        offsetTop = node.offsetTop;
+        offsetLeft = node.offsetLeft;
+        
+        if (className == 'appended') {
+            node = target.parentElement;
+            app.clearPhoto(target, node);
+            return;
         }
 
-        function photoEndDrag() {
-            switch (elementFromPoint.className) {
-                case 'place-photo':
-                    choosePhoto();
-                    break;
-                case 'appended':
-                    exchangePhotos();
-                    break;
-                default:
-                    resetPhoto();
-                    break;
-            }
-            node.style.zIndex = 'auto';
-            node.style.pointerEvents = 'auto';
+        window.addEventListener('mousemove', onDrag);
+        window.addEventListener('mouseup', closeDrag);
+    }
+    function onDrag(e) {
+        e.preventDefault();
+        pos1 = pos3 - e.pageX;
+        pos2 = pos4 - e.pageY;
+        pos3 = e.pageX;
+        pos4 = e.pageY;
+
+        if(className != 'timeline-years'){
+            offsetTop -= pos2;
+            offsetLeft -= pos1;
+            node.style.top = offsetTop + 'px';
+            node.style.left = offsetLeft + 'px';
         }
-
-        const makeContainerDraggable = () => {
-            node.style.marginLeft = '0px';
-            node.style.marginTop = '0px';
-            node.style.position = 'absolute';
-            node.style.zIndex = 2;
-            node.style.pointerEvents = 'none';
+        
+        switch (className) {
+            case 'move-btn':
+                app.moveEditablePhoto(pos1, pos2);
+                break;
+            case 'drag-photo':
+                makeContainerDraggable();
+                break;
+            case 'nav-point':
+                checkPointPosition();
+                break;
+            case 'timeline-years':
+                notes.slideYears(pos2);
+                break;
         }
+        
+    }
 
-        const checkPointPosition = () => {
-            if (pos3 > 100) {
-                notes.showMonths();
-                closeDrag();
-            } else if (node.parentElement.getBoundingClientRect().top - event.clientY > 35) {
-                notes.showYears();
-                closeDrag();
-            }
+    function closeDrag() {
+        let x = event.clientX;
+        let y = event.clientY;
+        
+        window.removeEventListener('mousemove', onDrag);
+        window.removeEventListener('mouseup', closeDrag);
+        
+        switch (className) {
+            case 'move-btn':
+                app.resetMoveButtons();
+                break;
+            case 'drag-photo':
+                elementFromPoint = document.elementFromPoint(x, y);
+                photoEndDrag();
+                break;
+            case 'nav-point':
+                resetNavPoint();
+                break;
         }
+    }
 
-        const choosePhoto = async () => {
-
-            if(!app.getCurrentAlbumNumber()){
+    function photoEndDrag() {
+        switch (elementFromPoint.className) {
+            case 'place-photo':
+                choosePhoto();
+                break;
+            case 'appended':
+                exchangePhotos();
+                break;
+            default:
                 resetPhoto();
-                return;
-            }
-
-            const photo = target;
-
-            photo.style.opacity = 1;
-            photo.style.transition = 'opacity 1s'
-            photo.classList.add('loading');
-        
-            elementFromPoint.appendChild(photo);
-            node.style.display = 'none';
-
-            
-            try{
-                await app.updateChosenPhoto(photo.id, elementFromPoint);
-            }catch(e){
-                node.appendChild(photo);
-                node.style.display = 'block';
-
-                console.log(e);
-                resetPhoto(node);
-                return;
-            }finally{
-                photo.classList.remove('loading');
-            }
-
-            photo.className = 'appended';
-            elementFromPoint.className = 'placed-photo';
-            node.parentElement.removeChild(node);
+                break;
         }
-        
-        async function exchangePhotos() {
-            const currentPhoto = elementFromPoint;
-            const currentPhotoId = Number(currentPhoto.id);
-            const currentPhotoSrc = currentPhoto.src;
-
-            const photo = target;
-            const newPhotoId = Number(photo.id);
-            const newPhotoSrc = photo.src;
-
-            photo.classList.add('loading');
-            currentPhoto.classList.add('loading');
-
-            resetPhoto();
-            currentPhoto.src = newPhotoSrc;
-            photo.src = currentPhotoSrc;
-
-
-            try{
-                await app.exchangePhotos(currentPhoto.parentElement, currentPhotoId, newPhotoId);
-            }catch(e){
-                photo.src = newPhotoSrc;
-                currentPhoto.src = currentPhotoSrc;
-                console.log(e);
-                return;
-            }finally{
-                photo.classList.remove('loading');
-                currentPhoto.classList.remove('loading');
-            }
-
-            currentPhoto.id = newPhotoId;
-            photo.id = currentPhotoId;
-
-        }
-
-        const resetPhoto = () => {
-            node.style.top = '0px';
-            node.style.left = '0px';
-            node.style.marginLeft = '0.1vw';
-            node.style.marginRight = '0.1vw';
-            node.style.marginBottom = '0.2vw';
-            node.style.position = 'relative';
-        }
-
-        const resetNavPoint = () => {
-            node.style.transition = '2s';
-            node.style.left = '24px';
-            node.style.top = '33px';
-        }    
+        node.style.zIndex = 'auto';
+        node.style.pointerEvents = 'auto';
     }
-    return {
-        dragElement
+
+    const makeContainerDraggable = () => {
+        node.style.marginLeft = '0px';
+        node.style.marginTop = '0px';
+        node.style.position = 'absolute';
+        node.style.zIndex = 2;
+        node.style.pointerEvents = 'none';
+    }
+
+    const checkPointPosition = () => {
+        if (pos3 > 100) {
+            notes.showMonths();
+            closeDrag();
+        } else if (node.parentElement.getBoundingClientRect().top - event.clientY > 35) {
+            notes.showYears();
+            closeDrag();
+        }
+    }
+
+    const choosePhoto = async () => {
+
+        if(!app.getCurrentAlbumNumber()){
+            resetPhoto();
+            return;
+        }
+
+        const photo = target;
+
+        photo.style.opacity = 1;
+        photo.style.transition = 'opacity 1s'
+        photo.classList.add('loading');
+    
+        elementFromPoint.appendChild(photo);
+        node.style.display = 'none';
+
+        
+        try{
+            await app.updateChosenPhoto(photo.id, elementFromPoint);
+        }catch(e){
+            node.appendChild(photo);
+            node.style.display = 'block';
+
+            console.log(e);
+            resetPhoto(node);
+            return;
+        }finally{
+            photo.classList.remove('loading');
+        }
+
+        photo.className = 'appended';
+        elementFromPoint.className = 'placed-photo';
+        node.parentElement.removeChild(node);
     }
     
-})();
+    async function exchangePhotos() {
+        const currentPhoto = elementFromPoint;
+        const currentPhotoId = Number(currentPhoto.id);
+        const currentPhotoSrc = currentPhoto.src;
+
+        const photo = target;
+        const newPhotoId = Number(photo.id);
+        const newPhotoSrc = photo.src;
+
+        photo.classList.add('loading');
+        currentPhoto.classList.add('loading');
+
+        resetPhoto();
+        currentPhoto.src = newPhotoSrc;
+        photo.src = currentPhotoSrc;
+
+
+        try{
+            await app.exchangePhotos(currentPhoto.parentElement, currentPhotoId, newPhotoId);
+        }catch(e){
+            photo.src = newPhotoSrc;
+            currentPhoto.src = currentPhotoSrc;
+            console.log(e);
+            return;
+        }finally{
+            photo.classList.remove('loading');
+            currentPhoto.classList.remove('loading');
+        }
+
+        currentPhoto.id = newPhotoId;
+        photo.id = currentPhotoId;
+
+    }
+
+    const resetPhoto = () => {
+        node.style.top = '0px';
+        node.style.left = '0px';
+        node.style.marginLeft = '0.1vw';
+        node.style.marginRight = '0.1vw';
+        node.style.marginBottom = '0.2vw';
+        node.style.position = 'relative';
+    }
+
+    const resetNavPoint = () => {
+        node.style.transition = '2s';
+        node.style.left = '24px';
+        node.style.top = '33px';
+    }    
+
+    return () => {
+        target.removeEventListener('mousedown', onMouseDown);
+    }
+}
