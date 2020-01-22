@@ -32,12 +32,7 @@ const animate = (() => {
     }
 
     const scrollToProfile = () => {
-        const height = document.body.scrollHeight;
-        const scroll = height - 1400 - scrollY;
-        deltaDir = -1;
-        
-        smoothScroll(scroll, 1000);
-        showCircles();
+        document.getElementById('shrink-seconde').classList.toggle('animate');
     }
 
     const scrollToAlbum = () => {

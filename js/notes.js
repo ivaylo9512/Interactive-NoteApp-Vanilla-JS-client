@@ -240,13 +240,9 @@ const notes = (() => {
 
     const updateNote = (e) => {
         //TODO: 
-        const userNote = focusedNote.children[0];
-            noteText = userNote.children[0],
-            noteName = userNote.children[2],
-            name = noteName.value,
-            note = noteText.value
-            
-        const id = userNote.id.substring(0, userNote.id.length - 4);    
+        const name = userNote.children[0].value;    
+        const id = focusedNote.id.substring(0, userNote.id.length - 4);
+
         const updateNote = {
             id,
             name,
@@ -261,11 +257,14 @@ const notes = (() => {
     const body = document.body;
 
     const noteSection = document.getElementById('note-section');
-    const cloudContainer = document.getElementById('cloud-headers');
-    const cloudHeader = document.getElementById('cloud-header');
     const leftNotesContainer = document.getElementById('left-notes');
     const rightNotesContainer = document.getElementById('right-notes');
-
+    
+    const cloudContainer = document.getElementById('cloud-headers');
+    const cloudHeader = document.getElementById('cloud-header');
+    const headerWidth = noteHeader.offsetWidth;
+    const headerHeight = noteHeader.offsetHeight;
+    
     const leftNotesFragment = document.createDocumentFragment();
     const rightNotesFragment = document.createDocumentFragment();
 
@@ -324,10 +323,8 @@ const notes = (() => {
             }else{
                 rightNotesFragment.appendChild(note);
             }
-
-            //TODO: 
-            updateBtn.addEventListener('mouseover', updateNote);
-            note.addEventListener('mousedown', () => showUserNote(i, note));
+ 
+            note.addEventListener('mousedown', () => showUserNote(i, note, updateBtn));
         })
         rightNotesContainer.appendChild(rightNotesFragment);
         leftNotesContainer.appendChild(leftNotesFragment);
@@ -335,8 +332,14 @@ const notes = (() => {
 
     let rotate;
     let focusedNote;
-    const showUserNote = (index, note) => {
-        if(note != focusedNote){
+    let transitionFinished = true;
+    const showUserNote = (index, note, updateBtn) => {
+        let cloud;
+        let removeDrag;
+        let draggedCloud;
+        if(note != focusedNote && transitionFinished){
+            transitionFinished = false;
+
             const parent = note.parentElement;
             let cloudIndex = Math.floor(index / 2);
             if(index >= userNotes.length - 2){
@@ -345,39 +348,68 @@ const notes = (() => {
                 cloudIndex++;
             }
 
-            const cloud = cloudHeaders[cloudIndex];
-            const draggedCloud = cloud.children[1];
-            draggedCloud.id = 'dragCloud';
+            cloud = cloudHeaders[cloudIndex];
+            draggedCloud = cloud.children[1];
 
-            let removeDrag;
             cloud.classList.add('translate');        
             setTimeout(() => cloud.classList.add('border-radius'), 0);
             setTimeout(() => {
-                cloud.addEventListener('mouseover', () => cloud.classList.add('box-shadow'), {
-                    once: true,
-                })
-                removeDrag = dragElement(draggedCloud);
-            }, 4500);
+                transitionFinished = true;
+
+                cloud.addEventListener('mouseover', addShadow, { once: true})
+                updateBtn.addEventListener('mouseover', updateNote);
+                
+                removeDrag = dragElement(draggedCloud);                
+                hideUserNote();
             
+            }, 3000);
+
             focusedNote = note;
             focusedNote.classList.add('active');
+            
             app.setfocusedNote(focusedNote);
             rotate = 360;
+        }
 
-            event.stopPropagation();
-            window.addEventListener('mousedown',  () => hideUserNote(removeDrag));
+        const addShadow = () => {
+            cloud.classList.add('box-shadow');
+        }
+        
+        function hideUserNote(){ 
+            window.addEventListener('mousedown',  function hideUserNote(){
+                const target = event.target;
+                const parent = target.parentElement;
+                const className = parent && parent.className;
+                
+                if(target != note && parent != note && !className.includes('user-photo') && target != draggedCloud && target.tagName != 'TEXTAREA'){
+                    cloud.classList.remove('box-shadow');
+                    cloud.classList.remove('translate');        
+                    cloud.classList.remove('border-radius');
+                    note.classList.remove('active');
+                    
+                    draggedCloud.style.top = null;
+                    draggedCloud.style.left = null;
+                    draggedCloud.style.transition = null;
+
+
+                    focusedNote = null;
+                    app.setfocusedNote(null);
+                    
+                    removeDrag();
+                    cloud.removeEventListener('mouseover', addShadow);
+                    updateBtn.removeEventListener('mouseover', updateNote);
+                    window.removeEventListener('mousedown', hideUserNote, true);
+                }
+            }, true);
+        }
+    }
+    const resetHeader = (header) => {
+        if(header.offsetLeft > headerWidth && header.offsetTop > headerWidth){
+            header.style.left = null;
+            header.style.left = null;
         }
     } 
     // TODO:
-    const hideUserNote = () => { 
-        const parent = event.target.parentElement;
-        const className = parent && parent.className;
-        if(event.currentTarget != focusedNote && !className.includes('user-photo')){
-            focusedNote.classList.remove('active');
-            focusedNote = null;
-            app.setfocusedNote(null);
-        }
-    }
 
     const resetNotes = () => {
         while (cloudContainer.children.length > 1) {
@@ -533,7 +565,8 @@ const notes = (() => {
             noteSection.classList.remove('animate');
 
             noteHeader.removeEventListener('mouseout', hideTopAnimations);
-            noteHeader.removeEventListener('mouseout', showTopAnimations);
+            noteHeader.removeEventListener('mouseover', showTopAnimations);
+            noteHeader.removeEventListener('click', showNoteView);
 
             noteViewActivated = true;
             setTimeout(() => {
@@ -564,7 +597,6 @@ const notes = (() => {
     
     months.forEach(month => month.addEventListener('click',() => getMonth(month.children[0].textContent)));
     years.forEach(year => year.addEventListener('click', () => getYear(year.children[0].textContent)));
-    daysContainer.addEventListener('click', getDay);
     
     const start = () => {
         noteHolders.addEventListener('click', noteAppend);
@@ -575,6 +607,7 @@ const notes = (() => {
         document.getElementById('submit-btn').addEventListener('click', submitNote);
         document.getElementById('input-note-btn').addEventListener('click', popNote)
         document.getElementById('close-btn').addEventListener('click', unpopNote)
+        daysContainer.addEventListener('click', getDay);
     }
 
     return {
@@ -589,5 +622,6 @@ const notes = (() => {
         resetNoteView,
         resetNote,
         setBrushAnimated,
+        resetHeader
     }
 })();

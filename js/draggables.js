@@ -86,6 +86,9 @@ const dragElement = (target) => {
             case 'nav-point':
                 resetNavPoint();
                 break;
+            case 'clouds-container':
+                notes.resetHeader();
+                break;
         }
     }
 
