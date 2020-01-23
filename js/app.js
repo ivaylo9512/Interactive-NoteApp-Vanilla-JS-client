@@ -87,8 +87,8 @@ const app = (() =>{
             currentPhoto.top = currentPhoto.top - pos2;
             currentPhoto.left = currentPhoto.left - pos1;
             //TODO:
-            if (currentPhoto.node.parentElement.className == 'user-note' && currentPhoto.node.getBoundingClientRect().top + window.pageYOffset > 30000) {
-                currentPhoto.top = currentPhoto.node.getBoundingClientRect().top + window.pageYOffset - secondSection.offsetTop;
+            if (currentPhoto.node.parentElement.className == 'user-note' && currentPhoto.node.getBoundingClientRect().top + animate.getScrollY() > 30000) {
+                currentPhoto.top = currentPhoto.node.getBoundingClientRect().top + animate.getScrollY() - secondSection.offsetTop;
                 currentPhoto.left = currentPhoto.left + focusedNote.offsetLeft + parseFloat(window.getComputedStyle(notesContainer).marginLeft) - secondSection.offsetLeft + noteContainer.offsetLeft;
                 currentPhoto.node.style.top = currentPhoto.top + 'px';
                 currentPhoto.node.style.left = currentPhoto.left + 'px';
@@ -374,7 +374,7 @@ const app = (() =>{
                 focusedNote.children[0].appendChild(currentPhoto.node);
             }else if(focusedNote && currentPhoto.node.parentElement.className == 'user-note'){
                 currentPhoto.node.classList.add('visible');
-                currentPhoto.top = currentPhoto.node.getBoundingClientRect().top + window.pageYOffset - secondSection.offsetTop;
+                currentPhoto.top = currentPhoto.node.getBoundingClientRect().top + animate.getScrollY() - secondSection.offsetTop;
                 currentPhoto.left = currentPhoto.left + focusedNote.offsetLeft + parseFloat(window.getComputedStyle(notesContainer).marginLeft) - secondSection.offsetLeft + noteContainer.offsetLeft;
                 currentPhoto.node.style.top = currentPhoto.top + 'px';
                 currentPhoto.node.style.left = currentPhoto.left + 'px';

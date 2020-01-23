@@ -262,8 +262,8 @@ const notes = (() => {
     
     const cloudContainer = document.getElementById('cloud-headers');
     const cloudHeader = document.getElementById('cloud-header');
-    const headerWidth = noteHeader.offsetWidth;
-    const headerHeight = noteHeader.offsetHeight;
+    let headerWidth;
+    let headerHeight = cloudHeader.offsetHeight;
     
     const leftNotesFragment = document.createDocumentFragment();
     const rightNotesFragment = document.createDocumentFragment();
@@ -363,6 +363,7 @@ const notes = (() => {
                 hideUserNote();
             
             }, 3000);
+            !headerWidth && (headerWidth = cloud.offsetWidth);
 
             focusedNote = note;
             focusedNote.classList.add('active');
@@ -385,12 +386,12 @@ const notes = (() => {
                     cloud.classList.remove('box-shadow');
                     cloud.classList.remove('translate');        
                     cloud.classList.remove('border-radius');
+                    cloud.firstElementChild.classList.remove('active');
                     note.classList.remove('active');
                     
                     draggedCloud.style.top = null;
                     draggedCloud.style.left = null;
                     draggedCloud.style.transition = null;
-
 
                     focusedNote = null;
                     app.setfocusedNote(null);
@@ -403,10 +404,17 @@ const notes = (() => {
             }, true);
         }
     }
-    const resetHeader = (header) => {
-        if(header.offsetLeft > headerWidth && header.offsetTop > headerWidth){
+    const resetHeader = (header, offsetLeft, offsetTop) => {
+        const cloud = header.parentElement;
+        const textArea = cloud.firstElementChild; 
+        if(Math.abs(offsetLeft) < headerWidth && Math.abs(offsetTop) < headerHeight){
+            cloud.parentElement.classList.remove('translate');
+            textArea.classList.remove('active');
+            header.style.transition = '1.5s';
             header.style.left = null;
-            header.style.left = null;
+            header.style.top = null;
+        }else if(textArea.className != 'active'){
+            textArea.className = 'active';
         }
     } 
     // TODO:
@@ -453,12 +461,13 @@ const notes = (() => {
     
     }
 
+    const windowWidth = window.innerWidth;     
+    const windowHeight = window.innerWidth;     
     function popNote(e){
         noteAppend(e.currentTarget.id);
 
-        const windowWidth = window.innerWidth;     
-        inputNote.style.top = window.innerHeight / 2 - windowWidth * 0.1325 + window.pageYOffset + 'px';
-        inputNote.style.left = window.innerWidth / 2 - windowWidth * 0.135 + 'px';
+        inputNote.style.top = windowHeight / 2 - windowWidth * 0.1325 + animate.getScrollY() + 'px';
+        inputNote.style.left = windowWidth / 2 - windowWidth * 0.135 + 'px';
     }
 
     const unpopNote = () => {

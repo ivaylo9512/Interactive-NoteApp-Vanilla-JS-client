@@ -12,17 +12,20 @@ const dragElement = (target) => {
     let node = target;
     let offsetTop;
     let offsetLeft;
-    function onMouseDown(e) {
-        className = target.className;
-        e.preventDefault();
 
+    let dragged;
+    function onMouseDown(e) {
+        e.preventDefault();
+        dragged = false;
+
+        className = target.className;        
+        
         if(className == 'move-btn') e.stopPropagation();
         pos3 = e.pageX;
         pos4 = e.pageY;            
 
         if(className.includes('loading')) return;
-        
-        if (className == 'move-note' || className == 'drag-photo' || className == 'move-btn') node = target.parentElement;
+            else if (className == 'move-note' || className == 'drag-photo' || className == 'move-btn') node = target.parentElement;
 
         node.style.transition = '0s';
         offsetTop = node.offsetTop;
@@ -39,10 +42,13 @@ const dragElement = (target) => {
     }
     function onDrag(e) {
         e.preventDefault();
+        dragged = true;
+
         pos1 = pos3 - e.pageX;
         pos2 = pos4 - e.pageY;
         pos3 = e.pageX;
         pos4 = e.pageY;
+
 
         if(className != 'timeline-years'){
             offsetTop -= pos2;
@@ -63,6 +69,9 @@ const dragElement = (target) => {
                 break;
             case 'timeline-years':
                 notes.slideYears(pos2);
+                break;
+            case 'clouds-container':
+                addBoxShadow();
                 break;
         }
         
@@ -87,7 +96,7 @@ const dragElement = (target) => {
                 resetNavPoint();
                 break;
             case 'clouds-container':
-                notes.resetHeader();
+                dragged && notes.resetHeader(node, offsetLeft, offsetTop);
                 break;
         }
     }
@@ -209,6 +218,11 @@ const dragElement = (target) => {
         node.style.left = '24px';
         node.style.top = '33px';
     }    
+
+    const addBoxShadow = () => {
+        const parent = node.parentElement;
+        !parent.className.includes('box-shadow') && parent.classList.add('box-shadow'); 
+    }
 
     return () => {
         target.removeEventListener('mousedown', onMouseDown);

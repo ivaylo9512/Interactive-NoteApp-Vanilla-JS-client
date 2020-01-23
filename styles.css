@@ -1020,6 +1020,8 @@ body.full-mode-active .note-animation-container{
 .cloud-header > div {
     text-align: center;
     position: relative;
+    left: 0;
+    top: 0;
     width: 100%;
     height: 245px;
     align-items: center;
@@ -1054,7 +1056,11 @@ body.full-mode-active .note-animation-container{
     width: 100%;
     background: #41291B;
     border-radius: 50%;
+    transition: all 1.5s;
     display: none;
+}
+.cloud-header textarea.active{
+    border-radius: 10px
 }
 .cloud-header h1{
     font: bold 80px "Aladin", Helvetica, sans-serif;
@@ -1081,12 +1087,13 @@ body.full-mode-active .cloud-header h1,
     display: inline-block;
     width: 17%;
     position: relative;
-    z-index: 6;
+    z-index: unset;
     vertical-align: bottom;
     margin-top: 60px;
 }
 .cloud-header{
     position: relative;
+    z-index: 2;
 }
 .note-section .cloud-headers > div:last-child > div{
     height: 245px;
@@ -1100,8 +1107,10 @@ body.full-mode-active .cloud-header h1,
 }
 body.full-mode-active .cloud-headers,
 .note-section.animated .cloud-headers{ 
-    z-index: 5;
     width: 31%;
+}
+.note-section.appended .clouds-container > * {
+    pointer-events: none;
 }
 .clouds-container > div{
     display: inline-block;
@@ -1116,7 +1125,7 @@ body.full-mode-active .cloud-headers,
     display: inline-block;
     position: relative;
 }
-.clouds-container > div > div > img{
+.clouds-container img{
     display: block;
 }
 .clouds-container > div > div:nth-child(3) {
@@ -1571,7 +1580,6 @@ body.full-mode-active .full-mode-circle {
     margin-top: 80px;
     position: relative;
     display: none;
-    z-index: 5;
 }
 .timeline-months{
     width: 0%;
@@ -1952,6 +1960,7 @@ ol::after {
 .left-notes-container{
     display: none;
     width: 22%;
+    z-index: unset;
 }
 
 body.full-mode-active .left-notes-container,
@@ -1973,7 +1982,7 @@ body.full-mode-active .right-notes-container,
     background: url(resources/cloud-note.png) no-repeat center;
     background-size: 100%;
     text-align: center;
-    z-index: 7;
+    z-index: unset;
     -moz-animation: fadeIn 1s ease-in forwards;
     -o-animation: fadeIn 1s ease-in forwards;
     -webkit-animation: fadeIn 1s ease-in forwards;
