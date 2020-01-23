@@ -117,7 +117,6 @@ const notes = (() => {
             if (clickedMonth != '') {
                 
                 chosenMonth.textContent = clickedMonth;
-                cloud.src = 'resources/cloud-filled.png';
 
                 switch (clickedMonth) {
                     case 'January':
@@ -196,8 +195,6 @@ const notes = (() => {
 
             year = clickedYear;
             chosenYear.textContent = clickedYear;
-            cloud2.src = 'resources/cloud-filled.png';
-
             yearsHiding = true;
             hideYears();
             showMonths();
@@ -207,7 +204,6 @@ const notes = (() => {
 
     function getDay() {
         if (event.target.tagName == 'A') {
-            cloud1.src = 'resources/cloud-filled.png';
             day = event.target.textContent;
             chosenDay.textContent = day;
 
@@ -236,22 +232,6 @@ const notes = (() => {
             }).catch(e => {
                 console.log(e);
         })
-    }
-
-    const updateNote = (e) => {
-        //TODO: 
-        const name = userNote.children[0].value;    
-        const id = focusedNote.id.substring(0, userNote.id.length - 4);
-
-        const updateNote = {
-            id,
-            name,
-            note,
-        }
-        remote.updateNote(updateNote);
-
-        e.target.style.transform = 'rotate(' + rotate + 'deg)';
-        rotate = rotate + 360;
     }
 
     const body = document.body;
@@ -324,33 +304,43 @@ const notes = (() => {
                 rightNotesFragment.appendChild(note);
             }
  
-            note.addEventListener('mousedown', () => showUserNote(i, note, updateBtn));
+            note.addEventListener('mousedown', () => showUserNote(i, note, userNote, updateBtn));
         })
         rightNotesContainer.appendChild(rightNotesFragment);
         leftNotesContainer.appendChild(leftNotesFragment);
     }
 
     let rotate;
-    let focusedNote;
     let transitionFinished = true;
-    const showUserNote = (index, note, updateBtn) => {
-        let cloud;
+    let focusedNote;
+    let focusedCloud;
+    const showUserNote = (index, note, noteInfo, updateBtn) => {
         let removeDrag;
         let draggedCloud;
-        if(note != focusedNote && transitionFinished){
+        let textArea;
+        let nameInput;
+        if(noteInfo != focusedNote && transitionFinished){
+            focusedNote = noteInfo;
             transitionFinished = false;
 
-            const parent = note.parentElement;
             let cloudIndex = Math.floor(index / 2);
             if(index >= userNotes.length - 2){
                 cloudIndex = cloudHeaders.length - 1;
-            }else if(userNotes.length % 2 != 0 && parent == rightNotesContainer){
+            }else if(userNotes.length % 2 != 0 && note.parentElement == rightNotesContainer){
                 cloudIndex++;
             }
 
-            cloud = cloudHeaders[cloudIndex];
+            focusedCloud = cloudHeaders[cloudIndex];
             draggedCloud = cloud.children[1];
+            nameInput = note.children[0];
 
+            textArea = cloud.children[0]; 
+            textArea.value = noteInfo.note;
+
+            textArea.addEventListener('input', update);
+            nameInput.addEventListener('input', update);
+
+            note.classList.add('active');
             cloud.classList.add('translate');        
             setTimeout(() => cloud.classList.add('border-radius'), 0);
             setTimeout(() => {
@@ -364,16 +354,9 @@ const notes = (() => {
             
             }, 3000);
             !headerWidth && (headerWidth = cloud.offsetWidth);
-
-            focusedNote = note;
-            focusedNote.classList.add('active');
             
-            app.setfocusedNote(focusedNote);
+            app.setfocusedNote(note);
             rotate = 360;
-        }
-
-        const addShadow = () => {
-            cloud.classList.add('box-shadow');
         }
         
         function hideUserNote(){ 
@@ -397,6 +380,8 @@ const notes = (() => {
                     app.setfocusedNote(null);
                     
                     removeDrag();
+                    textArea.removeEventListener('input', update);
+                    nameInput.removeEventListener('input', update);
                     cloud.removeEventListener('mouseover', addShadow);
                     updateBtn.removeEventListener('mouseover', updateNote);
                     window.removeEventListener('mousedown', hideUserNote, true);
@@ -404,20 +389,39 @@ const notes = (() => {
             }, true);
         }
     }
+    const addShadow = () => {
+        focusedCloud.classList.add('box-shadow');
+    }
+    const update = (e) => {
+        const target = e.target
+        const value = target.value;
+        target.tagName == 'TEXTAREA' ? focusedNote.note = value : focusedNote.name = value;
+    }
     const resetHeader = (header, offsetLeft, offsetTop) => {
         const cloud = header.parentElement;
         const textArea = cloud.firstElementChild; 
         if(Math.abs(offsetLeft) < headerWidth && Math.abs(offsetTop) < headerHeight){
-            cloud.parentElement.classList.remove('translate');
+            cloud.classList.remove('translate');
             textArea.classList.remove('active');
+            
             header.style.transition = '1.5s';
             header.style.left = null;
             header.style.top = null;
-        }else if(textArea.className != 'active'){
+        }else if(textArea.className != 'active')
             textArea.className = 'active';
-        }
+        
     } 
-    // TODO:
+    const updateNote = (e) => {
+        const updateNote = {
+            id: focusedNote.id,
+            name: focusedNote.name,
+            note: focusedNote.note,
+        }
+        remote.updateNote(updateNote);
+
+        e.target.style.transform = 'rotate(' + rotate + 'deg)';
+        rotate = rotate + 360;
+    }
 
     const resetNotes = () => {
         while (cloudContainer.children.length > 1) {
