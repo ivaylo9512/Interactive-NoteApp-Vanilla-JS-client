@@ -331,29 +331,29 @@ const notes = (() => {
             }
 
             focusedCloud = cloudHeaders[cloudIndex];
-            draggedCloud = cloud.children[1];
+            draggedCloud = focusedCloud.children[1];
             nameInput = note.children[0];
 
-            textArea = cloud.children[0]; 
+            textArea = focusedCloud.children[0]; 
             textArea.value = noteInfo.note;
 
             textArea.addEventListener('input', update);
             nameInput.addEventListener('input', update);
 
             note.classList.add('active');
-            cloud.classList.add('translate');        
-            setTimeout(() => cloud.classList.add('border-radius'), 0);
+            focusedCloud.classList.add('translate');        
+            setTimeout(() => focusedCloud.classList.add('border-radius'), 0);
             setTimeout(() => {
                 transitionFinished = true;
 
-                cloud.addEventListener('mouseover', addShadow, { once: true})
+                focusedCloud.addEventListener('mouseover', addShadow, { once: true})
                 updateBtn.addEventListener('mouseover', updateNote);
                 
                 removeDrag = dragElement(draggedCloud);                
                 hideUserNote();
             
             }, 3000);
-            !headerWidth && (headerWidth = cloud.offsetWidth);
+            !headerWidth && (headerWidth = focusedCloud.offsetWidth);
             
             app.setfocusedNote(note);
             rotate = 360;
@@ -366,10 +366,10 @@ const notes = (() => {
                 const className = parent && parent.className;
                 
                 if(target != note && parent != note && !className.includes('user-photo') && target != draggedCloud && target.tagName != 'TEXTAREA'){
-                    cloud.classList.remove('box-shadow');
-                    cloud.classList.remove('translate');        
-                    cloud.classList.remove('border-radius');
-                    cloud.firstElementChild.classList.remove('active');
+                    focusedCloud.classList.remove('box-shadow');
+                    focusedCloud.classList.remove('translate');        
+                    focusedCloud.classList.remove('border-radius');
+                    focusedCloud.firstElementChild.classList.remove('active');
                     note.classList.remove('active');
                     
                     draggedCloud.style.top = null;
@@ -382,7 +382,7 @@ const notes = (() => {
                     removeDrag();
                     textArea.removeEventListener('input', update);
                     nameInput.removeEventListener('input', update);
-                    cloud.removeEventListener('mouseover', addShadow);
+                    focusedCloud.removeEventListener('mouseover', addShadow);
                     updateBtn.removeEventListener('mouseover', updateNote);
                     window.removeEventListener('mousedown', hideUserNote, true);
                 }
@@ -398,10 +398,9 @@ const notes = (() => {
         target.tagName == 'TEXTAREA' ? focusedNote.note = value : focusedNote.name = value;
     }
     const resetHeader = (header, offsetLeft, offsetTop) => {
-        const cloud = header.parentElement;
-        const textArea = cloud.firstElementChild; 
+        const textArea = focusedCloud.firstElementChild; 
         if(Math.abs(offsetLeft) < headerWidth && Math.abs(offsetTop) < headerHeight){
-            cloud.classList.remove('translate');
+            focusedCloud.classList.remove('translate');
             textArea.classList.remove('active');
             
             header.style.transition = '1.5s';

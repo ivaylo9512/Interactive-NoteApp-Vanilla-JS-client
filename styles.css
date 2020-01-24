@@ -759,6 +759,16 @@ body.full-mode-active .play-box{
     height: 300px;
     margin-top: 240px;
 }
+.balloons-container svg{
+    float: right;
+    width: 21%;
+    position: relative;
+    top: 30%;
+    left: 2%;
+    height: 100%;
+    fill: #41291B;
+    animation: rightBalloonAnimation 3000ms linear both
+}
 .balloon {
     position: absolute;
     right: 0%;
@@ -2247,5 +2257,58 @@ body.full-mode-active .right-notes-container,
 
     to {
         transform:translatey(-6px);
+    }
+}
+@keyframes rightBalloonAnimation {
+    0%{
+        -webkit-transform: translate(315px, 220px) rotate(-41deg);
+        -moz-transform: translate(315px, 220px) rotate(-41deg);
+        transform: translate(315px, 220px) rotate(-41deg);
+    }
+    70%{
+        -webkit-transform: translate(0px, 50px) rotate(10deg);
+        -moz-transform: translate(0px, 50px) rotate(10deg);
+        transform: translate(0px, 50px) rotate(10deg);
+    }
+    100%{
+        -webkit-transform: translate(0px, 0px) rotate(0);
+        -moz-transform: translate(0px, 0px) rotate(0);
+        transform: translate(0px, 0px) rotate(0);
+    }
+}
+
+@-webkit-keyframes rightBalloonAnimation {
+    0%{
+        -webkit-transform: translate(315px, 220px) rotate(-41deg);
+        -moz-transform: translate(315px, 220px) rotate(-41deg);
+        transform: translate(315px, 220px) rotate(-41deg);
+    }
+    70%{
+        -webkit-transform: translate(0px, 50px) rotate(10deg);
+        -moz-transform: translate(0px, 50px) rotate(10deg);
+        transform: translate(0px, 50px) rotate(10deg);
+    }
+    100%{
+        -webkit-transform: translate(0px, 0px) rotate(0);
+        -moz-transform: translate(0px, 0px) rotate(0);
+        transform: translate(0px, 0px) rotate(0);
+    }
+}
+
+@-moz-keyframes rightBalloonAnimation {
+    0%{
+        -webkit-transform: translate(315px, 220px) rotate(-41deg);
+        -moz-transform: translate(315px, 220px) rotate(-41deg);
+        transform: translate(315px, 220px) rotate(-41deg);
+    }
+    70%{
+        -webkit-transform: translate(0px, 50px) rotate(10deg);
+        -moz-transform: translate(0px, 50px) rotate(10deg);
+        transform: translate(0px, 50px) rotate(10deg);
+    }
+    100%{
+        -webkit-transform: translate(0px, 0px) rotate(0);
+        -moz-transform: translate(0px, 0px) rotate(0);
+        transform: translate(0px, 0px) rotate(0);
     }
 }
