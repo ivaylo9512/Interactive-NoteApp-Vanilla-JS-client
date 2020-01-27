@@ -132,7 +132,8 @@ const app = (() =>{
             resizing = true;
 
             if (leftResize && currentPhoto.width + currentMousePosition - e.clientX > 80) {
-                currentPhoto.node.style.width = (currentPhoto.width + currentMousePosition - e.clientX) / parseFloat(window.getComputedStyle(currentPhoto.node.parentElement).width) * 100 + '%';
+                const parentWidth = currentPhoto.node.parentElement != secondSection ? secondSectionWidth : noteWidth;
+                currentPhoto.node.style.width = (currentPhoto.width + currentMousePosition - e.clientX) / parentWidth * 100 + '%';
                 currentPhoto.node.style.left = currentPhoto.left + e.clientX - currentMousePosition + 'px';
             } else if (!leftResize && currentPhoto.width + e.clientX - currentMousePosition > 80) {
                 currentPhoto.node.style.width = currentPhoto.width + e.clientX - currentMousePosition + 'px';
@@ -164,12 +165,6 @@ const app = (() =>{
     let focusedNote;
     const setfocusedNote = (note) => {
         focusedNote = note;
-
-        if(focusedNote){
-            notesContainer = focusedNote.parentElement;
-            noteContainer = notesContainer.parentElement;
-            noteSection = noteContainer.parentElement;
-        }
     }
 
     let editMode = false;
@@ -265,12 +260,10 @@ const app = (() =>{
     const resizeButton = document.getElementById('resize-btn');
     const rotateButton = document.getElementById('rotate-btn');
     const secondSection = document.getElementById('second-section');
+    const noteSection = document.getElementById('note-section');
 
-
-    //TODO:?
-    let notesContainer;
-    let noteContainer;
-    let noteSection;
+    let secondSectionWidth = secondSection.offsetWidth;
+    let noteWidth = noteSection.offsetWidth * 0.22;
 
     let currentPhoto;
     const focusPhoto = (photo) => {
@@ -325,8 +318,10 @@ const app = (() =>{
         moveButton.style.display = 'none';
 
         const photo = currentPhoto.node;
-        centerX = photo.getBoundingClientRect().left + (photo.getBoundingClientRect().right - photo.getBoundingClientRect().left) /2;
-        centerY = photo.getBoundingClientRect().top + window.scrollY + (photo.getBoundingClientRect().bottom - photo.getBoundingClientRect().top) /2;
+        
+        const clientRect = photo.getBoundingClientRect();
+        centerX = clientRect.left + (clientRect.right - clientRect.left) /2;
+        centerY = clientRect.top + window.scrollY + (clientRect.bottom - clientRect.top) /2;
 
         window.addEventListener('mousemove', rotate);
         window.addEventListener('mouseup', stopRotate);

@@ -269,6 +269,7 @@ const notes = (() => {
 
     let delay = 0;
     let notesCount = 0;
+    let photoFragment = document.createDocumentFragment();
     const appendNotes = () => {
         isTopNote = false;
         notesCount = userNotes.length;
@@ -291,9 +292,9 @@ const notes = (() => {
             noteName.value = userNote.name;
             note.id = userNote.id + 'note';
 
-            //TODO:
-            userNote.files.forEach(file => 
-                note.appendChild(app.findUserPhoto(file.id)));
+            userNote.files.forEach(photo => 
+                photoFragment.appendChild(app.findUserPhoto(photo.id)));
+            note.appendChild(photoFragment);
 
             note.style.animationDelay = delay + 's';
 
