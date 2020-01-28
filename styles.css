@@ -38,10 +38,17 @@ section{
 }
 
 .third-section {
-    background-image: url("resources/notebook-top.png");
     height: 560px;
 }
-
+.third-section form{
+    height: 260px;
+    background-image: url("resources/notebook-top.png");
+    background-repeat: no-repeat;
+    background-size: 100% 216px;
+    background-position: bottom;
+    position: relative;
+    z-index: 3;
+}
 body.full-mode-active .play-mode > *{
     display: none;
 }
@@ -764,41 +771,31 @@ body.full-mode-active .play-box{
     position: relative;
     fill: #41291B;
     display: none;
-    width: 100%;
-}
-.balloons-container div{
-    position: relative;
-    display: inline-block;
-    overflow: hidden;
-    height: 115%;
 }
 .balloons-container.animate svg{
     display: block;
 }
-.balloons-container div:nth-child(1){
-    width: 42%;
-    left: 7%;
+.balloons-container svg:nth-child(1){
+    width: 21%;
+    float: left;
+    left: 4%;
+    top: 8%;
+    animation: leftBalloonAnimation 5400ms 1800ms linear both;
 }
-.balloons-container div:nth-child(1) svg{
-    width: 50%;
-}
-.balloons-container.animate div:nth-child(1) svg{
-    animation: leftBalloonAnimation 6500ms 1500ms linear both;
-}
-.balloons-container div:nth-child(2){
+.balloons-container svg:nth-child(2){
     width: 14.5%;
     right: 0.6%;
-}
-.balloons-container.animate div:nth-child(2) svg{
-    animation: middleBalloonAnimation 2000ms 1500ms linear both;
     top: 42%;
+    animation: middleBalloonAnimation 2300ms 3200ms linear both;
+}
+.balloons-container.animate svg:nth-child(2){
+    display: inline-block;
 }
 .balloons-container > svg:last-child{
     float: right;
     width: 21%;
     top: 10%;
     left: 4%;
-    animation-delay: 2000ms;
     animation: rightBalloonAnimation 4800ms linear both;
 }
 .balloon {
@@ -2429,24 +2426,54 @@ body.full-mode-active .right-notes-container,
 }
 @keyframes leftBalloonAnimation {
     0% {
-        -webkit-transform: translateY(217px);
-        -moz-transform: translateY(217px);
-        transform: translateY(217px);
+        -webkit-transform: translate(140px, 460px) rotate(-45deg);
+        -moz-transform: translate(140px, 460px) rotate(-45deg);
+        transform: translate(140px, 460px) rotate(-45deg);
     }
-    30% {
-        -webkit-transform: translateY(0);
-        -moz-transform: translateY(0);
-        transform: translateY(0);
+    32% {
+        -webkit-transform: translate(-105px, 235px) rotate(15deg);
+        -moz-transform: translate(-105px, 235px) rotate(15deg);
+        transform: translate(-105px, 235px) rotate(15deg);
+    }
+    50% {
+        -webkit-transform: translate(-52px, 117px) rotate(-22deg);
+        -moz-transform: translate(-52px, 117px) rotate(-22deg);
+        transform: translate(-52px, 117px) rotate(-22deg);
+    }
+    73% {
+        -webkit-transform: translate(-20px, 50px) rotate(10deg);
+        -moz-transform: translate(-20px, 50px) rotate(10deg);
+        transform: translate(-20px, 50px) rotate(10deg);
+    }
+    100% {
+        -webkit-transform: translate(0px, 0px) rotate(0deg);
+        -moz-transform: translate(0px, 0px) rotate(0deg);
+        transform: translate(0px, 0px) rotate(0deg);
     }
 }
     
 @-webkit-keyframes leftBalloonAnimation{
     0% {
-        -webkit-transform: translate(100px, 447px) rotate(-45deg);
-        -moz-transform: translate(100px, 447px) rotate(-45deg);
-        transform: translate(100px, 447px) rotate(-45deg);
+        -webkit-transform: translate(140px, 460px) rotate(-45deg);
+        -moz-transform: translate(140px, 460px) rotate(-45deg);
+        transform: translate(140px, 460px) rotate(-45deg);
     }
-    30% {
+    32% {
+        -webkit-transform: translate(-105px, 235px) rotate(15deg);
+        -moz-transform: translate(-105px, 235px) rotate(15deg);
+        transform: translate(-105px, 235px) rotate(15deg);
+    }
+    50% {
+        -webkit-transform: translate(-52px, 117px) rotate(-22deg);
+        -moz-transform: translate(-52px, 117px) rotate(-22deg);
+        transform: translate(-52px, 117px) rotate(-22deg);
+    }
+    73% {
+        -webkit-transform: translate(-20px, 50px) rotate(10deg);
+        -moz-transform: translate(-20px, 50px) rotate(10deg);
+        transform: translate(-20px, 50px) rotate(10deg);
+    }
+    100% {
         -webkit-transform: translate(0px, 0px) rotate(0deg);
         -moz-transform: translate(0px, 0px) rotate(0deg);
         transform: translate(0px, 0px) rotate(0deg);
@@ -2455,11 +2482,26 @@ body.full-mode-active .right-notes-container,
     
 @-moz-keyframes leftBalloonAnimation{
     0% {
-        -webkit-transform: translate(100px, 447px) rotate(-45deg);
-        -moz-transform: translate(100px, 447px) rotate(-45deg);
-        transform: translate(100px, 447px) rotate(-45deg);
+        -webkit-transform: translate(140px, 460px) rotate(-45deg);
+        -moz-transform: translate(140px, 460px) rotate(-45deg);
+        transform: translate(140px, 460px) rotate(-45deg);
     }
-    30% {
+    32% {
+        -webkit-transform: translate(-105px, 235px) rotate(15deg);
+        -moz-transform: translate(-105px, 235px) rotate(15deg);
+        transform: translate(-105px, 235px) rotate(15deg);
+    }
+    50% {
+        -webkit-transform: translate(-52px, 117px) rotate(-22deg);
+        -moz-transform: translate(-52px, 117px) rotate(-22deg);
+        transform: translate(-52px, 117px) rotate(-22deg);
+    }
+    73% {
+        -webkit-transform: translate(-20px, 50px) rotate(10deg);
+        -moz-transform: translate(-20px, 50px) rotate(10deg);
+        transform: translate(-20px, 50px) rotate(10deg);
+    }
+    100% {
         -webkit-transform: translate(0px, 0px) rotate(0deg);
         -moz-transform: translate(0px, 0px) rotate(0deg);
         transform: translate(0px, 0px) rotate(0deg);
