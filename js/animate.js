@@ -1,12 +1,15 @@
 const animate = (() => {
-    let scrollY;
+    let scrollY = window.pageYOffset;
     const getScrollY = () => scrollY;
 
     const decideEvent = () => {
         const height = document.body.scrollHeight;
-        scrollY = window.pageYOffset;
+        const nextY = window.pageYOffset;
+        
+        deltaDir = Math.sign(nextY - scrollY);
+        scrollY = nextY
 
-        if (scrollY < 800) {
+        if (scrollY < 800 && !balloonPlayed && app.isInitialLoad()) {
             balloonAnimation();
         }
 
@@ -25,10 +28,6 @@ const animate = (() => {
         if (scrollY < height - 446 && !pointerHidden && deltaDir < 0) {
             hidePointer();
         }
-
-        if(animationIsPlaying){
-            event.preventDefault();
-        }
     }
 
     const scrollToProfile = () => {
@@ -36,7 +35,7 @@ const animate = (() => {
         const scroll = height - 1400 - scrollY;
         deltaDir = -1;
 
-        smoothScroll(scroll, 1000);
+        smoothScroll(scroll, 1000, scrollY);
         showCircles();
     }
 
@@ -45,35 +44,33 @@ const animate = (() => {
         const scroll = height - 1100 - scrollY;
         deltaDir = -1;        
 
-        smoothScroll(scroll, 1000);
+        smoothScroll(scroll, 1000, scrollY);
         showCircles();
     }
 
-    const smoothScroll = (y, durration) => {
-        const startPos = scrollY;
+    let startPos;
+    const smoothScroll = (y, durration, startPos) => {
         let startTime = null;
+        startPos = startPos;
+        
+        document.documentElement.style.overflow = 'hidden'
+        setTimeout(() => {
+            document.documentElement.style.overflow = 'visible'
+        }, durration);
 
         const scroll = (currentTime) => {
             if(!startTime) startTime = currentTime;
             const timeElapsed = currentTime - startTime;
-            
-            const amount = linearTween(timeElapsed, startPos, y, durration);
 
+            const amount = linearTween(timeElapsed, startPos, y, durration);
             window.scrollTo(0, amount);
+
             if(timeElapsed < durration) requestAnimationFrame(scroll);
         }
 
         const linearTween = (t, b, c, d) =>  c*t/d + b;
 
         requestAnimationFrame(scroll);
-    }
-
-    let deltaDir = 0;
-    const setDelta = () => {
-        deltaDir = Math.sign(event.deltaY);
-        if(animationIsPlaying){
-            event.preventDefault();
-        }
     }
 
     const circles = [];
@@ -84,7 +81,7 @@ const animate = (() => {
     const createCircles = () => {
         for (let i = 1; i < maxCircles; i++) {
             const circleCopy = circle.cloneNode(true);
-            circleCopy.className = `colorize circle${i}`;
+            circleCopy.className = 'colorize circle' + i;
 
             circles.push(circleCopy);
             circlesFragment.appendChild(circleCopy);
@@ -162,35 +159,31 @@ const animate = (() => {
         pointerHidden = true;
     }
 
-    
     let balloonPlayed = false;
-    let animationIsPlaying = false;
-
+    
     const brushAnimation = document.getElementById('brush-animation');
     const balloon = document.getElementById('balloon');
     const balloonLeft = document.getElementById('balloon-left');
     const balloonRight = document.getElementById('balloon-right');
 
     const balloonAnimation = () => {
-        if (!balloonPlayed && app.isInitialLoad()) {
-            balloonPlayed = true;
-            animationIsPlaying = true;
+        balloonPlayed = true;
+        animationIsPlaying = true;
 
-            window.scrollTo(0, 800);
-            smoothScroll(100, 3100);
-            setTimeout(() => smoothScroll(-900, 3500), 3100);
+        window.scrollTo(0, 800);
+        smoothScroll(100, 3100, 800);
+        setTimeout(() => smoothScroll(-900, 3500, scrollY), 3100);
 
-            balloon.style.display = 'block';
-            setTimeout(() => {
-                balloonLeft.style.display = 'block';
-                balloonRight.style.display = 'block';
-            }, 1250);
+        balloon.style.display = 'block';
+        setTimeout(() => {
+            balloonLeft.style.display = 'block';
+            balloonRight.style.display = 'block';
+        }, 1250);
 
-            setTimeout(() => {
-                balloonLeft.src = 'resources/first-balloon-second-animation.gif';
-                noteSectionAnimation();
-            }, 3500);
-        }
+        setTimeout(() => {
+            balloonLeft.src = 'resources/first-balloon-second-animation.gif';
+            noteSectionAnimation();
+        }, 3500);
     }
     const noteSection = document.getElementById('note-section');
 
@@ -228,7 +221,6 @@ const animate = (() => {
     const start = () => {
         createCircles();
         window.addEventListener('scroll', () => !app.isFullMode() && decideEvent());
-        window.addEventListener('wheel', setDelta, {passive: false});
         document.getElementById('profile-btn').addEventListener('click', scrollToProfile);
         document.getElementById('album-btn').addEventListener('click', scrollToAlbum);
     }
