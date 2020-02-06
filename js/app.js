@@ -55,7 +55,6 @@ const app = (() =>{
                 photo.style.width = currentAlbum[i].width + currentAlbum.widthUnits;
 
                 let noteId = currentAlbum[i].note + 'note';
-
                 if(currentAlbum[i].note){
                     photo.classList.remove('visible');
                 }
@@ -108,7 +107,7 @@ const app = (() =>{
         moving = false;
     }
 
-    let currentMousePosition;
+    let posX;
     const checkIfResizable = (e) => {
         if (editMode) {
             if (e.offsetX < currentPhoto.width / 7) {
@@ -118,7 +117,7 @@ const app = (() =>{
                 resizable = true;
                 leftResize = false;
             }
-            currentMousePosition = e.clientX;
+            posX = e.clientX;
             if(resizable){
                 window.addEventListener('mousemove', resize);
                 window.addEventListener('mouseup', stopResize)
@@ -127,18 +126,19 @@ const app = (() =>{
     }
     // TODO: max(x,y)
     const resize = (e) => {
-            moveButton.style.display = 'none';
-            rotateButton.style.display = 'none';
-            resizing = true;
+        moveButton.style.display = 'none';
+        rotateButton.style.display = 'none';
+        resizing = true;
 
-            if (leftResize && currentPhoto.width + currentMousePosition - e.clientX > 80) {
-                const parentWidth = currentPhoto.node.parentElement != secondSection ? secondSectionWidth : noteWidth;
-                currentPhoto.node.style.width = (currentPhoto.width + currentMousePosition - e.clientX) / parentWidth * 100 + '%';
-                currentPhoto.node.style.left = currentPhoto.left + e.clientX - currentMousePosition + 'px';
-            } else if (!leftResize && currentPhoto.width + e.clientX - currentMousePosition > 80) {
-                currentPhoto.node.style.width = currentPhoto.width + e.clientX - currentMousePosition + 'px';
-            }
-    }
+        if (leftResize && currentPhoto.width + posX - e.clientX > 80) {
+            currentPhoto.node.style.width = currentPhoto.width + posX - e.clientX + 'px';
+            currentPhoto.node.style.left = currentPhoto.left + e.clientX - posX + 'px';
+            currentPhoto.widthUnits = 'px';
+        } else if (!leftResize && currentPhoto.width + e.clientX - posX > 80) {
+            currentPhoto.node.style.width = currentPhoto.width + e.clientX - posX + 'px';
+            currentPhoto.widthUnits = 'px';
+        }
+}
 
     function stopResize(e) {
         resizing = false;

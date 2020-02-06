@@ -48,10 +48,8 @@ const animate = (() => {
         showCircles();
     }
 
-    let startPos;
     const smoothScroll = (y, durration, startPos) => {
         let startTime = null;
-        startPos = startPos;
         
         document.documentElement.style.overflow = 'hidden'
         setTimeout(() => {
