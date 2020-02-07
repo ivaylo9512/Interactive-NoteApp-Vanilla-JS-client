@@ -30,6 +30,7 @@ const animate = (() => {
         }
     }
 
+    //TODO:body.scollHeight;
     const scrollToProfile = () => {
         const height = document.body.scrollHeight;
         const scroll = height - 1400 - scrollY;

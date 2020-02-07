@@ -111,14 +111,14 @@ const app = (() =>{
     const checkIfResizable = (e) => {
         if (editMode) {
             if (e.offsetX < currentPhoto.width / 7) {
-                resizable = true;
+                resizing = true;
                 leftResize = true;
             }else if (e.offsetX > currentPhoto.width / 1.2) {
-                resizable = true;
+                resizing = true;
                 leftResize = false;
             }
             posX = e.clientX;
-            if(resizable){
+            if(resizing){
                 window.addEventListener('mousemove', resize);
                 window.addEventListener('mouseup', stopResize)
             }
@@ -128,25 +128,46 @@ const app = (() =>{
     const resize = (e) => {
         moveButton.style.display = 'none';
         rotateButton.style.display = 'none';
-        resizing = true;
 
-        if (leftResize && currentPhoto.width + posX - e.clientX > 80) {
-            currentPhoto.node.style.width = currentPhoto.width + posX - e.clientX + 'px';
-            currentPhoto.node.style.left = currentPhoto.left + e.clientX - posX + 'px';
-            currentPhoto.widthUnits = 'px';
-        } else if (!leftResize && currentPhoto.width + e.clientX - posX > 80) {
-            currentPhoto.node.style.width = currentPhoto.width + e.clientX - posX + 'px';
-            currentPhoto.widthUnits = 'px';
+        const nextPosX = e.clientX;
+        let resize;
+        let moveLeft;
+        const minWidth = currentPhoto.width - 80;
+        let minLeft = minWidth;
+        let minPosX;
+        if(leftResize){
+            resize = posX - nextPosX;
+            moveLeft = nextPosX - posX;
+            minPosX = posX += minWidth;
+        }else{
+            resize = nextPosX - posX;
+            moveLeft = 0;
+            minLeft = 0;
+            minPosX = posX -= minWidth;
+        }
+        if(currentPhoto.width + resize > 80){
+            currentPhoto.left = currentPhoto.left + moveLeft;
+            currentPhoto.node.style.left = currentPhoto.left + 'px';
+
+            currentPhoto.width = currentPhoto.width + resize;  
+            currentPhoto.node.style.width = currentPhoto.width + 'px';
+            
+            posX = nextPosX;
+        }else{
+            if(resize > 0){
+                currentPhoto.left = currentPhoto.left + minLeft;
+                currentPhoto.node.style.left = currentPhoto.left + 'px';
+
+                currentPhoto.width = currentPhoto.width - resize;
+                currentPhoto.node.style.width = currentPhoto.width + 'px';
+
+                posX = minPosX;
+            }
         }
 }
 
     function stopResize(e) {
         resizing = false;
-        resizable = false;
-        currentPhoto.left = currentPhoto.node.offsetLeft;
-        currentPhoto.top = currentPhoto.node.offsetTop;
-        currentPhoto.width = parseFloat(window.getComputedStyle(currentPhoto.node).width);
-        currentPhoto.height = parseFloat(window.getComputedStyle(currentPhoto.node).height);
 
         if (e.target != currentPhoto.node && e.target.parentElement != currentPhoto.node) {
             resizeButton.style.display = 'none'
@@ -198,9 +219,12 @@ const app = (() =>{
         appendedPhoto.style.top = null;
         appendedPhoto.style.left = null;
 
-        appendedPhoto.style.width = photo.width + photo.widthUnits;
+        appendedPhoto.style.width = photo.widthSize + photo.widthUnits;
+        photo.width = photo.widthSize;
         appendedPhoto.style.left = photo.leftPosition + 'px';
+        photo.left = photo.leftPosition;
         appendedPhoto.style.top = photo.topPosition + 'px';
+        photo.top = photo.topPosition;
         appendedPhoto.style.transform = `rotate(${photo.rotation}deg)`;
 
         let note = document.getElementById(photo.note + 'note')
@@ -276,10 +300,12 @@ const app = (() =>{
 
                 const styles = window.getComputedStyle(photo);
                 currentPhoto.zIndex = styles.zIndex;
-                currentPhoto.height = parseFloat(styles.height);
                 currentPhoto.left = parseFloat(styles.left);
+                currentPhoto.leftPosition = currentPhoto.left;
                 currentPhoto.top = parseFloat(styles.top);
+                currentPhoto.topPosition = currentPhoto.top;
                 currentPhoto.width = parseFloat(styles.width);
+                currentPhoto.widthSize = currentPhoto.width;
                 currentPhoto.widthUnits = 'px';
             }
 
