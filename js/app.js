@@ -130,21 +130,22 @@ const app = (() =>{
         rotateButton.style.display = 'none';
 
         const nextPosX = e.clientX;
+        const minWidth = currentPhoto.width - 80;
+        let minPosX;
+        let minLeft = minWidth;
         let resize;
         let moveLeft;
-        const minWidth = currentPhoto.width - 80;
-        let minLeft = minWidth;
-        let minPosX;
         if(leftResize){
             resize = posX - nextPosX;
             moveLeft = nextPosX - posX;
-            minPosX = posX += minWidth;
+            minPosX = posX + minWidth;
         }else{
             resize = nextPosX - posX;
             moveLeft = 0;
             minLeft = 0;
-            minPosX = posX -= minWidth;
+            minPosX = posX - minWidth;
         }
+
         if(currentPhoto.width + resize > 80){
             currentPhoto.left = currentPhoto.left + moveLeft;
             currentPhoto.node.style.left = currentPhoto.left + 'px';
@@ -154,11 +155,11 @@ const app = (() =>{
             
             posX = nextPosX;
         }else{
-            if(resize > 0){
+            if(minWidth > 0){
                 currentPhoto.left = currentPhoto.left + minLeft;
                 currentPhoto.node.style.left = currentPhoto.left + 'px';
 
-                currentPhoto.width = currentPhoto.width - resize;
+                currentPhoto.width = currentPhoto.width - minWidth;
                 currentPhoto.node.style.width = currentPhoto.width + 'px';
 
                 posX = minPosX;
