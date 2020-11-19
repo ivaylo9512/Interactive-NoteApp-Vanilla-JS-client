@@ -923,6 +923,10 @@ body.full-mode-active .play-box{
 }
 .chosen-profile-photo{
     left: 5px;
+    display: none;
+}
+.chosen-profile-photo[src]{
+    display: block;
 }
 .note-section{
     position: relative;
@@ -1565,7 +1569,7 @@ body.full-mode-active .full-mode{
 }
 
 .full-mode nav.active{
-    transform: translateY(0);
+    transform: translateY(-1px);
 }
 
 .full-mode nav li{

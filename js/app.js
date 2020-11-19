@@ -185,8 +185,15 @@ const app = (() =>{
     const hideAppendedPhotos = () => appendedPhotos.forEach(photo => photo.classList.remove('visible'));
     
     let focusedNote;
+    let notesContainer;
+    let noteContainer;
     const setfocusedNote = (note) => {
         focusedNote = note;
+
+        if(focusedNote){
+            notesContainer = focusedNote.parentElement;
+            noteContainer = notesContainer.parentElement;
+        }
     }
 
     let editMode = false;
