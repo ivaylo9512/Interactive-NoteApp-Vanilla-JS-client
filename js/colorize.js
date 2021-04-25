@@ -6,11 +6,8 @@ const colorize = (() => {
         const randomNumber = Math.floor(Math.random() * 5);
         const randomColor = colors[randomNumber];
 
-        if (currentColor == randomColor) {
-            matched = true;
-        } else {
-            matched = false;
-        }
+        matched = currentColor == randomColor ? true : false 
+
         return randomColor;
     }
 
@@ -40,6 +37,8 @@ const colorize = (() => {
     const playNav = document.getElementById('play-nav');
     let colorMode = false;
     const manageListeners = (e) => {
+        changeBulbImages()
+
         if(colorMode){
             colorMode = false;
             colorizables.forEach(colorizable => {
@@ -54,6 +53,14 @@ const colorize = (() => {
             });
 
             playNav.classList.add('play');
+        }
+    }
+
+    let changed;
+    let onloadAnimation = document.getElementById('onload-animation');
+    const changeBulbImages = () => {
+        if(!changed){
+            onloadAnimation.classList.add('swaped')
         }
     }
 

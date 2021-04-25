@@ -78,6 +78,9 @@ body.full-mode-active .play-mode > .play-nav{
     width: 184px;
     margin-bottom: 100px;
 }
+.onload-animation .blue-bulb.colorize {
+    display: none;
+}
 .pointer{
     position: absolute;
     width: 200px;
