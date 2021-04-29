@@ -73,12 +73,18 @@ body.full-mode-active .play-mode > .play-nav{
     width: 184px;
     animation-delay: 2s;
 }
-
 .onload-animation .blue-bulb {
     width: 184px;
     margin-bottom: 100px;
 }
-.onload-animation .blue-bulb.colorize {
+.onload-animation .blue-bulb.colorizable {
+    display: none;
+}
+.onload-animation.play .blue-bulb.colorizable {
+    display: inline-block;
+    fill: #8bb1e5;
+}
+.onload-animation.play .blue-bulb{
     display: none;
 }
 .pointer{

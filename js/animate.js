@@ -80,7 +80,7 @@ const animate = (() => {
     const createCircles = () => {
         for (let i = 1; i < maxCircles; i++) {
             const circleCopy = circle.cloneNode(true);
-            circleCopy.className = 'colorize circle' + i;
+            circleCopy.className = 'colorizable circle' + i;
 
             circles.push(circleCopy);
             circlesFragment.appendChild(circleCopy);
