@@ -1,7 +1,7 @@
 const colorize = (() => {
     let matched;
 
-    const colors = new Array('#E2007A', '#7398CA', '#E2007A', '#7398CA', '#41291B');
+    const colors = new Array('#E2007A', '#8bb1e5', '#E2007A', '#8bb1e5', '#41291B');
     function getRandomColor() {
         const randomNumber = Math.floor(Math.random() * 5);
         const randomColor = colors[randomNumber];
@@ -11,25 +11,10 @@ const colorize = (() => {
         return randomColor;
     }
 
-    const leftBulbImages = ['left-bulb-pink.png', 'left-bulb-brown.png', 'left-bulb-blue.png'];
-    const rightBulbImages = ['right-bulb-pink.png', 'right-bulb-brown.png', 'right-bulb-blue.png'];
-    const getRandomImage = id => {
-        const randomIndex = Math.floor(Math.random() * leftBulbImages.length);
-        const randomImage = id == 'pink-bulb' ? rightBulbImages[randomIndex] : leftBulbImages[randomIndex];
-        
-        if(currentColor == '#7398CA'){
-            matched = randomImage == 'right-bulb-blue.png';
-        }else{
-            matched = randomImage == 'left-bulb-pink.png';
-        } 
-
-        return randomImage;
-    }
-
     let maxScore = document.getElementById('max-score');
     let colorizables = [];
     const getElements = () => {
-        colorizables = Array.from(document.getElementsByClassName('colorize'));
+        colorizables = Array.from(document.getElementsByClassName('colorizable'));
         maxScore.textContent = colorizables.length - 1;
     }
 
