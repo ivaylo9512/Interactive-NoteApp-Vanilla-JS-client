@@ -45,7 +45,8 @@ const colorize = (() => {
     let onloadAnimation = document.getElementById('onload-animation');
     const changeBulbImages = () => {
         if(!changed){
-            onloadAnimation.classList.add('swaped')
+            changed = true;
+            onloadAnimation.classList.add('play');
         }
     }
 
@@ -54,36 +55,29 @@ const colorize = (() => {
         if(currentColor != ''){
             resetNodes();
         }
-
         currentColor = color;
     }
 
     const resetNodes = () => {
 
-        colorizables.forEach(colorizeable => {
-            colorizeable.style.color = '#41291B';
-            colorizeable.removeAttribute('color');
+        colorizables.forEach(colorizable => {
+            colorizable.style.color = '';
+            colorizable.style.fill = '';
+            colorizable.removeAttribute('color');
         })
         amountCounted = 0;
         score.textContent = 0;
-
     }
+
     const changeColor = () => {
-        const node = event.target; 
-        if (currentColor != '') {
+        const node = event.currentTarget; 
+        if (currentColor) {
+            const randomColor = getRandomColor();
 
-            if(node.tagName === 'IMG' && ((currentColor == '#7398CA' && node.id == 'pink-bulb') || (currentColor == '#E2007A' && node.id == 'blue-bulb'))){
-                const randomImage = getRandomImage(node.id);
-                node.src = 'resources/' + randomImage;
-                calculate(node);
-            }else if(node.tagName !== 'IMG'){
-                const randomColor = getRandomColor();
-                node.style.color = randomColor;
-                node.style.borderColor = randomColor;
-                calculate(node);
-            }
+            node.style.fill = randomColor;
+            node.style.color = randomColor;
 
-
+            calculate(node);
         }
     }
 
@@ -103,7 +97,7 @@ const colorize = (() => {
         getElements();
         playBtn.addEventListener('click', manageListeners);
         document.getElementById('pink-bulb-btn').addEventListener('click', () => setCurrentColor('#E2007A'));
-        document.getElementById('blue-bulb-btn').addEventListener('click', () => setCurrentColor('#7398CA'));   
+        document.getElementById('blue-bulb-btn').addEventListener('click', () => setCurrentColor('#8bb1e5'));   
     }
 
     return {
