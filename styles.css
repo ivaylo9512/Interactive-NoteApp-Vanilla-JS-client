@@ -36,13 +36,6 @@ section{
     z-index: 5;
     margin: 0 auto;
 }
-
-.first-section {
-    background-image: url("resources/notebook-bottom.png");
-    height: 579px;
-    overflow: hidden;
-}
-
 .third-section {
     height: 560px;
 }
@@ -62,20 +55,24 @@ body.full-mode-active .play-mode > .play-nav{
     display: block;
 }
 .tree{
-    width: 240px;
-    margin-right: 37px;
-    margin-top: 10px;
+    height: 100%;
+    margin-right: 3%;
+    margin-top: 1vh;
+    display: inline-block;
+    padding: 0 2%;
 }
-
+.onload-animation {
+    text-align: center;
+    height: 80vh;
+}
 .onload-animation .pink-bulb {
-    margin-bottom: 150px;
-    margin-right: 0px;
-    width: 184px;
+    margin-bottom: 23vh;
+    height: 40%;
     animation-delay: 2s;
 }
 .onload-animation .blue-bulb {
-    width: 184px;
-    margin-bottom: 100px;
+    height: 40%;
+    margin-bottom: 15vh;
 }
 .onload-animation .blue-bulb.colorizable {
     display: none;
@@ -112,19 +109,16 @@ body.full-mode-active .play-mode > .play-nav{
     transform: rotate(-45deg);
     margin-left: -4px;
 }
-.onload-animation {
-    text-align: center;
-}
-.first-section nav {
+.notebook nav {
     height: 20%;
     position: relative;
     opacity: 0;
 }
-.first-section nav.nav-show {
+.notebook nav.nav-show {
     opacity: 1;
     transition: opacity 1.15s ease-in-out;
 }
-.first-section nav li{
+.notebook nav li{
     margin-top: 40px;
     color: #41291B;
     text-shadow: 1px 1px 0 rgba(140, 140, 140, 0.6), 0px 0px 1px rgba(0, 0, 0, 0.67);
@@ -133,7 +127,7 @@ body.full-mode-active .play-mode > .play-nav{
     cursor: pointer;
 }
 
-.first-section nav ul{
+.notebook nav ul{
     display: -webkit-box;
     display: -ms-flexbox;
     display: -webkit-flex;
@@ -347,7 +341,7 @@ body.full-mode-active .play-box{
     -moz-transform: rotate(45deg);
     transform: rotate(45deg);
 }
-.second-section {
+.notebook {
     background-image: url("resources/notebook-middle.png");
     overflow: visible;
     background-position: 1.4px;
