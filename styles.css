@@ -20,8 +20,8 @@ body {
     -o-user-select: none;
     user-select: none;
 }
-section{
-    width: 989px;
+section {
+    width: 81%;
     margin: 0 auto;
     text-align: center;
     background-repeat: no-repeat;
@@ -30,17 +30,15 @@ section{
 }
 
 .play-mode{
-    width: 1263px;
+    width: 95.5%;
     position: relative;
     overflow: hidden;
     z-index: 5;
     margin: 0 auto;
+    height: 262vh;
 }
-.third-section {
-    height: 560px;
-}
-.third-section form{
-    height: 260px;
+.notebook form{
+    height: 90%;
     background-image: url("resources/notebook-top.png");
     background-repeat: no-repeat;
     background-size: 100% 216px;
@@ -57,13 +55,12 @@ body.full-mode-active .play-mode > .play-nav{
 .tree{
     height: 100%;
     margin-right: 3%;
-    margin-top: 1vh;
     display: inline-block;
     padding: 0 2%;
 }
 .onload-animation {
     text-align: center;
-    height: 80vh;
+    height: 27.5%;
 }
 .onload-animation .pink-bulb {
     margin-bottom: 23vh;
@@ -110,9 +107,10 @@ body.full-mode-active .play-mode > .play-nav{
     margin-left: -4px;
 }
 .notebook nav {
-    height: 20%;
+    height: 10%;
     position: relative;
     opacity: 0;
+    width: 100%;
 }
 .notebook nav.nav-show {
     opacity: 1;
@@ -120,6 +118,7 @@ body.full-mode-active .play-mode > .play-nav{
 }
 .notebook nav li{
     margin-top: 40px;
+    font-size: 8vh;
     color: #41291B;
     text-shadow: 1px 1px 0 rgba(140, 140, 140, 0.6), 0px 0px 1px rgba(0, 0, 0, 0.67);
     float: left;
@@ -133,19 +132,16 @@ body.full-mode-active .play-mode > .play-nav{
     display: -webkit-flex;
     display: flex;
     justify-content: center;
+    align-items: center;
+    height: 100%;
 }
 
 .profile-btn{
-    margin-right: 124px;
-    font-size: 55px;
-    margin-left: -34px;
+    margin-right: 12.5%;
+    margin-left: -3.5%;
 }
 
-.album-btn{
-    font-size: 55px;
-}
-
-.album-btns li{
+.notebook nav .album-btns li{
     font-size: 45px;
     position: absolute;
 }
@@ -345,7 +341,7 @@ body.full-mode-active .play-box{
     background-image: url("resources/notebook-middle.png");
     overflow: visible;
     background-position: 1.4px;
-    height: 560px;
+    height: 55.3%;
     background-attachment: local;
     z-index: 8;
 }
@@ -772,7 +768,7 @@ body.full-mode-active .play-box{
     font-size: 64px;
 }
 .balloons-container{
-    height: 300px;
+    height: 17.6%;
     margin-top: 240px;
     text-align: center;
 }
@@ -861,8 +857,8 @@ body.full-mode-active .play-box{
     top: -5px;
 }
 .buttons-container {
-    height: 60px;
-    width: 692px;
+    height: 8%;
+    width: 100%;
     float: right;
     position: relative;
     z-index: 9;
