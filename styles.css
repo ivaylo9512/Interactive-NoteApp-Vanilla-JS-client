@@ -54,9 +54,9 @@ body.full-mode-active .play-mode > .play-nav{
 }
 .tree{
     height: 100%;
-    margin-right: 3%;
+    margin-right: 2%;
     display: inline-block;
-    padding: 0 2%;
+    padding: 0 1%;
 }
 .onload-animation {
     text-align: center;
@@ -64,11 +64,11 @@ body.full-mode-active .play-mode > .play-nav{
 }
 .onload-animation .pink-bulb {
     margin-bottom: 23vh;
-    height: 40%;
+    height: 44%;
     animation-delay: 2s;
 }
 .onload-animation .blue-bulb {
-    height: 40%;
+    height: 44%;
     margin-bottom: 15vh;
 }
 .onload-animation .blue-bulb.colorizable {
@@ -142,7 +142,7 @@ body.full-mode-active .play-mode > .play-nav{
 }
 
 .notebook nav .album-btns li{
-    font-size: 45px;
+    font-size: 6.7vh;
     position: absolute;
 }
 
@@ -338,12 +338,13 @@ body.full-mode-active .play-box{
     transform: rotate(45deg);
 }
 .notebook {
-    background-image: url("resources/notebook-middle.png");
+    background-image: url("resources/notebook.png");
     overflow: visible;
-    background-position: 1.4px;
     height: 55.3%;
-    background-attachment: local;
     z-index: 8;
+    position: relative;
+    background-size: auto 95.5%;
+    background-position: center bottom;
 }
 .speech-bubble{
     cursor: pointer;
@@ -857,11 +858,12 @@ body.full-mode-active .play-box{
     top: -5px;
 }
 .buttons-container {
-    height: 8%;
     width: 100%;
     float: right;
     position: relative;
+    height: 5.4%;
     z-index: 9;
+    margin-bottom: 2vh;
 }
 .buttons-container button {
     padding: 0;
