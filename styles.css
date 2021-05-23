@@ -54,7 +54,7 @@ body.full-mode-active .play-mode > .play-nav{
 }
 .tree{
     height: 100%;
-    margin-right: 2%;
+    margin-right: 2.5%;
     display: inline-block;
     padding: 0 1%;
 }
@@ -81,30 +81,27 @@ body.full-mode-active .play-mode > .play-nav{
 .onload-animation.play .blue-bulb{
     display: none;
 }
-.pointer{
+.pointer {
     position: absolute;
-    width: 200px;
-    margin-left: 388px;
+    left: 50%;
     display: block;
     text-align: center;
-    bottom: 385px;
+    bottom: 84.5%;
     animation: translatePointer 1.6s infinite;
 }
-.pointer span{
-    width: 11px;
-    height: 28px;
+.pointer span {
+    width: 1.7vh;
+    height: 4.5vh;
     background: #41291B;
-    border-radius: 5px;
-    display: inline-block;
-    position: relative;
-
+    border-radius: 5vh;
+    float: right;
 }
-.pointer span:nth-child(1){
-    transform: rotate(45deg);
-}
-.pointer span:nth-child(2){
+.pointer span:nth-child(1) {
     transform: rotate(-45deg);
-    margin-left: -4px;
+    margin-left: 0.4vh;
+}
+.pointer span:nth-child(2) {
+    transform: rotate(45deg);
 }
 .notebook nav {
     height: 10%;
@@ -770,7 +767,6 @@ body.full-mode-active .play-box{
 }
 .balloons-container{
     height: 17.6%;
-    margin-top: 240px;
     text-align: center;
 }
 .balloons-container svg{
@@ -861,36 +857,35 @@ body.full-mode-active .play-box{
     width: 100%;
     float: right;
     position: relative;
-    height: 5.4%;
+    height: 5.35%;
     z-index: 9;
     margin-bottom: 2vh;
 }
 .buttons-container button {
     padding: 0;
     background-color: #442818;
-    width: 100px;
+    width: 10.5%;
     border-top-left-radius: 16px;
     border-top-right-radius: 16px;
     border: 1px solid white;
     outline: none;
     cursor: pointer;
     float: right;
-    font-size: 27px;
-    height: 44px;
-    margin-top: 1.7px;
+    font-size: 4vh;
+    height: 100%;
     transition: all 1s;
     text-align: center;
     color: #EAE9E5;
 }
 .buttons-container .register{
-    margin-left: 1px;
-    margin-right: 209px;
+    margin-left: 0.1%;
+    margin-right: 23%;
 }
 .buttons-container .register.active{
-    margin-left: -4px;
+    margin-left: -0.4%;
 }
 .buttons-container .login.active{
-    margin-right: -5px;
+    margin-right: -0.5%;
 }
 .buttons-container .user-btn {
     -webkit-transform: rotate(0.25deg);
@@ -900,8 +895,8 @@ body.full-mode-active .play-box{
     display: none;
 }
 .buttons-container button.active{
-    height: 48px;
-    margin-top: -2px;
+    height: 106%;
+    margin-top: -0.4vh;
     position: relative;
     z-index: 9;
     transition: all 1s;
@@ -2273,31 +2268,31 @@ body.full-mode-active .right-notes-container,
 }
 @keyframes translatePointer {
     from {
-        transform:translatey(0);
+        transform: translate(-50%, 0);
     }
 
     to {
-        transform:translatey(-6px);
+        transform: translate(-50%, -6px);
     }
 }
 
 @-webkit-keyframes translatePointer {
     from {
-        transform:translatey(0);
+        transform: translate(-50%, 0);
     }
 
     to {
-        transform:translatey(-6px);
+        transform: translate(-50%, -6px);
     }
 }
 
 @-moz-keyframes translatePointer {
     from {
-        transform:translatey(0);
+        transform: translate(-50%, 0);
     }
 
     to {
-        transform:translatey(-6px);
+        transform: translate(-50%, -6px);
     }
 }
 @keyframes rightBalloonAnimation {
