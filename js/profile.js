@@ -91,10 +91,10 @@ const profile = (() => {
 
         if(view.action){
             userBtn.textContent = view.action;
-            userBtn.style.display = 'block'
+            userBtn.style.visibility = 'visible'
         }else{
             userBtn.textContent = '';
-            userBtn.style.display = 'none'
+            userBtn.style.visibility = 'hidden'
 
         }
     }

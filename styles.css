@@ -39,10 +39,6 @@ section {
 }
 .notebook form{
     height: 90%;
-    background-image: url("resources/notebook-top.png");
-    background-repeat: no-repeat;
-    background-size: 100% 216px;
-    background-position: bottom;
     position: relative;
     z-index: 3;
 }
@@ -824,12 +820,16 @@ body.full-mode-active .play-box{
     z-index: 1;
     width: 684px;
 }
-.profile > div{
-    float: left;
+.profile {
+    text-align: center;
 }
-.user-info{
-    margin-left: 17%;
+.profile > div {
+    display: inline-block;
+}
+.user-info {
     width: 31%;
+    margin-left: -11vh;
+    margin-right: 14vh;
 }
 .user-info label{
     display: inline-block;
@@ -864,14 +864,13 @@ body.full-mode-active .play-box{
 .buttons-container button {
     padding: 0;
     background-color: #442818;
-    width: 10.5%;
+    width: 17vh;
     border-top-left-radius: 16px;
     border-top-right-radius: 16px;
     border: 1px solid white;
     outline: none;
     cursor: pointer;
-    float: right;
-    font-size: 4vh;
+    font-size: 22px;
     height: 100%;
     transition: all 1s;
     text-align: center;
@@ -879,7 +878,6 @@ body.full-mode-active .play-box{
 }
 .buttons-container .register{
     margin-left: 0.1%;
-    margin-right: 23%;
 }
 .buttons-container .register.active{
     margin-left: -0.4%;
@@ -891,8 +889,9 @@ body.full-mode-active .play-box{
     -webkit-transform: rotate(0.25deg);
     -moz-transform: rotate(0.25deg);
     transform: rotate(0.25deg);
-    float: left;
-    display: none;
+    margin-right: 26vh;
+    margin-left: 7vh;
+    visibility: hidden;
 }
 .buttons-container button.active{
     height: 106%;
