@@ -80,21 +80,22 @@ body.full-mode-active .play-mode > .play-nav{
 .pointer {
     position: absolute;
     left: 50%;
-    display: block;
-    text-align: center;
-    bottom: 84.5%;
+    top: 12%;
+    transform: translatex(-25%);
     animation: translatePointer 1.6s infinite;
+    width: 1.7vh;
+    margin-left: 0.1%;
 }
 .pointer span {
     width: 1.7vh;
     height: 4.5vh;
     background: #41291B;
+    position: absolute;
     border-radius: 5vh;
-    float: right;
+    transform-origin: 0.85vh 0.85vh;
 }
 .pointer span:nth-child(1) {
     transform: rotate(-45deg);
-    margin-left: 0.4vh;
 }
 .pointer span:nth-child(2) {
     transform: rotate(45deg);
@@ -110,10 +111,9 @@ body.full-mode-active .play-mode > .play-nav{
     transition: opacity 1.15s ease-in-out;
 }
 .notebook nav li{
-    margin-top: 40px;
     font-size: 8vh;
     color: #41291B;
-    text-shadow: 1px 1px 0 rgba(140, 140, 140, 0.6), 0px 0px 1px rgba(0, 0, 0, 0.67);
+    text-shadow: 1px 1px 0 rgb(140 140 140 / 60%), 0px 0px 1px rgb(0 0 0 / 67%), 2px 2px 0 rgb(140 140 140 / 60%);
     float: left;
     list-style-type: none;
     cursor: pointer;
@@ -855,11 +855,11 @@ body.full-mode-active .play-box{
 }
 .buttons-container {
     width: 100%;
-    float: right;
     position: relative;
     height: 5.35%;
     z-index: 9;
     margin-bottom: 2vh;
+    text-align: center;
 }
 .buttons-container button {
     padding: 0;
