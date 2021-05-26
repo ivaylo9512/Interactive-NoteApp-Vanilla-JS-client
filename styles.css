@@ -21,11 +21,6 @@ body {
     user-select: none;
 }
 section {
-    width: 81%;
-    margin: 0 auto;
-    text-align: center;
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
     position: relative;
 }
 
@@ -48,11 +43,16 @@ body.full-mode-active .play-mode > *{
 body.full-mode-active .play-mode > .play-nav{
     display: block;
 }
-.tree{
-    height: 100%;
-    margin-right: 2.5%;
+.tree {
     display: inline-block;
-    padding: 0 1%;
+    height: 100%;
+    padding: 0 1.4vh;
+}
+.tree img {
+    height: 100%;
+    margin-left: -4.5%;
+    display: inline-block;
+    position: relative;
 }
 .onload-animation {
     text-align: center;
@@ -85,6 +85,7 @@ body.full-mode-active .play-mode > .play-nav{
     animation: translatePointer 1.6s infinite;
     width: 1.7vh;
     margin-left: 0.1%;
+    z-index: 2;
 }
 .pointer span {
     width: 1.7vh;
@@ -113,8 +114,7 @@ body.full-mode-active .play-mode > .play-nav{
 .notebook nav li{
     font-size: 8vh;
     color: #41291B;
-    text-shadow: 1px 1px 0 rgb(140 140 140 / 60%), 0px 0px 1px rgb(0 0 0 / 67%), 2px 2px 0 rgb(140 140 140 / 60%);
-    float: left;
+    text-shadow: 0.01em 0.02em 0 rgb(140 140 140 / 60%), 0px 0px 0.01em rgb(0 0 0 / 67%), 0.02em 0.02em 0 rgb(140 140 140 / 60%);
     list-style-type: none;
     cursor: pointer;
 }
@@ -130,8 +130,8 @@ body.full-mode-active .play-mode > .play-nav{
 }
 
 .profile-btn{
-    margin-right: 12.5%;
-    margin-left: -3.5%;
+    margin-right: 22vh;
+    margin-left: -2vh;
 }
 
 .notebook nav .album-btns li{
@@ -337,6 +337,7 @@ body.full-mode-active .play-box{
     z-index: 8;
     position: relative;
     background-size: auto 95.5%;
+    background-repeat: no-repeat;
     background-position: center bottom;
 }
 .speech-bubble{
