@@ -23,14 +23,14 @@ body {
 section {
     position: relative;
 }
-
-.play-mode{
+.play-mode {
     width: 95.5%;
     position: relative;
     overflow: hidden;
     z-index: 5;
     margin: 0 auto;
-    height: 262vh;
+    height: 16em;
+    font-size: 17vh;
 }
 .notebook form{
     height: 90%;
@@ -56,16 +56,18 @@ body.full-mode-active .play-mode > .play-nav{
 }
 .onload-animation {
     text-align: center;
-    height: 27.5%;
+    height: 27.1%;
 }
 .onload-animation .pink-bulb {
-    margin-bottom: 23vh;
     height: 44%;
     animation-delay: 2s;
+    position: relative;
+    bottom: 32%;
 }
 .onload-animation .blue-bulb {
     height: 44%;
-    margin-bottom: 15vh;
+    position: relative;
+    bottom: 21%;
 }
 .onload-animation .blue-bulb.colorizable {
     display: none;
@@ -112,7 +114,7 @@ body.full-mode-active .play-mode > .play-nav{
     transition: opacity 1.15s ease-in-out;
 }
 .notebook nav li{
-    font-size: 8vh;
+    font-size: 0.5em;
     color: #41291B;
     text-shadow: 0.01em 0.02em 0 rgb(140 140 140 / 60%), 0px 0px 0.01em rgb(0 0 0 / 67%), 0.02em 0.02em 0 rgb(140 140 140 / 60%);
     list-style-type: none;
@@ -124,14 +126,13 @@ body.full-mode-active .play-mode > .play-nav{
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
-    justify-content: center;
     align-items: center;
     height: 100%;
 }
 
-.profile-btn{
-    margin-right: 22vh;
-    margin-left: -2vh;
+.profile-btn {
+    margin-right: 26%;
+    margin-left: 13%;
 }
 
 .notebook nav .album-btns li{
@@ -334,8 +335,9 @@ body.full-mode-active .play-box{
     background-image: url("resources/notebook.png");
     overflow: visible;
     height: 55.3%;
+    width: 6.5em;
     z-index: 8;
-    position: relative;
+    margin: auto;
     background-size: auto 95.5%;
     background-repeat: no-repeat;
     background-position: center bottom;
@@ -821,24 +823,21 @@ body.full-mode-active .play-box{
     z-index: 1;
     width: 684px;
 }
-.profile {
-    text-align: center;
-}
-.profile > div {
+.profile > div{
     display: inline-block;
 }
 .user-info {
-    width: 31%;
-    margin-left: -11vh;
-    margin-right: 14vh;
+    width: 43%;
+    margin-left: 3%;
+    line-height: 0;
 }
 .user-info label{
-    display: inline-block;
     width: 42%;
     font-weight: bold;
-    margin-bottom: 21px;
+    margin-bottom: 0.8em;
     text-align: center;
-    font-size: 27px;
+    font-size: 0.25em;
+    display: inline-block;
 }
 .inputs-container {
     width: 16%;
@@ -847,12 +846,12 @@ body.full-mode-active .play-box{
 .user-info input{
     width: 48%;
     background: transparent;
-    font: normal 24px/1 "Aladin", Helvetica, sans-serif;
+    font: normal 0.22em/1 "Aladin", Helvetica, sans-serif;
     text-align: center;
     border: 0px;
-    border-bottom: 2px solid #41291B;
+    border-bottom: 0.1em solid #41291B;
     position: relative;
-    top: -5px;
+    top: -0.3em;
 }
 .buttons-container {
     width: 100%;
@@ -871,10 +870,11 @@ body.full-mode-active .play-box{
     border: 1px solid white;
     outline: none;
     cursor: pointer;
-    font-size: 22px;
+    font-size: 0.23em;
     height: 100%;
     transition: all 1s;
     text-align: center;
+    vertical-align: top;
     color: #EAE9E5;
 }
 .buttons-container .register{
