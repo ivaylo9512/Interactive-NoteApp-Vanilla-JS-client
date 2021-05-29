@@ -20,17 +20,17 @@ body {
     -o-user-select: none;
     user-select: none;
 }
-section {
-    position: relative;
-}
 .play-mode {
-    width: 95.5%;
     position: relative;
     overflow: hidden;
     z-index: 5;
-    margin: 0 auto;
     height: 16em;
     font-size: 17vh;
+}
+.play-mode section {
+    position: relative;
+    width: 6.5em;
+    margin: 0 auto;
 }
 .notebook form{
     height: 90%;
@@ -335,9 +335,7 @@ body.full-mode-active .play-box{
     background-image: url("resources/notebook.png");
     overflow: visible;
     height: 55.3%;
-    width: 6.5em;
     z-index: 8;
-    margin: auto;
     background-size: auto 95.5%;
     background-repeat: no-repeat;
     background-position: center bottom;
@@ -778,16 +776,12 @@ body.full-mode-active .play-box{
 }
 .balloons-container svg:nth-child(1){
     width: 21%;
-    float: left;
-    left: 4%;
-    top: 8%;
+    margin-left: -1.5%;
     animation: leftBalloonAnimation 5400ms 1800ms linear both;
 }
-.balloons-container svg:nth-child(2){
-    width: 14.5%;
-    right: 0.6%;
-    top: 42%;
-    animation: middleBalloonAnimation 2300ms 3200ms linear both;
+.balloons-container svg:nth-child(2) {
+    width: 22.5%;
+    animation: middleBalloonAnimation 5300ms 3200ms ease-in-out both;
 }
 .balloons-container.animate svg:nth-child(2){
     display: inline-block;
@@ -795,8 +789,6 @@ body.full-mode-active .play-box{
 .balloons-container > svg:last-child{
     float: right;
     width: 21%;
-    top: 10%;
-    left: 4%;
     animation: rightBalloonAnimation 4800ms linear both;
 }
 .balloon {
@@ -2395,40 +2387,40 @@ body.full-mode-active .right-notes-container,
 }
 @keyframes middleBalloonAnimation {
     0% {
-        -webkit-transform: translateY(217px);
-        -moz-transform: translateY(217px);
-        transform: translateY(217px);
+        -webkit-transform: translateY(102%);
+        -moz-transform: translateY(102%);
+        transform: translateY(102%);
     }
     100% {
-        -webkit-transform: translateY(0);
-        -moz-transform: translateY(0);
-        transform: translateY(0);
+        -webkit-transform: translateY(225%);
+        -moz-transform: translateY(225%);
+        transform: translateY(225%);
     }
 }
     
 @-webkit-keyframes middleBalloonAnimation{
     0% {
-        -webkit-transform: translateY(217px);
-        -moz-transform: translateY(217px);
-        transform: translateY(217px);
+        -webkit-transform: translateY(102%);
+        -moz-transform: translateY(102%);
+        transform: translateY(102%);
     }
     100% {
-        -webkit-transform: translateY(0);
-        -moz-transform: translateY(0);
-        transform: translateY(0);
+        -webkit-transform: translateY(225%);
+        -moz-transform: translateY(225%);
+        transform: translateY(225%);
     }
 }
     
 @-moz-keyframes middleBalloonAnimation{
     0% {
-        -webkit-transform: translateY(217px);
-        -moz-transform: translateY(217px);
-        transform: translateY(217px);
+        -webkit-transform: translateY(102%);
+        -moz-transform: translateY(102%);
+        transform: translateY(102%);
     }
     100% {
-        -webkit-transform: translateY(0);
-        -moz-transform: translateY(0);
-        transform: translateY(0);
+        -webkit-transform: translateY(225%);
+        -moz-transform: translateY(225%);
+        transform: translateY(225%);
     }
 }
 @keyframes leftBalloonAnimation {
