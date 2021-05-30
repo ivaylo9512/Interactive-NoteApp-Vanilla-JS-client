@@ -69,6 +69,7 @@ const remote = (() => {
     const getBase = () => base; 
 
     return({
+        base,
         getAlbumImages,
         login,
         getNotes,

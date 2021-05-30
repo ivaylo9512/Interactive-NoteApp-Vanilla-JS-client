@@ -1,5 +1,4 @@
 const app = (() =>{
-
     const userPhotosContainer = document.getElementById('user-photos');
     const appendedPhotos = Array.from(userPhotosContainer.children);
     const albums = []
@@ -34,7 +33,7 @@ const app = (() =>{
 
     const appendAlbumPhotos = (currentAlbum) => {
         for(const [i, photo] of appendedPhotos.entries()) {
-            if(fullModeOn){
+            if(isFullModeOn){
                 return;
             }
 
@@ -47,7 +46,7 @@ const app = (() =>{
             if(i < currentAlbum.length){
                 photo.classList.add('visible');
                 photo.id = currentAlbum[i].id;
-                photo.children[0].src = 'http://localhost:8000/' + currentAlbum[i].location;
+                photo.children[0].src = remote.base + currentAlbum[i].location;
                 photo.style.transform = `rotate(${currentAlbum[i].rotation}deg)`;
                 photo.style.left = currentAlbum[i].leftPosition + 'px';
                 photo.style.top = currentAlbum[i].topPosition + 'px';
@@ -72,14 +71,14 @@ const app = (() =>{
 
     const findUserPhoto = (id) => appendedPhotos.find(photo => photo.id == id);
 
-    let moving = false;
-    let resizable = false;
-    let resizing = false;
-    let rotating = false;
+    let isMoving;
+    let resizable; //??
+    let isResizing;
+    let isRotating;
     
     const moveEditablePhoto = (pos1, pos2) => {
-        if (editMode) {
-            moving = true;
+        if (isEditMode) {
+            isMoving = true;
             rotateButton.style.display = 'none';
             resizeButton.style.display = 'none';
 
@@ -104,21 +103,22 @@ const app = (() =>{
     const resetMoveButtons = () => {
         rotateButton.style.display = 'block';
         resizeButton.style.display = 'block';
-        moving = false;
+        isMoving = false;
     }
 
     let posX;
+    let isLeftResize;
     const checkIfResizable = (e) => {
-        if (editMode) {
+        if (isEditMode) {
             if (e.offsetX < currentPhoto.width / 7) {
-                resizing = true;
-                leftResize = true;
+                isResizing = true;
+                isLeftResize = true;
             }else if (e.offsetX > currentPhoto.width / 1.2) {
-                resizing = true;
-                leftResize = false;
+                isResizing = true;
+                isLeftResize = false;
             }
             posX = e.clientX;
-            if(resizing){
+            if(isResizing){
                 window.addEventListener('mousemove', resize);
                 window.addEventListener('mouseup', stopResize)
             }
@@ -135,7 +135,7 @@ const app = (() =>{
         let minLeft = minWidth;
         let resize;
         let moveLeft;
-        if(leftResize){
+        if(isLeftResize){
             resize = posX - nextPosX;
             moveLeft = nextPosX - posX;
             minPosX = posX + minWidth;
@@ -168,7 +168,7 @@ const app = (() =>{
 }
 
     function stopResize(e) {
-        resizing = false;
+        isResizing = false;
 
         if (e.target != currentPhoto.node && e.target.parentElement != currentPhoto.node) {
             resizeButton.style.display = 'none'
@@ -196,13 +196,13 @@ const app = (() =>{
         }
     }
 
-    let editMode = false;
+    let isEditMode;
     const editButton = document.getElementById('speech-bubble-right');
     const saveButton = document.getElementById('speech-bubble-left');
     const editButtonLabel = editButton.children[0];
     
     const changeLabels = () => {
-        if (!editMode) {
+        if (!isEditMode) {
             editButtonLabel.textContent = 'Cancel';
         } else {
             editButtonLabel.textContent = 'Edit';
@@ -211,7 +211,7 @@ const app = (() =>{
             moveButton.style.display = 'none';
             resetEdits();
         }
-        editMode = !editMode;
+        isEditMode = !isEditMode;
     }
 
     const resetEdits = () => {
@@ -291,15 +291,12 @@ const app = (() =>{
     const moveButton = document.getElementById('move-btn');
     const resizeButton = document.getElementById('resize-btn');
     const rotateButton = document.getElementById('rotate-btn');
-    const secondSection = document.getElementById('second-section');
+    const secondSection = document.getElementById('notebook');
     const noteSection = document.getElementById('note-section');
-
-    let secondSectionWidth = secondSection.offsetWidth;
-    let noteWidth = noteSection.offsetWidth * 0.22;
 
     let currentPhoto;
     const focusPhoto = (photo) => {
-        if (!moving && !resizing && editMode && !rotating) {
+        if (!isMoving && !isResizing && isEditMode && !isRotating) {
             currentPhoto = albums[currentAlbumNumber][appendedPhotos.indexOf(photo)];
             currentPhoto.node = photo;
 
@@ -334,7 +331,7 @@ const app = (() =>{
     }
 
     const resetPhotoButtons = () => {
-        if (!moving && !resizing && !rotating && editMode) {
+        if (!isMoving && !isResizing && !isRotating && isEditMode) {
             moveButton.style.display = 'none';
             resizeButton.style.display = 'none';
             rotateButton.style.display = 'none';
@@ -347,7 +344,7 @@ const app = (() =>{
     let centerY;
     const startRotate = (e) => {
         e.stopPropagation();
-        rotating = true;
+        isRotating = true;
         resizeButton.style.display = 'none';
         moveButton.style.display = 'none';
 
@@ -362,7 +359,7 @@ const app = (() =>{
     }
 
     const rotate = () => {
-        if (editMode) {
+        if (isEditMode) {
             var mouseX = event.pageX;
             var mouseY = event.pageY;
 
@@ -374,7 +371,7 @@ const app = (() =>{
     }
     
     const stopRotate = (e) => {
-        rotating = false;
+        isRotating = false;
 
         if(e.target != currentPhoto.node && e.target.parentElement != currentPhoto.node){
             rotateButton.style.display = 'none';
@@ -425,11 +422,11 @@ const app = (() =>{
     const playNav = document.getElementById('play-nav');
     const addPhoto = document.getElementById('add-photo');
 
-    let fullModeOn = false;
-    let initialLoad = false;
+    let isFullModeOn;
+    let isInitialLoad;
     const fullModeToggle = () => {
-        if(fullModeOn){ 
-            initialLoad = false;
+        if(isFullModeOn){ 
+            isInitialLoad = false;
             notes.resetNote();
             notes.resetNoteView();
 
@@ -454,11 +451,8 @@ const app = (() =>{
         }
         document.body.classList.toggle('full-mode-active');
         currentAlbumNumber = null;
-        fullModeOn = !fullModeOn;
+        isFullModeOn = !isFullModeOn;
     }
-
-    const isFullMode = () => fullModeOn;
-    const isInitialLoad = () => initialLoad;
 
     const initialLoading = () => {
         document.getElementById('user-form').reset();
@@ -468,7 +462,7 @@ const app = (() =>{
         setTimeout(() => {
             document.getElementById('pink-bulb').src = 'resources/pink-bulb.gif';
             document.getElementById('blue-bulb').src = 'resources/blue-bulb.gif';
-            initialLoad = true;            
+            isInitialLoad = true;            
         }, 600);
     }
 
@@ -783,7 +777,7 @@ const app = (() =>{
             res => {
                 editButtonLabel.textContent = 'Edit';
                 rotateButton.style.display = 'none';
-                editMode = false;
+                isEditMode = false;
             }
         );
     }
