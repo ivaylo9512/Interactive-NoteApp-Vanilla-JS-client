@@ -9,19 +9,19 @@ const animate = (() => {
         deltaDir = Math.sign(nextY - scrollY);
         scrollY = nextY
 
-        if (scrollY < 800 && !balloonPlayed && app.isInitialLoad()) {
+        if (scrollY < 800 && !isBalloonPlayed && app.isInitialLoad()) {
             balloonAnimation();
         }
 
-        if (scrollY < height - 1139 && deltaDir < 0 && hiding) {
+        if (scrollY < height - 1139 && deltaDir < 0 && isHidden) {
             showCircles();
         }
     
-        if (scrollY > height - 1139 && deltaDir > 0 && !hiding) {
+        if (scrollY > height - 1139 && deltaDir > 0 && !isHidden) {
             hideCircles();
         }
     
-        if (scrollY <= height - 446 && !treeAnimated && deltaDir < 0) {
+        if (scrollY <= height - 446 && !isTreeAnimated && deltaDir < 0) {
             treeAnimation();
         }
 
@@ -30,7 +30,6 @@ const animate = (() => {
         }
     }
 
-    //TODO:body.scollHeight;
     const scrollToProfile = () => {
         const height = document.body.scrollHeight;
         const scroll = height - 1400 - scrollY;
@@ -90,18 +89,18 @@ const animate = (() => {
     
     const photos = document.getElementsByClassName('onLoad-photo');
 
-    let hiding = true;
+    let isHidden = true;
 
     const showCircles = () => {
         const delay = 100;
         let current = 0;
-        hiding = false;
+        isHidden = false;
         
         showLoop();
         function showLoop() {
             setTimeout(() => {
 
-                if(current == circles.length || hiding){
+                if(current == circles.length || isHidden){
                     return;
                 }
                 
@@ -120,13 +119,13 @@ const animate = (() => {
     }
     const hideCircles = () => {
         let delay = 50;
-        hiding = true;
+        isHidden = true;
         let current = circles.length - 1;
 
         hideLoop();
         function hideLoop() {
             setTimeout(() => {
-                if(current < 0 || !hiding){
+                if(current < 0 || !isHidden){
                     return;
                 }
 
@@ -145,10 +144,10 @@ const animate = (() => {
         circlesAnimated = true;
     }
 
-    let treeAnimated = false;
+    let isTreeAnimated;
     const treeAnimation = () => {
         document.getElementById('tree').src = 'resources/tree-animation.gif';
-        treeAnimated = true;
+        isTreeAnimated = true;
         setTimeout(() => document.getElementById('onload-nav').classList.add('nav-show'), 2300);
     }
 
@@ -158,29 +157,26 @@ const animate = (() => {
         pointerHidden = true;
     }
 
-    let balloonPlayed = false;
-    
+    let isBalloonPlayed;
     const brushAnimation = document.getElementById('brush-animation');
-    const balloon = document.getElementById('balloon');
-    const balloonLeft = document.getElementById('balloon-left');
-    const balloonRight = document.getElementById('balloon-right');
+    const balloons = document.getElementById('balloons-container').children;
 
     const balloonAnimation = () => {
-        balloonPlayed = true;
+        isBalloonPlayed = true;
         animationIsPlaying = true;
 
         window.scrollTo(0, 800);
         smoothScroll(100, 3100, 800);
         setTimeout(() => smoothScroll(-900, 3500, scrollY), 3100);
 
-        balloon.style.display = 'block';
+        balloons[1].style.display = 'inline-block';
         setTimeout(() => {
-            balloonLeft.style.display = 'block';
-            balloonRight.style.display = 'block';
+            balloons[0].style.display = 'inline-block';
+            balloons[2].style.display = 'inline-block';
         }, 1250);
 
         setTimeout(() => {
-            balloonLeft.src = 'resources/first-balloon-second-animation.gif';
+            balloons[0].src = 'resources/first-balloon-second-animation.gif';
             noteSectionAnimation();
         }, 3500);
     }
@@ -189,24 +185,24 @@ const animate = (() => {
     const noteSectionAnimation = () => {
         setTimeout(() => {
             animationIsPlaying = false;
-            balloonLeft.classList.add('hide');
+            balloons[0].classList.add('hide');
             noteSection.classList.add('animate');
 
             setTimeout(() => {
                 brushAnimation.style.display = 'block';
                 notes.setBrushAnimated();
-                balloonLeft.style.display = 'none';
+                balloons[0].style.display = 'none';
             }, 1100);
 
         }, 5050);
     }
     
     const skipAnimations = () => {
-        if(!balloonPlayed){
-            balloonPlayed = true;
+        if(!isBalloonPlayed){
+            isBalloonPlayed = true;
 
-            balloon.style.display = 'block';
-            balloonRight.style.display = 'block';
+            balloons[1].style.display = 'inline-block';
+            balloons[2].style.display = 'inline-block';
 
             brushAnimation.style.display = 'block';
             noteSection.classList.add('animate');
