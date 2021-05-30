@@ -158,56 +158,33 @@ const animate = (() => {
     }
 
     let isBalloonPlayed;
-    const brushAnimation = document.getElementById('brush-animation');
-    const balloons = document.getElementById('balloons-container').children;
+    let isAnimationPlaying;
+    const balloonsContainer = document.getElementById('balloons-container');
 
     const balloonAnimation = () => {
         isBalloonPlayed = true;
-        animationIsPlaying = true;
+        isAnimationPlaying = true;
 
         window.scrollTo(0, 800);
         smoothScroll(100, 3100, 800);
         setTimeout(() => smoothScroll(-900, 3500, scrollY), 3100);
 
-        balloons[1].style.display = 'inline-block';
+        balloonsContainer.classList.add('animate');
         setTimeout(() => {
-            balloons[0].style.display = 'inline-block';
-            balloons[2].style.display = 'inline-block';
-        }, 1250);
-
-        setTimeout(() => {
-            balloons[0].src = 'resources/first-balloon-second-animation.gif';
-            noteSectionAnimation();
+            isAnimationPlaying = false;
+            notes.setBalloonAnimated();
         }, 3500);
     }
+
     const noteSection = document.getElementById('note-section');
 
-    const noteSectionAnimation = () => {
-        setTimeout(() => {
-            animationIsPlaying = false;
-            balloons[0].classList.add('hide');
-            noteSection.classList.add('animate');
-
-            setTimeout(() => {
-                brushAnimation.style.display = 'block';
-                notes.setBrushAnimated();
-                balloons[0].style.display = 'none';
-            }, 1100);
-
-        }, 5050);
-    }
-    
     const skipAnimations = () => {
         if(!isBalloonPlayed){
             isBalloonPlayed = true;
 
-            balloons[1].style.display = 'inline-block';
-            balloons[2].style.display = 'inline-block';
+            balloonsContainer.classList.add('animated');
 
-            brushAnimation.style.display = 'block';
-            noteSection.classList.add('animate');
-            notes.setBrushAnimated();
-
+            notes.setBalloonAnimated();
             treeAnimation();
             hidePointer();
         }
