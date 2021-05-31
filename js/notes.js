@@ -174,6 +174,7 @@ const notes = (() => {
             }
     }
 
+
     const dayNode = document.createElement('a');
     const daysFragment = document.createDocumentFragment();
     const resetDays = () => {
@@ -195,7 +196,7 @@ const notes = (() => {
 
             year = clickedYear;
             chosenYear.textContent = clickedYear;
-            yearsHiding = true;
+            isYearsHiding = true;
             hideYears();
             showMonths();
 
@@ -271,7 +272,6 @@ const notes = (() => {
     let notesCount = 0;
     let photoFragment = document.createDocumentFragment();
     const appendNotes = () => {
-        isTopNote = false;
         notesCount = userNotes.length;
         delay = notesCount * 0.2;
 
@@ -312,17 +312,15 @@ const notes = (() => {
     }
 
     let rotate;
-    let transitionFinished = true;
+    let isTransitionFinished = true;
     let focusedNote;
     let focusedCloud;
     const showUserNote = (index, note, noteInfo, updateBtn) => {
-        let removeDrag;
-        let draggedCloud;
-        let textArea;
-        let nameInput;
-        if(noteInfo != focusedNote && transitionFinished){
+        let removeDrag, draggedCloud, textArea, nameInput;
+
+        if(noteInfo != focusedNote && isTransitionFinished){
             focusedNote = noteInfo;
-            transitionFinished = false;
+            isTransitionFinished = false;
 
             let cloudIndex = Math.floor(index / 2);
             if(index >= userNotes.length - 2){
@@ -345,7 +343,7 @@ const notes = (() => {
             focusedCloud.classList.add('translate');        
             setTimeout(() => focusedCloud.classList.add('border-radius'), 0);
             setTimeout(() => {
-                transitionFinished = true;
+                isTransitionFinished = true;
 
                 focusedCloud.addEventListener('mouseover', addShadow, { once: true})
                 updateBtn.addEventListener('mouseover', updateNote);
@@ -361,7 +359,7 @@ const notes = (() => {
         }
         
         function hideUserNote(){ 
-            window.addEventListener('mousedown',  function hideUserNote(){
+            window.addEventListener('mousedown', function hideUserNote(){
                 const target = event.target;
                 const parent = target.parentElement;
                 const className = parent && parent.className;
@@ -475,10 +473,10 @@ const notes = (() => {
     }
 
     const unpopNote = () => {
-        if(app.isFullMode()){
+        if(app.isFullMode){
             bindNote();
         }else{
-            noteIsAnimated = false;
+            isNoteAnimated = false;
             inputNote.style.left = null;
             inputNote.style.top = null;
             inputNote.style.display = 'none';
@@ -507,19 +505,13 @@ const notes = (() => {
         noteSection.style.display = 'none';     
     }
 
-    let noteViewActivated = false;
+    let isNoteViewActivated;
     const resetNoteView = () => {
-        if(!noteViewActivated){
-            daysCount = 0;
-            day = null;
-            year = null;
-            month = null;
-
-            isTopNote = false;
-            delay = 0;
+        if(!isNoteViewActivated){
+            daysCount = notesCount = delay = 0;
+            day = year = month = null;
 
             userNotes = [];
-            notesCount = 0;
             resetNotes();
             resetDays();
 
@@ -535,25 +527,23 @@ const notes = (() => {
 
     } 
 
-    let brushAnimated = false;
-    let noteIsAnimated = false;
-    const setBrushAnimated = () => {
-        brushAnimated = true;
+    let isBalloonsAnimated;
+    let isNoteAnimated;
+    const setBalloonAnimated = () => {
+        isBalloonsAnimated = true;
     }
 
     const resetNote = () => {
-        noteIsAnimated 
-            ? inputNote.style.display = 'block'
+        isNoteAnimated ? inputNote.style.display = 'block'
             : inputNote.style.display = 'none';
     }
-
     
-    const noteHolders = document.getElementById('note-animation-container');
+    const noteHolders = document.getElementById('note-animation');
 
     const noteAppend = (currentTarget) => {
         
-        if ((brushAnimated && event.target.id != 'note-animation-container') || currentTarget == 'input-note-btn') {
-            noteIsAnimated = true;
+        if ((isBalloonsAnimated && event.target.id != 'note-animation') || currentTarget == 'input-note-btn') {
+            isNoteAnimated = true;
             inputNote.style.display = 'block';
             animationNote.style.display = 'none';
             noteHolders.removeEventListener('click', noteAppend);
@@ -561,27 +551,27 @@ const notes = (() => {
     }
 
     const showTopAnimations = () => {
-        if (brushAnimated) {
+        if (isBalloonsAnimated) {
             noteSection.classList.remove('animate');
         }
     }
 
     const hideTopAnimations = () => {
-        if (brushAnimated) {
+        if (isBalloonsAnimated) {
             noteSection.classList.add('animate');
         }
     }
 
     const noteHeader = document.getElementById('notes-header');
     const showNoteView = () => {
-        if (brushAnimated && document.body.className != 'full-mode-active') {
+        if (isBalloonsAnimated && document.body.className != 'full-mode-active') {
             noteSection.classList.remove('animate');
 
             noteHeader.removeEventListener('mouseout', hideTopAnimations);
             noteHeader.removeEventListener('mouseover', showTopAnimations);
             noteHeader.removeEventListener('click', showNoteView);
 
-            noteViewActivated = true;
+            isNoteViewActivated = true;
             setTimeout(() => {
                 noteSection.classList.add('animated');
             }, 1600);
@@ -634,7 +624,7 @@ const notes = (() => {
         hideFullScreenNotes,
         resetNoteView,
         resetNote,
-        setBrushAnimated,
+        setBalloonAnimated,
         resetHeader
     }
 })();
