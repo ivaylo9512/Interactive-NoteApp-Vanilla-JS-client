@@ -1,8 +1,9 @@
 const notes = (() => {
     const timelineMonths = document.getElementById('timeline-months');
+   
     const months = Array.from(timelineMonths.getElementsByTagName('LI'));
-
     const years = [];
+   
     const maxYear = 1995;
     const currentYear = new Date().getFullYear();
     const yearsCount = currentYear - maxYear;
@@ -89,7 +90,6 @@ const notes = (() => {
     }
 
     const hideYears = () => {
-
         let current = 0;        
         hideLoop();
         function hideLoop(){
@@ -114,101 +114,35 @@ const notes = (() => {
 
     let day, 
         year, 
-        month, 
-        daysCount;
+        month;
 
-    let monthsData = {
-        january:{
-            month: 1,
-            daysCount: 31
-        },
-        february:{
-            month: 2,
-            daysCount: 28
-        },
-        march:{
-            month: 3,
-            daysCount: 31
-        },
-        april:{
-            month: 4,
-            daysCount: 30
-        },
-        may:{
-            month: 5,
-            daysCount: 31
-        },
-        june:{
-            month: 6,
-            daysCount: 30
-        },
-        july:{
-            month: 7,
-            daysCount: 31
-        },
-        august:{
-            month: 8,
-            daysCount: 31
-        },
-        september:{
-            month: 9,
-            daysCount: 30
-        },
-        october:{
-            month: 10,
-            daysCount: 31
-        },
-        november:{
-            month: 11,
-            daysCount: 30
-        },
-        december:{
-            month: 12,
-            daysCount: 31
-        }
-    }
+    let monthsDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
-    const getMonth = (clickedMonth) => {
+    const setMonth = (monthIndex, monthName) => {
             if (clickedMonth != '') {
-                
-                chosenMonth.textContent = clickedMonth;
+                chosenMonth.textContent = monthName;
+                month = monthIndex + 1;
 
-                ([month, day] = monthsData.clickedMonth)
-
-                resetDays();
+                setDaysCount(monthsDays[monthIndex]);
                 checkDate();
             }
     }
 
-    const dayNode = document.createElement('a');
-    const daysFragment = document.createDocumentFragment();
-    const resetDays = () => {
-        while (daysContainer.firstChild) {
-            daysContainer.removeChild(daysContainer.firstChild);
-        }
-
-        for (i = 1; i <= daysCount; i++) {
-            const dayCopy = dayNode.cloneNode(true);
-            dayCopy.textContent = i;
-
-            daysFragment.appendChild(dayCopy);
-        }
-        daysContainer.appendChild(daysFragment);
-
+    const setDaysCount = () => {
+        daysContainer.className = 'days count' + daysCount;
     }
 
-    const getYear = (clickedYear) => {
-
+    const setYear = (clickedYear) => {
             year = clickedYear;
             chosenYear.textContent = clickedYear;
             isYearsHiding = true;
+            
             hideYears();
             showMonths();
-
             checkDate();
     }
 
-    function getDay() {
+    function setDay() {
         if (event.target.tagName == 'A') {
             day = event.target.textContent;
             chosenDay.textContent = day;
@@ -432,11 +366,11 @@ const notes = (() => {
         }
 
         while (leftNotesContainer.firstChild) {
-            leftNotesContainer.removeChild(leftNotesContainer.firstChild)
+            leftNotesContainer.removeChild(leftNotesContainer.lastChild)
         }
 
         while (rightNotesContainer.firstChild) {
-            rightNotesContainer.removeChild(rightNotesContainer.firstChild)
+            rightNotesContainer.removeChild(rightNotesContainer.lastChild)
         }
 
         cloudHeaders = [];
@@ -513,12 +447,11 @@ const notes = (() => {
     let isNoteViewActivated;
     const resetNoteView = () => {
         if(!isNoteViewActivated){
-            daysCount = notesCount = delay = 0;
+            notesCount = delay = 0;
             day = year = month = null;
 
             userNotes = [];
             resetNotes();
-            resetDays();
 
             chosenMonth.textContent = '';
             chosenYear.textContent = '';
@@ -603,12 +536,10 @@ const notes = (() => {
         });
     }
     
-    months.forEach(month => month.addEventListener('click',() => getMonth(month.children[0].textContent)));
-    years.forEach(year => year.addEventListener('click', () => getYear(year.children[0].textContent)));
     
     const start = () => {
         appendYears();
-        
+
         noteHolders.addEventListener('click', noteAppend);
         noteHeader.addEventListener('mouseover', showTopAnimations);
         noteHeader.addEventListener('mouseout', hideTopAnimations);
@@ -617,7 +548,7 @@ const notes = (() => {
         document.getElementById('submit-btn').addEventListener('click', submitNote);
         document.getElementById('input-note-btn').addEventListener('click', popNote)
         document.getElementById('close-btn').addEventListener('click', unpopNote)
-        daysContainer.addEventListener('click', getDay);
+        daysContainer.addEventListener('click', setDay);
     }
 
     return {
