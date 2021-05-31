@@ -1,32 +1,36 @@
 const notes = (() => {
-
     const timelineMonths = document.getElementById('timeline-months');
-    const timelineYears = document.getElementById('timeline-years').children[0];
     const months = Array.from(timelineMonths.getElementsByTagName('LI'));
 
+    const years = [];
     const maxYear = 1995;
     const currentYear = new Date().getFullYear();
     const yearsCount = currentYear - maxYear;
+     
+    function appendYears(){
+        const timelineYears = document.getElementById('timeline-years').children[0];
+        const yearsFragment = document.createDocumentFragment();
+
+        for(let i = 0; i <= yearsCount ; i++){
+            const year = document.createElement('LI');
+            const yearLabel = document.createElement('P');
+            const point = document.createElement('SPAN');
+            
+            point.className = 'point';
+            yearLabel.textContent = maxYear + i;
     
-    const yearsFragment = document.createDocumentFragment();
-    const years = [];
-    for(let i = 0; i <= yearsCount ; i++){
-        const year = document.createElement('LI');
-        const yearLabel = document.createElement('P');
-        const point = document.createElement('SPAN');
-        point.className = 'point';
-        yearLabel.textContent = maxYear + i;
+            year.appendChild(yearLabel);
+            year.appendChild(point);
+            years.push(year);
+            yearsFragment.appendChild(year)
+            
+            if(i < yearsCount - 7) year.style.marginTop = '-69px';
+            else if(i == yearsCount - 7) year.style.marginTop = '-32px';
+        }
 
-        year.appendChild(yearLabel);
-        year.appendChild(point);
-        years.push(year);
-        yearsFragment.appendChild(year)
-        
-        if(i < yearsCount - 7) year.style.marginTop = '-69px';
-        else if(i == yearsCount - 7) year.style.marginTop = '-32px';
+        timelineYears.appendChild(yearsFragment);
     }
-    timelineYears.appendChild(yearsFragment);
-
+    
     let slideYear = yearsCount - 7;
     const slideYears = (pos) => {
         const currentYear = years[slideYear];
@@ -53,9 +57,9 @@ const notes = (() => {
         }
     }
 
-    yearsHiding = false;
+    let isYearsHidden;
     const showMonths = () => {
-        yearsHiding = true;
+        isYearsHidden = true;
         hideYears();
         timelineMonths.classList.add('show');
     }
@@ -65,7 +69,7 @@ const notes = (() => {
     }
 
     const showYears = () => {
-        yearsHiding = false;
+        isYearsHidden = false;
         hideMonths();
 
         let current = years.length - 1;
@@ -73,7 +77,7 @@ const notes = (() => {
         function showLoop(){
 
             setTimeout(() => { 
-                if(current < 0 || yearsHiding){
+                if(current < 0 || isYearsHidden){
                     return;
                 }
                 years[current].style.opacity = '1';
@@ -91,7 +95,7 @@ const notes = (() => {
         function hideLoop(){
 
             setTimeout(() => { 
-                if(current == years.length || !yearsHiding){
+                if(current == years.length || !isYearsHidden){
                     return;
                 }
                 years[current].style.opacity = '0';
@@ -108,72 +112,73 @@ const notes = (() => {
     const chosenYear = document.getElementById('chosen-year');
     const chosenDay = document.getElementById('chosen-day');
 
-    let day;
-    let year;
-    let month;
-    let daysCount;
+    let day, 
+        year, 
+        month, 
+        daysCount;
+
+    let monthsData = {
+        january:{
+            month: 1,
+            daysCount: 31
+        },
+        february:{
+            month: 2,
+            daysCount: 28
+        },
+        march:{
+            month: 3,
+            daysCount: 31
+        },
+        april:{
+            month: 4,
+            daysCount: 30
+        },
+        may:{
+            month: 5,
+            daysCount: 31
+        },
+        june:{
+            month: 6,
+            daysCount: 30
+        },
+        july:{
+            month: 7,
+            daysCount: 31
+        },
+        august:{
+            month: 8,
+            daysCount: 31
+        },
+        september:{
+            month: 9,
+            daysCount: 30
+        },
+        october:{
+            month: 10,
+            daysCount: 31
+        },
+        november:{
+            month: 11,
+            daysCount: 30
+        },
+        december:{
+            month: 12,
+            daysCount: 31
+        }
+    }
 
     const getMonth = (clickedMonth) => {
             if (clickedMonth != '') {
                 
                 chosenMonth.textContent = clickedMonth;
 
-                switch (clickedMonth) {
-                    case 'January':
-                        month = 1;
-                        daysCount = 31;
-                        break;
-                    case 'February':
-                        month = 2;
-                        daysCount = 28;
-                        break;
-                    case 'March':
-                        month = 3;
-                        daysCount = 31;
-                        break;
-                    case 'April':
-                        month = 4;
-                        daysCount = 30;
-                        break;
-                    case 'May':
-                        month = 5;
-                        daysCount = 31;
-                        break;
-                    case 'June':
-                        month = 6;
-                        daysCount = 30;
-                        break;
-                    case 'July':
-                        month = 7;
-                        daysCount = 31;
-                        break;
-                    case 'August':
-                        month = 8;
-                        daysCount = 31;
-                        break;
-                    case 'September':
-                        month = 9;
-                        daysCount = 30;
-                        break;
-                    case 'October':
-                        month = 10;
-                        daysCount = 31;
-                        break;
-                    case 'November':
-                        month = 11;
-                        daysCount = 30;
-                        break;
-                    case 'December':
-                        month = 12;
-                        daysCount = 31;
-                        break;
-                }
+                ([month, day] = monthsData.clickedMonth)
 
                 resetDays();
                 checkDate();
             }
     }
-
 
     const dayNode = document.createElement('a');
     const daysFragment = document.createDocumentFragment();
@@ -602,6 +607,8 @@ const notes = (() => {
     years.forEach(year => year.addEventListener('click', () => getYear(year.children[0].textContent)));
     
     const start = () => {
+        appendYears();
+        
         noteHolders.addEventListener('click', noteAppend);
         noteHeader.addEventListener('mouseover', showTopAnimations);
         noteHeader.addEventListener('mouseout', hideTopAnimations);
