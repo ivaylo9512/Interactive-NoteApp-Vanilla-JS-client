@@ -3,6 +3,10 @@ const animate = (() => {
     const getScrollY = () => scrollY;
 
     const decideEvent = () => {
+        if(!app.isFullMode()){
+            return;
+        }
+        
         const height = document.body.scrollHeight;
         const nextY = window.pageYOffset;
         
@@ -22,11 +26,7 @@ const animate = (() => {
         }
     
         if (scrollY <= height - 446 && !isTreeAnimated && deltaDir < 0) {
-            treeAnimation();
-        }
-
-        if (scrollY < height - 446 && !pointerHidden && deltaDir < 0) {
-            hidePointer();
+            animateTree();
         }
     }
 
@@ -71,30 +71,15 @@ const animate = (() => {
         requestAnimationFrame(scroll);
     }
 
-    const circles = [];
-    const circle = document.createElement('span');
-    const circlesFragment = document.createDocumentFragment();
-    const circleContainer = document.getElementById('circles-container');
-    const maxCircles = 25;
-    const createCircles = () => {
-        for (let i = 1; i < maxCircles; i++) {
-            const circleCopy = circle.cloneNode(true);
-            circleCopy.className = 'colorizable circle' + i;
-
-            circles.push(circleCopy);
-            circlesFragment.appendChild(circleCopy);
-        }
-        circleContainer.appendChild(circlesFragment);  
-    }
-    
+    const circles = document.getElementsByClassName('circle');
     const photos = document.getElementsByClassName('onLoad-photo');
-
     let isHidden = true;
 
     const showCircles = () => {
+        isHidden = false;
+     
         const delay = 100;
         let current = 0;
-        isHidden = false;
         
         showLoop();
         function showLoop() {
@@ -117,9 +102,11 @@ const animate = (() => {
             }, delay);
         };
     }
+
     const hideCircles = () => {
-        let delay = 50;
         isHidden = true;
+       
+        let delay = 50;
         let current = circles.length - 1;
 
         hideLoop();
@@ -141,29 +128,21 @@ const animate = (() => {
                 hideLoop();
             }, delay);
         }
-        circlesAnimated = true;
     }
 
     let isTreeAnimated;
-    const treeAnimation = () => {
-        document.getElementById('tree').src = 'resources/tree-animation.gif';
+    const animateTree = () => {
         isTreeAnimated = true;
-        setTimeout(() => document.getElementById('onload-nav').classList.add('nav-show'), 2300);
-    }
 
-    let pointerHidden = false;
-    const hidePointer = () => {
-        document.getElementById('pointer').style.display = 'none';
-        pointerHidden = true;
+        document.getElementById('tree').src = 'resources/tree-animation.gif';
+        document.getElementById('onload-animation').classList.add('animate');
     }
 
     let isBalloonPlayed;
-    let isAnimationPlaying;
     const balloonsContainer = document.getElementById('balloons-container');
 
     const balloonAnimation = () => {
         isBalloonPlayed = true;
-        isAnimationPlaying = true;
 
         window.scrollTo(0, 800);
         smoothScroll(100, 3100, 800);
@@ -171,12 +150,9 @@ const animate = (() => {
 
         balloonsContainer.classList.add('animate');
         setTimeout(() => {
-            isAnimationPlaying = false;
             notes.setBalloonAnimated();
         }, 3500);
     }
-
-    const noteSection = document.getElementById('note-section');
 
     const skipAnimations = () => {
         if(!isBalloonPlayed){
@@ -185,14 +161,14 @@ const animate = (() => {
             balloonsContainer.classList.add('animated');
 
             notes.setBalloonAnimated();
-            treeAnimation();
+            animateTree();
             hidePointer();
         }
     }
 
     const start = () => {
         createCircles();
-        window.addEventListener('scroll', () => !app.isFullMode() && decideEvent());
+        window.addEventListener('scroll', decideEvent);
         document.getElementById('profile-btn').addEventListener('click', scrollToProfile);
         document.getElementById('album-btn').addEventListener('click', scrollToAlbum);
     }
