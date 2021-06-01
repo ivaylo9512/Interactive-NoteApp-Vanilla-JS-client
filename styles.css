@@ -89,6 +89,9 @@ body.full-mode-active .play-mode > .play-nav{
     margin-left: 0.1%;
     z-index: 2;
 }
+.play-mode.tree-animation .pointer{
+    display: none;
+}
 .pointer span {
     width: 1.7vh;
     height: 4.5vh;
@@ -103,15 +106,15 @@ body.full-mode-active .play-mode > .play-nav{
 .pointer span:nth-child(2) {
     transform: rotate(45deg);
 }
+.play-mode.tree-animation .notebook nav{
+    opacity: 1;
+    transition: opacity 1.15s 4.5s ease-in-out;
+}
 .notebook nav {
     height: 10%;
     position: relative;
     opacity: 0;
     width: 100%;
-}
-.notebook nav.nav-show {
-    opacity: 1;
-    transition: opacity 1.15s ease-in-out;
 }
 .notebook nav li{
     font-size: 0.5em;
@@ -381,62 +384,68 @@ body.full-mode-active .play-box{
     display: inline-block;
     font-size: 27px;
 }
-.onLoad-photo{
+.onload-photos{
     position: absolute;
-    border-radius: 10px;
+    height: 50%;
+    float: right;
+    width: 50%;
+    top: 50%;
+    right: 0;
 }
-.onLoad-photo:nth-child(1){
-    bottom: 5%;
-    width: 10%;
+.onload-photos img{
+    position: absolute;
+    border-radius: 0.09em;
+    width: 29%;
+}
+.onload-photos img:nth-child(1){
+    bottom: 27%;
     -webkit-transform: rotate(20deg);
     -moz-transform: rotate(20deg);
     transform: rotate(20deg);
-    right: 20%;
+    right: 12%;
 }
 
-.onLoad-photo:nth-child(2){
-    bottom: 5%;
-    width: 10%;
+.onload-photos img:nth-child(2){
+    bottom: 26%;
     -webkit-transform: rotate(-20deg);
     -moz-transform: rotate(-20deg);
     transform: rotate(-20deg);
-    right: 25%;
+    right: 27%;
 }
 
-.onLoad-photo:nth-child(3) {
-    bottom: 18%;
-    width: 10%;
+.onload-photos img:nth-child(3) {
+    bottom: 42%;
     -webkit-transform: rotate(30deg);
     -moz-transform: rotate(30deg);
     transform: rotate(30deg);
-    right: 25%;
+    right: 27%;
 }
 
-.onLoad-photo:nth-child(4) {
-    bottom: 10%;
-    width: 10%;
+.onload-photos img:nth-child(4) {
+    bottom: 32%;
     -webkit-transform: rotate(10deg);
     -moz-transform: rotate(10deg);
     transform: rotate(10deg);
-    right: 30%;
+    right: 41%;
 }
 
-.onLoad-photo:nth-child(5) {
-    bottom: 14%;
-    width: 10%;
+.onload-photos img:nth-child(5) {
+    bottom: 39%;
     -webkit-transform: rotate(40deg);
     -moz-transform: rotate(40deg);
     transform: rotate(40deg);
-    right: 19%;
+    right: 12%;
 }
 
-.onLoad-photo:nth-child(6) {
-    bottom: 17%;
-    width: 10%;
+.onload-photos img:nth-child(6) {
+    bottom: 41%;
     -webkit-transform: rotate(-25deg);
     -moz-transform: rotate(-25deg);
     transform: rotate(-25deg);
-    right: 30%;
+    right: 41%;
+}
+.user-photos{
+    position: absolute;
 }
 .user-photo{
     position: absolute;
@@ -471,7 +480,7 @@ body.full-mode-active .play-box{
     -webkit-animation: opacity 2.5s forwards;
     animation: opacity 2.5s forwards;
 }
-.photo1{
+.user-photo:nth-child(1){
     top: 76%;
     width: 10%;
     left: 30%;
@@ -480,7 +489,7 @@ body.full-mode-active .play-box{
     transform: rotate(16deg);
     z-index: 1;
 }
-.photo2{
+.user-photo:nth-child(2){
     top: 83%;
     width: 10%;
     left: 35%;
@@ -489,7 +498,7 @@ body.full-mode-active .play-box{
     transform: rotate(-33deg);
 }
 
-.photo3{
+.user-photo:nth-child(3){
     top: 62%;
     width: 50%;
     left: 35%;
@@ -498,7 +507,7 @@ body.full-mode-active .play-box{
     transform: rotate(48deg);
     z-index: 1;
 }
-.photo4{
+.user-photo:nth-child(4){
     top: 71%;
     width: 10%;
     left: 22%;
@@ -507,7 +516,7 @@ body.full-mode-active .play-box{
     transform: rotate(-17deg);
 }
 
-.photo5{
+.user-photo:nth-child(5){
     top: 68%;
     width: 12%;
     left: 33%;
@@ -516,7 +525,7 @@ body.full-mode-active .play-box{
     transform: rotate(28deg);
 }
 
-.photo6{
+.user-photo:nth-child(6){
     top: 60%;
     width: 10%;
     left: 23%;
@@ -525,7 +534,7 @@ body.full-mode-active .play-box{
     transform: rotate(28deg);
 }
 
-.photo7{
+.user-photo:nth-child(7){
     top: 25%;
     width: 16%;
     left: 28%;
@@ -534,14 +543,14 @@ body.full-mode-active .play-box{
     transform: rotate(-32deg);
 }
 
-.photo8{
+.user-photo:nth-child(8){
     top: 38%;
     width: 16%;
     left: 34%;
     z-index: 1;
 }
 
-.photo9{
+.user-photo:nth-child(9){
     top: 38%;
     width: 15%;
     left: 26%;
@@ -551,7 +560,7 @@ body.full-mode-active .play-box{
     transform: rotate(25deg);
 }
 
-.photo10{
+.user-photo:nth-child(10){
     top: 25%;
     width: 16%;
     left: 36%;
@@ -598,18 +607,15 @@ body.full-mode-active .play-box{
 }
 
 .circles-container span,
-.circles-container img {
+.onload-photos img {
     display: none;
     opacity: 0;
     outline: 1px solid transparent;
 }
 
 .circles-container span.animate,
-.circles-container img.animate {
-    display: block;
-}
-.circles-container span.animate,
-.onLoad-photo.animate{
+.onload-photos img.animate{
+    display: inline;
     -moz-animation: fadeIn .5s ease-in forwards;
     -o-animation: fadeIn .5s ease-in forwards;
     -webkit-animation: fadeIn .5s ease-in forwards;
@@ -817,6 +823,7 @@ body.full-mode-active .play-box{
 }
 .profile > div{
     display: inline-block;
+    vertical-align: top;
 }
 .user-info {
     width: 43%;
@@ -828,7 +835,7 @@ body.full-mode-active .play-box{
     font-weight: bold;
     margin-bottom: 0.8em;
     text-align: center;
-    font-size: 0.25em;
+    font-size: 0.28em;
     display: inline-block;
 }
 .inputs-container {
@@ -838,12 +845,13 @@ body.full-mode-active .play-box{
 .user-info input{
     width: 48%;
     background: transparent;
-    font: normal 0.22em/1 "Aladin", Helvetica, sans-serif;
+    font: normal 0.2em/1 "Aladin", Helvetica, sans-serif;
     text-align: center;
     border: 0px;
     border-bottom: 0.1em solid #41291B;
     position: relative;
-    top: -0.3em;
+    top: -0.2em;
+    color: #41291B;
 }
 .buttons-container {
     width: 100%;
@@ -856,14 +864,13 @@ body.full-mode-active .play-box{
 .buttons-container button {
     padding: 0;
     background-color: #442818;
-    width: 17vh;
-    border-top-left-radius: 16px;
-    border-top-right-radius: 16px;
+    width: 17%;
+    height: 100%;
+    border-radius: 0.5em 0.5em 0 0;
     border: 1px solid white;
     outline: none;
     cursor: pointer;
     font-size: 0.23em;
-    height: 100%;
     transition: all 1s;
     text-align: center;
     vertical-align: top;
@@ -894,24 +901,26 @@ body.full-mode-active .play-box{
     transition: all 1s;
 }
 .profile-photo-container {
-    width: 180px;
-    height: 174px;
-    margin-left: 95px;
+    width: 29%;
+    margin-left: 12%;
     position: relative;
+    line-height: 0;
 }
 .profile-photo-container > * {
-    position: absolute;
     width: 100%;
-    height: 100%;
     top: 0;
+    left: 0;
 }
 .profile-photo-container input{
     opacity: 0;
     z-index: 9;
+    position: absolute;
+    height: 100%;
 }
 .chosen-profile-photo{
-    left: 5px;
     display: none;
+    position: absolute;
+    height: 100%;
 }
 .chosen-profile-photo[src]{
     display: block;
@@ -919,10 +928,10 @@ body.full-mode-active .play-box{
 .note-section{
     position: relative;
     width: 100%;
-    z-index: 5; 
+    height: 100vh;
+    z-index: 5;
 }
-
-.note-animation-container{
+.note-animation{
     position: relative;
     display: inline-block;
     width: 40%;
@@ -1047,11 +1056,11 @@ body.full-mode-active .play-box{
     fill: #EAE9E5;
     width: 50%;
 }
-.note-section.animate .note-animation-container{
+.note-section.animate .note-animation{
     opacity: 1;
 }
-.note-section.animated .note-animation-container,
-body.full-mode-active .note-animation-container{
+.note-section.animated .note-animation,
+body.full-mode-active .note-animation{
     display: none;
 }
 .cloud-header > div {
@@ -1244,33 +1253,6 @@ body.full-mode-active .clouds-container > div > div:nth-child(1),
 }
 body.full-mode-active .cloud-header img{
     opacity: 1;
-}
-.brush-animation-container {
-    position: relative;
-    display: inline-block;
-    width: 40%;
-    height: 400px;
-    z-index: 5;
-    vertical-align: bottom;
-    opacity: 0;
-    transition: opacity 1.15s ease-in-out;
-}
-.brush-animation {
-    width: 71%;
-    -webkit-transform: rotate(10deg);
-    -moz-transform: rotate(10deg);
-    transform: rotate(10deg);
-    margin-top: -55px;
-    margin-left: 45px;
-    transition: all 1.5s ease-in-out; 
-    display: none;
-}
-.note-section.animate .brush-animation-container{
-    opacity: 1;
-}
-.note-section.animated .brush-animation-container,
-body.full-mode-active .brush-animation-container{
-    display: none;
 }
 .input-note-container{
     position: absolute;
