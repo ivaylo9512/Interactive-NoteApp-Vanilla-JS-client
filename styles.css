@@ -600,8 +600,8 @@ body.full-mode-active .play-box{
     transform: translateX(-50%);
 }
 .circles-container span{
-    width: 0.2em;
-    height: 0.2em;
+    width: 0.25em;
+    height: 0.25em;
     border-radius: 50%;
     background: #41291B;
     position: absolute;
@@ -704,6 +704,41 @@ body.full-mode-active .play-box{
 .big-arrow span:nth-child(17){
     left: 120%;
     bottom: 10%;
+}
+.small-arrow{
+    position: absolute;
+    height: 1.25em;
+    width: 1.25em;
+    right: -21%;
+    top: 27%;
+}
+.small-arrow span:nth-child(1){
+    left: 40%;
+    bottom: 16%;
+}
+.small-arrow span:nth-child(2){
+    left: 40%;
+    bottom: 38%;
+}
+.small-arrow span:nth-child(3){
+    left: 61%;
+    bottom: 38%;
+}
+.small-arrow span:nth-child(4){
+    left: 19%;
+    bottom: 38%;
+}
+.small-arrow span:nth-child(5){
+    left: 51%;
+    top: 21%;
+}
+.small-arrow span:nth-child(6){
+    left: 28%;
+    top: 21%;
+}
+.small-arrow span:nth-child(7){
+    left: 40%;
+    top: 1%;
 }
 .balloons-container{
     height: 17.6%;
