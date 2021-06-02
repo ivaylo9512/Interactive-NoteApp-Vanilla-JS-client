@@ -32,11 +32,6 @@ body {
     width: 6.5em;
     margin: 0 auto;
 }
-.notebook form{
-    height: 90%;
-    position: relative;
-    z-index: 3;
-}
 body.full-mode-active .play-mode > *{
     display: none;
 }
@@ -797,12 +792,66 @@ body.full-mode-active .play-box{
     display: inline-block;
     vertical-align: top;
 }
-.user-info {
+.notebook form{
+    height: 90%;
+    position: relative;
+    z-index: 3;
+}
+.notebook form .user-btn:nth-child(1){
+    visibility: hidden;
+    display: inline-block;
+}
+.notebook form.first-view .user-btn:nth-child(1){
+    visibility: visible;
+}
+.notebook form.first-view .user-btn:nth-child(1){
+    visibility: visible;
+}
+.notebook form.first-register-view .register-btn,
+.notebook form.second-register-view .register-btn{
+    margin-right: -0.4%;
+    height: 106%;
+    margin-top: -0.4vh;
+    position: relative;
+    z-index: 9;
+    transition: all 1s;
+}
+.notebook form.first-register-view .user-info{
+    display: none;
+}
+.notebook form.second-register-view .user-info{
+    display: none;
+}
+.notebook form.first-register-view .register-view{
+    display: inline-block;
+}
+.notebook form.second-register-view .login-btn{
+    margin-left: -0.5%;
+    height: 106%;
+    margin-top: -0.4vh;
+    position: relative;
+    z-index: 9;
+    transition: all 1s;
+}
+.buttons-container .user-btn {
+    -webkit-transform: rotate(0.25deg);
+    -moz-transform: rotate(0.25deg);
+    transform: rotate(0.25deg);
+    margin-right: 26vh;
+    margin-left: 7vh;
+    display: none;
+}
+.register-view{
+    display: none;
+}
+.user-info,
+.register-view {
     width: 43%;
     margin-left: 3%;
     line-height: 0;
 }
-.user-info label{
+.user-info label,
+.register-view label{
     width: 42%;
     font-weight: bold;
     margin-bottom: 0.8em;
@@ -814,7 +863,7 @@ body.full-mode-active .play-box{
     width: 16%;
     height: 20%;
 }
-.user-info input{
+.profile input{
     width: 48%;
     background: transparent;
     font: normal 0.2em/1 "Aladin", Helvetica, sans-serif;
@@ -850,27 +899,6 @@ body.full-mode-active .play-box{
 }
 .buttons-container .register{
     margin-left: 0.1%;
-}
-.buttons-container .register.active{
-    margin-left: -0.4%;
-}
-.buttons-container .login.active{
-    margin-right: -0.5%;
-}
-.buttons-container .user-btn {
-    -webkit-transform: rotate(0.25deg);
-    -moz-transform: rotate(0.25deg);
-    transform: rotate(0.25deg);
-    margin-right: 26vh;
-    margin-left: 7vh;
-    visibility: hidden;
-}
-.buttons-container button.active{
-    height: 106%;
-    margin-top: -0.4vh;
-    position: relative;
-    z-index: 9;
-    transition: all 1s;
 }
 .profile-photo-container {
     width: 29%;
