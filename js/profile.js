@@ -1,7 +1,7 @@
 const profile = (() => {
 
-    const loginBtn = document.getElementById('login-view');
-    const registerBtn = document.getElementById('register-view');
+    const loginBtn = document.getElementById('login-btn');
+    const registerBtn = document.getElementById('register-btn');
     const view = [
         {
             labels:['Username', 'Password'],
@@ -58,6 +58,7 @@ const profile = (() => {
         }
     }
 
+    let userForm = document.getElementById('user-form');
     let profilePhoto = document.getElementById('chosen-image');
     let userContainer = document.getElementById('user-info');
     let labelNodes = userContainer.getElementsByTagName('label');
@@ -100,7 +101,7 @@ const profile = (() => {
     }
 
     let userInfo;
-    function setUserInfo(user) {
+    const setUserInfo = (user) => {
         userBtn.textContent = 'logout';
 
         userInfo = {
@@ -131,17 +132,21 @@ const profile = (() => {
             username,
             password,
         }
-        return remote.login(user);
+        remote.login(user).then(res => {
+            setUserInfo(res.data)
+        })
     }
 
     const logout = () => {
         localStorage.removeItem('Authorization');
         localStorage.removeItem('User');
         profilePhoto.src = '';
+        userForm.className = '';
 
-        userBtn.style.display = 'none';
-        userBtn.textContent = '';
+        resetInputs([...userInfoInputs, ...usernameInputs]);
     }
+
+    const resetInputs = (inputs) => inputs.forEach(element => element.value = '');
 
     const userRegister = {};
     const saveInputs = () => {
@@ -153,6 +158,11 @@ const profile = (() => {
             const input = inputNodes[i].value;                
             userRegister[label] = input; 
         }
+    }
+
+    const displayView = (e) => {
+        e.preventDefault();
+        userForm.className = e.target.name + '-view';
     }
 
     const register = () => {
@@ -187,9 +197,11 @@ const profile = (() => {
             profilePhoto.src = userInfo.profilePicture != 'undefined' ? remote.getBase() + userInfo.profilePicture : '#'; 
         }
         
-        loginBtn.addEventListener('click', userAction);
-        registerBtn.addEventListener('click', userAction);
-        document.getElementById('user-btn').addEventListener('click', userAction);
+        loginBtn.addEventListener('click', displayView);
+        registerBtn.addEventListener('click', displayView);
+        document.getElementById('next').addEventListener('click', displayView);
+        document.getElementById('send-login').addEventListener('click', login);
+        document.getElementById('send-register').addEventListener("click", register)
         document.getElementById('profile-photo').addEventListener('input', addProfilePhoto);    
     }
 
