@@ -288,11 +288,21 @@
             <section class="notebook" id='notebook'>
                 <form id="user-form" action="?">
                     <div class="buttons-container" id="buttons-container">
-                        <button type="submit" class="user-btn" id="user-btn">submit</button>
-                        <button type="button" class="register" id="register-view">Register
-                        <button type="button" class="login" id="login-view">Login</button>
+                        <button type="submit" class="user-btn" id="next">next</button>
+                        <button type="submit" class="user-btn" id="send-register">register</button>
+                        <button type="submit" class="user-btn" id="send-login">login</button>
+                        <button type="button" class="register-btn" id="register-btn">Register
+                        <button type="button" class="login-btn" id="login-btn">Login</button>
                     </div>
                     <div class="profile">
+                        <div class="register-view">
+                            <label class="colorizable">Username:</label>
+                            <input class="colorizable" type="text" />
+                            <label class="colorizable">Password:</label>
+                            <input class="colorizable" type="password" />
+                            <label class="colorizable">Repeat:</label>
+                            <input class="colorizable" type="password" />
+                        </div>
                         <div class="user-info" id="user-info">
                             <label class="colorizable">First name:</label>
                             <input class="colorizable" type="text" />
