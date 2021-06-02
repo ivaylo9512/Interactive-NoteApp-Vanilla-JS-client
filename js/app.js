@@ -6,7 +6,7 @@ const app = (() =>{
     let currentAlbumNumber;
     const windowHeight = window.innerHeight;
     const getAlbumImages = (e) => {
-        const albumNumber = +e.target.id;;
+        const albumNumber = +e.target.id;
 
         if(!albums[albumNumber]){
             
@@ -33,7 +33,7 @@ const app = (() =>{
 
     const appendAlbumPhotos = (currentAlbum) => {
         for(const [i, photo] of appendedPhotos.entries()) {
-            if(isFullModeOn){
+            if(isFullMode){
                 return;
             }
 
@@ -422,11 +422,11 @@ const app = (() =>{
     const playNav = document.getElementById('play-nav');
     const addPhoto = document.getElementById('add-photo');
 
-    let isFullModeOn;
-    let isInitialLoad;
+    let isFullMode;
+    const getIsFullMode = () => isFullMode;
+
     const fullModeToggle = () => {
-        if(isFullModeOn){ 
-            isInitialLoad = false;
+        if(isFullMode){ 
             notes.resetNote();
             notes.resetNoteView();
 
@@ -451,18 +451,25 @@ const app = (() =>{
         }
         document.body.classList.toggle('full-mode-active');
         currentAlbumNumber = null;
-        isFullModeOn = !isFullModeOn;
+        isFullMode = !isFullMode;
     }
+
+    let isLoaded;
+    const getIsLoaded = () => isLoaded;
 
     const initialLoading = () => {
         document.getElementById('user-form').reset();
-        
-        setTimeout(() => window.scrollTo(0, document.body.scrollHeight), 100);
+
+        setTimeout(() => {
+            window.scrollTo(0, document.body.scrollHeight)
+            setTimeout(() => {
+                isLoaded = true
+            }, 100);
+        }, 100);
 
         setTimeout(() => {
             document.getElementById('pink-bulb').src = 'resources/pink-bulb.gif';
             document.getElementById('blue-bulb').src = 'resources/blue-bulb.gif';
-            isInitialLoad = true;            
         }, 600);
     }
 
@@ -593,7 +600,7 @@ const app = (() =>{
             placePhotos.forEach(photo => {
                 if (photo.firstChild) {
                     photo.className = 'place-photo';
-                    photo.removeChild(photo.firstChild);
+                    photo.removeChild(photo.lastChild);
                 }
             })
 
@@ -788,9 +795,11 @@ const app = (() =>{
             profile.start();
         });
         
-        animate.start();
+        animate.initialize();
+        date.initialize();        
         colorize.start();
         notes.start();
+
         
         dragElement(document.getElementById('move-note'));
         dragElement(document.getElementById('point'));
@@ -832,8 +841,8 @@ const app = (() =>{
         resetMoveButtons,
         setfocusedNote,
         findUserPhoto,
-        isFullMode,
-        isInitialLoad
+        getIsFullMode,
+        getIsLoaded
     }
 })();
 app.start();
