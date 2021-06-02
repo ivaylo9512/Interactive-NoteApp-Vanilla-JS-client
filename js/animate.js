@@ -3,17 +3,17 @@ const animate = (() => {
     const getScrollY = () => scrollY;
 
     const decideEvent = () => {
-        if(!app.isFullMode()){
+        if(app.getIsFullMode() || !app.getIsLoaded()){
             return;
         }
-        
+
         const height = document.body.scrollHeight;
         const nextY = window.pageYOffset;
         
         deltaDir = Math.sign(nextY - scrollY);
         scrollY = nextY
 
-        if (scrollY < 800 && !isBalloonPlayed && app.isInitialLoad()) {
+        if (scrollY < 800 && !isBalloonPlayed) {
             balloonAnimation();
         }
 
@@ -71,36 +71,29 @@ const animate = (() => {
         requestAnimationFrame(scroll);
     }
 
-    const circles = document.getElementsByClassName('circle');
-    const photos = document.getElementsByClassName('onLoad-photo');
+    const circles = Array.from(document.getElementsByClassName('circles-container'))
+        .flatMap(n => Array.from(n.children));
+    const photos = document.getElementById('onload-photos').children;
     let isHidden = true;
 
     const showCircles = () => {
         isHidden = false;
-     
-        const delay = 100;
         let current = 0;
-        
-        showLoop();
-        function showLoop() {
-            setTimeout(() => {
+     
+        const interval = setInterval(() => {
+            if(current == circles.length - 1 || isHidden){
+                clearInterval(interval);
+            }
 
-                if(current == circles.length || isHidden){
-                    return;
-                }
-                
-                const circle = circles[current];            
-                if(current >= 4 && current <= 9){
-                    const photo = photos[current - 4];
-                    photo.classList.add('animate');
-                }
-                circle.classList.add('animate');
+            const circle = circles[current];            
+            if(current >= 4 && current <= 9){
+                const photo = photos[current - 4];
+                photo.classList.add('animate');
+            }
+            circle.classList.add('animate');
 
-                current++;
-                showLoop();
-
-            }, delay);
-        };
+            current++;
+        }, 100);
     }
 
     const hideCircles = () => {
@@ -133,9 +126,8 @@ const animate = (() => {
     let isTreeAnimated;
     const animateTree = () => {
         isTreeAnimated = true;
-
         document.getElementById('tree').src = 'resources/tree-animation.gif';
-        document.getElementById('onload-animation').classList.add('animate');
+        document.getElementById('play-mode').classList.add('tree-animation');
     }
 
     let isBalloonPlayed;
@@ -166,15 +158,14 @@ const animate = (() => {
         }
     }
 
-    const start = () => {
-        createCircles();
+    const initialize = () => {
         window.addEventListener('scroll', decideEvent);
         document.getElementById('profile-btn').addEventListener('click', scrollToProfile);
         document.getElementById('album-btn').addEventListener('click', scrollToAlbum);
     }
 
     return {
-        start,
+        initialize,
         smoothScroll,
         skipAnimations,
         getScrollY
