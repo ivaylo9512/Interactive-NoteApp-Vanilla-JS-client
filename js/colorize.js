@@ -3,7 +3,7 @@ const colorize = (() => {
 
     const colors = new Array('#E2007A', '#8bb1e5', '#E2007A', '#8bb1e5', '#41291B');
     function getRandomColor() {
-        const randomNumber = Math.floor(Math.random() * 5);
+        const randomNumber = Math.floor(Math.random() * colors.length);
         const randomColor = colors[randomNumber];
 
         isMatched = currentColor == randomColor
@@ -79,12 +79,12 @@ const colorize = (() => {
     let amountCounted = 0;
     let score = document.getElementById('score');
     const calculate = (node) => {
-        if (node.getAttribute('color') == 'marked' && !isMatched) {
+        if (node.dataset.isCounted && !isMatched) {
             amountCounted--;
-            node.setAttribute('color', 'unmarked');
-        } else if (isMatched && (node.getAttribute('color') == 'unmarked' || node.getAttribute('color') === null)) {
+            node.dataset.isCounted = '';
+        }else if (isMatched && !node.dataset.isCounted) {
             amountCounted++;
-            node.setAttribute('color', 'marked');
+            node.dataset.isCounted = true;
         }
         score.textContent = amountCounted;
     }
