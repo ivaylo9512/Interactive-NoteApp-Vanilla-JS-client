@@ -801,57 +801,94 @@ body.full-mode-active .play-box{
     visibility: hidden;
     display: inline-block;
 }
-.notebook form.first-view .user-btn:nth-child(1){
+.notebook form.first-register-view .user-btn:nth-child(1){
     visibility: visible;
 }
-.notebook form.first-view .user-btn:nth-child(1){
+.notebook form.second-register-view .user-btn:nth-child(1),
+.notebook form.logged-view .user-btn:nth-child(1),
+.notebook form.login-view .user-btn:nth-child(1){
+    display: none;
+}
+.notebook form.second-register-view .user-btn:nth-child(2){
     visibility: visible;
+    display: inline-block;
+}
+.notebook form.login-view .user-btn:nth-child(3){
+    visibility: visible;
+    display: inline-block;
+}
+.notebook form.logged-view .user-btn:nth-child(4){
+    visibility: visible;
+    display: inline-block;
+}
+.notebook form.second-register-view .user-btn:nth-child(1),
+.notebook form.login-view .user-btn:nth-child(1){
+    display: none;
 }
 .notebook form.first-register-view .register-btn,
 .notebook form.second-register-view .register-btn{
-    margin-right: -0.4%;
+    -webkit-transform: translate(1%, -6%);
+    -webkit-transform: translate(1%, -6%);
+    transform: translate(1%, -6%);
     height: 106%;
-    margin-top: -0.4vh;
     position: relative;
     z-index: 9;
     transition: all 1s;
 }
-.notebook form.first-register-view .user-info{
+.notebook form.first-register-view .login-btn,
+.notebook form.second-register-view .login-btn{
+    -webkit-transform: translateX(-1%);
+    -webkit-transform: translateX(-1%);
+    transform: translateX(-1%);
+}
+.notebook form.first-register-view .user-info,
+.notebook form.login-view .user-info{
     display: none;
 }
 .notebook form.second-register-view .user-info{
-    display: none;
-}
-.notebook form.first-register-view .register-view{
     display: inline-block;
 }
-.notebook form.second-register-view .login-btn{
-    margin-left: -0.5%;
+.notebook form.first-register-view .username-view,
+.notebook form.login-view .username-view{
+    display: inline-block;
+}
+.notebook form.login-view .username-view input:last-of-type,
+.notebook form.login-view .username-view label:last-of-type{
+    display: none;
+}
+.notebook form.login-view .login-btn{
+    -webkit-transform: translate(-1%, -6%);
+    -webkit-transform: translate(-1%, -6%);
+    transform: translate(-1%, -6%);
     height: 106%;
-    margin-top: -0.4vh;
     position: relative;
     z-index: 9;
     transition: all 1s;
+}
+.notebook form.login-view .register-btn{
+    -webkit-transform: translateX(1%);
+    -webkit-transform: translateX(1%);
+    transform: translateX(1%);
 }
 .buttons-container .user-btn {
     -webkit-transform: rotate(0.25deg);
     -moz-transform: rotate(0.25deg);
     transform: rotate(0.25deg);
-    margin-right: 26vh;
-    margin-left: 7vh;
+    margin-right: 23%;
+    margin-left: 17%;
     display: none;
 }
-.register-view{
+.profile > div.username-view{
     display: none;
 }
 .user-info,
-.register-view {
+.username-view {
     width: 43%;
     margin-left: 3%;
     line-height: 0;
 }
 .user-info label,
-.register-view label{
+.username-view label{
     width: 42%;
     font-weight: bold;
     margin-bottom: 0.8em;
@@ -880,7 +917,6 @@ body.full-mode-active .play-box{
     height: 5.35%;
     z-index: 9;
     margin-bottom: 2vh;
-    text-align: center;
 }
 .buttons-container button {
     padding: 0;
@@ -896,9 +932,6 @@ body.full-mode-active .play-box{
     text-align: center;
     vertical-align: top;
     color: #EAE9E5;
-}
-.buttons-container .register{
-    margin-left: 0.1%;
 }
 .profile-photo-container {
     width: 29%;
