@@ -1,108 +1,12 @@
 const profile = (() => {
-
-    const loginBtn = document.getElementById('login-btn');
-    const registerBtn = document.getElementById('register-btn');
-    const view = [
-        {
-            labels:['Username', 'Password'],
-            menuBtn: loginBtn,
-            action: 'login'   
-        }, 
-        {
-            labels:['Username', 'Password', 'Repeat'],
-            menuBtn: registerBtn,
-            action: 'next'   
-        },
-        {
-            labels:['First Name','Last Name','Age','Country'],
-            action: 'logout'   
-        },
-        {
-            labels:['First Name','Last Name','Age','Country'],
-            menuBtn: registerBtn,
-            action: 'register'   
-        }
-    ];
-
-    const userAction = (e) => {
-        e.preventDefault();
-        const action = e.target == userBtn ? userBtn.textContent : e.target.id; 
-        switch(action){
-            case 'login-view':
-                resetView(view[0]);
-                break;
-            case 'register-view':
-                resetView(view[1]);
-                break;
-            case 'logout':
-                logout();
-                resetView(view[2]);  
-                break; 
-            case 'login':
-                login().then(res => {
-                    setUserInfo(res.data);
-                    resetView(view[2], Object.values(userInfo));
-                })
-                break;
-            case 'register':
-                saveInputs();
-                register().then(res => {
-                    setUserInfo(res.data);
-                    resetView(view[2], Object.values(userRegister));
-                })
-                break;
-            case 'next':
-                saveInputs();
-                resetView(view[3]);  
-                break;    
-        }
-    }
-
-    let userForm = document.getElementById('user-form');
-    let profilePhoto = document.getElementById('chosen-image');
-    let userContainer = document.getElementById('user-info');
-    let labelNodes = userContainer.getElementsByTagName('label');
-    let inputNodes = userContainer.getElementsByTagName('input');
-    let userBtn = document.getElementById('user-btn');
-    
-    let currentBtn;
-    const resetView = (view, inputs) => {
-        for(let i = 0; i < inputNodes.length; i++){
-            const labelInfo = view.labels[i];
-            const input = inputNodes[i]; 
-            const label = labelNodes[i];
-
-            if(labelInfo){
-                input.value = inputs == undefined ? '' : inputs[i];
-                input.style.display = 'inline-block';
-                label.textContent = labelInfo;
-                label.style.display = 'inline-block';
-            }else{
-                input.value = '';
-                input.style.display = 'none';
-                label.textContent = '';
-                label.style.display = 'none';
-            }
-        }
-
-        const newBtn = view.menuBtn;
-        currentBtn && currentBtn.classList.remove('active');        
-        newBtn && newBtn.classList.add('active');
-        currentBtn = newBtn;
-
-        if(view.action){
-            userBtn.textContent = view.action;
-            userBtn.style.visibility = 'visible'
-        }else{
-            userBtn.textContent = '';
-            userBtn.style.visibility = 'hidden'
-
-        }
-    }
+    const userForm = document.getElementById('user-form');
+    const profilePhoto = document.getElementById('chosen-image');
+    const userInputs = [...document.getElementById('user-info').getElementsByTagName('input'), 
+        ...document.getElementById('username-view').getElementsByTagName('input')];
 
     let userInfo;
     const setUserInfo = (user) => {
-        userBtn.textContent = 'logout';
+        userForm.className = "logged-view";
 
         userInfo = {
             firstName: user.firstName,
@@ -125,16 +29,16 @@ const profile = (() => {
         }
     };
 
-    function login() {
-        let username = inputNodes[0].value;
-        let password = inputNodes[1].value;
+    const login = (e) => {
+        e.preventDefault();
+
+        let username = userInputs[0].value;
+        let password = userInputs[1].value;
         let user = {
             username,
             password,
         }
-        remote.login(user).then(res => {
-            setUserInfo(res.data)
-        })
+        remote.login(user).then(res => setUserInfo(res.data));
     }
 
     const logout = () => {
@@ -143,31 +47,21 @@ const profile = (() => {
         profilePhoto.src = '';
         userForm.className = '';
 
-        resetInputs([...userInfoInputs, ...usernameInputs]);
+        userInputs.forEach(el => el.value = '');
     }
 
-    const resetInputs = (inputs) => inputs.forEach(element => element.value = '');
-
     const userRegister = {};
-    const saveInputs = () => {
-        for(let i = 0; i < inputNodes.length; i++){
-            if(labelNodes[i].style.display == 'none')
-                break;
+    const register = (e) => {
+        e.preventDefault();
 
-            const label = labelNodes[i].textContent.toLowerCase();
-            const input = inputNodes[i].value;                
-            userRegister[label] = input; 
-        }
+        userInputs.forEach(el => userRegister[el.name] = el.value);
+        formData.append('user', JSON.stringify(userRegister));
+        remote.register(formData).then(res => setUserInfo(res));
     }
 
     const displayView = (e) => {
         e.preventDefault();
         userForm.className = e.target.name + '-view';
-    }
-
-    const register = () => {
-        formData.append('user', JSON.stringify(userRegister));
-        return remote.register(formData);
     }
 
     const reader = new FileReader();
@@ -188,8 +82,7 @@ const profile = (() => {
         }
     }
 
-    const start = () => { 
-
+    const initialize = () => { 
         if (isAuth()) {
             userInfo = JSON.parse(localStorage.getItem('User'));
             resetView(view[2], Object.values(userInfo));
@@ -197,9 +90,10 @@ const profile = (() => {
             profilePhoto.src = userInfo.profilePicture != 'undefined' ? remote.getBase() + userInfo.profilePicture : '#'; 
         }
         
-        loginBtn.addEventListener('click', displayView);
-        registerBtn.addEventListener('click', displayView);
+        document.getElementById('login-btn').addEventListener('click', displayView);
+        document.getElementById('register-btn').addEventListener('click', displayView);
         document.getElementById('next').addEventListener('click', displayView);
+        document.getElementById('logout-btn').addEventListener('click', logout);
         document.getElementById('send-login').addEventListener('click', login);
         document.getElementById('send-register').addEventListener("click", register)
         document.getElementById('profile-photo').addEventListener('input', addProfilePhoto);    
@@ -207,7 +101,7 @@ const profile = (() => {
 
     return{
         isAuth,
-        start
+        initialize
     }
 
 })();
