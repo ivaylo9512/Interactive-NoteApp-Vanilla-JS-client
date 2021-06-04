@@ -9,13 +9,13 @@
         <link rel="stylesheet" type="text/css" media="screen" href="styles.css" />
     </head>
     <body>
-        <section class="full-mode" id="full-mode">
+        <div class="full-mode" id="full-mode">
             <nav id="full-mode-nav">
                 <li id="notes-full-mode-btn">Notes</li>
                 <li id="photos-full-mode-btn">Photos</li>
                 <li id="play-full-mode-btn">Play</li>
             </nav>
-            <section class="photos-full-mode" id="photo-section-full-mode">
+            <div class="photo-section-full-mode" id="photo-section-full-mode">
                 <div class="album-container">
                     <div class="place-photo"></div>
                     <div class="place-photo"></div>
@@ -44,163 +44,159 @@
                     <div class="place-photo"></div>
                 </div>
                 <div class="photos-container-full-mode" id="photos-container-full-mode"></div>
-            </section>
-        </section>
+            </div>
+        </div>
         <section class="note-section" id="note-section">
-            <div class="notes">
-                <div class="timeline-years" id="timeline-years">
+            <div class="timeline-years" id="timeline-years">
+                <ol>
+                </ol>
+            </div>
+            <div class="note-animation" id="note-animation">
+                <div class="big-note">
+                    <span></span>
+                    <div>
+                        <svg viewBox="0 0 512 512">
+                            <path class="st0" d="M383.2,155.9c-0.9,28.5-8,55.4-18.6,81.4c-15.2,37.5-36,71.8-59.8,104.5c-13.7,18.9-26.1,38.5-33.5,61
+                                c-0.5,1.4-2.6,3.2-3.9,3.2c-8.1,0.2-16.2,0.1-24.3-0.2c-1.1,0-2.7-1.3-3.1-2.4c-9-27.5-25.9-50.3-42.3-73.6
+                                c-22.4-31.9-41.7-65.6-55.1-102.5c-8.5-23.4-14.1-47.4-14-72.6C128.9,114.1,144.9,81,176,55c14.9-12.5,31.6-22.3,49.8-28.8
+                                c16.1-5.8,32.9-6.2,49.7-2.8c16.4,3.4,30.7,11.7,44.5,20.6c30.4,19.7,51.8,46.1,59.4,82.2C381.4,136,381.9,146,383.2,155.9z"/>
+                            <path class="st0" d="M188.9,32.9c-7.8,5.8-15.5,11-22.6,16.9c-38.5,32.3-53.8,73.9-48.6,123.5c4.1,39.4,19.4,74.9,38,109.3
+                                c15.1,27.9,33.7,53.4,52,79.1c9.6,13.5,17.8,28,23.7,44.7c-3.2-0.9-5.8-1.8-9.1-2.8c3.5,14.4,6.9,28.6,10.1,41.6
+                                c16,0,31.5,0,47.2,0c3.5-14,6.8-27.6,10.2-41.7c-3.5,1.1-6.5,2.1-10.6,3.4c1.7-4.2,3-7.6,4.5-11c9.3-20.8,22.8-38.9,36-57.3
+                                c26.6-37.2,49.6-76.4,63.9-120.1c9.2-28.2,13.6-57,9-86.6c-5.9-37.4-25.7-66.1-55.6-88.5c-4.8-3.5-9.7-6.8-15.4-10.7
+                                c2,0.2,3.3,0,4.3,0.4c31.1,10.5,59.9,25,82.4,49.7c27.6,30.4,38.7,66.3,32.8,106.9c-7.4,51.9-30.9,96.1-66.6,134
+                                c-12.9,13.7-26.3,27-40,39.8c-9.6,8.9-20.2,16.8-30.4,25.1c-5.9,4.8-9.4,10.7-11,18.3c-2.4,12-5.7,23.9-8.6,35.8
+                                c-0.4,1.6-1.1,3.6-0.4,4.8c5.8,11.1,1.9,22.9,2.6,34.3c0.3,4.7-4.8,8.6-9.9,8.7c-12.5,0.2-25,0.2-37.5,0
+                                c-6.3-0.1-10.2-4.2-10.2-10.5c0-9.6,0.7-19.3,0.3-28.9c-0.3-5.5-2.2-11-3.5-16.5c-2.6-11-5.2-22-8.2-32.9c-0.8-3-2.7-6.2-5-8.3
+                                c-8.3-7.6-17-14.9-25.6-22.3c-38.5-32.8-74-68.2-95.9-114.8c-12.4-26.4-21.6-54-21.7-83.3C69.2,125,90.4,87.4,130,60.2
+                                c17.2-11.8,36.1-20.4,55.9-26.9C186.7,33.1,187.7,33.1,188.9,32.9z"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="small-note">
+                    <div>
+                        <span></span>
+                        <svg viewBox="0 0 512 512">
+                            <path class="st0" d="M383.2,155.9c-0.9,28.5-8,55.4-18.6,81.4c-15.2,37.5-36,71.8-59.8,104.5c-13.7,18.9-26.1,38.5-33.5,61
+                                c-0.5,1.4-2.6,3.2-3.9,3.2c-8.1,0.2-16.2,0.1-24.3-0.2c-1.1,0-2.7-1.3-3.1-2.4c-9-27.5-25.9-50.3-42.3-73.6
+                                c-22.4-31.9-41.7-65.6-55.1-102.5c-8.5-23.4-14.1-47.4-14-72.6C128.9,114.1,144.9,81,176,55c14.9-12.5,31.6-22.3,49.8-28.8
+                                c16.1-5.8,32.9-6.2,49.7-2.8c16.4,3.4,30.7,11.7,44.5,20.6c30.4,19.7,51.8,46.1,59.4,82.2C381.4,136,381.9,146,383.2,155.9z"/>
+                            <path class="st0" d="M188.9,32.9c-7.8,5.8-15.5,11-22.6,16.9c-38.5,32.3-53.8,73.9-48.6,123.5c4.1,39.4,19.4,74.9,38,109.3
+                                c15.1,27.9,33.7,53.4,52,79.1c9.6,13.5,17.8,28,23.7,44.7c-3.2-0.9-5.8-1.8-9.1-2.8c3.5,14.4,6.9,28.6,10.1,41.6
+                                c16,0,31.5,0,47.2,0c3.5-14,6.8-27.6,10.2-41.7c-3.5,1.1-6.5,2.1-10.6,3.4c1.7-4.2,3-7.6,4.5-11c9.3-20.8,22.8-38.9,36-57.3
+                                c26.6-37.2,49.6-76.4,63.9-120.1c9.2-28.2,13.6-57,9-86.6c-5.9-37.4-25.7-66.1-55.6-88.5c-4.8-3.5-9.7-6.8-15.4-10.7
+                                c2,0.2,3.3,0,4.3,0.4c31.1,10.5,59.9,25,82.4,49.7c27.6,30.4,38.7,66.3,32.8,106.9c-7.4,51.9-30.9,96.1-66.6,134
+                                c-12.9,13.7-26.3,27-40,39.8c-9.6,8.9-20.2,16.8-30.4,25.1c-5.9,4.8-9.4,10.7-11,18.3c-2.4,12-5.7,23.9-8.6,35.8
+                                c-0.4,1.6-1.1,3.6-0.4,4.8c5.8,11.1,1.9,22.9,2.6,34.3c0.3,4.7-4.8,8.6-9.9,8.7c-12.5,0.2-25,0.2-37.5,0
+                                c-6.3-0.1-10.2-4.2-10.2-10.5c0-9.6,0.7-19.3,0.3-28.9c-0.3-5.5-2.2-11-3.5-16.5c-2.6-11-5.2-22-8.2-32.9c-0.8-3-2.7-6.2-5-8.3
+                                c-8.3-7.6-17-14.9-25.6-22.3c-38.5-32.8-74-68.2-95.9-114.8c-12.4-26.4-21.6-54-21.7-83.3C69.2,125,90.4,87.4,130,60.2
+                                c17.2-11.8,36.1-20.4,55.9-26.9C186.7,33.1,187.7,33.1,188.9,32.9z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="input-note" id="animation-note">
+                            <div class="note"></div>
+                            <span class="move-note"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="left-notes" class="left-notes">
+            </div>
+            <div class="cloud-headers" id="cloud-headers">
+                <div class="cloud-header" id="cloud-header">
+                    <textarea></textarea>
+                    <div class="clouds-container">
+                        <div>
+                            <div>
+                                <img id="cloud2" src="resources/cloud-filled.png" alt="">
+                                <div class="date-container">
+                                    <p class="chosen-year" id="chosen-year"></p>
+                                </div>
+                            </div>
+                            <div>
+                                <img id="cloud1" src="resources/cloud-filled.png" alt="">
+                                <div class="date-container">
+                                    <p id="chosen-day"></p>
+                                </div>
+                            </div>
+                            <div>
+                                <img id="cloud" src="resources/cloud-filled.png" alt="">
+                                <div class="date-container">
+                                    <p id="chosen-month"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <h1 id="notes-header">Notes</h1>
+                    </div>
+                </div>
+            </div>
+            <div id="right-notes" class="right-notes">
+            </div>
+            <div class="timeline-months-container" id="timeline-months-container">
+                <div class="nav-point" id="point">
+                </div>
+                <div class="timeline-months" id="timeline-months">
                     <ol>
+                        <li>
+                            <p>January</p>
+                            <span class="point"></span>
+                        </li>
+                        <li>
+                            <p>February</p>
+                            <span class="point"></span>
+                        </li>
+                        <li>
+                            <p>March</p>
+                            <span class="point"></span>
+                        </li>
+                        <li>
+                            <p>April</p>
+                            <span class="point"></span>
+                        </li>
+                        <li>
+                            <p>May</p>
+                            <span class="point"></span>
+                        </li>
+                        <li>
+                            <p>June</p>
+                            <span class="point"></span>
+                        </li>
+                        <li>
+                            <span class="days-container"></span>
+                        </li>
+                        <li>
+                            <p>July</p>
+                            <span class="point"></span>
+                        </li>
+                        <li>
+                            <p>August</p>
+                            <span class="point"></span>
+                        </li>
+                        <li>
+                            <p>September</p>
+                            <span class="point"></span>
+                        </li>
+                        <li>
+                            <p>October</p>
+                            <span class="point"></span>
+                        </li>
+                        <li>
+                            <p>November</p>
+                            <span class="point"></span>
+                        </li>
+                        <li>
+                            <p>December</p>
+                            <span class="point"></span>
+                        </li>
                     </ol>
                 </div>
-                <div id="left-notes" class="left-notes">
-                </div>
-                <div class="cloud-headers" id="cloud-headers">
-                    <div class="cloud-header" id="cloud-header">
-                        <textarea></textarea>
-                        <div class="clouds-container">
-                            <div>
-                                <div>
-                                    <img id="cloud2" src="resources/cloud-filled.png" alt="">
-                                    <div class="date-container">
-                                        <p class="chosen-year" id="chosen-year"></p>
-                                    </div>
-                                </div>
-                                <div>
-                                    <img id="cloud1" src="resources/cloud-filled.png" alt="">
-                                    <div class="date-container">
-                                        <p id="chosen-day"></p>
-                                    </div>
-                                </div>
-                                <div>
-                                    <img id="cloud" src="resources/cloud-filled.png" alt="">
-                                    <div class="date-container">
-                                        <p id="chosen-month"></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <h1 id="notes-header">Notes</h1>
-                        </div>
-                    </div>
-                </div>
-                <div id="right-notes" class="right-notes">
-                </div>
-                <div class="timeline-months-container" id="timeline-months-container">
-                    <div class="nav-point" id="point">
-                    </div>
-                    <div class="timeline-months" id="timeline-months">
-                        <ol>
-                            <li>
-                                <p>January</p>
-                                <span class="point"></span>
-                            </li>
-                            <li>
-                                <p>February</p>
-                                <span class="point"></span>
-                            </li>
-                            <li>
-                                <p>March</p>
-                                <span class="point"></span>
-                            </li>
-                            <li>
-                                <p>April</p>
-                                <span class="point"></span>
-                            </li>
-                            <li>
-                                <p>May</p>
-                                <span class="point"></span>
-                            </li>
-                            <li>
-                                <p>June</p>
-                                <span class="point"></span>
-                            </li>
-                            <li>
-                                <span class="days-container"></span>
-                            </li>
-                            <li>
-                                <p>July</p>
-                                <span class="point"></span>
-                            </li>
-                            <li>
-                                <p>August</p>
-                                <span class="point"></span>
-                            </li>
-                            <li>
-                                <p>September</p>
-                                <span class="point"></span>
-                            </li>
-                            <li>
-                                <p>October</p>
-                                <span class="point"></span>
-                            </li>
-                            <li>
-                                <p>November</p>
-                                <span class="point"></span>
-                            </li>
-                            <li>
-                                <p>December</p>
-                                <span class="point"></span>
-                            </li>
-                        </ol>
-                    </div>
-                    <button class="days-container" id="days-container">
-                        <div class="days" id="days"></div>
-                    </button>
-                </div>
-            </div>
-            <div class="notes-animation-container">
-                <div class="note-animation" id="note-animation">
-                    <div class="big-note">
-                        <span></span>
-                        <div>
-                            <svg viewBox="0 0 512 512">
-                                <path class="st0" d="M383.2,155.9c-0.9,28.5-8,55.4-18.6,81.4c-15.2,37.5-36,71.8-59.8,104.5c-13.7,18.9-26.1,38.5-33.5,61
-                                    c-0.5,1.4-2.6,3.2-3.9,3.2c-8.1,0.2-16.2,0.1-24.3-0.2c-1.1,0-2.7-1.3-3.1-2.4c-9-27.5-25.9-50.3-42.3-73.6
-                                    c-22.4-31.9-41.7-65.6-55.1-102.5c-8.5-23.4-14.1-47.4-14-72.6C128.9,114.1,144.9,81,176,55c14.9-12.5,31.6-22.3,49.8-28.8
-                                    c16.1-5.8,32.9-6.2,49.7-2.8c16.4,3.4,30.7,11.7,44.5,20.6c30.4,19.7,51.8,46.1,59.4,82.2C381.4,136,381.9,146,383.2,155.9z"/>
-                                <path class="st0" d="M188.9,32.9c-7.8,5.8-15.5,11-22.6,16.9c-38.5,32.3-53.8,73.9-48.6,123.5c4.1,39.4,19.4,74.9,38,109.3
-                                    c15.1,27.9,33.7,53.4,52,79.1c9.6,13.5,17.8,28,23.7,44.7c-3.2-0.9-5.8-1.8-9.1-2.8c3.5,14.4,6.9,28.6,10.1,41.6
-                                    c16,0,31.5,0,47.2,0c3.5-14,6.8-27.6,10.2-41.7c-3.5,1.1-6.5,2.1-10.6,3.4c1.7-4.2,3-7.6,4.5-11c9.3-20.8,22.8-38.9,36-57.3
-                                    c26.6-37.2,49.6-76.4,63.9-120.1c9.2-28.2,13.6-57,9-86.6c-5.9-37.4-25.7-66.1-55.6-88.5c-4.8-3.5-9.7-6.8-15.4-10.7
-                                    c2,0.2,3.3,0,4.3,0.4c31.1,10.5,59.9,25,82.4,49.7c27.6,30.4,38.7,66.3,32.8,106.9c-7.4,51.9-30.9,96.1-66.6,134
-                                    c-12.9,13.7-26.3,27-40,39.8c-9.6,8.9-20.2,16.8-30.4,25.1c-5.9,4.8-9.4,10.7-11,18.3c-2.4,12-5.7,23.9-8.6,35.8
-                                    c-0.4,1.6-1.1,3.6-0.4,4.8c5.8,11.1,1.9,22.9,2.6,34.3c0.3,4.7-4.8,8.6-9.9,8.7c-12.5,0.2-25,0.2-37.5,0
-                                    c-6.3-0.1-10.2-4.2-10.2-10.5c0-9.6,0.7-19.3,0.3-28.9c-0.3-5.5-2.2-11-3.5-16.5c-2.6-11-5.2-22-8.2-32.9c-0.8-3-2.7-6.2-5-8.3
-                                    c-8.3-7.6-17-14.9-25.6-22.3c-38.5-32.8-74-68.2-95.9-114.8c-12.4-26.4-21.6-54-21.7-83.3C69.2,125,90.4,87.4,130,60.2
-                                    c17.2-11.8,36.1-20.4,55.9-26.9C186.7,33.1,187.7,33.1,188.9,32.9z"/>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="small-note">
-                        <div>
-                            <span></span>
-                            <svg viewBox="0 0 512 512">
-                                <path class="st0" d="M383.2,155.9c-0.9,28.5-8,55.4-18.6,81.4c-15.2,37.5-36,71.8-59.8,104.5c-13.7,18.9-26.1,38.5-33.5,61
-                                    c-0.5,1.4-2.6,3.2-3.9,3.2c-8.1,0.2-16.2,0.1-24.3-0.2c-1.1,0-2.7-1.3-3.1-2.4c-9-27.5-25.9-50.3-42.3-73.6
-                                    c-22.4-31.9-41.7-65.6-55.1-102.5c-8.5-23.4-14.1-47.4-14-72.6C128.9,114.1,144.9,81,176,55c14.9-12.5,31.6-22.3,49.8-28.8
-                                    c16.1-5.8,32.9-6.2,49.7-2.8c16.4,3.4,30.7,11.7,44.5,20.6c30.4,19.7,51.8,46.1,59.4,82.2C381.4,136,381.9,146,383.2,155.9z"/>
-                                <path class="st0" d="M188.9,32.9c-7.8,5.8-15.5,11-22.6,16.9c-38.5,32.3-53.8,73.9-48.6,123.5c4.1,39.4,19.4,74.9,38,109.3
-                                    c15.1,27.9,33.7,53.4,52,79.1c9.6,13.5,17.8,28,23.7,44.7c-3.2-0.9-5.8-1.8-9.1-2.8c3.5,14.4,6.9,28.6,10.1,41.6
-                                    c16,0,31.5,0,47.2,0c3.5-14,6.8-27.6,10.2-41.7c-3.5,1.1-6.5,2.1-10.6,3.4c1.7-4.2,3-7.6,4.5-11c9.3-20.8,22.8-38.9,36-57.3
-                                    c26.6-37.2,49.6-76.4,63.9-120.1c9.2-28.2,13.6-57,9-86.6c-5.9-37.4-25.7-66.1-55.6-88.5c-4.8-3.5-9.7-6.8-15.4-10.7
-                                    c2,0.2,3.3,0,4.3,0.4c31.1,10.5,59.9,25,82.4,49.7c27.6,30.4,38.7,66.3,32.8,106.9c-7.4,51.9-30.9,96.1-66.6,134
-                                    c-12.9,13.7-26.3,27-40,39.8c-9.6,8.9-20.2,16.8-30.4,25.1c-5.9,4.8-9.4,10.7-11,18.3c-2.4,12-5.7,23.9-8.6,35.8
-                                    c-0.4,1.6-1.1,3.6-0.4,4.8c5.8,11.1,1.9,22.9,2.6,34.3c0.3,4.7-4.8,8.6-9.9,8.7c-12.5,0.2-25,0.2-37.5,0
-                                    c-6.3-0.1-10.2-4.2-10.2-10.5c0-9.6,0.7-19.3,0.3-28.9c-0.3-5.5-2.2-11-3.5-16.5c-2.6-11-5.2-22-8.2-32.9c-0.8-3-2.7-6.2-5-8.3
-                                    c-8.3-7.6-17-14.9-25.6-22.3c-38.5-32.8-74-68.2-95.9-114.8c-12.4-26.4-21.6-54-21.7-83.3C69.2,125,90.4,87.4,130,60.2
-                                    c17.2-11.8,36.1-20.4,55.9-26.9C186.7,33.1,187.7,33.1,188.9,32.9z"/>
-                            </svg>
-                        </div>
-                        <div>
-                            <div class="input-note" id="animation-note">
-                                <div class="note"></div>
-                                <span class="move-note"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <button class="days-container" id="days-container">
+                    <div class="days" id="days"></div>
+                </button>
             </div>
         </section>
-        <section class="play-mode" id="play-mode">
+        <div class="play-mode" id="play-mode">
             <div class="play-nav" id="play-nav">
                 <button class="full-mode-button">
                     <img src="resources/full-mode.png" id="full-mode-btn">
@@ -234,6 +230,28 @@
                     <span></span>
                     <input class="input-photo" id="input-photo" type="file" />
                 </button>
+            </div>
+
+            <div class="input-note-container">
+                <div class="input-note" id="input-note">
+                    <input>
+                    <textarea></textarea>
+                    <div class="note"></div>
+                    <div class="note-buttons">
+                        <button class="submit-btn" id="submit-btn">
+                            <div>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </button>
+                        <button class="close-btn" id="close-btn">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </button>
+                    </div>
+                    <span class="move-note" id="move-note"></span>
+                </div>
             </div>
             <section class="balloons-container" id="balloons-container">
                 <svg viewBox="0 0 512 512">
@@ -283,8 +301,7 @@
                         c-6.3-0.1-10.2-4.2-10.2-10.5c0-9.6,0.7-19.3,0.3-28.9c-0.3-5.5-2.2-11-3.5-16.5c-2.6-11-5.2-22-8.2-32.9c-0.8-3-2.7-6.2-5-8.3
                         c-8.3-7.6-17-14.9-25.6-22.3c-38.5-32.8-74-68.2-95.9-114.8c-12.4-26.4-21.6-54-21.7-83.3C69.2,125,90.4,87.4,130,60.2
                         c17.2-11.8,36.1-20.4,55.9-26.9C186.7,33.1,187.7,33.1,188.9,32.9z"></path>
-                </svg>
-            </section>
+                </svg>            </section>
             <section class="notebook" id='notebook'>
                 <form id="user-form" action="?">
                     <div class="buttons-container" id="buttons-container">
@@ -298,21 +315,21 @@
                     <div class="profile">
                         <div class="username-view" id="username-view">
                             <label class="colorizable">Username:</label>
-                            <input name="username" class="colorizable" type="text" />
+                            <input class="colorizable" type="text" />
                             <label class="colorizable">Password:</label>
-                            <input name="password" class="colorizable" type="password" />
+                            <input class="colorizable" type="password" />
                             <label class="colorizable">Repeat:</label>
-                            <input name="repeatPassword" class="colorizable" type="password" />
+                            <input class="colorizable" type="password" />
                         </div>
                         <div class="user-info" id="user-info">
                             <label class="colorizable">First name:</label>
-                            <input name="firstName" class="colorizable" type="text" />
+                            <input class="colorizable" type="text" />
                             <label class="colorizable">Last name:</label>
-                            <input name="lastName" class="colorizable" type="text" />
+                            <input class="colorizable" type="text" />
                             <label class="colorizable">Age:</label>
-                            <input name="Age" class="colorizable" type="text" />
+                            <input class="colorizable" type="text" />
                             <label class="colorizable">Country:</label>
-                            <input name="country" class="colorizable" type="text" />
+                            <input class="colorizable" type="text" />
                         </div>
                         <div class="profile-photo-container" id="profile-photo-container">
                                 <img src="resources/photo-frame.png" class="profile-photo" alt="" />
@@ -358,17 +375,17 @@
                     <img src="resources/photo6.jpg">
                 </div>
                 <div class="user-photos" id="user-photos">
-                    <div class="user-photo"><img></div>
-                    <div class="user-photo"><img></div>
-                    <div class="user-photo"><img></div>
-                    <div class="user-photo"><img></div>
-                    <div class="user-photo"><img></div>
-                    <div class="user-photo"><img></div>
-                    <div class="user-photo"><img></div>
-                    <div class="user-photo"><img></div>
-                    <div class="user-photo"><img></div>
-                    <div class="user-photo"><img></div>
-                    <div class="user-photo"><img></div>
+                    <div><img></div>
+                    <div><img></div>
+                    <div><img></div>
+                    <div><img></div>
+                    <div><img></div>
+                    <div><img></div>
+                    <div><img></div>
+                    <div><img></div>
+                    <div><img></div>
+                    <div><img></div>
+                    <div><img></div>
                 </div>
                 <div class="photo-menu">
                     <img class="move-btn" id="move-btn" src="resources/move.png">
@@ -388,49 +405,19 @@
                         </div>
                     </ul>
                 </nav>
-            <section>
+            </section>
+
             <section class="onload-animation" id="onload-animation">
                 <div class="pointer" id="pointer">
                     <span></span>
                     <span></span>
                 </div>
-                <svg class="blue-bulb colorizable" xmlns="http://www.w3.org/2000/svg" version="1.0" viewBox="0 0 325.000000 360.000000" preserveAspectRatio="xMidYMid meet">
-                    <g transform="translate(0.000000,360.000000) scale(0.100000,-0.100000)">
-                        <path d="M2223 3096 c-17 -8 -39 -26 -49 -40 -16 -25 -16 -29 1 -71 20 -53 47 -75 93 -75 47 0 69 14 92 60 26 51 25 64 -7 100 -33 37 -84 47 -130 26z"></path>
-                        <path d="M1503 3076 c-47 -21 -57 -47 -43 -109 7 -29 23 -72 35 -97 13 -25 26 -62 29 -84 5 -40 30 -86 46 -86 17 0 32 43 32 88 -1 25 7 60 18 82 11 21 22 66 26 101 6 59 4 66 -19 87 -31 29 -83 36 -124 18z"></path>
-                        <path d="M2068 2763 c-9 -10 -18 -37 -22 -60 -3 -24 -9 -61 -12 -83 -4 -21 -4 -47 0 -56 6 -15 13 -12 48 22 69 67 100 162 59 184 -29 15 -56 12 -73 -7z"></path>
-                        <path d="M259 2692 c-38 -34 -34 -64 13 -88 33 -17 72 -12 101 13 24 23 21 40 -12 74 -37 36 -62 37 -102 1z"></path>
-                        <path d="M1556 2657 c-3 -13 -1 -39 4 -57 9 -31 7 -36 -33 -75 -35 -36 -58 -48 -142 -74 -55 -16 -138 -49 -185 -72 -58 -28 -98 -41 -125 -41 -48 1 -215 75 -288 129 -67 49 -134 57 -171 20 -21 -21 -26 -36 -26 -76 0 -60 7 -68 108 -121 96 -49 189 -138 198 -187 10 -53 -3 -144 -24 -172 -36 -50 -82 -63 -241 -70 -159 -8 -202 -20 -223 -67 -15 -33 12 -71 75 -102 l46 -24 102 17 c147 25 215 12 255 -50 8 -13 24 -59 35 -101 29 -117 59 -172 129 -240 57 -56 62 -65 62 -102 0 -22 -10 -62 -21 -89 -11 -26 -25 -66 -30 -88 -6 -22 -26 -62 -46 -89 -43 -60 -51 -101 -32 -149 30 -69 136 -89 194 -36 28 26 86 143 98 197 9 42 57 90 100 98 63 11 105 -4 159 -57 27 -27 52 -49 56 -49 3 0 28 22 56 48 76 73 195 102 271 66 48 -23 57 -43 83 -174 13 -63 29 -124 37 -136 18 -29 56 -44 108 -44 35 0 52 6 77 29 29 26 33 35 31 74 -2 60 -23 98 -80 143 -66 52 -92 83 -104 127 -14 53 14 111 94 195 80 84 167 251 167 320 0 109 135 148 365 106 105 -20 162 -10 208 33 42 41 38 91 -12 136 -52 47 -84 52 -221 32 -173 -26 -273 -12 -324 44 -27 29 -15 117 24 187 17 28 30 61 30 72 0 33 -38 52 -101 52 -107 0 -162 32 -214 124 -30 54 -42 82 -60 143 -3 9 -25 3 -70 -19 -61 -28 -73 -30 -139 -25 -124 9 -216 66 -216 133 0 35 -18 84 -31 84 -4 0 -9 -11 -13 -23z"></path>
-                        <path d="M120 1838 c-44 -30 -56 -67 -36 -110 20 -42 63 -68 110 -68 27 0 46 9 76 36 47 43 58 75 37 108 -36 55 -131 72 -187 34z"></path>
-                    </g>
-                </svg>
                 <img class="blue-bulb" id="blue-bulb"/>
                 <div class="tree">
                     <img src="resources/tree.png" id="tree"/>
                 </div>
                 <img class="pink-bulb colorizable" id="pink-bulb"/>
             </section>
-        </section>
-        <div class="fixed-note-container">
-            <div class="fixed-note" id="input-note">
-                <input>
-                <textarea></textarea>
-                <div class="note"></div>
-                <div class="note-buttons">
-                    <button class="submit-btn" id="submit-btn">
-                        <div>
-                            <span></span>
-                            <span></span>
-                        </div>
-                    </button>
-                    <button class="close-btn" id="close-btn">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </button>
-                </div>
-                <span class="move-note" id="move-note"></span>
-            </div>
         </div>
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script src="js/remote.js"></script>

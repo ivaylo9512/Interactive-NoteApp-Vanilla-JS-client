@@ -470,10 +470,10 @@ body.full-mode-active .play-box{
 }
 .user-photos .user-photo{
     opacity: 0;
-    -moz-animation: opacity 2.5s forwards;
-    -o-animation: opacity 2.5s forwards;
-    -webkit-animation: opacity 2.5s forwards;
-    animation: opacity 2.5s forwards;
+    -moz-animation: fade-in 2.5s forwards;
+    -o-animation: fade-in 2.5s forwards;
+    -webkit-animation: fade-in 2.5s forwards;
+    animation: fade-in 2.5s forwards;
 }
 .user-photo:nth-child(1){
     top: 76%;
@@ -603,17 +603,15 @@ body.full-mode-active .play-box{
 }
 .circles-container span,
 .onload-photos img {
-    display: none;
     opacity: 0;
+    pointer-events: none;
     outline: 1px solid transparent;
 }
 .circles-container span.animate,
 .onload-photos img.animate{
-    display: inline;
-    -moz-animation: fadeIn .5s ease-in forwards;
-    -o-animation: fadeIn .5s ease-in forwards;
-    -webkit-animation: fadeIn .5s ease-in forwards;
-    animation: fadeIn ease-in .5s forwards;
+    transition: opacity 0.5s ease-in;
+    opacity: 1;
+    pointer-events: all;
 }
 .big-arrow{
     position: absolute;
@@ -1709,12 +1707,12 @@ body.full-mode-active .timeline-years,
     width: 100%;
     overflow-y: scroll;
     background: transparent;
-    display: none;
+    visibility: hidden;
     padding: 0;
     margin: 0;
 }
 .timeline-years ol.show{
-    display: block;
+    visibility: visible;
 }
 .timeline-years li.bounce-year {
     animation: bouncePoint 2000ms linear both;
@@ -2308,7 +2306,7 @@ body.full-mode-active .right-notes,
 }
   
   /* Generated with Bounce.js. Edit at http://bouncejs.com#%7Bs%3A%5B%7BT%3A%22c%22%2Ce%3A%22s%22%2Cd%3A2000%2CD%3A0%2Cf%3A%7Bx%3A0%2Cy%3A0%7D%2Ct%3A%7Bx%3A1%2Cy%3A1%7D%2Cs%3A1%2Cb%3A3%7D%5D%7D */
-@-webkit-keyframes reversPoint { 
+@-webkit-keyframes reversePoint { 
     0% { -webkit-transform: matrix3d(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); transform: matrix3d(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
     2.4% { -webkit-transform: matrix3d(0.187, 0, 0, 0, 0, 0.187, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); transform: matrix3d(0.187, 0, 0, 0, 0, 0.187, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
     4.8% { -webkit-transform: matrix3d(0.304, 0, 0, 0, 0, 0.304, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); transform: matrix3d(0.304, 0, 0, 0, 0, 0.304, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
@@ -2322,7 +2320,7 @@ body.full-mode-active .right-notes,
     76.18% { -webkit-transform: matrix3d(0.002, 0, 0, 0, 0, 0.002, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); transform: matrix3d(0.002, 0, 0, 0, 0, 0.002, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
     100% { -webkit-transform: matrix3d(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); transform: matrix3d(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); } 
 }
-@keyframes reversPoint { 
+@keyframes reversePoint { 
     0% { -webkit-transform: matrix3d(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); transform: matrix3d(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
     2.4% { -webkit-transform: matrix3d(0.187, 0, 0, 0, 0, 0.187, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); transform: matrix3d(0.187, 0, 0, 0, 0, 0.187, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
     4.8% { -webkit-transform: matrix3d(0.304, 0, 0, 0, 0, 0.304, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); transform: matrix3d(0.304, 0, 0, 0, 0, 0.304, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
@@ -2337,33 +2335,6 @@ body.full-mode-active .right-notes,
     100% { -webkit-transform: matrix3d(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); transform: matrix3d(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); } 
 }
 
-@keyframes opacity {
-    from {
-        opacity:0;
-    }
-
-    to {
-        opacity:1;
-    }
-}
-@-webkit-keyframes opacity {
-    from {
-        opacity:0;
-    }
-
-    to {
-        opacity:1;
-    }
-}
-@-moz-keyframes opacity {
-    from {
-        opacity:0;
-    }
-
-    to {
-        opacity:1;
-    }
-}
 @keyframes translatePointer {
     from {
         transform: translate(-50%, 0);
