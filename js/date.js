@@ -1,5 +1,6 @@
 const date = (() => {     
     const timelineMonths = document.getElementById('timeline-months');
+    const timelineYears = document.getElementById('timeline-years').children[0];
    
     const months = Array.from(timelineMonths.getElementsByTagName('LI'));
     const years = [];
@@ -9,7 +10,6 @@ const date = (() => {
     const yearsCount = currentYear - maxYear;
      
     function appendYears(){
-        const timelineYears = document.getElementById('timeline-years').children[0];
         const yearsFragment = document.createDocumentFragment();
 
         for(let i = 0; i <= yearsCount ; i++){
@@ -19,44 +19,15 @@ const date = (() => {
             
             point.className = 'point';
             yearLabel.textContent = maxYear + i;
-            yearsLabel.className = 'colorizable';
+            yearLabel.className = 'colorizable';
     
             year.appendChild(yearLabel);
             year.appendChild(point);
             years.push(year);
             yearsFragment.appendChild(year)
-            
-            if(i < yearsCount - 7) year.style.marginTop = '-69px';
-            else if(i == yearsCount - 7) year.style.marginTop = '-32px';
         }
 
         timelineYears.appendChild(yearsFragment);
-    }
-    
-    let slideYear = yearsCount - 7;
-    const slideYears = (pos) => {
-        const currentYear = years[slideYear];
-        yearMargin = parseFloat(window.getComputedStyle(currentYear).marginTop);
-        const nextMargin = yearMargin - pos;
-
-        if(slideYear == yearsCount - 7 && nextMargin < -32){
-            currentYear.style.marginTop = '-32px';
-            return;
-        }
-        if(slideYear == 0 && nextMargin > 32){
-            currentYear.style.marginTop = '32px'
-            return;
-        }
-
-        if(nextMargin > 0 && slideYear != 0){
-            currentYear.style.marginTop = '0px';
-            slideYear--;
-        }else if(nextMargin < -69){
-            currentYear.style.marginTop = '-69px';
-            slideYear++;
-        }else{
-            currentYear.style.marginTop = nextMargin + 'px';
-        }
     }
 
     let isYearsHidden;
@@ -70,15 +41,19 @@ const date = (() => {
         timelineMonths.classList.remove('show');
     }
 
+    let showInterval;
     const showYears = () => {
-        isYearsHidden = false;
+        if(hideInterval){
+            clearInterval(hideInterval);
+        }
+
         hideMonths();
         timelineYears.classList.add('show');
 
         let current = years.length - 1;
-        const interval = setInterval(() => { 
-            if(current < 0 || isYearsHidden){
-                clearInterval(interval);
+        showInterval = setInterval(() => { 
+            if(current < 0){
+                clearInterval(showInterval);
                 return;
             }
             const year = years[current];
@@ -89,14 +64,16 @@ const date = (() => {
         }, 70)
     }
 
+    let hideInterval;
     const hideYears = () => {
+        if(showInterval){
+            clearInterval(showInterval);
+        }
+
         let current = 0;        
-        const interval = setInterval(() => {
-            if(!isYearsHidden){
-                clearInterval(interval);
-                return;
-            }else if(current == years.length){
-                clearInterval(interval);
+        hideInterval = setInterval(() => {
+            if(current == years.length){
+                clearInterval(hideInterval);
                 timelineYears.classList.remove('show');
                 return;
             }
@@ -122,13 +99,11 @@ const date = (() => {
     let monthsDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
     const setMonth = (monthIndex, monthName) => {
-            if (clickedMonth != '') {
-                chosenMonth.textContent = monthName;
-                month = monthIndex + 1;
+        chosenMonth.textContent = monthName;
+        month = monthIndex + 1;
 
-                setDaysCount(monthsDays[monthIndex]);
-                checkDate();
-            }
+        setDaysCount(monthsDays[monthIndex]);
+        checkDate();
     }
 
     const setDaysCount = () => {
@@ -136,13 +111,13 @@ const date = (() => {
     }
 
     const setYear = (clickedYear) => {
-            year = clickedYear;
-            chosenYear.textContent = clickedYear;
-            isYearsHiding = true;
-            
-            hideYears();
-            showMonths();
-            checkDate();
+        year = clickedYear;
+        chosenYear.textContent = clickedYear;
+        isYearsHiding = true;
+        
+        hideYears();
+        showMonths();
+        checkDate();
     }
 
     function setDay() {
