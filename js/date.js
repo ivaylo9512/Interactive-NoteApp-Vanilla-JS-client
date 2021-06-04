@@ -73,38 +73,40 @@ const date = (() => {
     const showYears = () => {
         isYearsHidden = false;
         hideMonths();
+        timelineYears.classList.add('show');
 
         let current = years.length - 1;
-        showLoop()
-        function showLoop(){
+        const interval = setInterval(() => { 
+            if(current < 0 || isYearsHidden){
+                clearInterval(interval);
+                return;
+            }
+            const year = years[current];
+            year.classList.add('bounce-year');
+            year.classList.remove('reverse-year');
 
-            setTimeout(() => { 
-                if(current < 0 || isYearsHidden){
-                    return;
-                }
-                years[current].style.opacity = '1';
-                current--;
-                showLoop();
-            }, 70)
-
-        }
+            current--;
+        }, 70)
     }
 
     const hideYears = () => {
         let current = 0;        
-        hideLoop();
-        function hideLoop(){
+        const interval = setInterval(() => {
+            if(!isYearsHidden){
+                clearInterval(interval);
+                return;
+            }else if(current == years.length){
+                clearInterval(interval);
+                timelineYears.classList.remove('show');
+                return;
+            }
+            const year = years[current];
+            year.classList.add('reverse-year');
+            year.classList.remove('bounce-year');
 
-            setTimeout(() => { 
-                if(current == years.length || !isYearsHidden){
-                    return;
-                }
-                years[current].style.opacity = '0';
-                current++;
-                hideLoop();
-            }, 70)
+            current++;
+        }, 70);
 
-        }
     }
 
     const daysContainer = document.getElementById('days');
@@ -182,7 +184,6 @@ const date = (() => {
     return {
         showMonths,
         showYears,
-        slideYears,
         resetDate,
         initialize
     }
