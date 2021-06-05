@@ -37,21 +37,22 @@ const app = (() =>{
                 return;
             }
 
+            const style = photo.style;
+
             photo.classList.remove('visible');
-            photo.style.width = null;
-            photo.style.transform = null;
-            photo.style.top = null;
-            photo.style.left = null;
+            style.width = style.transform = style.top = style.left = null;
 
             if(i < currentAlbum.length){
                 photo.classList.add('visible');
                 photo.id = currentAlbum[i].id;
                 photo.children[0].src = remote.base + currentAlbum[i].location;
-                photo.style.transform = `rotate(${currentAlbum[i].rotation}deg)`;
-                photo.style.left = currentAlbum[i].leftPosition + 'px';
-                photo.style.top = currentAlbum[i].topPosition + 'px';
+                
                 currentAlbum[i].widthUnits == currentAlbum.widthUnits == undefined ? '%' : 'px';
-                photo.style.width = currentAlbum[i].width + currentAlbum.widthUnits;
+
+                style.transform = `rotate(${currentAlbum[i].rotation}deg)`;
+                style.left = currentAlbum[i].leftPosition + 'px';
+                style.top = currentAlbum[i].topPosition + 'px';
+                style.width = currentAlbum[i].width + currentAlbum.widthUnits;
 
                 let noteId = currentAlbum[i].note + 'note';
                 if(currentAlbum[i].note){
@@ -221,21 +222,19 @@ const app = (() =>{
 
     const resetPhoto = (photo, i) => {
         const appendedPhoto = appendedPhotos[i];
+        const style = appendPhoto.style;
 
-        appendedPhoto.style.width = null;
-        appendedPhoto.style.transform = null;
-        appendedPhoto.style.top = null;
-        appendedPhoto.style.left = null;
+        style.width = style.transform = style.top = style.left = null;
 
-        appendedPhoto.style.width = photo.widthSize + photo.widthUnits;
+        style.width = photo.widthSize + photo.widthUnits;
         photo.width = photo.widthSize;
-        appendedPhoto.style.left = photo.leftPosition + 'px';
+        style.left = photo.leftPosition + 'px';
         photo.left = photo.leftPosition;
-        appendedPhoto.style.top = photo.topPosition + 'px';
+        style.top = photo.topPosition + 'px';
         photo.top = photo.topPosition;
-        appendedPhoto.style.transform = `rotate(${photo.rotation}deg)`;
+        style.transform = `rotate(${photo.rotation}deg)`; 
 
-        let note = document.getElementById(photo.note + 'note')
+        const note = document.getElementById(photo.note + 'note');
         if(note){
             note.appendChild(appendedPhoto);
             appendedPhoto.classList.remove('visible');
@@ -280,13 +279,10 @@ const app = (() =>{
 
     const userPhotoListeners = (photo) => {
         photo.addEventListener('dragstart', (e) => e.preventDefault());
-
         photo.addEventListener('mousedown', checkIfResizable);
         photo.addEventListener('mouseenter', () => focusPhoto(photo));
         photo.addEventListener('mouseleave', resetPhotoButtons);
-
     }
-
     
     const moveButton = document.getElementById('move-btn');
     const resizeButton = document.getElementById('resize-btn');
@@ -340,8 +336,7 @@ const app = (() =>{
         }
     }
 
-    let centerX;
-    let centerY;
+    let centerX, centerY;
     const startRotate = (e) => {
         e.stopPropagation();
         isRotating = true;
@@ -387,27 +382,32 @@ const app = (() =>{
     }
     // TODO:
     const attachPhoto = (e) => {
-        if(e.ctrlKey){
-            if (focusedNote && currentPhoto.node.parentElement.className != 'user-note' && currentPhoto.top < -900) {
-                currentPhoto.top = currentPhoto.top - focusedNote.offsetTop + secondSection.offsetTop - (noteContainer.offsetTop + noteSection.offsetTop + notesContainer.offsetTop);
-                currentPhoto.left = currentPhoto.left - focusedNote.offsetLeft + secondSection.offsetLeft - parseFloat(window.getComputedStyle(notesContainer).marginLeft) - noteContainer.offsetLeft;
-                currentPhoto.node.style.top = currentPhoto.top + 'px';
-                currentPhoto.node.style.left = currentPhoto.left + 'px';
-                currentPhoto.node.style.width = currentPhoto.width / parseFloat(window.getComputedStyle(focusedNote.children[0]).width) * 100 + '%';
-                currentPhoto.node.classList.remove('visible');
-
-                rotateButton.src = 'resources/rotate-pinned.png'
-                focusedNote.children[0].appendChild(currentPhoto.node);
-            }else if(focusedNote && currentPhoto.node.parentElement.className == 'user-note'){
+        if(e.ctrlKey && focusedNote){
+            const style = currentPhoto.node.style;
+            if(currentPhoto.node.parentElement.className == 'user-note'){
                 currentPhoto.node.classList.add('visible');
+               
                 currentPhoto.top = currentPhoto.node.getBoundingClientRect().top + animate.getScrollY() - secondSection.offsetTop;
                 currentPhoto.left = currentPhoto.left + focusedNote.offsetLeft + parseFloat(window.getComputedStyle(notesContainer).marginLeft) - secondSection.offsetLeft + noteContainer.offsetLeft;
-                currentPhoto.node.style.top = currentPhoto.top + 'px';
-                currentPhoto.node.style.left = currentPhoto.left + 'px';
-                currentPhoto.node.style.width = currentPhoto.width / parseFloat(window.getComputedStyle(secondSection).width) * 100 + '%';
+               
+                style.top = currentPhoto.top + 'px';
+                style.left = currentPhoto.left + 'px';
+                style.width = currentPhoto.width / parseFloat(window.getComputedStyle(secondSection).width) * 100 + '%';
 
                 rotateButton.src = 'resources/rotate.png'
                 userPhotosContainer.appendChild(currentPhoto.node);
+            }else if (currentPhoto.top < -900) {
+                currentPhoto.node.classList.remove('visible');
+               
+                currentPhoto.top = currentPhoto.top - focusedNote.offsetTop + secondSection.offsetTop - (noteContainer.offsetTop + noteSection.offsetTop + notesContainer.offsetTop);
+                currentPhoto.left = currentPhoto.left - focusedNote.offsetLeft + secondSection.offsetLeft - parseFloat(window.getComputedStyle(notesContainer).marginLeft) - noteContainer.offsetLeft;
+               
+                style.top = currentPhoto.top + 'px';
+                style.left = currentPhoto.left + 'px';
+                style.width = currentPhoto.width / parseFloat(window.getComputedStyle(focusedNote.children[0]).width) * 100 + '%';
+
+                rotateButton.src = 'resources/rotate-pinned.png'
+                focusedNote.children[0].appendChild(currentPhoto.node);
             }
         }
     }
@@ -792,43 +792,40 @@ const app = (() =>{
     const start = () => {
         window.addEventListener('load', () => {
             initialLoading();   
-            profile.start();
+            profile.initialize();
+            animate.initialize();
+            date.initialize();        
+            colorize.start();
+            notes.start();
+        
+            dragElement(document.getElementById('move-note'));
+            dragElement(document.getElementById('point'));
+            dragElement(moveButton);
+
+            document.getElementById('fixate-btn').addEventListener('click', fixatePlayNav)
+            document.getElementById('album-btns').addEventListener('click', getAlbumImages);
+            document.getElementById('full-mode-btn').addEventListener('click', fullModeToggle);
+            menuCircle.addEventListener('click', fullModeNavToggle);
+            fullModeNav.addEventListener('mouseover', navHoverAnimations);
+            fullModeNav.addEventListener('click', fullScreenNavEvents);
+
+            albumNumbersContainer.addEventListener('click', chooseAlbumNumber);
+
+            document.getElementById('input-photo').addEventListener('input', appendPhoto);
+
+            saveButton.addEventListener('mouseover', () => editButton.classList.add('rotate'));
+            saveButton.addEventListener('mouseout', () => editButton.classList.remove('rotate'));
+            saveButton.addEventListener('click', savePhotos);
+            editButton.addEventListener('click', changeLabels); 
+            
+            moveButton.addEventListener('click', attachPhoto);
+            rotateButton.addEventListener('dragstart', (e) => e.preventDefault());
+            rotateButton.addEventListener('mousedown', startRotate);
+
+            appendedPhotos.forEach(photo =>{
+                userPhotoListeners(photo);
+            })
         });
-        
-        animate.initialize();
-        date.initialize();        
-        colorize.start();
-        notes.start();
-
-        
-        dragElement(document.getElementById('move-note'));
-        dragElement(document.getElementById('point'));
-        dragElement(document.getElementById('timeline-years'))
-        dragElement(moveButton);
-
-        document.getElementById('fixate-btn').addEventListener('click', fixatePlayNav)
-        document.getElementById('album-btns').addEventListener('click', getAlbumImages);
-        document.getElementById('full-mode-btn').addEventListener('click', fullModeToggle);
-        menuCircle.addEventListener('click', fullModeNavToggle);
-        fullModeNav.addEventListener('mouseover', navHoverAnimations);
-        fullModeNav.addEventListener('click', fullScreenNavEvents);
-
-        albumNumbersContainer.addEventListener('click', chooseAlbumNumber);
-
-        document.getElementById('input-photo').addEventListener('input', appendPhoto);
-
-        saveButton.addEventListener('mouseover', () => editButton.classList.add('rotate'));
-        saveButton.addEventListener('mouseout', () => editButton.classList.remove('rotate'));
-        saveButton.addEventListener('click', savePhotos);
-        editButton.addEventListener('click', changeLabels); 
-        
-        moveButton.addEventListener('click', attachPhoto);
-        rotateButton.addEventListener('dragstart', (e) => e.preventDefault());
-        rotateButton.addEventListener('mousedown', startRotate);
-
-        appendedPhotos.forEach(photo =>{
-            userPhotoListeners(photo);
-        })
     }
 
     return {
