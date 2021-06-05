@@ -407,6 +407,7 @@ body.full-mode-active .play-box{
     width: 50%;
     top: 50%;
     right: 0;
+    z-index: 5;
 }
 .onload-photos img{
     position: absolute;
@@ -646,6 +647,7 @@ body.full-mode-active .play-box{
     top: 0;
     height: 100%;
     width: 50%;
+    z-index: 5;
 }
 .big-arrow span:nth-child(1){
     width: 0.15em;
@@ -731,6 +733,7 @@ body.full-mode-active .play-box{
     width: 1.25em;
     right: -21%;
     top: 27%;
+    z-index: 5;
 }
 .small-arrow span:nth-child(1){
     left: 40%;
@@ -992,16 +995,14 @@ body.full-mode-active .play-box{
 }
 .note-animation{
     position: absolute;
-    width: 50%;
-    height: 80%;
-    text-align: center;
-    justify-content: center;
+    padding-left: 5%;
+    width: 38%;
+    height: 68%;
+    left: 0;
     align-items: center;
     z-index: 6;
     transition: opacity 1.15s ease-in-out;
     opacity: 0;
-    justify-content: center;
-    align-items: center;
 
     display: -webkit-inline-box;
     display: -moz-inline-box;
@@ -1018,16 +1019,13 @@ body.full-mode-active .play-box{
     transform: rotate(45deg);
     z-index: 3;
 }
-.big-note{
+.big-note {
     position: relative;
-    padding-bottom: 40%;
-    display: inline-block;
-    width: 40%;
+    padding-bottom: 54%;
+    width: 54%;
     transform: rotate(-19deg);
     background: #432717;
-    box-shadow: -4px 6px 18px -6px rgba(0, 0, 0, 0.75), -2px 3px 19px -2px rgba(0, 0, 0, 0.75);
-    align-items: center;
-    justify-content: center;
+    box-shadow: -0.05em 0.1em 0.2em -0.1em rgb(0 0 0 / 75%), -0.02em 0.02em 0.5em -0.02em rgb(0 0 0 / 75%);
     cursor: pointer;
 }
 .big-note span{
@@ -1052,8 +1050,8 @@ body.full-mode-active .play-box{
     width: 56%;
 }
 .small-note{
-    width: 22%;
-    padding-bottom: 22%;
+    width: 30%;
+    padding-bottom: 30%;
     position: relative;
     z-index: 5;
     cursor: pointer;
@@ -1073,7 +1071,7 @@ body.full-mode-active .play-box{
     justify-content: center;
     transition: rotate 1.5s;
     transform-origin: top right;
-    box-shadow: -4px 6px 18px -6px rgba(0, 0, 0, 0.75), -2px 3px 19px -2px rgba(0, 0, 0, 0.75);
+    box-shadow: -0.05em 0.1em 0.2em -0.1em rgb(0 0 0 / 75%), -0.02em 0.02em 0.5em -0.02em rgb(0 0 0 / 75%);
     display: flex;
     align-items: center;
 
@@ -1096,7 +1094,7 @@ body.full-mode-active .play-box{
 }
 .small-note:hover > div:last-child, 
 .big-note:hover + .small-note > div:last-child {
-    box-shadow: -4px 6px 18px -6px rgba(0, 0, 0, 0.75), -2px 3px 19px -2px rgba(0, 0, 0, 0.75);
+    box-shadow: -0.05em 0.1em 0.2em -0.1em rgb(0 0 0 / 75%), -0.02em 0.02em 0.5em -0.02em rgb(0 0 0 / 75%);
 }
 .small-note:hover > div:first-child,
 .big-note:hover + .small-note > div:first-child{
@@ -1194,6 +1192,10 @@ body.full-mode-active .cloud-header h1,
 }
 .cloud-headers {
     display: inline-flex;
+    display: -webkit-inline-box;
+    display: -moz-inline-box;
+    display: -ms-inline-flexbox;
+    display: -webkit-inline-flex;
     width: 31%;
     position: relative;
     z-index: unset;
@@ -1203,6 +1205,7 @@ body.full-mode-active .cloud-header h1,
 .cloud-header{
     position: relative;
     z-index: 2;
+    width: 100%;
 }
 .note-section .cloud-headers > div:last-child > div{
     height: 245px;
@@ -1659,10 +1662,13 @@ body.full-mode-active .full-mode-circle {
     z-index: 9;
     margin-left: -5%;
 }
+.timeline-years,
+.timeline-months{
+    font: bold 1.1vw "Aladin", Helvetica, sans-serif;
+}
 .timeline-years p,
 .timeline-months p{
     text-align: center;
-    font: bold 1.1vw "Aladin", Helvetica, sans-serif;
 }
 ol li .point {
     width: 1.3vw;
@@ -1698,10 +1704,10 @@ ol li .point {
     width: 3%;
     position: absolute;
     z-index: 7;
-    overflow: hidden;
-    bottom: 16%;
-    height: 82%;
+    height: 100%;
+    display: none;
     margin-left: 1.3%;
+    font: bold 1.1vw "Aladin", Helvetica, sans-serif;
 }
 .timeline-years ol::-webkit-scrollbar {
     display: none;
@@ -1726,7 +1732,8 @@ body.full-mode-active .timeline-years,
     display: block;
 }
 .timeline-years ol {
-    height: 100%;
+    height: 77%;
+    margin-top: 12vh;
     overflow-y: scroll;
     background: transparent;
     visibility: hidden;
@@ -1816,12 +1823,15 @@ button.days-container:focus{
     width: 100%;
     height: 14%;
 }
+.nav-point-container::before {
+    visibility: hidden;
+    content: "\00a0";
+    display: list-item;
+}
 .nav-point {
-    position: absolute;
+    position: relative;
     z-index: 9;
     transition: all 3s;
-    left: 24px;
-    top: 33px;
     width: 1.3vw;
     height: 1.3vw;
     background: #41291B;
