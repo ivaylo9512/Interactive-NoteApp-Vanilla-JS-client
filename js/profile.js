@@ -16,6 +16,11 @@ const profile = (() => {
             profilePicture : user.profilePicture
         }
 
+        userInputs[0].value = user.firstName;
+        userInputs[1].value = user.lastName;
+        userInputs[2].value = user.age;
+        userInputs[3].value = user.country;
+
         profilePhoto.src = user.profilePicture ? remote.getBase() + user.profilePicture : '#'; 
         localStorage.setItem('Authorization', user.token);
         localStorage.setItem('User', JSON.stringify(userInfo));
@@ -85,9 +90,7 @@ const profile = (() => {
     const initialize = () => { 
         if (isAuth()) {
             userInfo = JSON.parse(localStorage.getItem('User'));
-            resetView(view[2], Object.values(userInfo));
-    
-            profilePhoto.src = userInfo.profilePicture != 'undefined' ? remote.getBase() + userInfo.profilePicture : '#'; 
+            setUserInfo(userInfo);
         }
         
         document.getElementById('login-btn').addEventListener('click', displayView);
