@@ -48,14 +48,13 @@ const dragElement = (target) => {
         pos2 = pos4 - e.pageY;
         pos3 = e.pageX;
         pos4 = e.pageY;
-
-
-        if(className != 'timeline-years'){
-            offsetTop -= pos2;
-            offsetLeft -= pos1;
-            node.style.top = offsetTop + 'px';
-            node.style.left = offsetLeft + 'px';
+         
+        if(className != 'nav-point'){
+            pos1 = offsetLeft -= pos1;
+            pos2 = offsetTop -= pos2;
         }
+        node.style.top = offsetTop + 'px';
+        node.style.left = offsetLeft + 'px';
         
         switch (className) {
             case 'move-btn':
@@ -66,9 +65,6 @@ const dragElement = (target) => {
                 break;
             case 'nav-point':
                 checkPointPosition();
-                break;
-            case 'timeline-years':
-                notes.slideYears(pos2);
                 break;
             case 'clouds-container':
                 addBoxShadow();
@@ -127,10 +123,10 @@ const dragElement = (target) => {
 
     const checkPointPosition = () => {
         if (pos3 > 100) {
-            notes.showMonths();
+            date.showMonths();
             closeDrag();
         } else if (node.parentElement.getBoundingClientRect().top - event.clientY > 35) {
-            notes.showYears();
+            date.showYears();
             closeDrag();
         }
     }
@@ -215,8 +211,8 @@ const dragElement = (target) => {
 
     const resetNavPoint = () => {
         node.style.transition = '2s';
-        node.style.left = '24px';
-        node.style.top = '33px';
+        node.style.left = 0;
+        node.style.top = 0;
     }    
 
     const addBoxShadow = () => {
