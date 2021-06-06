@@ -28,8 +28,8 @@ const dragElement = (target) => {
             else if (className == 'move-note' || className == 'drag-photo' || className == 'move-btn') node = target.parentElement;
 
         node.style.transition = '0s';
-        offsetTop = node.offsetTop;
-        offsetLeft = node.offsetLeft;
+        offsetTop = parseFloat(window.getComputedStyle(node).top)
+        offsetLeft = parseFloat(window.getComputedStyle(node).left);
         
         if (className == 'appended') {
             node = target.parentElement;
@@ -44,17 +44,13 @@ const dragElement = (target) => {
         e.preventDefault();
         dragged = true;
 
-        pos1 = pos3 - e.pageX;
-        pos2 = pos4 - e.pageY;
+        offsetLeft -= pos3 - e.pageX;
+        offsetTop -= pos4 - e.pageY;
         pos3 = e.pageX;
         pos4 = e.pageY;
          
-        if(className != 'nav-point'){
-            pos1 = offsetLeft -= pos1;
-            pos2 = offsetTop -= pos2;
-        }
-        node.style.top = offsetTop + 'px';
         node.style.left = offsetLeft + 'px';
+        node.style.top = offsetTop + 'px';
         
         switch (className) {
             case 'move-btn':
@@ -63,7 +59,7 @@ const dragElement = (target) => {
             case 'drag-photo':
                 makeContainerDraggable();
                 break;
-            case 'nav-point':
+            case 'point':
                 checkPointPosition();
                 break;
             case 'clouds-container':
@@ -88,7 +84,7 @@ const dragElement = (target) => {
                 elementFromPoint = document.elementFromPoint(x, y);
                 photoEndDrag();
                 break;
-            case 'nav-point':
+            case 'point':
                 resetNavPoint();
                 break;
             case 'clouds-container':
