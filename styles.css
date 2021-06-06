@@ -74,29 +74,34 @@ body.full-mode-active .play-mode > .play-nav{
 .onload-animation.play .blue-bulb{
     display: none;
 }
+.onload-animation .pointer{
+    animation: translatePointer 1.6s infinite;
+}
+.onload-animation .pointer span{
+    transform-origin: 0.05em 0.05em;
+}
 .pointer {
     position: absolute;
     left: 50%;
     top: 12%;
-    animation: translatePointer 1.6s infinite;
     width: 0.1em;
     height: 0.26em;
     margin-left: 0.1%;
     z-index: 2;
+    line-height: 0;
 }
 .play-mode.tree-animation .pointer{
     display: none;
 }
 .pointer span {
-    width: 1.7vh;
-    height: 4.5vh;
+    width: 100%;
+    height: 100%;
     background: #41291B;
     position: absolute;
+    display: inline-block;
     border-radius: 5vh;
-    transform-origin: 0.85vh 0.85vh;
 }
 .pointer span:nth-child(1) {
-    transform: rotate(-45deg);
     -webkit-transform: rotate(-45deg);
     -moz-transform: rotate(-45deg);
     transform: rotate(-45deg);
@@ -104,7 +109,6 @@ body.full-mode-active .play-mode > .play-nav{
 .pointer span:nth-child(2) {
     -webkit-transform: rotate(45deg);
     -moz-transform: rotate(45deg);
-    transform: rotate(45deg);
     transform: rotate(45deg);
 }
 .play-mode.tree-animation .notebook nav{
@@ -1664,11 +1668,44 @@ body.full-mode-active .full-mode-circle {
 }
 .timeline-years,
 .timeline-months{
+    visibility: hidden;
+    opacity: 0;
+    transition: 2s opacity;
     font: bold 1.1vw "Aladin", Helvetica, sans-serif;
+}
+.timeline-months .pointer{
+    font-size: 8vw;
+    left: 5%;
+    top: 7%;
+    transition: 2s transform;
+}
+.note-section .timeline-months.show .pointer {
+    transform: translateX(89vw);
+}
+.timeline-months .pointer span{
+    transform-origin: 0.13em 0.13em;
+}
+.timeline-months .pointer span:nth-child(1){
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+    -moz-transform: rotate(135deg);
+    transform: rotate(135deg);
+}
+.timeline-months .pointer span:nth-child(2){
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+    -moz-transform: rotate(-135deg);
+    transform: rotate(-135deg);
 }
 .timeline-years p,
 .timeline-months p{
     text-align: center;
+}
+.timeline-months li,
+.timeline-years li{
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    transform: scale(0);
 }
 .point {
     width: 1.3vw;
@@ -1682,9 +1719,8 @@ body.full-mode-active .full-mode-circle {
     text-align: center;
 }
 .timeline-months{
-    display: none;
     position: relative;
-    margin-top: 12vh;
+    margin-top: 11vh;
 }
 .timeline-months.show{
     display: block;
@@ -1693,6 +1729,10 @@ body.full-mode-active .full-mode-circle {
     z-index: 7;
     text-align: center;
     display: block;
+    visibility: hidden;
+}
+.timeline-months.show ol{
+    visibility: visible;
 }
 .timeline-months li {
     width: 6.5%;
@@ -1704,20 +1744,21 @@ body.full-mode-active .full-mode-circle {
     position: absolute;
     z-index: 7;
     height: 100%;
-    display: none;
     margin-left: 1.3%;
-    font: bold 1.1vw "Aladin", Helvetica, sans-serif;
 }
 .timeline-years ol::-webkit-scrollbar {
     display: none;
 }
 body.full-mode-active .timeline-years,
-.note-section.animated .timeline-years{
-    display: block;
+.note-section.animated .timeline-years,
+body.full-mode-active .timeline-months,
+.note-section.animated .timeline-months{
+    visibility: visible;
+    opacity: 1;
 }
 .timeline-years ol {
     height: 77%;
-    margin-top: 7vh;
+    margin-top: 8vh;
     overflow-y: scroll;
     background: transparent;
     visibility: hidden;
@@ -1725,18 +1766,15 @@ body.full-mode-active .timeline-years,
 .timeline-years.show ol{
     visibility: visible;
 }
-.timeline-years li.bounce-year {
+.note-section li.bounce {
     animation: bouncePoint 2000ms linear both;
 }
-.timeline-years li.reverse-year {
+.note-section li.reverse-bounce {
     animation: reversePoint 2000ms linear both;
 }
 .timeline-years li {
     padding: 0.1vw;
     margin-bottom: 3.8vh;
-    -webkit-transform: scale(0);
-    -moz-transform: scale(0);
-    transform: scale(0);
 }
 .timeline-years .point {
     margin-left: -5%;
@@ -1797,7 +1835,11 @@ button.days-container:focus{
     z-index: 9;
     position: relative;
     width: 100%;
-    padding-top: 5vh;
+    text-align: center;
+    padding-top: 3vh;
+}
+.nav-point-container .point{
+    position: relative;
 }
 .nav-point-container::before {
     visibility: hidden;
@@ -1820,9 +1862,9 @@ button.days-container:focus{
     border-radius: 5vh;
 }
 .timeline-years.show .timeline-border::before{
-    -webkit-transform: translateY(-88vh);
-    -moz-transform: translateY(-88vh);
-    transform: translateY(-88vh);
+    -webkit-transform: translateY(-78vh);
+    -moz-transform: translateY(-78vh);
+    transform: translateY(-78vh);
 }
 .photo-section-full-mode{
     display: none;
