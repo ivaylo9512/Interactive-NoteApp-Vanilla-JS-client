@@ -1174,7 +1174,7 @@ body.full-mode-active .note-animation{
     border-radius: 10px
 }
 .cloud-header h1{
-    font: bold 80px "Aladin", Helvetica, sans-serif;
+    font: bold 13.5vh "Aladin", Helvetica, sans-serif;
     letter-spacing: 7px;
     color: #442818;
     cursor: pointer;
@@ -1182,6 +1182,7 @@ body.full-mode-active .note-animation{
     -webkit-transform: translateY(-50%);
     -moz-transform: translateY(-50%);
     transform: translateY(-50%);
+    text-shadow: 0.01em 0.01em 0.02em rgb(0 0 0);
 }
 body.full-mode-active .cloud-header > div,
 .note-section.animated .cloud-header > div{
@@ -1670,13 +1671,13 @@ body.full-mode-active .full-mode-circle {
 .timeline-months{
     visibility: hidden;
     opacity: 0;
-    transition: 2s opacity;
+    transition: 2s opacity 2s;
     font: bold 1.1vw "Aladin", Helvetica, sans-serif;
 }
 .timeline-months .pointer{
     font-size: 8vw;
     left: 5%;
-    top: 7%;
+    top: 33%;
     transition: 2s transform;
 }
 .note-section .timeline-months.show .pointer {
@@ -1714,6 +1715,7 @@ body.full-mode-active .full-mode-circle {
     cursor: pointer;
     display: inline-block;
     border-radius: 50%;
+    box-shadow: -0.05em 0.1em 0.2em -0.1em rgb(0 0 0 / 75%), -0.02em 0.02em 0.5em -0.02em rgb(0 0 0 / 75%);
 }
 .note-section ol li{
     text-align: center;
@@ -1780,56 +1782,70 @@ body.full-mode-active .timeline-months,
     margin-left: -5%;
 }
 .days-container {
-    width: 23px;
-    height: 23px;
-    display: inline-block;
+    width: 2.8vw;
+    position: absolute;
+    height: 2.8vw;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
     border: 0.25vw solid #41291B;
+    box-sizing: content-box;
     border-radius: 50%;
     box-shadow: 0px 0px 0.2em -0.04em rgb(0 0 0);
-    background: -moz-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
-    background: -webkit-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+    background: -moz-linear-gradient(top, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 100%);
+    background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 100%);
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 100%);
 }
-button.days-container {
-    width: 78px;
-    height: 22px;
-    -webkit-transform: translate(-50%, -50%);
-    -moz-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    bottom: 36.95%;
-    left: 50.35%;
+.days-container:nth-child(2) {
     overflow: hidden;
-    opacity: 0;
+    visibility: hidden;
+    align-items: center;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
 }
-body.full-mode-active button.days-container {
-    bottom: 36.25%;
+.days-container:nth-child(1):focus + .days-container.visible{
+    transition: 2s width ease-in-out 1.5s, 2s height ease-in-out 1.5s, 2s border-radius ease-in-out 1.5s, 1.5s transform ease-in-out 0s;
+    visibility: visible;
+    width: 29vh;
+    height: 24vh;
+    border-radius: 1vw;
+    -webkit-transform: translate(-50%, -130%);
+    -moz-transform: translate(-50%, -130%);
+    transform: translate(-50%, -130%);
 }
-button.days-container:focus{
-    width: 160px;
-    height: 120px;
-    -webkit-transform: translate(-50%, -50%);
-    -moz-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    transition: height 2s, width 2s ease-in-out;
-    opacity: 1;
-    background: -moz-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
-    background: -webkit-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#00ffffff', GradientType=0);
-}
-.days{
-    width: 152px;
-    margin-top: 15px;
+.days-container > div{
     text-align: center;
-    height: 95px;
-    font-size: 19px;
+    font-size: 0;
+    opacity: 0;
+    padding: 0 2%;
 }
-.days a{
-    margin-left: 4px;
+.days-container:nth-child(1):focus + .days-container > div {
+    opacity: 1;
+    transition: 1s opacity 2.5s;
+}
+.days-container a{
+    margin-left: 2%;
     display: inline-block;
-    font: normal 19px/1 "Aladin", Helvetica, sans-serif;
+    font: bold 1.3vw "Aladin", Helvetica, sans-serif;
     color: #41291B;
     cursor: pointer;
+}
+.days-container.count30 a:nth-child(31),
+.days-container.count29 a:nth-child(31),
+.days-container.count28 a:nth-child(31){
+    display: none;
+}
+.days-container.count29 a:nth-child(30),
+.days-container.count28 a:nth-child(30){
+    display: none;
+}
+.days-container.count28 a:nth-child(29){
+    display: none;
 }
 .nav-point-container{
     z-index: 9;
@@ -1841,7 +1857,7 @@ button.days-container:focus{
 .nav-point-container .point{
     position: relative;
 }
-.nav-point-container::before {
+.nav-point-container::before{
     visibility: hidden;
     content: "\00a0";
     display: list-item;
@@ -1851,17 +1867,22 @@ button.days-container:focus{
     top: 0;
     width: 100%;
 }
-.timeline-border::after, .timeline-border::before {
-    top: 0;
+.timeline-years::after, .timeline-years::before{
+    top: 85%;
     content: '';
-    height: 1vh;
+    height: 1.8vh;
     width: 100%;
     background: #41291B;
     transition: 2s all;
     position: absolute;
     border-radius: 5vh;
+    box-shadow: -0.05em 0.1em 0.2em -0.1em rgb(0 0 0 / 75%), -0.02em 0.02em 0.5em -0.02em rgb(0 0 0 / 75%);
 }
-.timeline-years.show .timeline-border::before{
+.timeline-years::before{
+    opacity: 0;
+}
+.timeline-years.show::before{
+    opacity: 1;
     -webkit-transform: translateY(-78vh);
     -moz-transform: translateY(-78vh);
     transform: translateY(-78vh);
