@@ -2,7 +2,8 @@ const date = (() => {
     const timelineMonths = document.getElementById('timeline-months');
     const timelineYears = document.getElementById('timeline-years');
    
-    const months = Array.from(timelineMonths.getElementsByTagName('LI'));
+    const monthNodes = Array.from(timelineMonths.getElementsByTagName('LI'));
+    const months = monthNodes.filter((el, index) => index != 6);
     const years = [];
    
     const minYear = 1995;
@@ -29,15 +30,47 @@ const date = (() => {
         timelineYears.children[0].appendChild(yearsFragment);
     }
 
-    let isYearsHidden;
+    let showMonthsInterval;
     const showMonths = () => {
-        isYearsHidden = true;
+        if(hideMonthsInterval){
+            clearInterval(hideMonthsInterval)
+        }
         hideYears();
+
+        showMonthsInterval = function interval(delay, current){
+            return setTimeout(() => {
+                if(current == monthNodes.length){
+                    return;
+                }
+                const month = monthNodes[current];
+                month.classList.remove('reverse-bounce')
+                month.classList.add('bounce')
+
+                interval(100, ++current)
+            }, delay);
+        }(500, 0)
         timelineMonths.classList.add('show');
     }
 
+    let hideMonthsInterval
     const hideMonths = () => {
-        timelineMonths.classList.remove('show');
+        if(showMonthsInterval){
+            clearInterval(showMonthsInterval)
+        }
+
+        let current = monthNodes.length - 1; 
+        hideMonthsInterval = setInterval(() => {
+            if(current < 0){
+                clearInterval(hideMonthsInterval)
+                timelineMonths.classList.remove('show');
+                return;
+            }
+            const month = monthNodes[current];
+            month.classList.remove('bounce');
+            month.classList.add('reverse-bounce');
+
+            current--;
+        }, 50)
     }
 
     let showYersInterval;
