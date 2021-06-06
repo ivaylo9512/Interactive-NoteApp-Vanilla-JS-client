@@ -1,24 +1,23 @@
 const date = (() => {     
     const timelineMonths = document.getElementById('timeline-months');
-    const timelineYears = document.getElementById('timeline-years').children[0];
+    const timelineYears = document.getElementById('timeline-years');
    
     const months = Array.from(timelineMonths.getElementsByTagName('LI'));
     const years = [];
    
-    const maxYear = 1995;
+    const minYear = 1995;
     const currentYear = new Date().getFullYear();
-    const yearsCount = currentYear - maxYear;
      
     function appendYears(){
         const yearsFragment = document.createDocumentFragment();
 
-        for(let i = 0; i <= yearsCount ; i++){
+        for(let i = currentYear; i >= minYear; i--){
             const year = document.createElement('LI');
             const yearLabel = document.createElement('P');
             const point = document.createElement('SPAN');
             
             point.className = 'point';
-            yearLabel.textContent = maxYear + i;
+            yearLabel.textContent = i;
             yearLabel.className = 'colorizable';
     
             year.appendChild(yearLabel);
@@ -27,7 +26,7 @@ const date = (() => {
             yearsFragment.appendChild(year)
         }
 
-        timelineYears.appendChild(yearsFragment);
+        timelineYears.children[0].appendChild(yearsFragment);
     }
 
     let isYearsHidden;
@@ -41,52 +40,52 @@ const date = (() => {
         timelineMonths.classList.remove('show');
     }
 
-    let showInterval;
+    let showYersInterval;
     const showYears = () => {
-        if(hideInterval){
-            clearInterval(hideInterval);
+        if(showYersInterval){
+            clearInterval(showYersInterval);
         }
 
         hideMonths();
         timelineYears.classList.add('show');
 
-        let current = years.length - 1;
-        showInterval = setInterval(() => { 
-            if(current < 0){
-                clearInterval(showInterval);
-                return;
-            }
-            const year = years[current];
-            year.classList.add('bounce-year');
-            year.classList.remove('reverse-year');
+        showYersInterval = function interval(current, delay){ 
+            return setTimeout(() => { 
+                if(current < 0){
+                    return;
+                }
+                const year = years[current];
+                year.classList.add('bounce');
+                year.classList.remove('reverse-bounce');
 
-            current--;
-        }, 70)
+                interval(--current, 70)
+            }, delay)
+        }(years.length - 1, 1200)
     }
 
-    let hideInterval;
+    let hideYearsInterval;
     const hideYears = () => {
-        if(showInterval){
-            clearInterval(showInterval);
+        if(hideYearsInterval){
+            clearInterval(hideYearsInterval);
         }
 
         let current = 0;        
-        hideInterval = setInterval(() => {
+        hideYearsInterval = setInterval(() => {
             if(current == years.length){
-                clearInterval(hideInterval);
+                clearInterval(hideYearsInterval);
                 timelineYears.classList.remove('show');
                 return;
             }
             const year = years[current];
-            year.classList.add('reverse-year');
-            year.classList.remove('bounce-year');
+            year.classList.add('reverse-bounce');
+            year.classList.remove('bounce');
 
             current++;
         }, 70);
 
     }
 
-    const daysContainer = document.getElementById('days');
+    const daysContainer = document.getElementById('days-container');
 
     const chosenMonth = document.getElementById('chosen-month');
     const chosenYear = document.getElementById('chosen-year');
@@ -106,8 +105,8 @@ const date = (() => {
         checkDate();
     }
 
-    const setDaysCount = () => {
-        daysContainer.className = 'days visible count' + daysCount;
+    const setDaysCount = (daysCount) => {
+        daysContainer.className = 'days-container visible count' + daysCount;
     }
 
     const setYear = (clickedYear) => {
@@ -144,6 +143,7 @@ const date = (() => {
         chosenMonth.textContent = '';
         chosenYear.textContent = '';
         chosenDay.textContent = '';
+        daysContainer.className = 'days-container';
 
         hideYears();
         hideMonths();
