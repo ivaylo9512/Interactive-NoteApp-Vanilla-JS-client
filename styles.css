@@ -42,13 +42,9 @@ body.full-mode-active .play-mode > .play-nav{
     display: block;
 }
 .tree {
-    display: inline-block;
     height: 100%;
-    padding: 0 1.4vh;
-}
-.tree img {
-    height: 100%;
-    margin-left: -4.5%;
+    left: -1.5%;
+    padding: 0 1.5%;
     display: inline-block;
     position: relative;
 }
@@ -222,9 +218,15 @@ body.full-mode-active .play-nav.active {
 .play-box{
     width: 100%;
     z-index: 9;
+    border: 2px solid transparent;
     float: right;
 }
-
+.play-box:hover {
+    box-shadow: 0 0 10px 0px rgb(0 0 0);
+    border-radius: 5px;
+    background: #41291B;
+    border: 0.15vw solid #EAE9E5;
+}
 .play-box > *:not(:first-child) {
     display: none;
 }
@@ -927,8 +929,7 @@ body.full-mode-active .play-box{
     margin-bottom: 2vh;
 }
 .buttons-container button {
-    padding: 0;
-    background-color: #442818;
+    background: linear-gradient(to right, #41291B 70% , #32271d);
     width: 17%;
     height: 100%;
     border-radius: 0.5em 0.5em 0 0;
