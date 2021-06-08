@@ -180,6 +180,8 @@ body.full-mode-active .play-mode > .play-nav{
     width: 100%;
     transition: 1.5s;
     display: block;
+    stroke: #EAE9E5;
+    fill: #41291B;
 }
 
 .full-mode-button img{
@@ -214,18 +216,25 @@ body.full-mode-active .play-nav.active {
 .gear {
     width: 100%;
     z-index: 7;
+    fill:#41291b
 }
-.play-box{
+.play-box {
     width: 100%;
     z-index: 9;
-    border: 2px solid transparent;
-    float: right;
+    text-align: center;
+    line-height: 0;
+    display: none;
+    align-items: center;
+    flex-direction: column;
+    height: 300px;
 }
 .play-box:hover {
     box-shadow: 0 0 10px 0px rgb(0 0 0);
     border-radius: 5px;
     background: #41291B;
-    border: 0.15vw solid #EAE9E5;
+    border: 2px solid #EAE9E5;
+    position: relative;
+    display: flex;
 }
 .play-box > *:not(:first-child) {
     display: none;
@@ -295,23 +304,12 @@ body.full-mode-active .play-box{
     opacity: 1;
 }
 
-.play-btn,
-.fixate-btn {
+.play-btn, .fixate-btn {
     position: relative;
-    height: 34px;
-    justify-content: center;
-    width: 34px;
-    align-items: center;
-    background: #41291B;
-    margin-right: -1.5px;
+    height: 43px;
+    width: 43px;
     border-radius: 50%;
     cursor: pointer;
-    box-shadow: 0px 0px 4px 1.5px rgba(0,0,0,0.4);
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
 }
 .play-btn span{
     border-top: 10px solid transparent;
