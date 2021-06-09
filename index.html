@@ -242,17 +242,18 @@
         </section>
         <div class="play-mode" id="play-mode">
             <div class="play-nav" id="play-nav">
-                <button class="full-mode-button">
+                <button class="full-mode-button" id="full-mode-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 62.05 53.67">   
                         <defs>
-                            <filter id="f1" filterUnits="userSpaceOnUse">
-                                <feDropShadow filterUnits="userSpaceOnUse" dx="0.4" dy="0.2" stdDeviation="4"></feDropShadow>
+                            <filter id="full-mode-button-filter" filterUnits="userSpaceOnUse">
+                                <feDropShadow dx="0.4" dy="0.2" stdDeviation="4" />
                             </filter>
                         </defs>
                         <g>
                             <g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1">
-                                <rect x="2.5" y="2.5" width="57.05" height="48.67" style="filter: url(#f1);stroke: none;"></rect>
-                                <polyline points="29.44 15.97 42.49 15.97 42.49 27.84" style="stroke-linecap:round;stroke-linejoin:round;stroke-width:5px;"></polyline><polyline points="31.89 36.94 18.84 36.94 18.84 25.07" style="stroke-linecap:round;stroke-linejoin:round;stroke-width:5px;"></polyline>
+                                <rect x="2.5" y="2.5" width="57.05" height="48.67" />
+                                <polyline points="29.44 15.97 42.49 15.97 42.49 27.84" />
+                                <polyline points="31.89 36.94 18.84 36.94 18.84 25.07" />
                             </g>
                         </g>
                     </svg>
@@ -260,9 +261,14 @@
                 <div id="play-box" class="play-box">
                     <button class="gear">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 51.23 51.23">
+                            <filter filterUnits="userSpaceOnUse" id="gear-filter">
+                                <feDropShadow dx="0.4" dy="0" stdDeviation="3" />
+                            </filter>
                             <g>
                                 <g>
-                                    <path d="M47.65,20.9a5.48,5.48,0,0,1-3.12-7.53l1.63-3.44L41.3,5.07,37.86,6.7a5.48,5.48,0,0,1-7.53-3.12L29.05,0H22.18L20.9,3.58A5.48,5.48,0,0,1,13.37,6.7L9.93,5.07,5.07,9.93,6.7,13.37A5.48,5.48,0,0,1,3.58,20.9L0,22.18v6.87l3.58,1.28A5.48,5.48,0,0,1,6.7,37.86L5.07,41.3l4.86,4.86,3.44-1.63a5.48,5.48,0,0,1,7.53,3.12l1.28,3.58h6.87l1.28-3.58a5.48,5.48,0,0,1,7.53-3.12l3.44,1.63,4.86-4.86-2.11-4.44A4.49,4.49,0,0,1,46.6,30.7l4.63-1.65V22.18Zm-22,13.62a8.91,8.91,0,1,1,8.91-8.91A8.9,8.9,0,0,1,25.61,34.52Z"></path>
+                                    <circle cx="25.61486" cy="25.61493" r="15.68164" />
+                                    <path d="M47.65,20.9a5.48,5.48,0,0,1-3.12-7.53l1.63-3.44L41.3,5.07,37.86,6.7a5.48,5.48,0,0,1-7.53-3.12L29.05,0H22.18L20.9,3.58A5.48,5.48,0,0,1,13.37,6.7L9.93,5.07,5.07,9.93,6.7,13.37A5.48,5.48,0,0,1,3.58,20.9L0,22.18v6.87l3.58,1.28A5.48,5.48,0,0,1,6.7,37.86L5.07,41.3l4.86,4.86,3.44-1.63a5.48,5.48,0,0,1,7.53,3.12l1.28,3.58h6.87l1.28-3.58a5.48,5.48,0,0,1,7.53-3.12l3.44,1.63,4.86-4.86-2.11-4.44A4.49,4.49,0,0,1,46.6,30.7l4.63-1.65V22.18Zm-22,13.62a8.91,8.91,0,1,1,8.91-8.91A8.9,8.9,0,0,1,25.61,34.52Z" />
+                                    <circle cx="25.61486" cy="25.61493" r="9.68164" />
                                 </g>
                             </g>
                         </svg>
