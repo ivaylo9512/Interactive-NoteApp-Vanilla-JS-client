@@ -246,7 +246,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 62.05 53.67">   
                         <defs>
                             <filter id="full-mode-button-filter" filterUnits="userSpaceOnUse">
-                                <feDropShadow dx="0.4" dy="0.2" stdDeviation="4" />
+                                <feDropShadow dx="0.4" dy="0.2" stdDeviation="4"/>
                             </filter>
                         </defs>
                         <g>
@@ -286,8 +286,26 @@
                         </button>
                     </div>
                     <button class="fixate-btn" id="fixate-btn">
-                        <span></span>
-                        <span></span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22.4915 22.4915">                      
+                            <defs>
+                                <filter id="fixate-filter" width="200%" height="200%" y="-60%" x="-60%" filterUnits="userSpaceOnUse">
+                                    <feDropShadow dx="0.4" dy="0" stdDeviation="1" />
+                                </filter>
+                                <filter id="fixate-filter2" width="200%" height="200%" y="-60%" x="-60%" filterUnits="userSpaceOnUse">
+                                    <feDropShadow dx="0.4" dy="0" stdDeviation="2" flood-opacity="0.5" />
+                                </filter>
+                         
+                            </defs>              
+                            <g style="filter: url(#fixate-filter2)">
+                                <g id="Layer_1-2" data-name="Layer 1" style="filter: url(#fixate-filter)">
+                                    <path d="M8.8768.5A10.8931,10.8931,0,1,0,21.9915,13.6146" />
+                                    <path class="upper-border" d="M21.9915,8.5718A10.8988,10.8988,0,0,0,13.92.5" />
+                                    <circle cx="11.3982" cy="11.0933" r="10.3982" />
+                                    <line x1="6.25103" y1="11.09326" x2="16.54543" y2="11.09326" />
+                                    <line x1="11.39823" y1="16.24046" x2="11.39823" y2="5.94606" />
+                                </g>
+                            </g>
+                        </svg>
                     </button>
                     <div class="input-note" id="input-note-btn">
                         <div class="note"></div>
