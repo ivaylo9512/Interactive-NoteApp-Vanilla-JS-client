@@ -208,7 +208,7 @@ body.full-mode-active .play-mode > .play-nav{
     bottom: 62vh;
     transition: all 1.5s 0.15s;
 }
-.play-nav.active,
+.play-nav.fixed,
 .play-nav.play{
     position: fixed;
     z-index: 9;
@@ -219,7 +219,7 @@ body.full-mode-active .play-nav {
     width: 2.6%;
     position: fixed;
 }
-body.full-mode-active .play-nav.active {
+body.full-mode-active .play-nav.fixed {
     top: calc(7.5vh + 0.5vw);
 }
 .play-box .gear {
@@ -347,9 +347,23 @@ body.full-mode-active .play-box{
     stroke: #EAE9E5;
     stroke-linecap: round;
 }
-.fixate-btn:hover .upper-border{
+.fixate-btn .upper-border{
+    fill: none;
+    filter: url(#fixate-filter);
     transition: 1.5s all;
     transform-origin: center;
+}
+.fixate-btn circle{
+    stroke: none;
+}
+.fixate-btn line{
+    stroke-width: 2px;
+    transition: 1.5s all cubic-bezier(0.52, -0.52, 0.8, 0.82);
+}
+.play-nav.fixed .fixate-btn line:nth-of-type(2){
+    transform: rotate(90deg) translate(-1.5%, -100%);
+}
+.fixate-btn:hover .upper-border{
     -webkit-transform: rotate(-5deg) translate(9%, -10%);
     -moz-transform: rotate(-5deg) translate(9%, -10%);
     transform: rotate(-5deg) translate(9%, -10%);
