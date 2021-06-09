@@ -218,6 +218,27 @@ body.full-mode-active .play-nav.active {
     z-index: 7;
     fill:#41291b
 }
+.play-box:hover .gear circle {
+    stroke-dashoffset: 0;
+}
+.gear circle {
+    fill: none;
+    stroke-width: 2px;
+    stroke-miterlimit: 10;
+    stroke: #EAE9E5;
+    stroke-dasharray: calc(40px * 3.14);
+    transition: 2s all 0.5s;
+    stroke-dashoffset: calc(40px * 3.14);
+}
+.play-box:hover .gear path {
+    transform: scale(0.4);
+    fill: #EAE9E5;
+}
+.play-box .gear path {
+    fill: #41291B;
+    transition: 1.5s;
+    transform-origin: center;
+}
 .play-box {
     width: 100%;
     z-index: 9;
@@ -307,55 +328,15 @@ body.full-mode-active .play-box{
 .play-btn, .fixate-btn {
     position: relative;
     height: 43px;
-    width: 43px;
-    border-radius: 50%;
+    width: 116%;
     cursor: pointer;
 }
-.play-btn span{
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-left: 12px solid #EAE9E5;
-    margin-left: 3px;
-}
-.play-nav.play .play-btn span{
-    border-top: 0px;
-    border-bottom: 0px;
-    width: 6.5px;
-    height: 16px;
-    border-left: 4.5px solid #EAE9E5;
-    border-right: 4.5px solid #EAE9E5;
-    margin-left: 0px;
-}
-.fixate-btn{
-    display: block;
-    margin-top: -3px;
-}
-.fixate-btn span{
-    width: 3px;
-    height: 20px;
-    background: #EAE9E5;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    margin-top: -10px;
-    margin-left: -1.5px;
-    border-radius: 5px;
-    transition: all 1.5s;
-}
-.fixate-btn span:first-child{
-    -webkit-transform: rotate(90deg);
-    -moz-transform: rotate(90deg);
-    transform: rotate(90deg);
-}
-.play-nav.active .fixate-btn span{
-    -webkit-transform: rotate(-45deg);
-    -moz-transform: rotate(-45deg);
-    transform: rotate(-45deg);
-}
-.play-nav.active .fixate-btn span:first-child{
-    -webkit-transform: rotate(45deg);
-    -moz-transform: rotate(45deg);
-    transform: rotate(45deg);
+.play-box:hover .fixate-btn .upper-border{
+    transition: 1.5s all;
+    transform-origin: center;
+    -webkit-transform: rotate(-5deg) translate(9%, -10%);
+    -moz-transform: rotate(-5deg) translate(9%, -10%);
+    transform: rotate(-5deg) translate(9%, -10%);
 }
 .notebook {
     background-image: url("resources/notebook.png");
