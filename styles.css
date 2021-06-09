@@ -180,10 +180,19 @@ body.full-mode-active .play-mode > .play-nav{
     width: 100%;
     transition: 1.5s;
     display: block;
+    fill: #41291B;
     stroke: #EAE9E5;
     fill: #41291B;
 }
-
+.full-mode-button polyline{
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 5px;
+}
+.full-mode-button rect{
+    filter: url(#full-mode-button-filter);
+    stroke: none;
+}
 .full-mode-button img{
     width: 100%;
     cursor: pointer;
@@ -213,54 +222,69 @@ body.full-mode-active .play-nav {
 body.full-mode-active .play-nav.active {
     top: calc(7.5vh + 0.5vw);
 }
-.gear {
+.play-box .gear {
     width: 100%;
     z-index: 7;
     fill:#41291b
 }
-.play-box:hover .gear circle {
-    stroke-dashoffset: 0;
-}
-.gear circle {
+.gear circle:nth-of-type(1) {
     fill: none;
     stroke-width: 2px;
-    stroke-miterlimit: 10;
     stroke: #EAE9E5;
     stroke-dasharray: calc(40px * 3.14);
     transition: 2s all 0.5s;
     stroke-dashoffset: calc(40px * 3.14);
 }
+.play-box:hover .gear circle:nth-of-type(1) {
+    stroke-dashoffset: 0;
+}
+.gear circle:nth-of-type(2) {
+    fill: #EAE9E5;
+}
+.play-box:hover .gear circle:nth-of-type(2){
+    display: none;
+}
 .play-box:hover .gear path {
+    -webkit-transform: scale(0.4);
+    -moz-transform: scale(0.4);
     transform: scale(0.4);
     fill: #EAE9E5;
+    filter: none;
 }
 .play-box .gear path {
     fill: #41291B;
     transition: 1.5s;
     transform-origin: center;
+    filter: url(#gear-filter);
 }
 .play-box {
     width: 100%;
     z-index: 9;
-    text-align: center;
+    border: 1.5px solid transparent;
     line-height: 0;
-    display: none;
     align-items: center;
     flex-direction: column;
-    height: 300px;
+    transition: 1.5s all;
+    max-height: 2.9vw;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
 }
 .play-box:hover {
     box-shadow: 0 0 10px 0px rgb(0 0 0);
-    border-radius: 5px;
+    border-radius: 3px;
     background: #41291B;
-    border: 2px solid #EAE9E5;
+    border-color: #EAE9E5;
     position: relative;
-    display: flex;
+    max-height: 30vw;
 }
-.play-box > *:not(:first-child) {
-    display: none;
+.play-box button {
+    width: 116%;
+    cursor: pointer;
+    display: block;
 }
-
 body.full-mode-active .play-box{
     display: none;
 }
@@ -311,9 +335,6 @@ body.full-mode-active .play-box{
 .play-nav.play .play-btn-container > *{
     opacity: 1;
 }
-.play-box:hover > *{
-    display: block;
-}
 .play-box:hover > .play-btn-container{
     display: -webkit-box;
     display: -moz-box;
@@ -321,17 +342,12 @@ body.full-mode-active .play-box{
     display: -webkit-flex;
     display: flex;
 }
-.play-box:hover .play-btn{
-    opacity: 1;
+.fixate-btn{
+    fill: #41291B;
+    stroke: #EAE9E5;
+    stroke-linecap: round;
 }
-
-.play-btn, .fixate-btn {
-    position: relative;
-    height: 43px;
-    width: 116%;
-    cursor: pointer;
-}
-.play-box:hover .fixate-btn .upper-border{
+.fixate-btn:hover .upper-border{
     transition: 1.5s all;
     transform-origin: center;
     -webkit-transform: rotate(-5deg) translate(9%, -10%);
@@ -1306,15 +1322,15 @@ body.full-mode-active .input-note-container{
     left: calc(50% - 13.25%);
     top: calc(50% - 13.5vw);
 }
-.play-nav .input-note{
+.play-nav .input-note {
     position: relative;
-    width: 110%;
-    padding-bottom: 110%;
-    margin-top: 13px;
-    height: 0;
-    -webkit-transform: rotate(7deg);
+    width: 123%;
+    padding-bottom: 123%;
+    top: -3%;
+    margin-left: -4%;
+    -webkit-transform: rotate(16deg);
     -moz-transform: rotate(7deg);
-    transform: rotate(7deg);
+    transform: rotate(18deg);
 }
 .input-note *{
     position: relative;
@@ -1330,8 +1346,8 @@ body.full-mode-active .input-note-container{
     transition: opacity 1.5s ease-in-out;
     z-index: 2;
 }
-.play-nav .input-note .note{
-    box-shadow: -3px 3px 4px 0px rgba(0, 0, 0, 0.2);
+.play-nav .input-note .note {
+    box-shadow: 0.05vw 0.05vw 0.3vw 0.05vw rgb(0 0 0);
 }
 .input-note .note-buttons{
     position: absolute;
