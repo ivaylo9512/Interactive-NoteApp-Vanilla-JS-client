@@ -8,7 +8,7 @@
         <link rel="stylesheet" type="text/css" media="screen" href="reset.css" />
         <link rel="stylesheet" type="text/css" media="screen" href="styles.css" />
     </head>
-    <body>
+    <body class="remove-transitions-on-load-up">
         <div class="full-mode" id="full-mode">
             <nav id="full-mode-nav">
                 <li id="notes-full-mode-btn">Notes</li>
@@ -242,10 +242,10 @@
         </section>
         <div class="play-mode" id="play-mode">
             <div class="play-nav" id="play-nav">
-                <button class="full-mode-button" id="full-mode-btn">
+                <button class="full-mode-btn" id="full-mode-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 62.05 53.67">   
                         <defs>
-                            <filter id="full-mode-button-filter" filterUnits="userSpaceOnUse">
+                            <filter id="full-mode-btn-filter" filterUnits="userSpaceOnUse">
                                 <feDropShadow dx="0.4" dy="0.2" stdDeviation="4"/>
                             </filter>
                         </defs>
@@ -273,18 +273,16 @@
                             </g>
                         </svg>
                     </button>
-                    <div class="play-btn-container">
-                        <img src="resources/left-bulb-pink.png" class="pink-bulb" id="pink-bulb-btn">
-                        <img src="resources/right-bulb-blue.png" class="blue-bulb" id="blue-bulb-btn">
-                        <div class="score">
-                            <li class="colorizable" id="score">0</li>
-                            <li class="colorizable">/</li>
-                            <li class="colorizable" id="max-score">100</li>
-                        </div>
-                        <button class="play-btn" id="play-btn">
-                            <span></span>
-                        </button>
-                    </div>
+                    <button class="play-btn" id="play-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22">
+                            <g>
+                                <g>
+                                    <circle cx="11" cy="11" r="10.5" />
+                                    <path d="M15.77739,10.62419l-6.974-4.13776a.47894.47894,0,0,0-.72331.41189v8.27552a.47894.47894,0,0,0,.72331.41189l6.974-4.13776A.47893.47893,0,0,0,15.77739,10.62419Z" />
+                                </g>
+                            </g>
+                        </svg>
+                    </button>
                     <button class="fixate-btn" id="fixate-btn">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22.4915 22.4915">                      
                             <defs>
@@ -294,7 +292,6 @@
                                 <filter id="fixate-filter2" width="200%" height="200%" y="-60%" x="-60%" filterUnits="userSpaceOnUse">
                                     <feDropShadow dx="0.4" dy="0" stdDeviation="2" flood-opacity="0.5" />
                                 </filter>
-                         
                             </defs>              
                             <g style="filter: url(#fixate-filter2)">
                                 <g id="Layer_1-2" data-name="Layer 1" style="filter: url(#fixate-filter)">
@@ -307,6 +304,15 @@
                             </g>
                         </svg>
                     </button>
+                    <div class="play-btn-container">
+                        <img src="resources/left-bulb-pink.png" class="pink-bulb" id="pink-bulb-btn">
+                        <img src="resources/right-bulb-blue.png" class="blue-bulb" id="blue-bulb-btn">
+                        <div class="score">
+                            <li class="colorizable" id="score">0</li>
+                            <li class="colorizable">/</li>
+                            <li class="colorizable" id="max-score">100</li>
+                        </div>
+                    </div>
                     <div class="input-note" id="input-note-btn">
                         <div class="note"></div>
                         <span class="move-note"></span>
