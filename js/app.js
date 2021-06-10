@@ -232,7 +232,7 @@ const app = (() =>{
         photo.left = photo.leftPosition;
         style.top = photo.topPosition + 'px';
         photo.top = photo.topPosition;
-        style.transform = `rotate(${photo.rotation}deg)`; 
+        style.transform = `rotate(${photo.rotation}deg)`;
 
         const note = document.getElementById(photo.note + 'note');
         if(note){
@@ -380,36 +380,44 @@ const app = (() =>{
 
         window.removeEventListener('mousemove', rotate);
     }
-    // TODO:
+
     const attachPhoto = (e) => {
         if(e.ctrlKey && focusedNote){
-            const style = currentPhoto.node.style;
             if(currentPhoto.node.parentElement.className == 'user-note'){
-                currentPhoto.node.classList.add('visible');
-               
-                currentPhoto.top = currentPhoto.node.getBoundingClientRect().top + animate.getScrollY() - secondSection.offsetTop;
-                currentPhoto.left = currentPhoto.left + focusedNote.offsetLeft + parseFloat(window.getComputedStyle(notesContainer).marginLeft) - secondSection.offsetLeft + noteContainer.offsetLeft;
-               
-                style.top = currentPhoto.top + 'px';
-                style.left = currentPhoto.left + 'px';
-                style.width = currentPhoto.width / parseFloat(window.getComputedStyle(secondSection).width) * 100 + '%';
-
-                rotateButton.src = 'resources/rotate.png'
-                userPhotosContainer.appendChild(currentPhoto.node);
+                detachFromNote();
             }else if (currentPhoto.top < -900) {
-                currentPhoto.node.classList.remove('visible');
-               
-                currentPhoto.top = currentPhoto.top - focusedNote.offsetTop + secondSection.offsetTop - (noteContainer.offsetTop + noteSection.offsetTop + notesContainer.offsetTop);
-                currentPhoto.left = currentPhoto.left - focusedNote.offsetLeft + secondSection.offsetLeft - parseFloat(window.getComputedStyle(notesContainer).marginLeft) - noteContainer.offsetLeft;
-               
-                style.top = currentPhoto.top + 'px';
-                style.left = currentPhoto.left + 'px';
-                style.width = currentPhoto.width / parseFloat(window.getComputedStyle(focusedNote.children[0]).width) * 100 + '%';
-
-                rotateButton.src = 'resources/rotate-pinned.png'
-                focusedNote.children[0].appendChild(currentPhoto.node);
+                attachToNote();
             }
         }
+    }
+    const detachFromNote = () => {
+        const style = currentPhoto.node.style;
+      
+        currentPhoto.node.classList.add('visible');
+        currentPhoto.top = currentPhoto.node.getBoundingClientRect().top + animate.getScrollY() - secondSection.offsetTop;
+        currentPhoto.left = currentPhoto.left + focusedNote.offsetLeft + parseFloat(window.getComputedStyle(notesContainer).marginLeft) - secondSection.offsetLeft + noteContainer.offsetLeft;
+       
+        style.top = currentPhoto.top + 'px';
+        style.left = currentPhoto.left + 'px';
+        style.width = currentPhoto.width / parseFloat(window.getComputedStyle(secondSection).width) * 100 + '%';
+
+        rotateButton.src = 'resources/rotate.png'
+        userPhotosContainer.appendChild(currentPhoto.node);
+    }
+
+    const attachToNote = () => {
+        const style = currentPhoto.node.style;
+
+        currentPhoto.node.classList.remove('visible');
+        currentPhoto.top = currentPhoto.top - focusedNote.offsetTop + secondSection.offsetTop - (noteContainer.offsetTop + noteSection.offsetTop + notesContainer.offsetTop);
+        currentPhoto.left = currentPhoto.left - focusedNote.offsetLeft + secondSection.offsetLeft - parseFloat(window.getComputedStyle(notesContainer).marginLeft) - noteContainer.offsetLeft;
+       
+        style.top = currentPhoto.top + 'px';
+        style.left = currentPhoto.left + 'px';
+        style.width = currentPhoto.width / parseFloat(window.getComputedStyle(focusedNote.children[0]).width) * 100 + '%';
+
+        rotateButton.src = 'resources/rotate-pinned.png'
+        focusedNote.children[0].appendChild(currentPhoto.node);
     }
     
     const getCurrentAlbumNumber = () => currentAlbumNumber;
@@ -432,7 +440,7 @@ const app = (() =>{
 
             clearPlacedPhotos();
 
-            playNav.classList.remove('active');
+            playNav.classList.remove('fixed');
             addPhoto.style.display = 'none';
             inputNote.classList.remove('inactive');
             fullMode.style.display = 'none';
@@ -446,7 +454,7 @@ const app = (() =>{
                 hideAppendedPhotos();
             }
             inputNote.style.display = 'none';
-            playNav.classList.remove('active');
+            playNav.classList.remove('fixed');
             fullModeReset();
         }
         document.body.classList.toggle('full-mode-active');
@@ -459,6 +467,7 @@ const app = (() =>{
 
     const initialLoading = () => {
         document.getElementById('user-form').reset();
+        document.body.classList.remove("remove-transitions-on-load-up");
 
         setTimeout(() => {
             window.scrollTo(0, document.body.scrollHeight)
@@ -477,7 +486,7 @@ const app = (() =>{
     const fullModeNavToggle = () => {
 
         if(menuCircle.classList.contains('inactive')) fullModeReset();
-        playNav.classList.add('active');
+        playNav.classList.add('fixed');
         setTimeout(() => 
             fullModeNav.classList.add('active')
         , 0);
