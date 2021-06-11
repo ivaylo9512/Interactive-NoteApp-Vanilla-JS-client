@@ -468,7 +468,7 @@ const app = (() =>{
     const initialLoading = () => {
         document.getElementById('user-form').reset();
         document.body.classList.remove("remove-transitions-on-load-up");
-
+        
         setTimeout(() => {
             window.scrollTo(0, document.body.scrollHeight)
             setTimeout(() => {
@@ -526,7 +526,7 @@ const app = (() =>{
         if(event.target.tagName == 'LI'){
             menuCircle.classList.add('inactive');
             fullModeNav.classList.remove('active')
-            playNav.classList.remove('active');
+            playNav.classList.remove('fixed');
             
             switch(event.target.textContent){
                 case 'Notes':
@@ -542,8 +542,22 @@ const app = (() =>{
         }
     }
 
-    const fixatePlayNav = () => playNav.classList.toggle('active');
+    const fixatePlayNav = () => playNav.classList.toggle('fixed');
     
+    let playBoxHoverTimeout;
+    const setPlayBoxHover = (e) => {
+        if(playBoxHoverTimeout){
+            clearTimeout(playBoxHoverTimeout);        
+        playBoxHoverTimeout = setTimeout(() => {
+            e.currentTarget.parentElement.classList.add('play-box-transitioned');           
+        }, 1500);
+    }  
+    const removePlayBoxHover = (e) => {
+        clearTimeout(playBoxHoverTimeout);
+        e.currentTarget.parentElement.classList.remove('play-box-transitioned')            
+    }  
+
+
     const photoContainer = (() => { 
         const container = document.createElement('div');
         container.className = 'drag-photo-container';
@@ -811,7 +825,9 @@ const app = (() =>{
             dragElement(document.getElementById('point'));
             dragElement(moveButton);
 
-            document.getElementById('fixate-btn').addEventListener('click', fixatePlayNav)
+            document.getElementById('play-box').addEventListener('mouseover', setPlayBoxHover);
+            document.getElementById('play-box').addEventListener('mouseout', removePlayBoxHover);
+            document.getElementById('fixate-btn').addEventListener('click', fixatePlayNav);
             document.getElementById('album-btns').addEventListener('click', getAlbumImages);
             document.getElementById('full-mode-btn').addEventListener('click', fullModeToggle);
             menuCircle.addEventListener('click', fullModeNavToggle);

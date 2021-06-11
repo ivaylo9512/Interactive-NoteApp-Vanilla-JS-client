@@ -277,6 +277,12 @@ body.full-mode-active .play-nav.fixed {
     filter: url(#fixate-filter);
     stroke-width: 1.2px;
 }
+.play-box button:hover circle {
+    stroke-width: 0.5px;
+    -webkit-transform: scale(0.8);
+    -moz-transform: scale(0.8);
+    transform: scale(0.8);
+}
 .play-box button:not(.gear){
     display: block;
     fill: #41291B;
@@ -303,6 +309,8 @@ body.full-mode-active .play-nav.fixed {
 }
 .play-box:hover button{
     visibility: visible;
+    margin-top: 1vw;
+    transition: 4.5s margin 2.5s cubic-bezier(0.32, 0.2, 0.64, 4.36);
 }
 .play-box:hover button svg {
     transform: scale(1);
@@ -405,12 +413,6 @@ body.full-mode-active .play-box{
     display: -webkit-flex;
     display: flex;
 }
-.play-box .play-btn:hover circle {
-    stroke-width: 0.5px;
-    -webkit-transform: scale(0.8);
-    -moz-transform: scale(0.8);
-    transform: scale(0.8);
-}
 .play-box .play-btn:hover path:nth-of-type(1) {
     opacity: 0;
     -webkit-transform: scale(0.8);
@@ -442,6 +444,12 @@ body.full-mode-active .play-box{
     -moz-transform: scale(0.8);
     transform: scale(0.8);
 }
+.play-box button.first-game-play-btn circle{
+    transition: 1.5s all cubic-bezier(0.74, -0.71, 1, 1);
+}
+.play-box .first-game-play-btn path:last-child{
+    transition: 1.5s all cubic-bezier(0.74, -0.71, 1, 1);
+}
 .play-box .first-game-play-btn:hover circle {
     -webkit-transform: scale(0.86);
     -moz-transform: scale(0.86);
@@ -456,11 +464,13 @@ body.full-mode-active .play-box{
     transition: 2s all;
     stroke: #EAE9E5;
 }
+.play-box .second-game-play-btn:hover path:last-child{
+    -moz-transform: scale(0.8);
+    -webkit-transform: scale(0.8);
+    transform: scale(0.8);
+}
 .play-box .second-game-play-btn:hover circle {
     stroke-width: 0.8;
-    -moz-transform: scale(0.55);
-    -webkit-transform: scale(0.55);
-    transform: scale(0.55);
 }
 .fixate-btn line{
     stroke-width: 2px;
