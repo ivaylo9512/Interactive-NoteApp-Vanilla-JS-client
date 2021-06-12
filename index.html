@@ -14,6 +14,15 @@
                 <filter id="balloon-shadow">
                     <feDropShadow dx="0.4" dy="0.2" stdDeviation="4" />
                 </filter>
+                <filter id="cloud-shadow">
+                    <feDropShadow filterUnits="userSpaceOnUse" dx="1.5" dy="0.8" stdDeviation="1" />
+                </filter>
+                <filter id="cloud-shadow-second">
+                    <feDropShadow filterUnits="userSpaceOnUse" dx="-2" dy="1.8" stdDeviation="1" />
+                </filter>
+                <filter id="cloud-shadow-third">
+                    <feDropShadow flood-opacity="0.1" stdDeviation="10" dy="-4" dx="-2"/>
+                </filter>
                 <linearGradient id="balloon-gradient" y1="234.71" x2="374.78" y2="234.71" gradientUnits="userSpaceOnUse">
                     <stop offset="0" stop-color="#41291b" />
                     <stop offset="0.8" stop-color="#32271d" />
@@ -26,6 +35,11 @@
                         <path d="M129.91,321.24h0a3,3,0,0,0-.14-4.22c-34.25-32.58-49-66.35-43.84-100.41,6.23-41.18,40.71-75.89,68.53-97.75a375.45,375.45,0,0,1,57.41-36.92,3,3,0,0,0,1.33-4h0a3,3,0,0,0-4.07-1.37,381.06,381.06,0,0,0-58.28,37.45C122.14,136.61,86.53,172.55,80,215.7c-5.47,36.12,9.89,71.67,45.66,105.69A3,3,0,0,0,129.91,321.24Z" />
                         <path d="M127.7,324.21a5,5,0,0,1-3.42-1.37C88,288.34,72.45,252.2,78,215.4c6.63-43.8,42.6-80.14,71.6-102.91a380.34,380.34,0,0,1,58.6-37.66,5,5,0,0,1,4.56,8.89,375.86,375.86,0,0,0-57.08,36.71C128.16,142.07,94,176.38,87.91,216.9c-5,33.37,9.5,66.57,43.24,98.67a5,5,0,0,1,.23,7h0a5,5,0,0,1-3.52,1.6ZM210.49,78.27a1,1,0,0,0-.44.11,384,384,0,0,0-58,37.25C123.66,138,88.41,173.5,82,216c-5.37,35.44,9.79,70.41,45.06,104a.9.9,0,0,0,.7.26,1,1,0,0,0,.69-.31,1,1,0,0,0,0-1.42C93.65,285.41,78.7,251,84,216.31c6.33-41.83,41.17-76.94,69.28-99A381.57,381.57,0,0,1,211,80.16a1,1,0,0,0-.15-1.83A.82.82,0,0,0,210.49,78.27Z" />
                         <circle cx="187.39" cy="234.71" r="28.63" />
+                    </g>
+                </g>
+                <g id="cloud" class="cloud">
+                    <g>
+                        <path d="M167.1,52.17S209.77-28.24,301.66,10.6c0,0,59.62,23.52,56.34,96.81,0,0,55.45,16.41,51.79,79.86,0,0-.3,61.95-67.65,67.28H220.75q-72.56,0-145.12,0C29.57,254.66-2.8,215,.19,170.31c0,0,7.74-70,81.58-68.37C81.77,101.94,101.46,42.87,167.1,52.17Z" /> 
                     </g>
                 </g>
             </defs>
@@ -135,58 +149,13 @@
                     <div class="clouds-container">
                         <div>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 409.96 254.59" style="filter: url(#f1);">
-                                <defs>
-                                    <filter filterUnits="userSpaceOnUse" id="f1">
-                                        <feDropShadow filterUnits="userSpaceOnUse" dx="1.5" dy="0.8" stdDeviation="1"></feDropShadow>
-                                    </filter>
-                                    <filter filterUnits="userSpaceOnUse" id="f2">
-                                        <feDropShadow filterUnits="userSpaceOnUse" dx="-2" dy="1.8" stdDeviation="1"></feDropShadow>
-                                    </filter>
-                                    <filter filterUnits="userSpaceOnUse" id="f3">
-                                        <feDropShadow flood-opacity="0.1" stdDeviation="10" dy="-4" dx="-2" filterUnits="userSpaceOnUse"></feDropShadow>
-                                    </filter>
-                                </defs>
-                                <g style="filter: url(#f2);">
-                                    <g style="filter: url(#f3);">
-                                        <path d="M167.1,52.17S209.77-28.24,301.66,10.6c0,0,59.62,23.52,56.34,96.81,0,0,55.45,16.41,51.79,79.86,0,0-.3,61.95-67.65,67.28H220.75q-72.56,0-145.12,0C29.57,254.66-2.8,215,.19,170.31c0,0,7.74-70,81.58-68.37C81.77,101.94,101.46,42.87,167.1,52.17Z" 
-                                            style="filter: url(#f1);">
-                                        </path>
-                                    </g>
-                                </g>
+                                    <use href="#cloud" />
                             </svg>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 409.96 254.59" style="filter: url(#f1);">
-                                <defs>
-                                    <filter filterUnits="userSpaceOnUse" id="f1">
-                                        <feDropShadow filterUnits="userSpaceOnUse" dx="1.5" dy="0.8" stdDeviation="1"></feDropShadow>
-                                    </filter>
-                                    <filter filterUnits="userSpaceOnUse" id="f2">
-                                        <feDropShadow filterUnits="userSpaceOnUse" dx="-2" dy="1.8" stdDeviation="1"></feDropShadow>
-                                    </filter>
-                                </defs>
-                                <g style="filter: url(#f2);">
-                                    <g>
-                                        <path d="M167.1,52.17S209.77-28.24,301.66,10.6c0,0,59.62,23.52,56.34,96.81,0,0,55.45,16.41,51.79,79.86,0,0-.3,61.95-67.65,67.28H220.75q-72.56,0-145.12,0C29.57,254.66-2.8,215,.19,170.31c0,0,7.74-70,81.58-68.37C81.77,101.94,101.46,42.87,167.1,52.17Z" 
-                                            style="filter: url(#f1);">
-                                        </path>
-                                    </g>
-                                </g>
+                                <use href="#cloud" />
                             </svg>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 409.96 254.59" style="filter: url(#f1);">
-                                <defs>
-                                    <filter filterUnits="userSpaceOnUse" id="f1">
-                                        <feDropShadow filterUnits="userSpaceOnUse" dx="1.5" dy="0.8" stdDeviation="1"></feDropShadow>
-                                    </filter>
-                                    <filter filterUnits="userSpaceOnUse" id="f2">
-                                        <feDropShadow filterUnits="userSpaceOnUse" dx="-2" dy="1.8" stdDeviation="1"></feDropShadow>
-                                    </filter>
-                                </defs>
-                                <g style="filter: url(#f2);">
-                                    <g>
-                                        <path d="M167.1,52.17S209.77-28.24,301.66,10.6c0,0,59.62,23.52,56.34,96.81,0,0,55.45,16.41,51.79,79.86,0,0-.3,61.95-67.65,67.28H220.75q-72.56,0-145.12,0C29.57,254.66-2.8,215,.19,170.31c0,0,7.74-70,81.58-68.37C81.77,101.94,101.46,42.87,167.1,52.17Z" 
-                                            style="filter: url(#f1);">
-                                        </path>
-                                    </g>
-                                </g>
+                                <use href="#cloud" />
                             </svg>
                         </div>
                         <h1 id="notes-header">Notes</h1>
