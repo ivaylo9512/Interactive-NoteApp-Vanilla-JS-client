@@ -272,15 +272,15 @@ body.full-mode-active .play-nav.fixed {
     -moz-transform: scale(0);
 }
 .play-box button:not(.gear) svg > g{
-    filter: url(#fixate-filter);
+    filter: url(#playbox-btn-shadow);
 }
 .play-box button:not(.gear) svg > g > g{
-    filter: url(#fixate-filter2);
+    filter: url(#playbox-btn-shadow-second);
 }
 .play-box button:not(.gear) circle{
     transition: 1.5s all;
     transform-origin: center;
-    filter: url(#fixate-filter);
+    filter: url(#playbox-btn-shadow);
     stroke-width: 1.2px;
 }
 .play-box button:hover circle {
@@ -898,13 +898,19 @@ body.full-mode-active .play-box{
     left: 40%;
     top: 1%;
 }
+.balloon {
+    fill: #EAE9E5;
+}
+.balloon path:first-child{
+    fill:url(#balloon-gradient)
+}
 .balloons-container{
     height: 17.6%;
     text-align: center;
 }
 .balloons-container svg{
+    filter: url(#balloon-shadow);
     position: relative;
-    fill: #41291B;
     display: none;
 }
 .balloons-container.animate svg{
@@ -920,7 +926,6 @@ body.full-mode-active .play-box{
     animation: middleBalloonAnimation 5300ms 3200ms ease-in-out both;
 }
 .balloons-container > svg:last-child{
-    float: right;
     width: 21%;
     animation: rightBalloonAnimation 4800ms linear both;
 }
@@ -1230,6 +1235,14 @@ body.full-mode-active .play-box{
 body.full-mode-active .note-animation{
     display: none;
 }
+.cloud{
+    filter: url(#cloud-shadow-second);
+}
+.cloud path{
+    filter: url(#cloud-shadow);
+    fill: #41291B;
+}
+.cloud
 .cloud-header > div {
     text-align: center;
     position: relative;
