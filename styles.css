@@ -26,6 +26,12 @@ body.remove-transitions-on-load-up *{
 svg{
     overflow: visible;
 }
+.reusable-svgs{
+    height: 0;
+    width: 0;
+    position: absolute;
+    display: block;
+}
 .play-mode {
     position: relative;
     overflow: hidden;
@@ -198,6 +204,9 @@ body.full-mode-active .play-mode > .play-nav{
     stroke-width: 2px;
     stroke-dasharray: 2.2vw;
     transition: 1.5s all;
+}
+.full-mode-btn:hover svg rect {
+    stroke-dashoffset: 3vw;
 }
 .play-nav.play-box-hovered .full-mode-btn rect {
     stroke-dasharray: 16.6vw;
@@ -1242,7 +1251,6 @@ body.full-mode-active .note-animation{
     filter: url(#cloud-shadow);
     fill: #41291B;
 }
-.cloud
 .cloud-header > div {
     text-align: center;
     position: relative;
@@ -1378,7 +1386,7 @@ body.full-mode-active .clouds-container > div > div:nth-child(3),
     -moz-transform: scale(1);
     transform: scale(1);
 }
-.clouds-container > div > div:nth-child(3) img{
+.clouds-container > div > div:nth-child(3) svg{
     width: 160px;
 }
 .clouds-container > div > div:nth-child(2) {
@@ -1402,9 +1410,6 @@ body.full-mode-active .clouds-container > div > div:nth-child(2),
     transform: scale(1) rotate(10.97deg);
     transition: 2s 1.5s;
 }
-.clouds-container > div > div:nth-child(2) img{
-    width: 88px;
-}
 .clouds-container > div > div:nth-child(2) .date-container{
     margin-top: calc(-0.5em + 9%);
 }
@@ -1424,7 +1429,7 @@ body.full-mode-active .clouds-container > div > div:nth-child(1),
     transform: scale(1) rotate(-22.91deg);
     transition: 1s 1s;
 }
-.clouds-container > div > div:nth-child(1) img{
+.clouds-container > div > div:nth-child(1) svg{
     width: 128px;
 }
 .cloud-headers p{

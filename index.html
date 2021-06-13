@@ -47,7 +47,6 @@
                 </g>
             </defs>
         </svg>
-
         <div class="full-mode" id="full-mode">
             <nav id="full-mode-nav">
                 <li id="notes-full-mode-btn">Notes</li>
@@ -125,15 +124,30 @@
                     <textarea></textarea>
                     <div class="clouds-container">
                         <div>
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 409.96 254.59" style="filter: url(#f1);">
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 409.96 254.59" style="filter: url(#f1);">
                                     <use href="#cloud" />
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 409.96 254.59" style="filter: url(#f1);">
-                                <use href="#cloud" />
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 409.96 254.59" style="filter: url(#f1);">
-                                <use href="#cloud" />
-                            </svg>
+                                </svg>
+                                <div class="date-container">
+                                    <p class="chosen-year" id="chosen-year"></p>
+                                </div>
+                            </div>
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 409.96 254.59" style="filter: url(#f1);">
+                                    <use href="#cloud" />
+                                </svg>
+                                <div class="date-container">
+                                    <p id="chosen-day"></p>
+                                </div>
+                            </div>
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 409.96 254.59" style="filter: url(#f1);">
+                                    <use href="#cloud" />
+                                </svg>
+                                <div class="date-container">
+                                    <p id="chosen-month"></p>
+                                </div>
+                            </div>
                         </div>
                         <h1 id="notes-header">Notes</h1>
                     </div>
