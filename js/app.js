@@ -546,15 +546,17 @@ const app = (() =>{
     
     let playBoxHoverTimeout;
     const setPlayBoxHover = (e) => {
-        if(playBoxHoverTimeout){
-            clearTimeout(playBoxHoverTimeout);        
+        if(playBoxHoverTimeout) clearTimeout(playBoxHoverTimeout);        
+
+        playNav.classList.add('play-box-hovered');           
         playBoxHoverTimeout = setTimeout(() => {
-            e.currentTarget.parentElement.classList.add('play-box-transitioned');           
+            playNav.classList.add('play-box-transitioned');           
         }, 1500);
     }  
     const removePlayBoxHover = (e) => {
         clearTimeout(playBoxHoverTimeout);
-        e.currentTarget.parentElement.classList.remove('play-box-transitioned')            
+        playNav.classList.remove('play-box-hovered');           
+        playNav.classList.remove('play-box-transitioned')            
     }  
 
 
@@ -826,7 +828,7 @@ const app = (() =>{
             dragElement(moveButton);
 
             document.getElementById('play-box').addEventListener('mouseover', setPlayBoxHover);
-            document.getElementById('play-box').addEventListener('mouseout', removePlayBoxHover);
+            document.getElementById('play-box').addEventListener('mouseleave', removePlayBoxHover);
             document.getElementById('fixate-btn').addEventListener('click', fixatePlayNav);
             document.getElementById('album-btns').addEventListener('click', getAlbumImages);
             document.getElementById('full-mode-btn').addEventListener('click', fullModeToggle);
