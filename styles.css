@@ -195,20 +195,21 @@ body.full-mode-active .play-mode > .play-nav{
 .full-mode-btn polyline{
     stroke-linecap: round;
     stroke-linejoin: round;
-    stroke-width: 5px;
+    stroke-width: 4px;
 }
 .full-mode-btn rect{
     filter: url(#full-mode-btn-filter);
     stroke: #EAE9E5;
-    stroke-width: 2px;
-    stroke-dasharray: 2.2vw;
-    transition: 1.5s all;
+    stroke-width: 1.9px;
+    stroke-dasharray: 22.7px;
+    transition: stroke-like-cap 0.2s 1.3s, all 1.5s ease 0s;
 }
 .full-mode-btn:hover svg rect {
-    stroke-dashoffset: 3vw;
+    stroke-dashoffset: 31px;
 }
 .play-nav.play-box-hovered .full-mode-btn rect {
-    stroke-dasharray: 16.6vw;
+    stroke-dasharray: 180px;
+    stroke-linecap: round;
 }
 .play-nav{
     position: absolute;
