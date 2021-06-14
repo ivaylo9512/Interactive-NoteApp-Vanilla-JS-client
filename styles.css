@@ -27,8 +27,6 @@ svg{
     overflow: visible;
 }
 .reusable-svgs{
-    height: 0;
-    width: 0;
     position: absolute;
     display: block;
 }
@@ -259,23 +257,21 @@ body.full-mode-active .play-nav.fixed {
     max-height: 30vw;
 }
 .play-box button {
-    width: 124%;
-    padding-bottom: 116%;
-    margin-top: 0.5vw;
+    width: 100%;
     cursor: pointer;
     display: block;
+    text-align: center;
     visibility: hidden;
     position: relative;
 }
+
 .play-nav.fixed button{
     width: 95%;
 }
-.play-box button svg{
+.play-box button svg {
     padding: 20%;
-    width: 100%;
-    position: absolute;
-    left: -20%;
-    top: -20%;
+    margin-left: -32%;
+    width: 124%;
     transform: scale(0);
     -webkit-transform: scale(0);
     -moz-transform: scale(0);
