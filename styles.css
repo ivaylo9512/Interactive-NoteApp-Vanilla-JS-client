@@ -256,7 +256,7 @@ body.full-mode-active .play-nav.fixed {
     position: relative;
     max-height: 30vw;
 }
-.play-box button {
+.play-box button{
     width: 100%;
     cursor: pointer;
     display: block;
@@ -264,14 +264,14 @@ body.full-mode-active .play-nav.fixed {
     visibility: hidden;
     position: relative;
 }
-
 .play-nav.fixed button{
     width: 95%;
 }
 .play-box button svg {
+    width: 100%;
+    margin-left: -20%;
     padding: 20%;
-    margin-left: -32%;
-    width: 124%;
+    display: block;
     transform: scale(0);
     -webkit-transform: scale(0);
     -moz-transform: scale(0);
@@ -297,6 +297,8 @@ body.full-mode-active .play-nav.fixed {
 .play-box button:not(.gear){
     display: block;
     fill: #41291B;
+    width: 124%;
+    margin-top: -60%;
     stroke: #EAE9E5;
     stroke-linecap: round;
 }
@@ -320,8 +322,7 @@ body.full-mode-active .play-nav.fixed {
 }
 .play-box:hover button:not(.gear){
     visibility: visible;
-    margin-top: 1vw;
-    transition: 4.5s margin 2.5s cubic-bezier(0.32, 0.2, 0.64, 4.36);
+    animation: 13.5s forwards cubic-bezier(0.45, 0, 0.36, 0.99) play-box-slide;
 }
 .play-box:hover button svg {
     transform: scale(1);
@@ -339,7 +340,6 @@ body.full-mode-active .play-nav.fixed {
 }
 .play-box .gear {
     width: 100%;
-    padding-bottom: 100%;
     z-index: 7;
     fill: #41291b;
     visibility: visible;
@@ -2390,7 +2390,24 @@ body.full-mode-active .right-notes,
     }
 }
 
-  
+@keyframes play-box-slide {
+    0% {
+        margin-top: -60%;
+    }
+    26.5% {
+        margin-top: 35%;
+    }
+    45% {
+        margin-top: -30%;
+    }
+    68% {
+        margin-top: 25%;
+    }
+    100% {
+        margin-top: -20%;
+    }
+}  
+
 /* Generated with Bounce.js. Edit at http://bouncejs.com#%7Bs%3A%5B%7BT%3A%22c%22%2Ce%3A%22b%22%2Cd%3A2000%2CD%3A0%2Cf%3A%7Bx%3A0%2Cy%3A0%7D%2Ct%3A%7Bx%3A1%2Cy%3A1%7D%2Cs%3A1%2Cb%3A4%7D%5D%7D */
 @-webkit-keyframes bouncePoint { 
     0% { -webkit-transform: matrix3d(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); transform: matrix3d(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
