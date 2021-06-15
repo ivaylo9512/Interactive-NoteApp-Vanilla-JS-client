@@ -83,39 +83,21 @@ body.full-mode-active .play-mode > .play-nav{
 .onload-animation .pointer{
     animation: translatePointer 1.6s infinite;
 }
-.onload-animation .pointer span{
-    transform-origin: 0.05em 0.05em;
-}
 .pointer {
     position: absolute;
     left: 50%;
     top: 12%;
-    width: 0.1em;
-    height: 0.26em;
-    margin-left: 0.1%;
+    width: 0.4em;
+    margin-left: 0.03em;
+    stroke-width: 13px;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke: #41291B;
     z-index: 2;
-    line-height: 0;
 }
 .play-mode.tree-animation .pointer{
     display: none;
-}
-.pointer span {
-    width: 100%;
-    height: 100%;
-    background: #41291B;
-    position: absolute;
-    display: inline-block;
-    border-radius: 5vh;
-}
-.pointer span:nth-child(1) {
-    -webkit-transform: rotate(-45deg);
-    -moz-transform: rotate(-45deg);
-    transform: rotate(-45deg);
-}
-.pointer span:nth-child(2) {
-    -webkit-transform: rotate(45deg);
-    -moz-transform: rotate(45deg);
-    transform: rotate(45deg);
 }
 .play-mode.tree-animation .notebook nav{
     opacity: 1;
@@ -189,6 +171,7 @@ body.full-mode-active .play-mode > .play-nav{
     display: block;
     fill: #41291B;
     stroke: #EAE9E5;
+    margin-bottom: 8%;
 }
 .full-mode-btn polyline{
     stroke-linecap: round;
@@ -214,8 +197,9 @@ body.full-mode-active .play-mode > .play-nav{
     z-index: 9;
     width: 2.9vw;
     right: 1%;
-    height: 215px;
-    bottom: 62vh;
+    height: 50vh;
+    bottom: 46vh;
+    padding-top: 1vh;
     line-height: 0;
     transition: all 1.5s 0.15s;
 }
@@ -255,6 +239,7 @@ body.full-mode-active .play-nav.fixed {
     border-color: #EAE9E5;
     position: relative;
     max-height: 40vw;
+    padding-bottom: 35%;
 }
 .play-box button{
     width: 100%;
@@ -264,8 +249,8 @@ body.full-mode-active .play-nav.fixed {
     visibility: hidden;
     position: relative;
 }
-.play-nav.fixed button{
-    width: 95%;
+.play-nav.fixed .play-box button:not(.gear){
+    padding: 20%;
 }
 .play-box button svg {
     width: 100%;
@@ -1502,6 +1487,10 @@ body.full-mode-active .input-note-container{
 .play-box.play:hover .input-note {
     transition: 1.5s transform 1.8s;
 }
+.play-nav.fixed .input-note{
+    padding-bottom: 100%;
+    width: 100%;
+}
 .input-note *{
     position: relative;
     z-index: 3;
@@ -1824,21 +1813,6 @@ body.full-mode-active .full-mode-circle {
 }
 .note-section .timeline-months.show .pointer {
     transform: translateX(89vw);
-}
-.timeline-months .pointer span{
-    transform-origin: 0.13em 0.13em;
-}
-.timeline-months .pointer span:nth-child(1){
-    transform: rotate(135deg);
-    -webkit-transform: rotate(135deg);
-    -moz-transform: rotate(135deg);
-    transform: rotate(135deg);
-}
-.timeline-months .pointer span:nth-child(2){
-    transform: rotate(-135deg);
-    -webkit-transform: rotate(-135deg);
-    -moz-transform: rotate(-135deg);
-    transform: rotate(-135deg);
 }
 .timeline-years p,
 .timeline-months p{
