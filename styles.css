@@ -26,9 +26,14 @@ body.remove-transitions-on-load-up *{
 svg{
     overflow: visible;
 }
+button{
+    cursor: pointer;
+}
 .reusable-svgs{
     position: absolute;
     display: block;
+    top: -100vh;
+    left: -100vw;
 }
 .play-mode {
     position: relative;
@@ -108,6 +113,7 @@ body.full-mode-active .play-mode > .play-nav{
     position: relative;
     opacity: 0;
     width: 100%;
+    z-index: 5;
 }
 .notebook nav li{
     font-size: 0.5em;
@@ -243,7 +249,6 @@ body.full-mode-active .play-nav.fixed {
 }
 .play-box button{
     width: 100%;
-    cursor: pointer;
     display: block;
     text-align: center;
     visibility: hidden;
@@ -939,7 +944,7 @@ body.full-mode-active .play-box{
 .notebook form{
     height: 90%;
     position: relative;
-    z-index: 3;
+    z-index: 6;
 }
 .notebook form .user-btn:nth-child(1){
     visibility: hidden;
@@ -1069,7 +1074,6 @@ body.full-mode-active .play-box{
     border-radius: 0.5em 0.5em 0 0;
     border: 1px solid white;
     outline: none;
-    cursor: pointer;
     font-size: 0.23em;
     transition: all 1s;
     text-align: center;
@@ -1807,12 +1811,18 @@ body.full-mode-active .full-mode-circle {
 }
 .timeline-months .pointer{
     font-size: 8vw;
-    left: 5%;
-    top: 33%;
+    left: 4%;
+    top: 18%;
     transition: 2s transform;
+    -moz-transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+    filter: url(#timeline-shadow);
 }
 .note-section .timeline-months.show .pointer {
-    transform: translateX(89vw);
+    -moz-transform: translateX(89vw) rotate(90deg);
+    -webkit-transform: translateX(89vw) rotate(90deg);
+    transform: translateX(89vw) rotate(90deg);
 }
 .timeline-years p,
 .timeline-months p{
@@ -1978,26 +1988,20 @@ body.full-mode-active .timeline-months,
     content: "\00a0";
     display: list-item;
 }
-.timeline-border{
+.timeline-years-line{
     position: absolute;
-    top: 0;
-    width: 100%;
-}
-.timeline-years::after, .timeline-years::before{
-    top: 85%;
-    content: '';
-    height: 1.8vh;
-    width: 100%;
-    background: #41291B;
+    width: 3.2vw;
+    top: 82.5%;
+    stroke-width: 13px;
     transition: 2s all;
-    position: absolute;
-    border-radius: 5vh;
-    box-shadow: -0.05em 0.1em 0.2em -0.1em rgb(0 0 0 / 75%), -0.02em 0.02em 0.5em -0.02em rgb(0 0 0 / 75%);
+    stroke-linecap: round;
+    filter: url(#timeline-shadow);
+    stroke: #41291B;
 }
-.timeline-years::before{
+.timeline-years > svg:first-of-type{
     opacity: 0;
 }
-.timeline-years.show::before{
+.timeline-years.show > svg:first-of-type{
     opacity: 1;
     -webkit-transform: translateY(-78vh);
     -moz-transform: translateY(-78vh);

@@ -26,6 +26,9 @@
                 <filter id="playbox-btn-shadow-second" width="200%" height="200%" y="-60%" x="-60%" filterUnits="userSpaceOnUse">
                     <feDropShadow dx="0.4" dy="0" stdDeviation="2" flood-opacity="0.5" />
                 </filter>
+                <filter id="timeline-shadow">
+                    <feDropShadow dx="0" dy="0" stdDeviation="2" />
+                </filter>
                 <linearGradient id="balloon-gradient" y1="234.71" x2="374.78" y2="234.71" gradientUnits="userSpaceOnUse">
                     <stop offset="0" stop-color="#41291b" />
                     <stop offset="0.8" stop-color="#32271d" />
@@ -88,6 +91,12 @@
             <div class="timeline-years" id="timeline-years">
                 <ol>
                 </ol>
+                <svg class="timeline-years-line" viewBox="0 0 50 50">
+                    <line x1="0" y1="25" x2="50" y2="25" />
+                </svg>
+                <svg class="timeline-years-line" viewBox="0 0 50 50">
+                    <line x1="0" y1="25" x2="50" y2="25" />
+                </svg>
                 <div class="nav-point-container">
                     <div class="point" id="point">
                     </div>
@@ -156,10 +165,9 @@
             <div id="right-notes" class="right-notes">
             </div>
             <div class="timeline-months" id="timeline-months">
-                <div class="pointer" id="pointer">
-                    <span></span>
-                    <span></span>
-                </div>
+                <svg class="pointer" viewBox="0 0 50 50">
+                    <polyline points="10 32.5 25 17.5 40 32.5" />
+                </svg>
                 <ol>
                     <li>
                         <p>January</p>
