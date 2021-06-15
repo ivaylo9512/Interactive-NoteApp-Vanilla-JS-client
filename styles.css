@@ -212,7 +212,7 @@ body.full-mode-active .play-mode > .play-nav{
 .play-nav{
     position: absolute;
     z-index: 9;
-    width: 38px;
+    width: 2.9vw;
     right: 1%;
     height: 215px;
     bottom: 62vh;
@@ -236,11 +236,11 @@ body.full-mode-active .play-nav.fixed {
 .play-box {
     width: 100%;
     z-index: 9;
-    border: 1.5px solid transparent;
     box-sizing: border-box;
     align-items: center;
     flex-direction: column;
-    max-height: 2.9vw;
+    max-height: 0;
+    position: relative;
     display: -webkit-box;
     display: -moz-box;
     display: -ms-flexbox;
@@ -254,7 +254,7 @@ body.full-mode-active .play-nav.fixed {
     background: #41291B;
     border-color: #EAE9E5;
     position: relative;
-    max-height: 30vw;
+    max-height: 40vw;
 }
 .play-box button{
     width: 100%;
@@ -322,7 +322,7 @@ body.full-mode-active .play-nav.fixed {
 }
 .play-box:hover button:not(.gear){
     visibility: visible;
-    animation: 13.5s forwards cubic-bezier(0.45, 0, 0.36, 0.99) play-box-slide;
+    animation: 13.5s forwards cubic-bezier(0.45, 0, 0.36, 0.99) play-box-slide 2.5s;
 }
 .play-box:hover button svg {
     transform: scale(1);
@@ -336,7 +336,8 @@ body.full-mode-active .play-nav.fixed {
 }
 .rect-background rect{
     fill: #41291b;
-    stroke-width: 2px;
+    stroke-width: calc(2.9vw * 0.04);
+    stroke: #EAE9E5;
 }
 .play-box .gear {
     width: 100%;
@@ -344,6 +345,7 @@ body.full-mode-active .play-nav.fixed {
     fill: #41291b;
     visibility: visible;
     transition: 1.5s all;
+    transform-origin: center top;
 }
 .play-box .gear svg{
     transform: scale(1);
@@ -353,19 +355,21 @@ body.full-mode-active .play-nav.fixed {
 .gear circle {
     fill: #EAE9E5;
 }
+.play-box:hover .gear path {
+    -webkit-transform: scale(0.55);
+    -moz-transform: scale(0.55);
+    transform: scale(0.55);
+}
 .play-box:hover .gear circle{
     display: none;
-}
-.play-box:hover .gear {
-    width: 55%;
 }
 .play-box:hover .gear path {
     fill: #EAE9E5;
 }
 .gear path {
-    fill: #41291B;
-    transition: 1.5s;
     transform-origin: center;
+    fill: #41291B;
+    transition: 1.5s all;
     filter: url(#gear-filter);
 }
 .game-buttons{
@@ -2390,6 +2394,23 @@ body.full-mode-active .right-notes,
     }
 }
 
+@-webkit-keyframes play-box-slide {
+    0% {
+        margin-top: -60%;
+    }
+    26.5% {
+        margin-top: 35%;
+    }
+    45% {
+        margin-top: -30%;
+    }
+    68% {
+        margin-top: 25%;
+    }
+    100% {
+        margin-top: -20%;
+    }
+}  
 @keyframes play-box-slide {
     0% {
         margin-top: -60%;
