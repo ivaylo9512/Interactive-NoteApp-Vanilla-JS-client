@@ -37,28 +37,25 @@ const date = (() => {
             clearInterval(hideMonthsInterval)
         }
         hideYears();
+        hidingMonths = false;
         
-        showMonthsInterval = function interval(delay, current){
+        function showLoop(delay, current){
             return setTimeout(() => {
-                if(current == monthNodes.length){
+                if(current == monthNodes.length || hidingMonths){
                     return;
                 }
                 const month = monthNodes[current];
                 month.classList.remove('reverse-bounce')
                 month.classList.add('bounce')
 
-                interval(100, ++current)
+                showLoop(100, ++current)
             }, delay);
         }(500, 0)
         timelineMonths.classList.add('show');
     }
 
-    let hideMonthsInterval
+    let hidingMonths;
     const hideMonths = () => {
-        if(showMonthsInterval){
-            clearInterval(showMonthsInterval)
-        }
-
         let current = monthNodes.length - 1; 
         hideMonthsInterval = setInterval(() => {
             if(current < 0){
@@ -76,17 +73,14 @@ const date = (() => {
 
     let showYersInterval;
     const showYears = () => {
-        if(showYersInterval){
-            clearInterval(showYersInterval);
+        if(hideYearsInterval){
+            clearInterval(hideYearsInterval);
         }
 
         hideMonths();
         timelineYears.classList.add('show');
 
-        const scrolledYears = getScrolledYears();
-        const safeExceed = 2;
-        const yearsLength = years.length - 1;
-        const startingIndex = Math.min(yearsLength - scrolledYears + safeExceed, yearsLength)
+        const startingIndex = getScrolledYearIndex();
         
         showYersInterval = function interval(current, delay){ 
             return setTimeout(() => { 
@@ -101,7 +95,7 @@ const date = (() => {
             }, delay)
         }(startingIndex, 200);
 
-        for (let i = startingIndex + 1; index <= yearsLength; i++) {
+        for (let i = startingIndex + 1; i <= years.length - 1; i++) {
             const year = years[i];
             year.classList.add('bounce');
             year.classList.remove('reverse-bounce');
@@ -110,11 +104,13 @@ const date = (() => {
 
     let hideYearsInterval;
     const hideYears = () => {
-        if(hideYearsInterval){
-            clearInterval(hideYearsInterval);
+        if(showYersInterval){
+            clearInterval(showYersInterval);
         }
-
-        let current = 0;        
+        
+        const startingIndex = getScrolledMonthIndex();
+        
+        let current = startingIndex;
         hideYearsInterval = setInterval(() => {
             if(current == years.length){
                 clearInterval(hideYearsInterval);
@@ -127,14 +123,33 @@ const date = (() => {
 
             current++;
         }, 70);
+
+        for(let i = startingIndex; i > 0; i--){
+            const year = years[current];
+            year.classList.add('reverse-bounce');
+            year.classList.remove('bounce');
+        }
     }
 
-    const getScrolledYears = () => {
-        const li = timelineYearsList.children[0];
-        const liHeight = li.clientHeight + parseFloat(window.getComputedStyle(li).marginBottom); 
+    const getScrolledMonthIndex = () => {
+        const liHeight = getLiHeight(timelineYearsList);
+        const safeExceed = 2;
+        return parseInt(Math.max(timelineYearsList.scrollTop  / liHeight - safeExceed, 0))
+    }
+    const getScrolledYearIndex = () => {
+        const liHeight = getLiHeight(timelineYearsList);
         const scrolledAmount = timelineYearsList.scrollTop + timelineYearsList.clientHeight - timelineYearsList.scrollHeight;
 
-        return parseInt(Math.abs(scrolledAmount / liHeight));
+        const safeExceed = 2;
+        const yearsLength = years.length - 1;
+        const scrolledYears = parseInt(Math.abs(scrolledAmount / liHeight));
+        
+        return Math.min(yearsLength - scrolledYears + safeExceed, yearsLength);
+    }
+
+    const getLiHeight = (list) => {
+        const li = list.children[0];
+        return li.clientHeight + parseFloat(window.getComputedStyle(li).marginBottom); 
     }
 
     const daysContainer = document.getElementById('days-container');
