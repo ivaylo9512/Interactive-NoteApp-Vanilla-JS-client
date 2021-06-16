@@ -1,7 +1,7 @@
 const date = (() => {     
     const timelineMonths = document.getElementById('timeline-months');
     const timelineYears = document.getElementById('timeline-years');
-   
+
     const monthNodes = Array.from(timelineMonths.getElementsByTagName('LI'));
     const months = monthNodes.filter((el, index) => index != 6);
     const years = [];
@@ -36,7 +36,7 @@ const date = (() => {
             clearInterval(hideMonthsInterval)
         }
         hideYears();
-
+        
         showMonthsInterval = function interval(delay, current){
             return setTimeout(() => {
                 if(current == monthNodes.length){
@@ -130,10 +130,11 @@ const date = (() => {
 
     let monthsDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
-    const setMonth = (monthIndex, monthName) => {
-        chosenMonth.textContent = monthName;
+    const setMonth = (monthIndex) => {
+        const pIndex = monthIndex < 6 ? 1 : 0;
+        chosenMonth.textContent = event.currentTarget.children[pIndex].textContent;
+        
         month = monthIndex + 1;
-
         setDaysCount(monthsDays[monthIndex]);
         checkDate();
     }
@@ -184,7 +185,7 @@ const date = (() => {
     
     const initialize = () => {
         appendYears()
-        months.forEach(month => month.addEventListener('click',() => setMonth(months.indexOf(month), month.children[0].textContent)));
+        months.forEach(month => month.addEventListener('click',() => setMonth(months.indexOf(month))));
         years.forEach(year => year.addEventListener('click', () => setYear(year.children[0].textContent)));
         daysContainer.addEventListener('click', setDay);  
     }
