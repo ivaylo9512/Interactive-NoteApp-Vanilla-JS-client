@@ -1,6 +1,7 @@
 const date = (() => {     
     const timelineMonths = document.getElementById('timeline-months');
     const timelineYears = document.getElementById('timeline-years');
+    const timelineYearsList = timelineYears.getElementsByTagName("OL")[0];
 
     const monthNodes = Array.from(timelineMonths.getElementsByTagName('LI'));
     const months = monthNodes.filter((el, index) => index != 6);
@@ -82,6 +83,11 @@ const date = (() => {
         hideMonths();
         timelineYears.classList.add('show');
 
+        const scrolledYears = getScrolledYears();
+        const safeExceed = 2;
+        const yearsLength = years.length - 1;
+        const startingIndex = Math.min(yearsLength - scrolledYears + safeExceed, yearsLength)
+        
         showYersInterval = function interval(current, delay){ 
             return setTimeout(() => { 
                 if(current < 0){
@@ -93,7 +99,13 @@ const date = (() => {
 
                 interval(--current, 70)
             }, delay)
-        }(years.length - 1, 1200)
+        }(startingIndex, 200);
+
+        for (let i = startingIndex + 1; index <= yearsLength; i++) {
+            const year = years[i];
+            year.classList.add('bounce');
+            year.classList.remove('reverse-bounce');
+        }
     }
 
     let hideYearsInterval;
@@ -115,7 +127,14 @@ const date = (() => {
 
             current++;
         }, 70);
+    }
 
+    const getScrolledYears = () => {
+        const li = timelineYearsList.children[0];
+        const liHeight = li.clientHeight + parseFloat(window.getComputedStyle(li).marginBottom); 
+        const scrolledAmount = timelineYearsList.scrollTop + timelineYearsList.clientHeight - timelineYearsList.scrollHeight;
+
+        return parseInt(Math.abs(scrolledAmount / liHeight));
     }
 
     const daysContainer = document.getElementById('days-container');
