@@ -1,4 +1,12 @@
 const notes = (() => {
+    const body = document.body;
+    const noteSection = document.getElementById('note-section');
+    const leftNotesContainer = document.getElementById('left-notes');
+    const rightNotesContainer = document.getElementById('right-notes');
+    const cloudContainer = document.getElementById('cloud-headers');
+    const cloudHeader = document.getElementById('cloud-header');
+    const cloudSvg = document.getElementById('cloud');
+
     let userNotes = []; 
     const getNotes = (date) => {
         userNotes = [];
@@ -11,13 +19,6 @@ const notes = (() => {
                 console.log(e);
         })
     }
-
-    const body = document.body;
-    const noteSection = document.getElementById('note-section');
-    const leftNotesContainer = document.getElementById('left-notes');
-    const rightNotesContainer = document.getElementById('right-notes');
-    const cloudContainer = document.getElementById('cloud-headers');
-    const cloudHeader = document.getElementById('cloud-header');
 
     const noteContainer = (() =>{
         const container = document.createElement('button');
@@ -32,9 +33,15 @@ const notes = (() => {
         updateBtn.className = 'note-update-btn';
         updateBtn.id = 'note-update-btn';
 
+        const svg = document.createElement('svg');
+        svg.setAttribute("viewBox", "0 0 409.96 254.59"); 
+        svg.setAttribute("xmlns", "http://www.w3.org/2000/svg")
+        svg.appendChild(cloudSvg.cloneNode(true));
+
         container.appendChild(noteName);
         container.appendChild(updateBtn);
-
+        container.appendChild(svg);
+        
         return container;
     })();
 
@@ -127,6 +134,7 @@ const notes = (() => {
                 hideUserNote();
             
             }, 3000);
+            //??
             !headerWidth && (headerWidth = focusedCloud.offsetWidth); 
             
             app.setfocusedNote(note);
@@ -140,6 +148,7 @@ const notes = (() => {
                 const className = parent && parent.className;
                 
                 if(target != note && parent != note && !className.includes('user-photo') && target != draggedCloud && target.tagName != 'TEXTAREA'){
+                    // TODO just 1 big class?
                     focusedCloud.classList.remove('box-shadow');
                     focusedCloud.classList.remove('translate');        
                     focusedCloud.classList.remove('border-radius');
@@ -184,6 +193,7 @@ const notes = (() => {
             note: focusedNote.note.value,
         }
         remote.updateNote(updateNote);
+        //same catch as submit i da dam else koito izliza prozorec s error ako e drug
 
         rotateBtn(e.target);
     }
@@ -224,6 +234,7 @@ const notes = (() => {
 
     const inputNote = document.getElementById('input-note');
     const animationNote = document.getElementById('animation-note');
+    //TODO just class?
     const bindNote = () => {
         inputNote.style.display = 'block';
         inputNote.classList.add('inactive');
@@ -324,7 +335,7 @@ const notes = (() => {
 
     const noteHeader = document.getElementById('notes-header');
     const showNoteView = () => {
-        if (isBalloonsAnimated && !app.getIsFullMode) {
+        if (isBalloonsAnimated && !app.getIsFullMode()) {
             noteSection.classList.remove('animate');
 
             noteHeader.removeEventListener('mouseout', hideTopAnimations);
