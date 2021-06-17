@@ -39,7 +39,7 @@ const date = (() => {
         hideYears();
         hidingMonths = false;
         
-        function showLoop(delay, current){
+        (function showLoop(delay, current){
             return setTimeout(() => {
                 if(current == monthNodes.length || hidingMonths){
                     return;
@@ -50,13 +50,16 @@ const date = (() => {
 
                 showLoop(100, ++current)
             }, delay);
-        }(500, 0)
+        })(500, 0)
         timelineMonths.classList.add('show');
     }
 
+    let hideMonthsInterval;
     let hidingMonths;
     const hideMonths = () => {
+        hidingMonths = true;
         let current = monthNodes.length - 1; 
+
         hideMonthsInterval = setInterval(() => {
             if(current < 0){
                 clearInterval(hideMonthsInterval)
@@ -93,7 +96,7 @@ const date = (() => {
 
                 interval(--current, 70)
             }, delay)
-        }(startingIndex, 200);
+        }(startingIndex, 400);
 
         for (let i = startingIndex + 1; i <= years.length - 1; i++) {
             const year = years[i];
