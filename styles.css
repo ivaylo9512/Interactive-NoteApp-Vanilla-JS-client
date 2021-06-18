@@ -1285,16 +1285,16 @@ body.full-mode-active .note-animation{
     color: #EAE9E5;
     border-radius: 50%;
     transition: all 1.5s;
-    padding: 5px;
+    padding: 0.5vh;
     box-sizing: border-box;
     display: none;
 }
 .cloud-header textarea.active{
-    border-radius: 10px
+    border-radius: 1vw;
 }
 .cloud-header h1{
     font: bold 13.5vh "Aladin", Helvetica, sans-serif;
-    letter-spacing: 7px;
+    letter-spacing: 0.6vw;
     color: #442818;
     cursor: pointer;
     display: inline-block;
@@ -1325,18 +1325,23 @@ body.full-mode-active .cloud-header h1,
     position: relative;
     z-index: unset;
     min-height: 77vh;
-    align-items: center;
+    flex-direction: column;
+    justify-content: center;
 }
 .cloud-header{
     position: relative;
     z-index: 2;
     width: 100%;
+    margin-top: 6vh;
 }
 .note-section.appended .cloud-headers textarea{
     display: block;
 }
-.note-section.appended .cloud-headers > div:last-child > div{
+.note-section.appended .cloud-headers > div:last-child{
     margin: 14vw 0;
+}
+.note-section.appended .cloud-header{
+    margin-top: 14vw;
 }
 .note-section.appended .clouds-container > * {
     pointer-events: none;
@@ -1685,47 +1690,44 @@ body.full-mode-active .input-note{
 }
 .full-mode {
     display: none;
-    min-height: calc(100vh - 1vw);
-    border: 0.5vw solid;
-    width: 99%;
+    min-height: 100vh;
+    border: 0.5vw solid #41291B;
+    width: 100%;
     text-align: center;
+    box-sizing: border-box;
     position: relative;
 }
-
 body.full-mode-active .full-mode{
     display: block;
 }
-
 .hide {
     opacity: 0;
     transition: opacity 1.15s ease-in-out;
 }
-
 .show {
     opacity: 1;
     transition: opacity 1.15s ease-in-out;
 }
-
 .full-mode nav{
-    height: 5vh;
     background: #41291b;
-    flex-direction: row;
-    align-items: stretch;
-    transition: transform 1.5s 0.15s;
+    transition: 1.5s transform 0.15s;
     overflow: hidden;
     position: absolute;
     width: 100%;
-    padding-bottom: 0.5vw;
-    transform: translateY(calc(-5vh - 1vw));
-
-    display: -webkit-box; 
+    padding: 0.5vw 0;
+    -moz-transform: translateY(calc(-5.1vh - 1.5vw));
+    -webkit-transform: translateY(calc(-5.1vh - 1.5vw));
+    transform: translateY(calc(-5.1vh - 1.5vw));
+    display: -webkit-box;
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
 }
 
 .full-mode nav.active{
-    transform: translateY(-1px);
+    -moz-transform: translateY(-0.5vw);
+    -webkit-transform: translateY(-0.5vw);
+    transform: translateY(-0.5vw);
 }
 
 .full-mode nav li{
@@ -1735,15 +1737,14 @@ body.full-mode-active .full-mode{
     cursor: pointer;
     border-right: 0.1vw solid #EAE9E5;
     font-size: 5vh;
-
     -webkit-box-flex: 1;
         -webkit-flex: 1;  
             -ms-flex: 1;
                 flex: 1; 
 }
 
-.full-mode nav li:first-child{
-    border-left: 0.1vw solid #EAE9E5;
+.full-mode nav li:last-child{
+    border-width: 0px;
 }
 .full-mode-circle {
     position: fixed;
@@ -1855,6 +1856,9 @@ body.full-mode-active .full-mode-circle {
     vertical-align: middle;
     text-align: right;
 }
+.timeline-months .point {
+    background: #EAE9E5;
+}
 .timeline-months li:nth-child(n + 8) {
     text-align: left;
 }
@@ -1884,6 +1888,8 @@ body.full-mode-active .timeline-months,
 }
 .timeline-years ol {
     height: 79vh;
+    padding-top: 1vh;
+    box-sizing: border-box;
     overflow-y: scroll;
     background: transparent;
     visibility: hidden;
@@ -2209,9 +2215,9 @@ body.full-mode-active .right-notes,
 .note-section.animated .right-notes{
     display: inline-block;
 }
-.right-notes button:first-child,
-.left-notes button:first-child{
-    margin-top: 0;
+.right-notes > button:first-child,
+.left-notes > button:first-child{
+    margin-top: 5vh;
 }
 .user-note-container {
     width: 100%;
