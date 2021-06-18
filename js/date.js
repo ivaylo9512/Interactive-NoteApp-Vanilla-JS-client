@@ -31,17 +31,19 @@ const date = (() => {
         timelineYears.children[0].appendChild(yearsFragment);
     }
 
-    let showMonthsInterval;
     const showMonths = () => {
         if(hideMonthsInterval){
             clearInterval(hideMonthsInterval)
         }
+        if(!isHidingMonths){
+            return;
+        }
         hideYears();
-        hidingMonths = false;
+        isHidingMonths = false;
         
         (function showLoop(delay, current){
             return setTimeout(() => {
-                if(current == monthNodes.length || hidingMonths){
+                if(current == monthNodes.length || isHidingMonths){
                     return;
                 }
                 const month = monthNodes[current];
@@ -55,9 +57,12 @@ const date = (() => {
     }
 
     let hideMonthsInterval;
-    let hidingMonths;
+    let isHidingMonths = true;
     const hideMonths = () => {
-        hidingMonths = true;
+        if(isHidingMonths){
+            return;
+        }
+        isHidingMonths = true;
         let current = monthNodes.length - 1; 
 
         hideMonthsInterval = setInterval(() => {
@@ -79,7 +84,11 @@ const date = (() => {
         if(hideYearsInterval){
             clearInterval(hideYearsInterval);
         }
+        if(!isHidingYears){
+            return;
+        }
 
+        isHidingYears = false;
         hideMonths();
         timelineYears.classList.add('show');
 
@@ -87,7 +96,7 @@ const date = (() => {
         
         showYersInterval = function interval(current, delay){ 
             return setTimeout(() => { 
-                if(current < 0){
+                if(current < 0 || isHidingYears){
                     return;
                 }
                 const year = years[current];
@@ -106,10 +115,15 @@ const date = (() => {
     }
 
     let hideYearsInterval;
+    let isHidingYears = true;
     const hideYears = () => {
         if(showYersInterval){
             clearInterval(showYersInterval);
         }
+        if(isHidingYears){
+            return;
+        }
+        isHidingYears = true;
         
         const startingIndex = getScrolledMonthIndex();
         
