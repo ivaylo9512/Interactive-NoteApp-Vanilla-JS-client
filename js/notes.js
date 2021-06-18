@@ -33,9 +33,9 @@ const notes = (() => {
         updateBtn.className = 'note-update-btn';
         updateBtn.id = 'note-update-btn';
 
-        const svg = document.createElement('svg');
+        const xml = "http://www.w3.org/2000/svg";
+        const svg = document.createElementNS(xml, 'svg');
         svg.setAttribute("viewBox", "0 0 409.96 254.59"); 
-        svg.setAttribute("xmlns", "http://www.w3.org/2000/svg")
         svg.appendChild(cloudSvg.cloneNode(true));
 
         container.appendChild(noteName);

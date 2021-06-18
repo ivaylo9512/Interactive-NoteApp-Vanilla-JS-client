@@ -37,8 +37,8 @@ const profile = (() => {
     const login = (e) => {
         e.preventDefault();
 
-        let username = userInputs[0].value;
-        let password = userInputs[1].value;
+        let username = userInputs[4].value;
+        let password = userInputs[5].value;
         let user = {
             username,
             password,
@@ -90,6 +90,7 @@ const profile = (() => {
     const initialize = () => { 
         if (isAuth()) {
             userInfo = JSON.parse(localStorage.getItem('User'));
+            userInfo.token = localStorage.getItem('Authorization');
             setUserInfo(userInfo);
         }
         
