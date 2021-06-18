@@ -2,9 +2,7 @@ const dragElement = (target) => {
     target.addEventListener('mousedown', onMouseDown);
     
     let pos1 = 0,
-        pos2 = 0,
-        pos3 = 0,
-        pos4 = 0;
+        pos2 = 0;
 
     let className;
     let elementFromPoint;
@@ -21,8 +19,8 @@ const dragElement = (target) => {
         className = target.className;        
         
         if(className == 'move-btn') e.stopPropagation();
-        pos3 = e.pageX;
-        pos4 = e.pageY;            
+        pos1 = e.pageX;
+        pos2 = e.pageY;            
 
         if(className.includes('loading')) return;
             else if (className == 'move-note' || className == 'drag-photo' || className == 'move-btn') node = target.parentElement;
@@ -44,10 +42,10 @@ const dragElement = (target) => {
         e.preventDefault();
         dragged = true;
 
-        offsetLeft -= pos3 - e.pageX;
-        offsetTop -= pos4 - e.pageY;
-        pos3 = e.pageX;
-        pos4 = e.pageY;
+        offsetLeft -= pos1 - e.pageX;
+        offsetTop -= pos2 - e.pageY;
+        pos1 = e.pageX;
+        pos2 = e.pageY;
          
         node.style.left = offsetLeft + 'px';
         node.style.top = offsetTop + 'px';
@@ -69,10 +67,7 @@ const dragElement = (target) => {
         
     }
 
-    function closeDrag() {
-        let x = event.clientX;
-        let y = event.clientY;
-        
+    function closeDrag() {        
         window.removeEventListener('mousemove', onDrag);
         window.removeEventListener('mouseup', closeDrag);
         
@@ -81,7 +76,7 @@ const dragElement = (target) => {
                 app.resetMoveButtons();
                 break;
             case 'drag-photo':
-                elementFromPoint = document.elementFromPoint(x, y);
+                elementFromPoint = document.elementFromPoint(event.clientX, event.clientY);
                 photoEndDrag();
                 break;
             case 'point':
@@ -118,10 +113,10 @@ const dragElement = (target) => {
     }
 
     const checkPointPosition = () => {
-        if (pos3 > 100) {
+        if (offsetLeft > window.innerWidth / 25) {
             date.showMonths();
             closeDrag();
-        } else if (node.parentElement.getBoundingClientRect().top - event.clientY > 35) {
+        } else if (offsetTop < -window.innerHeight / 15) {
             date.showYears();
             closeDrag();
         }
@@ -206,7 +201,7 @@ const dragElement = (target) => {
     }
 
     const resetNavPoint = () => {
-        node.style.transition = '2s';
+        node.style.transition = null;
         node.style.left = 0;
         node.style.top = 0;
     }    
