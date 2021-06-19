@@ -1712,6 +1712,12 @@ body.full-mode-active .full-mode{
     -moz-transform: translateY(calc(-7.1vh - 0.5vw));
     -webkit-transform: translateY(calc(-7.1vh - 0.5vw));
     transform: translateY(calc(-7.1vh - 0.5vw));
+}
+.full-mode.photo-section{
+    border: 0.5vw 0 0 0;
+}
+.full-mode nav ul{
+    width: 100%;
     display: -webkit-box;
     display: -ms-flexbox;
     display: -webkit-flex;
@@ -2004,13 +2010,13 @@ body.full-mode-active .timeline-months,
 .photo-section{
     display: none;
     width: 100%;
-    padding-top: 6vh;
     position: relative;
     z-index: 2;
 }
-.apended-photos {
+.appended-photos {
     width: 100%;
-    height: 59vh;
+    height: 64vh;
+    padding: 5vh 0;
     display: -webkit-box;
     display: -moz-box;
     display: -ms-flexbox;
@@ -2068,6 +2074,72 @@ body.full-mode-active .timeline-months,
     justify-content: center;
     align-items: center;
     font-size: 7vw;
+    flex-direction: column;
+}
+.clouds-container-photo-section{
+    display: flex;
+    width: 100%;
+    padding: 0vw 4vw;
+    box-sizing: border-box;
+}
+.clouds-container-photo-section button{
+    margin: 0 0.1vw;
+    -webkit-box-flex: 1; 
+    -webkit-flex: 1;     
+    -ms-flex: 1;         
+    flex: 1; 
+    width: 3vw;
+    position: relative;
+    transition: 2s all;
+}
+.clouds-container-photo-section p{
+    position: absolute;
+    top: 50%;
+    font-size: 2.5vw;
+    text-align: center;
+    color: #EAE9E5;
+    width: 100%;
+    margin-top: calc(-0.5em + 12%);
+}
+.clouds-container-photo-section svg{
+    display: block;
+}
+.clouds-container-photo-section.second-album button:first-child,
+.clouds-container-photo-section.third-album button:first-child{
+    -moz-transform: translatex(-20%) rotate(-25deg);
+    -webkit-transform: translatex(-20%) rotate(-25deg);
+    transform: translatex(-20%) rotate(-25deg);
+}
+.clouds-container-photo-section.second-album button:nth-child(2){
+    -moz-transform: scale(1.3) translateY(-35%);
+    -webkit-transform: scale(1.3) translateY(-35%);
+    transform: scale(1.3) translateY(-35%);
+}
+.clouds-container-photo-section.second-album button:last-child,
+.clouds-container-photo-section.first-album button:last-child{
+    -moz-transform: translatex(20%) rotate(25deg);
+    -webkit-transform: translatex(20%) rotate(25deg);
+    transform: translatex(20%) rotate(25deg);
+}
+.clouds-container-photo-section.first-album button:first-child{
+    -moz-transform: translate(calc(100% + 0.2vw), -45%) scale(1.3);
+    -webkit-transform: translate(calc(100% + 0.2vw), -45%) scale(1.3);
+    transform: translate(calc(100% + 0.2vw), -45%) scale(1.3);
+}
+.clouds-container-photo-section.first-album button:nth-child(2){
+    -moz-transform: translateX(calc(-120% - 0.2vw)) rotate(-25deg);
+    -webkit-transform: translateX(calc(-120% - 0.2vw)) rotate(-25deg);
+    transform: translateX(calc(-120% - 0.2vw)) rotate(-25deg);
+}
+.clouds-container-photo-section.third-album button:nth-child(2){
+    -moz-transform: translateX(calc(120% + 0.2vw)) rotate(25deg);
+    -webkit-transform: translateX(calc(120% + 0.2vw)) rotate(25deg);
+    transform: translateX(calc(120% + 0.2vw)) rotate(25deg);
+}
+.clouds-container-photo-section.third-album button:last-child{
+    -moz-transform: translate(calc(-100% - 0.2vw), -45%) scale(1.3);
+    -webkit-transform: translate(calc(-100% - 0.2vw), -45%) scale(1.3);
+    transform: translate(calc(-100% - 0.2vw), -45%) scale(1.3);
 }
 .balloons-container-photo-section{
     -webkit-box-flex: 1; 
@@ -2119,27 +2191,18 @@ body.full-mode-active .timeline-months,
     cursor: pointer; 
 }
 .photos-container-full-mode{
-    flex-wrap: wrap;
-    padding: 2vh 0;
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
+    padding: 2vh 0 2vh 1.2vw;
     box-sizing: border-box;
 }
 .drag-photo-container{
     height: 5vw;
     overflow: hidden;
-    width: calc(12.5% - 0.3vw);
+    width: 12%;
     border: 0.05vw solid rgb(65, 41, 27);
-    margin-bottom: 0.2vw;
-    margin-left: 0.1vw;
+    margin: 0 0.1vw 0.2vw 0.1vw;
     cursor: pointer;
-    margin-right: 0.1vw;
     position: relative;
     border-radius: 0.4vw;
-    justify-content: center;
     align-items: center;
     display: -webkit-inline-box;
     display: -moz-inline-box;
