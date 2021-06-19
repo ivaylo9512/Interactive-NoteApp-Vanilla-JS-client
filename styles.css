@@ -266,10 +266,10 @@ body.full-mode-active .play-nav.fixed {
     -webkit-transform: scale(0);
     -moz-transform: scale(0);
 }
-.play-box button:not(.gear) svg > g{
+.play-nav button:not(.gear):not(.full-mode-btn) svg > g{
     filter: url(#playbox-btn-shadow);
 }
-.play-box button:not(.gear) svg > g > g{
+.play-nav button:not(.gear):not(.full-mode-btn) svg > g > g{
     filter: url(#playbox-btn-shadow-second);
 }
 .play-box button:not(.gear) circle{
@@ -1714,7 +1714,7 @@ body.full-mode-active .full-mode{
     transform: translateY(calc(-7.1vh - 0.5vw));
 }
 .full-mode.photo-section{
-    border: 0.5vw 0 0 0;
+    border-width: 0.5vw 0 0 0;
 }
 .full-mode nav ul{
     width: 100%;
@@ -2147,42 +2147,27 @@ body.full-mode-active .timeline-months,
     -ms-flex: 1;         
     flex: 1; 
 }
-.add-photo {
-    background-size: 100%;
-    border: 0.1vw solid #41291B;
-    border-radius: 50%;
-    outline: none;
-    position: relative;
+.add-photo circle{
+    filter: url(#playbox-btn-shadow);
+    stroke-width: 1.2px;
+}
+.add-photo{
     display: none;
-    width: 110%;
-    padding-bottom: calc(110% - 0.2vw);
-    z-index: 9;
-    margin-left: -5%;
-    margin-top: 0.5vh;
-    box-shadow: 0px 0px 3px 1.5px rgba(0,0,0,0.3);
+    fill: #41291B;
+    width: 115%;
+    margin-left: -7.5%;
+    stroke: #EAE9E5;
+    stroke-linecap: round;
 }
-.add-photo span{
-    position: absolute;
-    background: #41291B;
-    border-radius: 13px;
-    z-index: -1;
-}
-.add-photo span:nth-child(1){
-    height: 50%;
-    left: calc(50% - 3.5%);
-    top: 25%;
-    width: 7%;
-}
-.add-photo span:nth-child(2){
-    width: 50%;
-    top: calc(50% - 3.5%);
-    left: 25%;
-    height: 7%;
+.add-photo path {
+    stroke: #41291B;
+    fill: none;
+    transform-origin: center;
 }
 .add-photo input {
-    width: 110%;
-    padding-bottom: 110%;
-    border-radius: 90px;
+    width: 100%;
+    padding-bottom: 100%;
+    border-radius: 50%;
     opacity: 0;
     cursor: pointer;
     position: absolute;
