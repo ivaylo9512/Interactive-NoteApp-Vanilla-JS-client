@@ -50,13 +50,15 @@
                 </g>
             </defs>
         </svg>
-        <div class="full-mode" id="full-mode">
+        <section class="full-mode" id="full-mode">
             <nav id="full-mode-nav">
-                <li id="notes-full-mode-btn">Notes</li>
-                <li id="photos-full-mode-btn">Photos</li>
-                <li id="play-full-mode-btn">Play</li>
+                <ul>
+                    <li id="notes-full-mode-btn">Notes</li>
+                    <li id="photos-full-mode-btn">Photos</li>
+                    <li id="play-full-mode-btn">Play</li>
+                </ul>
             </nav>
-            <div class="photo-section-full-mode" id="photo-section-full-mode">
+            <section class="photo-section-full-mode" id="photo-section-full-mode">
                 <div class="album-container">
                     <div class="place-photo"></div>
                     <div class="place-photo"></div>
@@ -68,11 +70,6 @@
                     <div class="place-photo"></div>
                     <div class="place-photo"></div>
                     <div class="place-photo"></div>
-                    <div class="album-numbers" id="album-numbers">
-                        <div id="1"></div>
-                        <div id="2"></div>
-                        <div id="3"></div>
-                    </div>
                     <div class="place-photo"></div>
                     <div class="place-photo"></div>
                     <div class="place-photo"></div>
@@ -84,9 +81,14 @@
                     <div class="place-photo"></div>
                     <div class="place-photo"></div>
                 </div>
-                <div class="photos-container-full-mode" id="photos-container-full-mode"></div>
-            </div>
-        </div>
+                <div class="album-photo-numbers">
+                </div>
+                <div class="baloons-container">
+                </div>
+            </section>
+            <section class="photos-container-full-mode" id="photos-container-full-mode">
+            </section>
+        </section>
         <section class="note-section" id="note-section">
             <div class="timeline-years" id="timeline-years">
                 <ol>
@@ -97,9 +99,8 @@
                 <svg class="timeline-years-line" viewBox="0 0 50 50">
                     <line x1="0" y1="25" x2="50" y2="25" />
                 </svg>
-                <div class="nav-point-container">
-                    <div class="point" id="point">
-                    </div>
+                <div class="nav-point-container" id="nav-point-container">
+                    <span class="point" id="point"></span>
                 </div>
             </div>
             <div class="note-animation" id="note-animation">
