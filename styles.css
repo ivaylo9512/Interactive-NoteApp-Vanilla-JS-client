@@ -1700,14 +1700,6 @@ body.full-mode-active .input-note{
 body.full-mode-active .full-mode{
     display: block;
 }
-.hide {
-    opacity: 0;
-    transition: opacity 1.15s ease-in-out;
-}
-.show {
-    opacity: 1;
-    transition: opacity 1.15s ease-in-out;
-}
 .full-mode nav{
     background: #41291b;
     transition: 1.5s transform 0.15s;
@@ -2012,22 +2004,26 @@ body.full-mode-active .timeline-months,
 .photo-section-full-mode{
     display: none;
     width: 100%;
-    height: calc(100vh - 8vh - 1vw);
-    margin-top: 8vh;
+    padding-top: 8vh;
+    padding-bottom: 3vh;
     position: relative;
     z-index: 2;
-    text-align: center;
 }
-
+.apended-photos{
+    width: 100%;
+    height: 55vh;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+}
 .album-one-label{
     height: 68px;
     margin-left: 10px;
     margin-top: 5px;
 }
 .album-container{
-    height: 39%;
-    width: 75%;
-    margin: 0 auto;
     flex-wrap: wrap;
     justify-content: center;
 
@@ -2038,7 +2034,7 @@ body.full-mode-active .timeline-months,
     display: flex;
 }
 .album-container > div{
-    width: calc(14.26% - 0.4vw);
+    width: 23%;
     position: relative;
     border: 0.05vw solid #41291B;
     overflow: hidden;
@@ -2048,7 +2044,6 @@ body.full-mode-active .timeline-months,
     align-items: center;
     margin-left: 0.3vw;
     margin-bottom: 0.7vh;
-
     display: -webkit-inline-box;
     display: -moz-inline-box;
     display: -ms-inline-flexbox;
@@ -2065,59 +2060,6 @@ body.full-mode-active .timeline-months,
     -o-animation: fadeIn 1s ease-in forwards;
     -webkit-animation: fadeIn 1s ease-in forwards;
     animation: fadeIn ease-in 1s forwards;
-}
-.album-container .album-numbers{
-    background-color: #41291B;
-    background-size: 100%;
-    -moz-box-shadow: 0px 0px 4px 2px rgba(0,0,0,0.75);
-    box-shadow: 0px 0px 3px 1.5px rgba(0,0,0,0.75);
-    border: 0.1vw solid #EAE9E5;
-    box-sizing: border-box;
-}
-.album-numbers div{
-    background-size: 100%;
-    width: 33.3%;
-    background: no-repeat center center / cover;
-    height: 100%;
-    position: absolute;
-    display: inline-block;
-    -webkit-transform: scale(1);
-    -moz-transform: scale(1);
-    transform: scale(1);
-    transition: all 0.95s, transform 0.4s 0.9s;
-    cursor: pointer;
-}
-.album-numbers div:hover{
-    border: 1px solid #41291B;
-}
-.album-numbers.middle div{
-    transition: all 0.95s, transform 0.4s;
-}
-.album-numbers div:nth-child(1){
-    background-image: url('resources/one.png');
-    left: 0%;
-}
-.album-numbers div:nth-child(2){
-    background-image: url('resources/two.png');
-    left: 33.3%;
-}
-.album-numbers div:nth-child(3){
-    background-image: url('resources/three.png');
-    left: 66.6%;
-}
-.album-numbers.active div{
-    -webkit-form: scale(0);
-    -moz-form: scale(0);
-    transform: scale(0);
-    transition-delay: 0s;
-
-}
-.album-numbers.active div.slide-middle{
-    -webkit-form: scale(1);
-    -moz-form: scale(1);
-    transform: scale(1);
-    transition:all 0.9s 0.3s;
-    left: 33%;
 }
 .add-photo {
     background-size: 100%;
