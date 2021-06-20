@@ -1,6 +1,7 @@
 const notes = (() => {
     const body = document.body;
     const noteSection = document.getElementById('note-section');
+    const noteHolders = document.getElementById('note-animation');
     const leftNotesContainer = document.getElementById('left-notes');
     const rightNotesContainer = document.getElementById('right-notes');
     const cloudContainer = document.getElementById('cloud-headers');
@@ -183,7 +184,6 @@ const notes = (() => {
             header.style.top = null;
         }else if(textArea.className != 'active')
             textArea.className = 'active';
-        
     }
 
     const updateNote = (e) => {
@@ -234,57 +234,25 @@ const notes = (() => {
 
     const inputNote = document.getElementById('input-note');
     const animationNote = document.getElementById('animation-note');
-    //TODO just class?
     const bindNote = () => {
-        inputNote.style.display = 'block';
-        inputNote.classList.add('inactive');
-        inputNote.classList.remove('bounce');    
-        inputNote.style.left = null;
-        inputNote.style.top = null;
-        inputNote.classList.remove('hide');
-        inputNote.parentElement.style.display = 'block';
+        inputNote.classList.remove('active');
+        inputNote.style.transform = null;
+        inputNote.style.mozTransform = null;
+        inputNote.style.webkitTransform = null;
+        inputNote.addEventListener('click', popNote);
     }
-
-    const windowWidth = window.innerWidth;     
-    const windowHeight = window.innerWidth;     
-    function popNote(e){
-        noteAppend(e.currentTarget.id);
-
-        inputNote.style.top = windowHeight / 2 - windowWidth * 0.1325 + animate.getScrollY() + 'px';
-        inputNote.style.left = windowWidth / 2 - windowWidth * 0.135 + 'px';
+    
+    const popNote = () => {
+        inputNote.classList.add('active');
+        inputNote.removeEventListener('click', popNote);
     }
 
     const unpopNote = () => {
-        if(app.isFullMode){
-            bindNote();
-        }else{
-            isNoteAnimated = false;
-            inputNote.style.left = null;
-            inputNote.style.top = null;
-            inputNote.style.display = 'none';
+        if(!app.getIsFullMode() && !isNoteViewActivated){
+            noteHolders.addEventListener('click', noteAppend);
             animationNote.style.display = 'block';
-            noteHolders.addEventListener('click', noteAppend); //???
-        }   
-    }
-
-    const hideNote = () => {
-        inputNote.style.display = 'none';
-    }
-
-
-    const activateNote = () => {
-        inputNote.classList.remove('inactive');
-        inputNote.classList.add('bounce');
-    }
-
-    const showFullScreenNotes = () => {
-        inputNote.style.display = 'none';
-        noteSection.style.display = 'block';
-        window.scrollTo(0, body.scrollHeight);
-    }
-
-    const hideFullScreenNotes = () => {
-        noteSection.style.display = 'none';     
+        }
+        bindNote();
     }
 
     let isNoteViewActivated;
@@ -294,48 +262,36 @@ const notes = (() => {
             userNotes = [];
           
             resetNotes();
+            bindNote();
             date.resetDate();
         }
-        noteSection.style.display = 'block'; 
     } 
-
-    let isBalloonsAnimated;
-    let isNoteAnimated;
-    const setBalloonAnimated = () => {
-        isBalloonsAnimated = true;
-    }
-
-    const resetNote = () => {
-        isNoteAnimated ? inputNote.style.display = 'block'
-            : inputNote.style.display = 'none';
-    }
     
-    const noteHolders = document.getElementById('note-animation');
-
-    const noteAppend = (currentTarget) => {
-        if ((isBalloonsAnimated && event.target.id != 'note-animation') || currentTarget == 'input-note-btn') {
-            isNoteAnimated = true;
-            inputNote.style.display = 'block';
-            animationNote.style.display = 'none';
-            noteHolders.removeEventListener('click', noteAppend);
+    const noteAppend = (e) => {
+        if(animate.getIsBalloonAnimated() || e.currentTarget == 'input-note-btn') {
+            if(!isNoteViewActivated){
+                animationNote.style.display = 'none';
+                noteHolders.removeEventListener('click', noteAppend);    
+            }
+            popNote();
         }
     }
 
     const showTopAnimations = () => {
-        if (isBalloonsAnimated) {
+        if (animate.getIsBalloonAnimated()) {
             noteSection.classList.remove('animate');
         }
     }
 
     const hideTopAnimations = () => {
-        if (isBalloonsAnimated) {
+        if (animate.getIsBalloonAnimated()) {
             noteSection.classList.add('animate');
         }
     }
 
     const noteHeader = document.getElementById('notes-header');
     const showNoteView = () => {
-        if (isBalloonsAnimated && !app.getIsFullMode()) {
+        if (animate.getIsBalloonAnimated() && !app.getIsFullMode()) {
             noteSection.classList.remove('animate');
 
             noteHeader.removeEventListener('mouseout', hideTopAnimations);
@@ -374,21 +330,16 @@ const notes = (() => {
         noteHeader.addEventListener('mouseover', showTopAnimations);
         noteHeader.addEventListener('mouseout', hideTopAnimations);
         noteHeader.addEventListener('click', showNoteView);
-        inputNote.addEventListener('mousedown', activateNote);
+        inputNote.addEventListener('mousedown', popNote);
         document.getElementById('submit-btn').addEventListener('click', submitNote);
-        document.getElementById('input-note-btn').addEventListener('click', popNote)
-        document.getElementById('close-btn').addEventListener('click', unpopNote)
+        document.getElementById('input-note-btn').addEventListener('click', noteAppend)
+        document.getElementById('close-btn').addEventListener('click', bindNote)
     }
 
     return {
         start,
         bindNote,
-        hideNote,
-        showFullScreenNotes,
-        hideFullScreenNotes,
         resetNoteView,
-        resetNote,
-        setBalloonAnimated,
         resetHeader,
         getNotes
     }
