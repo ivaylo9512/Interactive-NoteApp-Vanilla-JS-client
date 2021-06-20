@@ -234,7 +234,7 @@ const notes = (() => {
 
     const inputNote = document.getElementById('input-note');
     const animationNote = document.getElementById('animation-note');
-    const bindNote = () => {
+    const unpopNote = () => {
         inputNote.classList.remove('active');
         inputNote.style.transform = null;
         inputNote.style.mozTransform = null;
@@ -247,12 +247,22 @@ const notes = (() => {
         inputNote.removeEventListener('click', popNote);
     }
 
-    const unpopNote = () => {
+    const bindNote = () => {
         if(!app.getIsFullMode() && !isNoteViewActivated){
-            noteHolders.addEventListener('click', noteAppend);
+            noteHolders.addEventListener('click', unbindNote);
             animationNote.style.display = 'block';
         }
-        bindNote();
+        unpopNote();
+    }
+
+    const unbindNote = (e) => {
+        if(animate.getIsBalloonAnimated() || e.currentTarget == 'input-note-btn') {
+            if(!isNoteViewActivated){
+                animationNote.style.display = 'none';
+                noteHolders.removeEventListener('click', unbindNote);    
+            }
+            popNote();
+        }
     }
 
     let isNoteViewActivated;
@@ -262,20 +272,10 @@ const notes = (() => {
             userNotes = [];
           
             resetNotes();
-            bindNote();
+            unpopNote();
             date.resetDate();
         }
     } 
-    
-    const noteAppend = (e) => {
-        if(animate.getIsBalloonAnimated() || e.currentTarget == 'input-note-btn') {
-            if(!isNoteViewActivated){
-                animationNote.style.display = 'none';
-                noteHolders.removeEventListener('click', noteAppend);    
-            }
-            popNote();
-        }
-    }
 
     const showTopAnimations = () => {
         if (animate.getIsBalloonAnimated()) {
@@ -326,19 +326,20 @@ const notes = (() => {
     
     
     const start = () => {
-        noteHolders.addEventListener('click', noteAppend);
+        noteHolders.addEventListener('click', unbindNote);
         noteHeader.addEventListener('mouseover', showTopAnimations);
         noteHeader.addEventListener('mouseout', hideTopAnimations);
         noteHeader.addEventListener('click', showNoteView);
         inputNote.addEventListener('mousedown', popNote);
         document.getElementById('submit-btn').addEventListener('click', submitNote);
-        document.getElementById('input-note-btn').addEventListener('click', noteAppend)
+        document.getElementById('input-note-btn').addEventListener('click', unbindNote)
         document.getElementById('close-btn').addEventListener('click', bindNote)
     }
 
     return {
         start,
         bindNote,
+        unpopNote,
         resetNoteView,
         resetHeader,
         getNotes
