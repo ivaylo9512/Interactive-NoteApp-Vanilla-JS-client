@@ -425,37 +425,26 @@ const app = (() =>{
     const fullModeNav = document.getElementById('full-mode-nav');
     const fullMode = document.getElementById('full-mode');
     const inputNote = document.getElementById('input-note');
-    const photoSection = document.getElementById('photo-section-full-mode')
     const photosContainer = document.getElementById('photos-container-full-mode');
     const playNav = document.getElementById('play-nav');
-    const addPhoto = document.getElementById('add-photo');
 
     let isFullMode;
     const getIsFullMode = () => isFullMode;
 
     const fullModeToggle = () => {
         if(isFullMode){ 
-            notes.resetNote();
             notes.resetNoteView();
-
+            fullModeReset();
             clearPlacedPhotos();
-
-            playNav.classList.remove('fixed');
-            addPhoto.style.display = 'none';
-            inputNote.classList.remove('inactive');
-            fullMode.style.display = 'none';
-
             setTimeout(() => window.scrollTo(0, document.body.scrollHeight),0);   
-            
         }else{
             animate.skipAnimations();
             if(currentAlbumNumber){
                 hideButtons();
                 hideAppendedPhotos();
             }
-            inputNote.style.display = 'none';
+            inputNote.classList.remove("active");
             playNav.classList.remove('fixed');
-            fullModeReset();
         }
         document.body.classList.toggle('full-mode-active');
         currentAlbumNumber = null;
@@ -484,29 +473,21 @@ const app = (() =>{
 
     const menuCircle = document.getElementById('menu-circle');
     const fullModeNavToggle = () => {
-
-        if(menuCircle.classList.contains('inactive')) fullModeReset();
-        playNav.classList.add('fixed');
-        setTimeout(() => 
-            fullModeNav.classList.add('active')
-        , 0);
-        
+        if(!menuCircle.classList.contains('active')) fullModeReset();
+        fullmode.classList.add('nav-toggle');
     }
 
     const fullModeReset = () => {
-        menuCircle.classList.remove('inactive');
-        fullMode.style.display = 'block';
-        addPhoto.style.display = 'none';
-        photoSection.style.display = 'none';
-        inputNote.classList.add('inactive')
-        notes.hideFullScreenNotes();
-        fullModeNav.classList.remove('active');
+        menuCircle.classList.add('active');
+        inputNote.classList.remove('active')
+        document.body.classList.remove("note-section")
+        fullMode.classList.remove('nav-toggle');
+        fullMode.classList.remove("photo-section");
     }
 
     const navHoverAnimations = () => {
         if(fullModeNav.classList.contains('active')){
             if(event.target.tagName == 'LI'){
-                
                 switch(event.target.textContent){
                     case 'Notes':
                         notes.bindNote();
@@ -517,21 +498,17 @@ const app = (() =>{
                     case 'Play':        
                         break;
                 }
-            
             }
         }
     }
     
     const fullScreenNavEvents = () => {
         if(event.target.tagName == 'LI'){
-            menuCircle.classList.add('inactive');
-            fullModeNav.classList.remove('active')
-            playNav.classList.remove('fixed');
+            fullmode.classList.remove('nav-toggle');
             
             switch(event.target.textContent){
                 case 'Notes':
-                    fullMode.style.display = 'none';
-                    notes.showFullScreenNotes();
+                    showFullScreenNotes();
                     break;
                 case 'Photos':
                     showPhotoSection();
@@ -540,6 +517,12 @@ const app = (() =>{
                     break;
             }
         }
+    }
+
+    const showFullScreenNotes = () => {
+        inputNote.classList.remove("active");
+        body.classList.add("note-section")
+        window.scrollTo(0, body.scrollHeight);
     }
 
     const fixatePlayNav = () => playNav.classList.toggle('fixed');
@@ -553,12 +536,12 @@ const app = (() =>{
             playNav.classList.add('play-box-transitioned');           
         }, 1500);
     }  
+
     const removePlayBoxHover = (e) => {
         clearTimeout(playBoxHoverTimeout);
         playNav.classList.remove('play-box-hovered');           
         playNav.classList.remove('play-box-transitioned')            
     }  
-
 
     const photoContainer = (() => { 
         const container = document.createElement('div');
@@ -573,8 +556,7 @@ const app = (() =>{
 
     const photosFragment = document.createDocumentFragment();
     const showPhotoSection = () => {
-        photoSection.style.display = 'block';
-        addPhoto.style.display = 'block';
+        fullMode.classList.add("photo-section");
         
         if(photosContainer.children.length == 0){
             remote.getAlbumImages(0).then(
@@ -833,10 +815,7 @@ const app = (() =>{
             document.getElementById('album-btns').addEventListener('click', getAlbumImages);
             document.getElementById('full-mode-btn').addEventListener('click', fullModeToggle);
             menuCircle.addEventListener('click', fullModeNavToggle);
-            fullModeNav.addEventListener('mouseover', navHoverAnimations);
             fullModeNav.addEventListener('click', fullScreenNavEvents);
-
-            albumNumbersContainer.addEventListener('click', chooseAlbumNumber);
 
             document.getElementById('input-photo').addEventListener('input', appendPhoto);
 
