@@ -236,9 +236,8 @@ const notes = (() => {
     const animationNote = document.getElementById('animation-note');
     const unpopNote = () => {
         inputNote.classList.remove('active');
-        inputNote.style.transform = null;
-        inputNote.style.mozTransform = null;
-        inputNote.style.webkitTransform = null;
+        inputNote.style.top = null;
+        inputNote.style.left = null;
         inputNote.addEventListener('click', popNote);
     }
     
@@ -256,7 +255,7 @@ const notes = (() => {
     }
 
     const unbindNote = (e) => {
-        if(animate.getIsBalloonAnimated() || e.currentTarget == 'input-note-btn') {
+        if(animate.getIsBalloonAnimated() || e.currentTarget.id == 'input-note-btn') {
             if(!isNoteViewActivated){
                 animationNote.style.display = 'none';
                 noteHolders.removeEventListener('click', unbindNote);    

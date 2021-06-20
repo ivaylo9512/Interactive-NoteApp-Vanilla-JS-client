@@ -72,13 +72,13 @@ const colorize = (() => {
             node.style.fill = randomColor;
             node.style.color = randomColor;
 
-            calculate(node);
+            setScore(node);
         }
     }
 
     let amountCounted = 0;
     let score = document.getElementById('score');
-    const calculate = (node) => {
+    const setScore = (node) => {
         if (node.dataset.isCounted && !isMatched) {
             amountCounted--;
             node.dataset.isCounted = '';

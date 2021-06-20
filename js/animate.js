@@ -131,6 +131,8 @@ const animate = (() => {
     }
 
     let isBalloonPlayed;
+    let isBalloonAnimated
+    const getIsBalloonAnimated = () => isBalloonAnimated;
     const balloonsContainer = document.getElementById('balloons-container');
 
     const balloonAnimation = () => {
@@ -142,19 +144,16 @@ const animate = (() => {
 
         balloonsContainer.classList.add('animate');
         setTimeout(() => {
-            notes.setBalloonAnimated();
+            isBalloonAnimated = true
         }, 3500);
     }
 
     const skipAnimations = () => {
         if(!isBalloonPlayed){
             isBalloonPlayed = true;
-
+            isBalloonAnimated = true;
             balloonsContainer.classList.add('animated');
-
-            notes.setBalloonAnimated();
             animateTree();
-            hidePointer();
         }
     }
 
@@ -168,6 +167,7 @@ const animate = (() => {
         initialize,
         smoothScroll,
         skipAnimations,
+        getIsBalloonAnimated,
         getScrollY
     };
 })();
