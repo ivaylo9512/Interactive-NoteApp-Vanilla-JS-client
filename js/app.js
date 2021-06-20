@@ -1,17 +1,20 @@
 const app = (() =>{
+    const body = document.body;
     const userPhotosContainer = document.getElementById('user-photos');
     const appendedPhotos = Array.from(userPhotosContainer.children);
     const albums = []
 
     let currentAlbumNumber;
-    const windowHeight = window.innerHeight;
+    const getCurrentAlbumNumber = () => currentAlbumNumber;
+
+    const windowHeight = window.innerHeight; // if resize?
     const getAlbumImages = (e) => {
         const albumNumber = +e.target.id;
 
         if(!albums[albumNumber]){
             
             remote.getAlbumImages(albumNumber).then(res => {
-                animate.smoothScroll(document.body.offsetHeight - animate.getScrollY() - windowHeight - 450, 1500);
+                animate.smoothScroll(body.offsetHeight - animate.getScrollY() - windowHeight - 450, 1500);
                 albums[albumNumber] = res.data;
 
                 currentAlbumNumber = albumNumber
@@ -26,7 +29,7 @@ const app = (() =>{
             currentAlbumNumber = albumNumber
 
             showButtons();            
-            animate.smoothScroll(document.body.offsetHeight - animate.getScrollY() - windowHeight - 450, 1500);
+            animate.smoothScroll(body.offsetHeight - animate.getScrollY() - windowHeight - 450, 1500);
             appendAlbumPhotos(albums[albumNumber])
         }
     }
@@ -420,11 +423,8 @@ const app = (() =>{
         focusedNote.children[0].appendChild(currentPhoto.node);
     }
     
-    const getCurrentAlbumNumber = () => currentAlbumNumber;
-
     const fullModeNav = document.getElementById('full-mode-nav');
     const fullMode = document.getElementById('full-mode');
-    const inputNote = document.getElementById('input-note');
     const photosContainer = document.getElementById('photos-container-full-mode');
     const playNav = document.getElementById('play-nav');
 
@@ -436,17 +436,17 @@ const app = (() =>{
             notes.resetNoteView();
             fullModeReset();
             clearPlacedPhotos();
-            setTimeout(() => window.scrollTo(0, document.body.scrollHeight),0);   
+            setTimeout(() => window.scrollTo(0, body.scrollHeight),0);   
         }else{
             animate.skipAnimations();
+            notes.bindNote();
             if(currentAlbumNumber){
                 hideButtons();
                 hideAppendedPhotos();
             }
-            inputNote.classList.remove("active");
             playNav.classList.remove('fixed');
         }
-        document.body.classList.toggle('full-mode-active');
+        body.classList.toggle('full-mode-active');
         currentAlbumNumber = null;
         isFullMode = !isFullMode;
     }
@@ -456,10 +456,10 @@ const app = (() =>{
 
     const initialLoading = () => {
         document.getElementById('user-form').reset();
-        document.body.classList.remove("remove-transitions-on-load-up");
+        body.classList.remove("remove-transitions-on-load-up");
         
         setTimeout(() => {
-            window.scrollTo(0, document.body.scrollHeight)
+            window.scrollTo(0, body.scrollHeight)
             setTimeout(() => {
                 isLoaded = true
             }, 100);
@@ -473,39 +473,26 @@ const app = (() =>{
 
     const menuCircle = document.getElementById('menu-circle');
     const fullModeNavToggle = () => {
-        if(!menuCircle.classList.contains('active')) fullModeReset();
-        fullmode.classList.add('nav-toggle');
+        if(!menuCircle.classList.contains('active')) {
+            fullModeReset();
+            notes.unpopNote();
+        }
+        fullMode.classList.add('nav-toggle');
     }
 
     const fullModeReset = () => {
         menuCircle.classList.add('active');
-        inputNote.classList.remove('active')
-        document.body.classList.remove("note-section")
+        body.classList.remove("note-section-active")
         fullMode.classList.remove('nav-toggle');
-        fullMode.classList.remove("photo-section");
-    }
-
-    const navHoverAnimations = () => {
-        if(fullModeNav.classList.contains('active')){
-            if(event.target.tagName == 'LI'){
-                switch(event.target.textContent){
-                    case 'Notes':
-                        notes.bindNote();
-                        break;
-                    case 'Photos':
-                        notes.hideNote();
-                        break;
-                    case 'Play':        
-                        break;
-                }
-            }
-        }
+        fullMode.classList.remove("photo-section-active");
     }
     
     const fullScreenNavEvents = () => {
         if(event.target.tagName == 'LI'){
-            fullmode.classList.remove('nav-toggle');
-            
+            fullMode.classList.remove('nav-toggle');
+            menuCircle.classList.remove('active');
+            notes.unpopNote();
+
             switch(event.target.textContent){
                 case 'Notes':
                     showFullScreenNotes();
@@ -520,8 +507,7 @@ const app = (() =>{
     }
 
     const showFullScreenNotes = () => {
-        inputNote.classList.remove("active");
-        body.classList.add("note-section")
+        body.classList.add('note-section-active')
         window.scrollTo(0, body.scrollHeight);
     }
 
@@ -556,7 +542,7 @@ const app = (() =>{
 
     const photosFragment = document.createDocumentFragment();
     const showPhotoSection = () => {
-        fullMode.classList.add("photo-section");
+        fullMode.classList.add("photo-section-active");
         
         if(photosContainer.children.length == 0){
             remote.getAlbumImages(0).then(
@@ -574,7 +560,6 @@ const app = (() =>{
                         photosFragment.insertBefore(containerCopy, photosFragment.firstChild);
                     });
                     photosContainer.insertBefore(photosFragment, photosContainer.firstChild);
-
                 }
             )
         }
