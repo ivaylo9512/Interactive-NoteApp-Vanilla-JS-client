@@ -144,7 +144,7 @@ body.full-mode-active .play-mode > .play-nav{
     position: absolute;
 }
 
-.album-btns .first {
+.album-btns li:nth-of-type(1){
     -webkit-transform: rotate(-44deg);
     -moz-transform: rotate(-44deg);
     transform: rotate(-44deg);
@@ -153,7 +153,7 @@ body.full-mode-active .play-mode > .play-nav{
     left: 77.5%;
 }
 
-.album-btns .second {
+.album-btns li:nth-of-type(2){
     -webkit-transform: rotate(-53deg);
     -moz-transform: rotate(-53deg);
     transform: rotate(-53deg);
@@ -162,7 +162,7 @@ body.full-mode-active .play-mode > .play-nav{
     left: 74.5%;
 }
 
-.album-btns .third {
+.album-btns li:nth-of-type(3){
     margin-left: 9%;
     -webkit-transform: rotate(-45deg);
     -moz-transform: rotate(-45deg);
@@ -216,8 +216,7 @@ body.full-mode-active .play-mode > .play-nav{
 }
 body.full-mode-active .play-nav {
     bottom: unset;
-    top: 2.5vh;
-    width: 2.6%;
+    top: 3vh;
     position: fixed;
 }
 body.full-mode-active .play-nav.fixed {
@@ -254,6 +253,11 @@ body.full-mode-active .play-nav.fixed {
     visibility: hidden;
     position: relative;
 }
+.play-nav > button svg{
+    width: 100%;
+    margin: -20% 0 -20% -20%;
+    padding: 20%;
+}
 .play-nav.fixed .play-box button:not(.gear){
     padding: 20%;
 }
@@ -269,7 +273,7 @@ body.full-mode-active .play-nav.fixed {
 .play-nav button:not(.gear):not(.full-mode-btn) svg > g{
     filter: url(#playbox-btn-shadow);
 }
-.play-nav button:not(.gear):not(.full-mode-btn) svg > g > g{
+.play-box button:not(.gear):not(.full-mode-btn) svg > g > g{
     filter: url(#playbox-btn-shadow-second);
 }
 .play-box button:not(.gear) circle{
@@ -1740,47 +1744,8 @@ body.full-mode-active .full-mode{
             -ms-flex: 1;
                 flex: 1; 
 }
-
 .full-mode nav li:last-child{
     border-width: 0px;
-}
-.full-mode-circle {
-    position: fixed;
-    top: 50%;
-    right: 50%;
-    margin-right: -2.5%;
-    margin-top: -2.5%;
-    background: url(resources/menu-icon.png) no-repeat center center;
-    background-size: 40%;
-    border: 0.15vw solid #41291B;
-    border-radius: 50%;
-    padding-bottom: calc(5% - 0.3vw);
-    width: 5%;
-    -webkit-transform: scale(1);
-    -moz-transform: scale(1);
-    transform: scale(1);
-    z-index: 5;
-    cursor: pointer;
-    box-shadow: 0px 0px 3px 1.5px rgba(0,0,0,0.3);
-    display: none;
-}
-.full-mode-circle:hover {
-    box-shadow: none;
-}
-body.full-mode-active .full-mode-circle {
-    display: block;
-}
-.full-mode-circle.inactive {
-    position: relative;
-    right: 0;
-    margin-right: 0;
-    top: 0;
-    width: 110%;
-    margin-top: 0.2vh;
-    padding-bottom: calc(110% - 0.2vw);
-    border-width: 0.1vw;
-    z-index: 9;
-    margin-left: -5%;
 }
 .timeline-years,
 .timeline-months{
@@ -2147,22 +2112,28 @@ body.full-mode-active .timeline-months,
     -ms-flex: 1;         
     flex: 1; 
 }
-.add-photo circle{
+.add-photo circle,
+.full-mode-circle circle{
     filter: url(#playbox-btn-shadow);
     stroke-width: 1.2px;
 }
-.add-photo{
+.add-photo,
+.full-mode-circle{
     display: none;
     fill: #41291B;
-    width: 115%;
-    margin-left: -7.5%;
+    width: 100%;
     stroke: #EAE9E5;
     stroke-linecap: round;
+    transition: 1.5s all;
 }
-.add-photo path {
+.add-photo path,
+.full-mode-circle path{
     stroke: #41291B;
     fill: none;
     transform-origin: center;
+}
+.full-mode-circle line{
+    stroke-width: 1.5px;
 }
 .add-photo input {
     width: 100%;
@@ -2175,6 +2146,30 @@ body.full-mode-active .timeline-months,
 .add-photo input::-webkit-file-upload-button {
     cursor: pointer; 
 }
+.full-mode-circle {
+    z-index: 5;
+    cursor: pointer;
+}
+.full-mode-circle svg{
+    transition: 1.5s transform;
+}
+.full-mode-circle.active:hover svg {
+    -webkit-transform: scale(1.5);
+    -moz-transform: scale(1.5);
+    transform: scale(1.5);
+}
+body.full-mode-active .full-mode-circle{
+    display: block;
+}
+body.full-mode-active .full-mode-circle.active {
+    position: fixed;
+    width: 5%;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
 .photos-container-full-mode{
     padding: 2vh 0 2vh 1.2vw;
     box-sizing: border-box;
@@ -2183,22 +2178,20 @@ body.full-mode-active .timeline-months,
     height: 5vw;
     overflow: hidden;
     width: 12%;
-    border: 0.05vw solid rgb(65, 41, 27);
-    margin: 0 0.1vw 0.2vw 0.1vw;
+    margin: 0 0.3vw 0.3vw 0.1vw;
     cursor: pointer;
     position: relative;
     border-radius: 0.4vw;
     align-items: center;
-    display: -webkit-inline-box;
-    display: -moz-inline-box;
-    display: -ms-inline-flexbox;
-    display: -webkit-inline-flex;
-    display: inline-flex;
+    display: inline-block;
+    box-shadow: 0 0 0.3vh 0.05vh rgb(0 0 0);
 }
 .drag-photo-container div{
-    height: 105%;
-    width: 105%;
+    height: 125%;
+    width: 100%;
+    position: relative;
     background: no-repeat center center / cover;
+    top: -12.5%;
 }
 .drag-photo.loading{
     opacity: 0.2;
