@@ -76,19 +76,22 @@ body.note-section-active .full-mode{
     position: relative;
     bottom: 32%;
 }
+svg.pink-blob {
+   fill: #729bd2;
+}
 .onload-animation .blue-blob {
     height: 44%;
     position: relative;
     bottom: 21%;
 }
-.onload-animation .blue-blob.colorizable {
+.onload-animation svg.colorizable {
     display: none;
 }
-.onload-animation.play .blue-blob.colorizable {
+.onload-animation.play svg.colorizable {
     display: inline-block;
-    fill: #8bb1e5;
 }
-.onload-animation.play .blue-blob{
+.onload-animation.play .blue-blob,
+.onload-animation.play .pink-blob{
     display: none;
 }
 .onload-animation .pointer{
