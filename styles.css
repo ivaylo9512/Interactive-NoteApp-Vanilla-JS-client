@@ -70,25 +70,25 @@ body.note-section-active .full-mode{
     text-align: center;
     height: 27.1%;
 }
-.onload-animation .pink-bulb {
+.onload-animation .pink-blob {
     height: 44%;
     animation-delay: 2s;
     position: relative;
     bottom: 32%;
 }
-.onload-animation .blue-bulb {
+.onload-animation .blue-blob {
     height: 44%;
     position: relative;
     bottom: 21%;
 }
-.onload-animation .blue-bulb.colorizable {
+.onload-animation .blue-blob.colorizable {
     display: none;
 }
-.onload-animation.play .blue-bulb.colorizable {
+.onload-animation.play .blue-blob.colorizable {
     display: inline-block;
     fill: #8bb1e5;
 }
-.onload-animation.play .blue-bulb{
+.onload-animation.play .blue-blob{
     display: none;
 }
 .onload-animation .pointer{
@@ -1494,11 +1494,11 @@ body.full-mode-active .cloud-header img{
 .score-box svg {
     display: block;
 }
-.score-box .blue-bulb {
+.score-box .blue-blob {
     fill: #729bd2;
     width: 85%;
 }
-.score-box .pink-bulb {
+.score-box .pink-blob {
     fill: #e3037b;
     width: 85%;
 }

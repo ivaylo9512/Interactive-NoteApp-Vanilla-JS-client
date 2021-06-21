@@ -38,7 +38,7 @@ const colorize = (() => {
     }
 
     let onloadAnimation = document.getElementById('onload-animation');
-    const changeBulbImages = () => {
+    const changeblobImages = () => {
         onloadAnimation.classList.add('play');
     }
 
@@ -92,10 +92,10 @@ const colorize = (() => {
     const start = () => {
         getElements();
         playBtn.addEventListener('click', manageListeners);
-        playBtn.addEventListener('click', changeBulbImages, {once: true});
+        playBtn.addEventListener('click', changeblobImages, {once: true});
         document.getElementById('second-game-btn').addEventListener("click", toggleScore);
-        document.getElementById('pink-bulb-score').addEventListener('click', () => setCurrentColor('#E2007A'));
-        document.getElementById('blue-bulb-score').addEventListener('click', () => setCurrentColor('#8bb1e5'));   
+        document.getElementById('pink-blob-score').addEventListener('click', () => setCurrentColor('#E2007A'));
+        document.getElementById('blue-blob-score').addEventListener('click', () => setCurrentColor('#8bb1e5'));   
     }
 
     return {

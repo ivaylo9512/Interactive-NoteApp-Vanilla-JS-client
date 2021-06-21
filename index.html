@@ -377,9 +377,9 @@
                 <svg class="pointer" id="pointer" viewBox="0 0 50 50">
                     <polyline points="10 32.5 25 17.5 40 32.5" />
                 </svg>
-                <img class="blue-bulb" id="blue-bulb"/>
+                <img class="blue-blob" id="blue-blob"/>
                 <img src="resources/tree.png" class="tree" id="tree"/>
-                <img class="pink-bulb colorizable" id="pink-bulb"/>
+                <img class="pink-blob colorizable" id="pink-blob"/>
             </section>
         </section>
         <div class="play-nav" id="play-nav">
@@ -453,7 +453,7 @@
                             </g>
                         </svg>
                     </button>
-                    <button class="second-game-play-btn">
+                    <button class="second-game-play-btn" id="second-game-btn">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22">
                             <g>
                                 <g>
@@ -473,7 +473,7 @@
                 </div>
             </div>
             <div class="score-box">      
-                <svg class="blue-bulb" xmlns="http://www.w3.org/2000/svg" version="1.0" viewBox="0 0 325.000000 360.000000" preserveAspectRatio="xMidYMid meet">
+                <svg class="blue-blob" id="blue-blob-score" xmlns="http://www.w3.org/2000/svg" version="1.0" viewBox="0 0 325.000000 360.000000" preserveAspectRatio="xMidYMid meet">
                     <g transform="translate(0.000000,360.000000) scale(0.100000,-0.100000)">
                         <path d="M2223 3096 c-17 -8 -39 -26 -49 -40 -16 -25 -16 -29 1 -71 20 -53 47 -75 93 -75 47 0 69 14 92 60 26 51 25 64 -7 100 -33 37 -84 47 -130 26z" />
                         <path d="M1503 3076 c-47 -21 -57 -47 -43 -109 7 -29 23 -72 35 -97 13 -25 26 -62 29 -84 5 -40 30 -86 46 -86 17 0 32 43 32 88 -1 25 7 60 18 82 11 21 22 66 26 101 6 59 4 66 -19 87 -31 29 -83 36 -124 18z" />
@@ -484,7 +484,7 @@
                     </g>
                 </svg>
                 <span>or</span>
-                <svg class="pink-bulb" xmlns="http://www.w3.org/2000/svg" version="1.0" viewBox="0 0 325.000000 360.000000" preserveAspectRatio="xMidYMid meet">
+                <svg class="pink-blob" id="pink-blob-score" xmlns="http://www.w3.org/2000/svg" version="1.0" viewBox="0 0 325.000000 360.000000" preserveAspectRatio="xMidYMid meet">
                     <g transform="translate(0.000000,360.000000) scale(0.100000,-0.100000)">
                         <path d="M2223 3096 c-17 -8 -39 -26 -49 -40 -16 -25 -16 -29 1 -71 20 -53 47 -75 93 -75 47 0 69 14 92 60 26 51 25 64 -7 100 -33 37 -84 47 -130 26z" />
                         <path d="M1503 3076 c-47 -21 -57 -47 -43 -109 7 -29 23 -72 35 -97 13 -25 26 -62 29 -84 5 -40 30 -86 46 -86 17 0 32 43 32 88 -1 25 7 60 18 82 11 21 22 66 26 101 6 59 4 66 -19 87 -31 29 -83 36 -124 18z" />
@@ -496,9 +496,9 @@
                 </svg>
                 <span>Score:</span>
                 <div class="score">
-                    <span>0</span>
+                    <span id="score">0</span>
                     /
-                    <span>50</span>
+                    <span id="max-score"></span>
                 </div>
             </div>
             <button class="full-mode-circle active" id="menu-circle">

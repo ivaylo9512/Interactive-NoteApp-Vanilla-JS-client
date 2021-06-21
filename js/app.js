@@ -466,8 +466,8 @@ const app = (() =>{
         }, 100);
 
         setTimeout(() => {
-            document.getElementById('pink-bulb').src = 'resources/pink-bulb.gif';
-            document.getElementById('blue-bulb').src = 'resources/blue-bulb.gif';
+            document.getElementById('pink-blob').src = 'resources/pink-blob.gif';
+            document.getElementById('blue-blob').src = 'resources/blue-blob.gif';
         }, 600);
     }
 
