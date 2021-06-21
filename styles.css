@@ -47,11 +47,17 @@ button{
     width: 6.5em;
     margin: 0 auto;
 }
-body.full-mode-active .play-mode > *{
+body.full-mode-active .play-mode{
     display: none;
 }
-body.full-mode-active .play-mode > .play-nav{
+body.full-mode-active .note-section{
+    display: none;
+}
+body.note-section-active .note-section{
     display: block;
+}
+body.note-section-active .full-mode{
+    display: none;
 }
 .tree {
     height: 100%;
@@ -219,8 +225,11 @@ body.full-mode-active .play-nav {
     top: 3vh;
     position: fixed;
 }
-body.full-mode-active .play-nav.fixed {
-    top: calc(7.5vh + 0.5vw);
+body.full-mode-active .nav-toggle ~ .play-nav {
+    top: calc(9.1vh + 0.5vw);
+}
+.nav-toggle ~ .input-note-container .input-note {
+    display: block;
 }
 .play-box {
     width: 100%;
@@ -255,7 +264,7 @@ body.full-mode-active .play-nav.fixed {
 }
 .play-nav > button svg{
     width: 100%;
-    margin: -20% 0 -20% -20%;
+    margin: 0% 0 -20% -20%;
     padding: 20%;
 }
 .play-nav.fixed .play-box button:not(.gear){
@@ -270,12 +279,18 @@ body.full-mode-active .play-nav.fixed {
     -webkit-transform: scale(0);
     -moz-transform: scale(0);
 }
-.play-nav button:not(.gear):not(.full-mode-btn) svg > g{
+.play-box button:not(.gear) svg > g{
     filter: url(#playbox-btn-shadow);
 }
-.play-box button:not(.gear):not(.full-mode-btn) svg > g > g{
+.play-box button:not(.gear) svg > g > g{
     filter: url(#playbox-btn-shadow-second);
 }
+.play-nav > button:not(.gear) svg > g{
+    filter: url(#playbox-btn-shadow-third);
+}
+.play-nav > button:not(.gear) circle{
+    filter: url(#playbox-btn-shadow-third);
+} 
 .play-box button:not(.gear) circle{
     transition: 1.5s all;
     transform-origin: center;
@@ -340,6 +355,7 @@ body.full-mode-active .play-nav.fixed {
     visibility: visible;
     transition: 1.5s all;
     transform-origin: center top;
+    margin: -10% 0;
 }
 .play-box .gear svg{
     transform: scale(1);
@@ -1434,19 +1450,13 @@ body.full-mode-active .cloud-header img{
     opacity: 1;
 }
 .input-note-container{
-    position: absolute;
-    height: 100vh;
-    width: 100%;
-    z-index: 9;
-    pointer-events: none;
-}
-body.full-mode-active .input-note-container{
     position: fixed;
-    height: 100%;
+    height: 100vh;
+    width: 100vw;
     top: 0;
     left: 0;
-    width: 100%;
     z-index: 9;
+    pointer-events: none;
 }
 .input-note{
     display: none;
@@ -1455,11 +1465,13 @@ body.full-mode-active .input-note-container{
     z-index: 9;
     pointer-events: all;
 }
-.input-note-container .input-note{
+.input-note-container .input-note {
     width: 26.5%;
     height: 27vw;
-    left: calc(50% - 13.25%);
-    top: calc(50% - 13.5vw);
+    left: 50%;
+    top: 50%;
+    margin-left: -13.25%;
+    margin-top: -13.5vw;
 }
 .play-nav .input-note {
     position: relative;
@@ -1682,17 +1694,18 @@ body.full-mode-active .input-note-container{
     border-radius: 5px 0px 0px 5px;
     bottom: 0;
 }
-body.full-mode-active .input-note.bounce {
+body.full-mode-active .input-note{
+    -moz-transform: scale(0.5) rotate(-9deg);
+    -webkit-transform: scale(0.5) rotate(-9deg);
+    transform: scale(0.5) rotate(-9deg);
+}
+.input-note.active{
+    display: block;
     transform: none;
     -moz-animation: bounceNote 1000ms linear both;
     -o-animation: bounceNote 1000ms linear both;
     -webkit-animation: bounceNote 1000ms linear both;
     animation: bounceNote 1000ms linear both;
-}
-body.full-mode-active .input-note{
-    -moz-transform: scale(0.5) rotate(-9deg);
-    -webkit-transform: scale(0.5) rotate(-9deg);
-    transform: scale(0.5) rotate(-9deg);
 }
 .full-mode {
     display: none;
@@ -1706,16 +1719,23 @@ body.full-mode-active .input-note{
 body.full-mode-active .full-mode{
     display: block;
 }
-.full-mode nav{
+.full-mode nav {
     background: #41291b;
     transition: 1.5s transform 0.15s;
     overflow: hidden;
     position: absolute;
-    width: 100%;
+    width: calc(100% + 2vw);
+    margin-left: -1vw;
     padding: 1vh 0;
     -moz-transform: translateY(calc(-7.1vh - 0.5vw));
     -webkit-transform: translateY(calc(-7.1vh - 0.5vw));
     transform: translateY(calc(-7.1vh - 0.5vw));
+    box-shadow: 0 0 0.3vh 0.4vh rgb(0 0 0);
+}
+.full-mode.nav-toggle nav{
+    -moz-transform: translateY(-1vh);
+    -webkit-transform: translateY(-1vh);
+    transform: translateY(-1vh);
 }
 .full-mode.photo-section{
     border-width: 0.5vw 0 0 0;
@@ -1726,11 +1746,6 @@ body.full-mode-active .full-mode{
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
-}
-.full-mode nav.active{
-    -moz-transform: translateY(-1vh);
-    -webkit-transform: translateY(-1vh);
-    transform: translateY(-1vh);
 }
 .full-mode nav li{
     color: #eae9e5;
@@ -1978,6 +1993,9 @@ body.full-mode-active .timeline-months,
     position: relative;
     z-index: 2;
 }
+.full-mode.photo-section-active .photo-section{
+    display: block;
+}
 .appended-photos {
     width: 100%;
     height: 64vh;
@@ -2124,7 +2142,7 @@ body.full-mode-active .timeline-months,
     width: 100%;
     stroke: #EAE9E5;
     stroke-linecap: round;
-    transition: 1.5s all;
+    position: relative;
 }
 .add-photo path,
 .full-mode-circle path{
@@ -2137,11 +2155,15 @@ body.full-mode-active .timeline-months,
 }
 .add-photo input {
     width: 100%;
-    padding-bottom: 100%;
+    height: 100%;
     border-radius: 50%;
     opacity: 0;
     cursor: pointer;
     position: absolute;
+    top: 0;
+}
+.photo-section-active ~ .play-nav .add-photo {
+    display: block;
 }
 .add-photo input::-webkit-file-upload-button {
     cursor: pointer; 
