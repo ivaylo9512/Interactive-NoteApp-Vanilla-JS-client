@@ -22,39 +22,35 @@ const colorize = (() => {
     const playNav = document.getElementById('play-nav');
     let isColorMode;
     const manageListeners = (e) => {
-        changeBulbImages()
-
-        isColorMode ? 
+        if(isColorMode) { 
+            resetColors();
             colorizables.forEach(colorizable => {
                 colorizable.removeEventListener('mouseover', changeColor);
-            }) :
+            })
+        }else{
             colorizables.forEach(colorizable => {
                 colorizable.addEventListener('mouseover', changeColor);
             });
+        }
 
         isColorMode = !isColorMode;
         playNav.classList.toggle('play');
-
     }
 
-    let isChanged;
     let onloadAnimation = document.getElementById('onload-animation');
     const changeBulbImages = () => {
-        if(!isChanged){
-            isChanged = true;
-            onloadAnimation.classList.add('play');
-        }
+        onloadAnimation.classList.add('play');
     }
 
     let currentColor;
     const setCurrentColor = (color) => {
         if(currentColor){
-            resetNodes();
+            resetColors();
         }
         currentColor = color;
     }
 
-    const resetNodes = () => {
+    const resetColors = () => {
         colorizables.forEach(colorizable => {
             colorizable.style.color = '';
             colorizable.style.fill = '';
@@ -89,11 +85,17 @@ const colorize = (() => {
         score.textContent = amountCounted;
     }
 
+    const toggleScore = () => {
+        playNav.classList.toggle("color-game");
+    }
+
     const start = () => {
         getElements();
         playBtn.addEventListener('click', manageListeners);
-        document.getElementById('pink-bulb-btn').addEventListener('click', () => setCurrentColor('#E2007A'));
-        document.getElementById('blue-bulb-btn').addEventListener('click', () => setCurrentColor('#8bb1e5'));   
+        playBtn.addEventListener('click', changeBulbImages, {once: true});
+        document.getElementById('second-game-btn').addEventListener("click", toggleScore);
+        document.getElementById('pink-bulb-score').addEventListener('click', () => setCurrentColor('#E2007A'));
+        document.getElementById('blue-bulb-score').addEventListener('click', () => setCurrentColor('#8bb1e5'));   
     }
 
     return {
