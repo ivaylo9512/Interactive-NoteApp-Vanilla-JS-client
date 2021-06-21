@@ -1432,7 +1432,7 @@ body.full-mode-active .cloud-header img{
     position: relative;
     width: 123%;
     padding-bottom: 123%;
-    margin-top: -4%;
+    margin-top: 20%;
     margin-left: -4%;
     display: block;
     -moz-transfrom: scale(0) rotate(0);
@@ -1468,6 +1468,49 @@ body.full-mode-active .cloud-header img{
 }
 .play-nav .input-note .note {
     box-shadow: 0.05vw 0.05vw 0.3vw 0.05vw rgb(0 0 0);
+}
+.score-box {
+    position: absolute;
+    top: 1vh;
+    margin-top: 139%;
+    font-size: 40px;
+    right: 145%;
+    border: calc(2.9vw * 0.04) solid #EAE9E5;
+    line-height: 1;
+    color: #EAE9E5;
+    background: #41291B;
+    padding-bottom: 42%;
+    width: 260%;
+    flex-direction: column;
+    border-radius: calc(2.9vw * 0.5);
+    align-items: center;
+    box-shadow: 0 0 0.5vw 0.05vw rgb(0 0 0);
+    display: none;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+}
+.score-box svg {
+    display: block;
+}
+.score-box .blue-bulb {
+    fill: #729bd2;
+    width: 85%;
+}
+.score-box .pink-bulb {
+    fill: #e3037b;
+    width: 85%;
+}
+.score-box > span:nth-of-type(1) {
+    font-size: 3.8vw;
+}
+.score-box > span:nth-of-type(2) {
+    font-size: 2vw;
+}
+.score{
+    display: inline-block;
+    font-size: 1.6vw;
 }
 .input-note .note-buttons{
     position: absolute;
