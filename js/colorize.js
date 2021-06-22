@@ -1,7 +1,12 @@
 const colorize = (() => {
+    const playBtn = document.getElementById('second-game-btn'); 
+    const playNav = document.getElementById('play-nav');
+    const stopBtn = document.getElementById('stop-btn');
+    const onloadAnimation = document.getElementById('onload-animation');
+    
+    const colors = ['#E2007A', '#8bb1e5', '#E2007A', '#8bb1e5', '#41291B'];
+    
     let isMatched;
-
-    const colors = new Array('#E2007A', '#8bb1e5', '#E2007A', '#8bb1e5', '#41291B');
     function getRandomColor() {
         const randomNumber = Math.floor(Math.random() * colors.length);
         const randomColor = colors[randomNumber];
@@ -17,13 +22,7 @@ const colorize = (() => {
         colorizables = Array.from(document.getElementsByClassName('colorizable'));
         maxScore.textContent = colorizables.length - 1;
     }
-
-    const playBtn = document.getElementById('second-game-btn'); 
-    const playNav = document.getElementById('play-nav');
-    const stopBtn = document.getElementById('stop-btn');
-    let isColorMode;
-
-    let onloadAnimation = document.getElementById('onload-animation');
+   
     const changeblobImages = () => {
         onloadAnimation.classList.add('play');
         playBtn.removeEventListener('click', changeblobImages);
@@ -41,13 +40,10 @@ const colorize = (() => {
         playNav.classList.add('play');
         setCurrentColor(color);
         stopBtn.addEventListener('click', stopGame);
-        
-        if(!isColorMode) { 
-            isColorMode = true;
-            colorizables.forEach(colorizable => {
-                colorizable.addEventListener('mouseover', changeColor);
-            });
-        }
+
+        colorizables.forEach(colorizable => {
+            colorizable.addEventListener('mouseover', changeColor);
+        });
     }
 
     const stopGame = () => {
@@ -100,7 +96,7 @@ const colorize = (() => {
         playNav.classList.toggle('color-game');
     }
 
-    const start = () => {
+    const initialize = () => {
         getElements();
         playBtn.addEventListener('click', toggleScore);
         playBtn.addEventListener('click', changeblobImages);
@@ -109,6 +105,6 @@ const colorize = (() => {
     }
 
     return {
-        start
+        initialize
     };
 })();
