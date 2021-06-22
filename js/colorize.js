@@ -18,28 +18,15 @@ const colorize = (() => {
         maxScore.textContent = colorizables.length - 1;
     }
 
-    const playBtn = document.getElementById('play-btn'); 
+    const playBtn = document.getElementById('second-game-btn'); 
     const playNav = document.getElementById('play-nav');
+    const stopBtn = document.getElementById('stop-btn');
     let isColorMode;
-    const manageListeners = (e) => {
-        if(isColorMode) { 
-            resetColors();
-            colorizables.forEach(colorizable => {
-                colorizable.removeEventListener('mouseover', changeColor);
-            })
-        }else{
-            colorizables.forEach(colorizable => {
-                colorizable.addEventListener('mouseover', changeColor);
-            });
-        }
-
-        isColorMode = !isColorMode;
-        playNav.classList.toggle('play');
-    }
 
     let onloadAnimation = document.getElementById('onload-animation');
     const changeblobImages = () => {
         onloadAnimation.classList.add('play');
+        playBtn.removeEventListener('click', changeblobImages);
     }
 
     let currentColor;
@@ -51,15 +38,34 @@ const colorize = (() => {
     }
 
     const startGame = (color) => {
-        playNav.classList.add("play");
+        playNav.classList.add('play');
         setCurrentColor(color);
+        stopBtn.addEventListener('click', stopGame);
+        
+        if(!isColorMode) { 
+            isColorMode = true;
+            colorizables.forEach(colorizable => {
+                colorizable.addEventListener('mouseover', changeColor);
+            });
+        }
+    }
+
+    const stopGame = () => {
+        playNav.classList.remove('play');
+        playNav.classList.remove('color-game');
+        stopBtn.removeEventListener('click', stopGame);
+        resetColors();
+
+        colorizables.forEach(colorizable => {
+            colorizable.addEventListener('mouseover', changeColor);
+        });
     }
 
     const resetColors = () => {
         colorizables.forEach(colorizable => {
-            colorizable.style.color = '';
-            colorizable.style.fill = '';
-            colorizable.removeAttribute('color');
+            colorizable.style.color = null;
+            colorizable.style.fill = null;
+            colorizable.dataset.isCounted = '';
         })
         amountCounted = 0;
         score.textContent = 0;
@@ -91,14 +97,13 @@ const colorize = (() => {
     }
 
     const toggleScore = () => {
-        playNav.classList.toggle("color-game");
+        playNav.classList.toggle('color-game');
     }
 
     const start = () => {
         getElements();
-        playBtn.addEventListener('click', manageListeners);
-        playBtn.addEventListener('click', changeblobImages, {once: true});
-        document.getElementById('second-game-btn').addEventListener("click", toggleScore);
+        playBtn.addEventListener('click', toggleScore);
+        playBtn.addEventListener('click', changeblobImages);
         document.getElementById('pink-blob-score').addEventListener('click', () => startGame('#E2007A'));
         document.getElementById('blue-blob-score').addEventListener('click', () => startGame('#8bb1e5'));   
     }
