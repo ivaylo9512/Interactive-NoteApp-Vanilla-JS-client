@@ -61,6 +61,7 @@ const colorize = (() => {
         colorizables.forEach(colorizable => {
             colorizable.style.color = null;
             colorizable.style.fill = null;
+            colorizable.style.background = null;
             colorizable.dataset.isCounted = '';
         })
         amountCounted = 0;
@@ -71,9 +72,11 @@ const colorize = (() => {
         const node = event.currentTarget; 
         if (currentColor) {
             const randomColor = getRandomColor();
-
             node.style.fill = randomColor;
             node.style.color = randomColor;
+            if(node.tagName == 'SPAN'){
+                node.style.background = randomColor;
+            }
 
             setScore(node);
         }

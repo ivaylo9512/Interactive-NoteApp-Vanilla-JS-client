@@ -122,6 +122,7 @@ svg.blue-blob{
 .play-mode.tree-animation .notebook nav{
     opacity: 1;
     transition: opacity 1.15s 4.5s ease-in-out;
+    pointer-events: all;
 }
 .notebook nav {
     height: 10%;
@@ -129,6 +130,7 @@ svg.blue-blob{
     opacity: 0;
     width: 100%;
     z-index: 5;
+    pointer-events: none;
 }
 .notebook nav li{
     font-size: 0.5em;
@@ -545,11 +547,9 @@ body.full-mode-active .play-box{
 .onload-photos{
     position: absolute;
     height: 50%;
-    float: right;
     width: 50%;
     top: 50%;
     right: 0;
-    z-index: 5;
 }
 .onload-photos img{
     position: absolute;
@@ -941,9 +941,10 @@ body.full-mode-active .play-box{
     vertical-align: top;
 }
 .notebook form{
-    height: 90%;
+    height: 27%;
     position: relative;
     z-index: 6;
+    margin-bottom: 86%;
 }
 .notebook form .user-btn:nth-child(1){
     visibility: hidden;
@@ -1062,7 +1063,7 @@ body.full-mode-active .play-box{
 .buttons-container {
     width: 100%;
     position: relative;
-    height: 5.35%;
+    height: 18%;
     z-index: 9;
     margin-bottom: 2vh;
 }
@@ -1511,12 +1512,17 @@ body.full-mode-active .cloud-header img{
     box-shadow: 0 0 0.5vw 0.05vw rgb(0 0 0);
     display: none;
 }
+.play .score-box > :nth-child(-n + 3) {
+    display: none;
+}
 .play .score-box{
     position: relative;
     top: 0;
     right: 0;
     margin-top: 20%;
     margin-left: -160%;
+    padding: 13% 0;
+    border-radius: calc(2.9vw * 0.2);
 }
 .color-game .score-box{
     display: -webkit-box;

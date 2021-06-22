@@ -787,7 +787,7 @@ const app = (() =>{
             profile.initialize();
             animate.initialize();
             date.initialize();        
-            colorize.start();
+            colorize.initialize();
             notes.start();
         
             dragElement(document.getElementById('move-note'));
