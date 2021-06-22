@@ -1487,7 +1487,7 @@ body.full-mode-active .cloud-header img{
     height: 100%;
     width: 100%;
     background: yellow;
-    box-shadow: -5.5px 5.5px 4px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: -1vh 1vh 1vh 0px rgb(0 0 0 / 20%);
     transition: opacity 1.5s ease-in-out;
     z-index: 2;
 }
@@ -1550,37 +1550,33 @@ body.full-mode-active .cloud-header img{
     display: inline-block;
     font-size: 1.6vw;
 }
-.input-note .note-buttons{
+.input-note .note-buttons {
     position: absolute;
     z-index: 1;
-    height: 35%;
-    width: 30%;
-    right: -17%;
+    width: 45%;
+    padding-bottom: 45%;
+    right: 0;
     top: 0;
-    margin-top: -9.5%;
-    text-align: center;
     transition: transform 1s;
-
-    -webkit-transform: translate(-50%, 50%);
-    -moz-transform: translate(-50%, 50%);
-    transform: translate(-50%, 50%);
+    -webkit-transform: translate(-5%, 5%);
+    -moz-transform: translate(-5%, 5%);
+    transform: translate(-5%, 5%);
 }
 .input-note:hover .note-buttons {
-    -webkit-transform: translate(0%, 0%);
-    -moz-transform: translate(0%, 0%);
-    transform: translate(0%, 0%);
+    -webkit-transform: translate(25%, -25%);
+    -moz-transform: translate(25%, -25%);
+    transform: translate(25%, -25%);
 }
 .input-note .note-buttons button{
     position: absolute;
-    transition: 1s;
-    width: 25%;
-    padding-bottom: calc(25% - 2px);
+    transition: 1s all;
+    height: 18%;
+    width: 18%;
+    right: 0;
     background: #41291B;
-    background-color: #41291B;
-    border-radius: 10px 10px 10px 4px;
-    background-size: 100%;
-    box-shadow: 0px 0px 1px 1.5px rgba(0,0,0,0.75);
-    border: 1px solid #EAE9E5;
+    border-radius: 0.6vw 0.6vw 0.6vw 0.2vw;
+    box-shadow: 0px 0px 0.1vw 0.1vw rgb(0 0 0 / 75%);
+    border: 0.15vw solid #EAE9E5;
 }
 .input-note div:hover button{
     border-radius: 50%;
@@ -1631,16 +1627,16 @@ body.full-mode-active .cloud-header img{
 .input-note textarea{
     height: 78%;
     width: 97.8%;
-    font-size: 13px;
+    font-size: 2.5vh;
     color: #41291B;
     font-family: Arial;
     resize: none;
-    margin-top: 6px;
+    margin-top: 1vh;
 }
 .input-note input{
     width: 90%;
-    margin-top: 9px;
-    font: bold 45px/1 "Aladin", Helvetica, sans-serif;
+    margin-top: 1.5vh;
+    font: bold 7vh/1 "Aladin", Helvetica, sans-serif;
     border-bottom: 1px solid transparent;
 }
 .input-note input::-webkit-input-placeholder {
@@ -1665,19 +1661,17 @@ body.full-mode-active .cloud-header img{
 .input-note input.error{
     border-bottom: 1px solid red;
 }
-.input-note b{
-    position: absolute;
-    left: 50%;
-    font-size: 70px;
-    top: 50%;
-    -webkit-transform:  translate(-50%, -50%);
-    -moz-transform:  translate(-50%, -50%);
-    transform:  translate(-50%, -50%);
-}
-.input-note.inactive > * {
+.input-note > * {
     display: none;
 }
-.input-note.inactive > .note {
+.input-note .note,
+.input-note .move-note{
+    display: block;
+}
+.input-note.active > *{
+    display: block;
+}
+.input-note > .note {
     display: block;
 }
 .close-btn span{
@@ -1687,7 +1681,7 @@ body.full-mode-active .cloud-header img{
     position: absolute;
     left: 50%;
     margin-left: -25%;
-    border-radius: 5px;
+    border-radius: 5vw;
     transition: 1s all;
 }
 .close-btn span:nth-child(1){
