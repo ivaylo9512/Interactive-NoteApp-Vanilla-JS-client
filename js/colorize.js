@@ -50,6 +50,11 @@ const colorize = (() => {
         currentColor = color;
     }
 
+    const startGame = (color) => {
+        playNav.classList.add("play");
+        setCurrentColor(color);
+    }
+
     const resetColors = () => {
         colorizables.forEach(colorizable => {
             colorizable.style.color = '';
@@ -94,8 +99,8 @@ const colorize = (() => {
         playBtn.addEventListener('click', manageListeners);
         playBtn.addEventListener('click', changeblobImages, {once: true});
         document.getElementById('second-game-btn').addEventListener("click", toggleScore);
-        document.getElementById('pink-blob-score').addEventListener('click', () => setCurrentColor('#E2007A'));
-        document.getElementById('blue-blob-score').addEventListener('click', () => setCurrentColor('#8bb1e5'));   
+        document.getElementById('pink-blob-score').addEventListener('click', () => startGame('#E2007A'));
+        document.getElementById('blue-blob-score').addEventListener('click', () => startGame('#8bb1e5'));   
     }
 
     return {

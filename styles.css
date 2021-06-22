@@ -246,7 +246,7 @@ body.full-mode-active .nav-toggle ~ .play-nav {
     box-sizing: border-box;
     align-items: center;
     flex-direction: column;
-    border: calc(2.9vw * 0.04) solid #EAE9E5;
+    border: calc(2.9vw * 0.04) solid transparent;
     max-height: 0;
     position: relative;
     display: -webkit-box;
@@ -256,6 +256,7 @@ body.full-mode-active .nav-toggle ~ .play-nav {
     display: flex;
 }
 .play-box:hover {
+    border-color: #EAE9E5;
     transition: 1.5s all;
     background: #41291B;
     position: relative;
@@ -263,6 +264,9 @@ body.full-mode-active .nav-toggle ~ .play-nav {
     padding-bottom: 35%;
     border-radius: calc(2.9vw * 0.1);
     box-shadow: 0 0 0.5vw 0.05vw rgb(0 0 0);
+}
+.play .play-box{
+    display: none;
 }
 .play-box button{
     width: 100%;
@@ -466,6 +470,27 @@ body.full-mode-active .play-box{
     -moz-transform: rotate(90deg) translate(-1.5%, -100%);
     -webkit-transform: rotate(90deg) translate(-1.5%, -100%);
     transform: rotate(90deg) translate(-1.5%, -100%);
+}
+.stop-btn{
+    stroke: #EAE9E5;
+    fill: #41291B;
+    display: none;
+}
+.play-nav .stop-btn svg{
+    width: 110%;
+    margin: 0 0 -20% -25%;
+}
+.stop-btn circle{
+    filter: url(#playbox-btn-shadow);
+    stroke-width: 1px;
+}
+
+.stop-btn line{
+    stroke-width: 2px;
+    stroke-linecap: round;
+}
+.play .stop-btn{
+    display: block;
 }
 .notebook {
     background-image: url("resources/notebook.png");
@@ -1485,6 +1510,13 @@ body.full-mode-active .cloud-header img{
     align-items: center;
     box-shadow: 0 0 0.5vw 0.05vw rgb(0 0 0);
     display: none;
+}
+.play .score-box{
+    position: relative;
+    top: 0;
+    right: 0;
+    margin-top: 20%;
+    margin-left: -160%;
 }
 .color-game .score-box{
     display: -webkit-box;
