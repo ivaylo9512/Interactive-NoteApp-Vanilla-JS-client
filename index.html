@@ -9,7 +9,7 @@
         <link rel="stylesheet" type="text/css" media="screen" href="styles.css" />
     </head>
     <body class="remove-transitions-on-load-up">
-        <svg class="reusable-svgs">
+        <svg class="reusable-svgs" xmlns="http://www.w3.org/2000/svg">
             <defs>
                 <filter id="balloon-shadow">
                     <feDropShadow dx="0.4" dy="0.2" stdDeviation="4" />
@@ -51,7 +51,7 @@
                         <path d="M167.1,52.17S209.77-28.24,301.66,10.6c0,0,59.62,23.52,56.34,96.81,0,0,55.45,16.41,51.79,79.86,0,0-.3,61.95-67.65,67.28H220.75q-72.56,0-145.12,0C29.57,254.66-2.8,215,.19,170.31c0,0,7.74-70,81.58-68.37C81.77,101.94,101.46,42.87,167.1,52.17Z" /> 
                     </g>
                 </g>
-                <g id="left-blob" transform="translate(0.000000,360.000000) scale(0.100000,-0.100000)">
+                <g id="left-blob" class="left-blob" transform="translate(0.000000,360.000000) scale(0.100000,-0.100000)">
                     <path d="M2223 3096 c-17 -8 -39 -26 -49 -40 -16 -25 -16 -29 1 -71 20 -53 47 -75 93 -75 47 0 69 14 92 60 26 51 25 64 -7 100 -33 37 -84 47 -130 26z" />
                     <path d="M1503 3076 c-47 -21 -57 -47 -43 -109 7 -29 23 -72 35 -97 13 -25 26 -62 29 -84 5 -40 30 -86 46 -86 17 0 32 43 32 88 -1 25 7 60 18 82 11 21 22 66 26 101 6 59 4 66 -19 87 -31 29 -83 36 -124 18z" />
                     <path d="M2068 2763 c-9 -10 -18 -37 -22 -60 -3 -24 -9 -61 -12 -83 -4 -21 -4 -47 0 -56 6 -15 13 -12 48 22 69 67 100 162 59 184 -29 15 -56 12 -73 -7z" />
@@ -127,10 +127,10 @@
             <div class="timeline-years" id="timeline-years">
                 <ol>
                 </ol>
-                <svg class="timeline-years-line" viewBox="0 0 50 50">
+                <svg class="timeline-years-line" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
                     <line x1="0" y1="25" x2="50" y2="25" />
                 </svg>
-                <svg class="timeline-years-line" viewBox="0 0 50 50">
+                <svg class="timeline-years-line" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
                     <line x1="0" y1="25" x2="50" y2="25" />
                 </svg>
                 <div class="nav-point-container" id="nav-point-container">
@@ -141,7 +141,7 @@
                 <div class="big-note">
                     <span></span>
                     <div>
-                        <svg viewBox="0 0 512 512">
+                        <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
                             <use href="#balloon" />
                         </svg>
                     </div>
@@ -149,7 +149,7 @@
                 <div class="small-note">
                     <div>
                         <span></span>
-                        <svg viewBox="0 0 512 512">
+                        <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
                             <use href="#balloon" />
                         </svg>
                     </div>
@@ -200,7 +200,7 @@
             <div id="right-notes" class="right-notes">
             </div>
             <div class="timeline-months" id="timeline-months">
-                <svg class="pointer" viewBox="0 0 50 50">
+                <svg class="pointer" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
                     <polyline points="10 32.5 25 17.5 40 32.5" />
                 </svg>
                 <ol>
@@ -267,13 +267,13 @@
         </section>
         <section class="play-mode" id="play-mode">
             <section class="balloons-container" id="balloons-container">
-                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 374.78 469.43">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 374.78 469.43">
                     <use href="#balloon" />
                 </svg>
-                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 374.78 469.43">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 374.78 469.43">
                     <use href="#balloon" />
                 </svg>
-                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 374.78 469.43">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 374.78 469.43">
                     <use href="#balloon" />
                 </svg> 
             </section>
@@ -382,14 +382,18 @@
                 </nav>
             </section>
             <section class="onload-animation" id="onload-animation">
-                <svg class="pointer" id="pointer" viewBox="0 0 50 50">
+                <svg class="pointer" id="pointer" viewBox="0 0 50 50"  xmlns:xlink="http://www.w3.org/1999/xlink" >
                     <polyline points="10 32.5 25 17.5 40 32.5" />
                 </svg>
                 <img class="blue-blob" id="blue-blob"/>
-                <use class="blue-blob colorizable" href="left-blob" />
+                <svg class="blue-blob colorizable"  xmlns:xlink="http://www.w3.org/1999/xlink" >
+                    <use href="#left-blob" />
+                </svg>
                 <img src="resources/tree.png" class="tree" id="tree"/>
+                <svg class="pink-blob colorizable"  xmlns:xlink="http://www.w3.org/1999/xlink" >
+                    <use href="#right-blob" />
+                </svg>
                 <img class="pink-blob" id="pink-blob"/>
-                <use class="pink-blob colorizable" href="right-blob" />
             </section>
         </section>
         <div class="play-nav" id="play-nav">
@@ -406,9 +410,6 @@
                 </svg>
             </button>
             <div id="play-box" class="play-box">
-                <svg class="rect-background">
-                    <rect rx="calc(2.9vw * 0.1)" width="100%" height="100%"/>
-                </svg>
                 <button class="gear">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 51.23 51.23">
                         <defs>
@@ -484,11 +485,11 @@
             </div>
             <div class="score-box">      
                 <svg class="blue-blob" id="blue-blob-score" xmlns="http://www.w3.org/2000/svg" version="1.0" viewBox="0 0 325.000000 360.000000" preserveAspectRatio="xMidYMid meet">
-                    <use href="left-blob" />
+                    <use href="#left-blob" />
                 </svg>
                 <span>or</span>
                 <svg class="pink-blob" id="pink-blob-score" xmlns="http://www.w3.org/2000/svg" version="1.0" viewBox="0 0 325.000000 360.000000" preserveAspectRatio="xMidYMid meet">
-                    <use href="left-blob" />
+                    <use href="#left-blob" />
                 </svg>
                 <span>Score:</span>
                 <div class="score">
