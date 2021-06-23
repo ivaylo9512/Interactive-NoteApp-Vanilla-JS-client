@@ -1362,8 +1362,8 @@ body.full-mode-active .cloud-header h1,
 }
 .clouds{
     display: inline-block;
-    font: bold 40px/1 "Aladin", Helvetica, sans-serif;
-    transition: 1.5s;
+    font: bold 6vh/1 "Aladin", Helvetica, sans-serif;
+    transition: 1.5s all;
     position: relative;
     text-align: center;
     height: 16.5vh;
@@ -1372,8 +1372,6 @@ body.full-mode-active .cloud-header h1,
 .clouds > div{
     display: inline-block;
     position: absolute;
-    left: 50%;
-    bottom: 15%;
 }
 .clouds-container svg{
     display: block;
@@ -1381,30 +1379,27 @@ body.full-mode-active .cloud-header h1,
 }
 .clouds div:nth-child(1) {
     height: 75%;
-    -webkit-transform: scale(0) rotate(0) translateX(-50%);
-    -moz-transform: scale(0) rotate(0) translateX(-50%);
-    transform: scale(0) rotate(0) translate(208%, 200%);
-    bottom: 38%;
-    left: 0;
-    transform-origin: right;
-    transition: 2.5s ease-out 1s;
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    transform: scale(0);
+    bottom: 0%;
+    left: 6%;
+    transform-origin: top;
 }
 body.full-mode-active .clouds > div:nth-child(1),
 .note-section.animated .clouds > div:nth-child(1){
-    -webkit-transform: scale(1) rotate(-22.91deg);
-    -moz-transform: scale(1) rotate(-22.91deg);
-    transform: scale(1) rotate(-22.91deg);
+    animation: first-cloud-transition 2.3s forwards ease-out 1s;
 }
 .clouds > div:nth-child(2) {
-    font-size: 30px;
+    font-size: 4.5vh;
     height: 50%;
     -webkit-transform: scale(0) rotate(10.97deg) translateX(-50%);
     -moz-transform: scale(0) rotate(10.97deg) translateX(-50%);
     transform: scale(0) rotate(10.97deg) translateX(-50%);
-    transform-origin: bottom center;
+    transform-origin: 40% 60%;
     bottom: 79%;
     left: 37%;
-    transition: 2s 1.5s;
+    transition: 2s 1.45s;
 }
 body.full-mode-active .clouds > div:nth-child(2),
 .note-section.animated .clouds > div:nth-child(2){
@@ -1419,18 +1414,14 @@ body.full-mode-active .clouds > div:nth-child(2),
     -webkit-transform: translate(-50%, -4%) scale(0);
     -moz-transform: translate(-50%, -4%) scale(0);
     transform: translate(-50%, 4%) scale(0);
-    transform-origin: 50% 60%;
-    transition: 2s transform;
+    transform-origin: bottom;
     left: 50%;
-    bottom: 18%;
+    bottom: 35%;
     height: 90%;
 }
 body.full-mode-active .clouds > div:nth-child(3),
 .note-section.animated .clouds > div:nth-child(3){
-    -webkit-transform: translate(18%, 10%) scale(1);
-    -moz-transform: translate(18%, 10%) scale(1);
-    transform: translate(18%, 10%) scale(1);
-    animation: thirdCloudTransition forwards linear 2s;
+    animation: third-cloud-transition 4s forwards ease-out;
 }
 .cloud-headers p{
     color: #EAE9E5;
@@ -2850,5 +2841,86 @@ body.full-mode-active .right-notes,
         -webkit-transform: translate(0px, 0px) rotate(0deg);
         -moz-transform: translate(0px, 0px) rotate(0deg);
         transform: translate(0px, 0px) rotate(0deg);
+    }
+}
+
+@-webkit-keyframes first-cloud-transition{
+    0% {
+        -moz-transform: scale(0) rotate(0) translate(40%, -85%);
+        -webkit-transform: scale(0) rotate(0) translate(40%, -85%);
+        transform: scale(0) rotate(0) translate(40%, -85%);
+    }
+    33% {
+        -moz-transform: scale(1) translate(-15%, -30%) rotate(-22.91deg);
+        -webkit-transform: scale(1) translate(-15%, -30%) rotate(-22.91deg);
+        transform: scale(1) translate(-15%, -30%) rotate(-22.91deg);
+    }
+    100% {
+        -moz-transform: scale(1) translate(-30%, -20%) rotate(-22.91deg);
+        -webkit-transform: scale(1) translate(-30%, -20%) rotate(-22.91deg);
+        transform: scale(1) translate(-30%, -20%) rotate(-22.91deg);
+    }
+}
+@keyframes first-cloud-transition{
+    0% {
+        -moz-transform: scale(0) rotate(0) translate(40%, -85%);
+        -webkit-transform: scale(0) rotate(0) translate(40%, -85%);
+        transform: scale(0) rotate(0) translate(40%, -85%);
+    }
+    33% {
+        -moz-transform: scale(1) translate(-15%, -30%) rotate(-22.91deg);
+        -webkit-transform: scale(1) translate(-15%, -30%) rotate(-22.91deg);
+        transform: scale(1) translate(-15%, -30%) rotate(-22.91deg);
+    }
+    100% {
+        -moz-transform: scale(1) translate(-30%, -20%) rotate(-22.91deg);
+        -webkit-transform: scale(1) translate(-30%, -20%) rotate(-22.91deg);
+        transform: scale(1) translate(-30%, -20%) rotate(-22.91deg);
+    }
+}
+@keyframes third-cloud-transition{
+    0% {
+        -moz-transform: translate(-45%, -12%) scale(0);
+        -webkit-transform: translate(-45%, -12%) scale(0);
+        transform: translate(-45%, -12%) scale(0);
+    }
+    
+    30% {
+        -moz-transform: translate(-45%, 30%) scale(1);
+        -webkit-transform: translate(-45%, 30%) scale(1);
+        transform: translate(-45%, 30%) scale(1);
+    }
+    50% {
+        -moz-transform: translate(-5%, 30%) scale(1);
+        -webkit-transform: translate(-5%, 30%) scale(1);
+        transform: translate(-5%, 30%) scale(1);
+    }
+    100% {
+        -moz-transform: translate(18%, 30%) scale(1);
+        -webkit-transform: translate(18%, 30%) scale(1);
+        transform: translate(18%, 30%) scale(1);
+    }
+}
+@-webkit-keyframes third-cloud-transition{
+    0% {
+        -moz-transform: translate(-45%, -12%) scale(0);
+        -webkit-transform: translate(-45%, -12%) scale(0);
+        transform: translate(-45%, -12%) scale(0);
+    }
+    
+    30% {
+        -moz-transform: translate(-45%, 30%) scale(1);
+        -webkit-transform: translate(-45%, 30%) scale(1);
+        transform: translate(-45%, 30%) scale(1);
+    }
+    50% {
+        -moz-transform: translate(-5%, 30%) scale(1);
+        -webkit-transform: translate(-5%, 30%) scale(1);
+        transform: translate(-5%, 30%) scale(1);
+    }
+    100% {
+        -moz-transform: translate(18%, 30%) scale(1);
+        -webkit-transform: translate(18%, 30%) scale(1);
+        transform: translate(18%, 30%) scale(1);
     }
 }
