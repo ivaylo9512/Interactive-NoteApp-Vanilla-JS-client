@@ -907,16 +907,26 @@ body.full-mode-active .play-box{
 }
 .balloon {
     fill: #EAE9E5;
+    stroke: #EAE9E5;
+    filter: url(#balloon-shadow);
+}
+.balloon path:not(:first-child){
+    stroke-width: 4px;
 }
 .balloon path:first-child{
-    fill:url(#balloon-gradient)
+    stroke-width: 0;
+    fill: url(#balloon-gradient);
 }
 .balloons-container{
     height: 17.6%;
     text-align: center;
 }
+.balloons-container svg {
+    --gradient: url(#balloon-gradient);
+    --line-fill: #EAE9E5;
+    --line-stroke: #EAE9E5;
+}
 .balloons-container svg{
-    filter: url(#balloon-shadow);
     position: relative;
     display: none;
 }
@@ -1129,6 +1139,11 @@ body.full-mode-active .play-box{
     display: -webkit-inline-flex;
     display: inline-flex;
 }
+.note-animation svg{
+    --line-fill: #41291B;
+    --line-stroke: #41291B;
+    --gradient: none;
+}
 .big-note span,
 .small-note > div:first-child span{
     position: absolute;
@@ -1165,8 +1180,7 @@ body.full-mode-active .play-box{
     display: flex;
 }
 .big-note svg{
-    fill: #EAE9E5;
-    width: 56%;
+    width: 42%;
 }
 .small-note{
     width: 30%;
@@ -1767,8 +1781,8 @@ body.full-mode-active .full-mode{
     -webkit-transform: translateY(-1vh);
     transform: translateY(-1vh);
 }
-.full-mode.photo-section{
-    border-width: 0.5vw 0 0 0;
+.full-mode.photo-section-active{
+    border-width: 0;
 }
 .full-mode nav ul{
     width: 100%;
@@ -2038,6 +2052,7 @@ body.full-mode-active .timeline-months,
     border: 0vh solid #41291b;
     box-sizing: border-box;
     border-bottom-width: 2vw;
+    border-top-width: 1vw;
     box-shadow: 0 0 0.5vh 0.5vh rgb(0 0 0);
 }
 .album-container{
