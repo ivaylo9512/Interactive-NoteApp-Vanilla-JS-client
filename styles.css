@@ -1316,7 +1316,7 @@ body.full-mode-active .note-animation{
     -moz-transform: translateY(-50%);
     transform: translateY(-50%);
     text-shadow: 0.01em 0.01em 0.02em rgb(0 0 0);
-    margin-top: -4%;
+    margin-top: -3vh;
 }
 body.full-mode-active .cloud-header > div,
 .note-section.animated .cloud-header > div{
@@ -1366,6 +1366,8 @@ body.full-mode-active .cloud-header h1,
     transition: 1.5s;
     position: relative;
     text-align: center;
+    height: 16.5vh;
+    width: 58vh;
 }
 .clouds > div{
     display: inline-block;
@@ -1378,46 +1380,56 @@ body.full-mode-active .cloud-header h1,
     height: 100%;
 }
 .clouds div:nth-child(1) {
-    -webkit-transform: scale(0) rotate(0);
-    -moz-transform: scale(0) rotate(0);
-    transform: scale(0) rotate(0);
+    height: 75%;
+    -webkit-transform: scale(0) rotate(0) translateX(-50%);
+    -moz-transform: scale(0) rotate(0) translateX(-50%);
+    transform: scale(0) rotate(0) translate(208%, 200%);
+    bottom: 38%;
+    left: 0;
+    transform-origin: right;
+    transition: 2.5s ease-out 1s;
 }
 body.full-mode-active .clouds > div:nth-child(1),
 .note-section.animated .clouds > div:nth-child(1){
-    height: 75%;
-    -webkit-transform: scale(1) translateX(-142%) rotate(-22.91deg);
-    -moz-transform: scale(1) translateX(-142%) rotate(-22.91deg);
-    transform: scale(1) translateX(-142%) rotate(-22.91deg);
-    transition: 1s 1s;
+    -webkit-transform: scale(1) rotate(-22.91deg);
+    -moz-transform: scale(1) rotate(-22.91deg);
+    transform: scale(1) rotate(-22.91deg);
 }
 .clouds > div:nth-child(2) {
     font-size: 30px;
     height: 50%;
-    -webkit-transform: scale(0)rotate(10.97deg);
-    -moz-transform: scale(0) rotate(10.97deg);
-    transform: scale(0) rotate(10.97deg);
-    transform-origin: center;
+    -webkit-transform: scale(0) rotate(10.97deg) translateX(-50%);
+    -moz-transform: scale(0) rotate(10.97deg) translateX(-50%);
+    transform: scale(0) rotate(10.97deg) translateX(-50%);
+    transform-origin: bottom center;
+    bottom: 79%;
+    left: 37%;
+    transition: 2s 1.5s;
 }
 body.full-mode-active .clouds > div:nth-child(2),
 .note-section.animated .clouds > div:nth-child(2){
-    -webkit-transform: scale(1) rotate(10.97deg) translate(-70%, -100%);
-    -moz-transform: scale(1) rotate(10.97deg) translate(-70%, -100%);
-    transform: scale(1) rotate(10.97deg) translate(-70%, -100%);
-    transition: 2s 1.5s;
+    -webkit-transform: scale(1) rotate(10.97deg);
+    -moz-transform: scale(1) rotate(10.97deg);
+    transform: scale(1) rotate(10.97deg);
 }
 .clouds div:nth-child(2) .date-container{
     margin-top: calc(-0.5em + 9%);
 }
 .clouds > div:nth-child(3) {
-    height: 90%;
-    -webkit-transform: translate(18%, 10%) scale(1);
-    -moz-transform: translate(18%, 10%) scale(1);
-    transform: translate(18%, 10%) scale(1);
+    -webkit-transform: translate(-50%, -4%) scale(0);
+    -moz-transform: translate(-50%, -4%) scale(0);
+    transform: translate(-50%, 4%) scale(0);
     transform-origin: 50% 60%;
     transition: 2s transform;
+    left: 50%;
+    bottom: 18%;
+    height: 90%;
 }
 body.full-mode-active .clouds > div:nth-child(3),
 .note-section.animated .clouds > div:nth-child(3){
+    -webkit-transform: translate(18%, 10%) scale(1);
+    -moz-transform: translate(18%, 10%) scale(1);
+    transform: translate(18%, 10%) scale(1);
     animation: thirdCloudTransition forwards linear 2s;
 }
 .cloud-headers p{
