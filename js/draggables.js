@@ -1,4 +1,4 @@
-const dragElement = (target) => {
+const dragElement = (target, transform, dragParent, isStopPropagation, mouseDownCallback) => {
     target.addEventListener('mousedown', onMouseDown);
     
     let pos1 = 0,
@@ -17,23 +17,24 @@ const dragElement = (target) => {
         dragged = false;
 
         className = target.className;        
-        
-        if(className == 'move-btn') e.stopPropagation();
-        pos1 = e.pageX;
-        pos2 = e.pageY;            
-
-        if(className.includes('loading')) return;
-            else if (className == 'move-note' || className == 'drag-photo' || className == 'move-btn') node = target.parentElement;
-
-        node.style.transition = '0s';
-        offsetTop = parseFloat(window.getComputedStyle(node).top)
-        offsetLeft = parseFloat(window.getComputedStyle(node).left);
-        
+        if(mouseDownCallback){
+            if(!mouseDownCallback()) return;
+        }
         if (className == 'appended') {
             node = target.parentElement;
             app.clearPhoto(target, node);
             return;
         }
+        if(isStopPropagation) e.stopPropagation();
+        if(className.includes('loading')) return;
+        if(dragParent) node = target.parentElement;
+
+        pos1 = e.pageX;
+        pos2 = e.pageY;            
+        offsetTop = parseFloat(window.getComputedStyle(node).top)
+        offsetLeft = parseFloat(window.getComputedStyle(node).left);
+        node.style.pointerEvents = 'none';
+    
 
         window.addEventListener('mousemove', onDrag);
         window.addEventListener('mouseup', closeDrag);
@@ -46,16 +47,19 @@ const dragElement = (target) => {
         offsetTop -= pos2 - e.pageY;
         pos1 = e.pageX;
         pos2 = e.pageY;
-         
-        node.style.left = offsetLeft + 'px';
-        node.style.top = offsetTop + 'px';
+        
+        if(transform){
+            node.style.mozTransform = `translate(${offsetLeft}px, ${offsetTop}px)`;
+            node.style.webkitTransform = `translate(${offsetLeft}px, ${offsetTop}px)`;
+            node.style.transform = `translate(${offsetLeft}px, ${offsetTop}px)`; 
+        }else{
+            node.style.left = offsetLeft + 'px';
+            node.style.top = offsetTop + 'px';
+        }
         
         switch (className) {
             case 'move-btn':
                 app.moveEditablePhoto(pos1, pos2);
-                break;
-            case 'drag-photo':
-                makeContainerDraggable();
                 break;
             case 'point':
                 checkPointPosition();
@@ -102,14 +106,6 @@ const dragElement = (target) => {
         }
         node.style.zIndex = 'auto';
         node.style.pointerEvents = 'auto';
-    }
-
-    const makeContainerDraggable = () => {
-        node.style.marginLeft = '0px';
-        node.style.marginTop = '0px';
-        node.style.position = 'absolute';
-        node.style.zIndex = 2;
-        node.style.pointerEvents = 'none';
     }
 
     const checkPointPosition = () => {
@@ -192,12 +188,9 @@ const dragElement = (target) => {
     }
 
     const resetPhoto = () => {
-        node.style.top = '0px';
-        node.style.left = '0px';
-        node.style.marginLeft = '0.1vw';
-        node.style.marginRight = '0.1vw';
-        node.style.marginBottom = '0.2vw';
-        node.style.position = 'relative';
+        node.style.webkitTransform = null;
+        node.style.mozTransform = null;
+        node.style.transform = null;
     }
 
     const resetNavPoint = () => {
