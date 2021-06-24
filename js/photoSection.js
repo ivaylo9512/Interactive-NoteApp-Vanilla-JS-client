@@ -19,7 +19,7 @@ const photoSection = (() => {
     
     const choosePhoto = async () => {
 
-        if(!app.getCurrentAlbumNumber()){
+        if(!numberNode){
             resetPhoto();
             return;
         }
@@ -54,11 +54,11 @@ const photoSection = (() => {
     
     const exchangePhotos = async() => {
         const currentPhoto = elementFromPoint;
-        const currentPhotoId = Number(currentPhoto.id);
+        const currentPhotoId = parseInt(currentPhoto.id);
         const currentPhotoSrc = currentPhoto.src;
 
         const photo = target;
-        const newPhotoId = Number(photo.id);
+        const newPhotoId = parseInt(photo.id);
         const newPhotoSrc = photo.src;
 
         photo.classList.add('loading');
@@ -88,7 +88,7 @@ const photoSection = (() => {
 
     const exchange = (placedPhoto, currentPhoto, newPhoto) => {
         const index = placePhotos.indexOf(placedPhoto);
-        const album = albums[currentAlbumNumber];
+        const album = albums[currentNumber];
 
         return remote.exchangePhotos(currentPhoto, newPhoto).then(res => {
             const image = res.data;
@@ -109,9 +109,9 @@ const photoSection = (() => {
     }
 
     const updateChosenPhoto = (id, elementFromPoint) => { 
-        const album = albums[currentAlbumNumber]
+        const album = albums[currentNumber]
 
-        return remote.updatePhotoAlbum(id, currentAlbumNumber).then(res => {
+        return remote.updatePhotoAlbum(id, currentNumber).then(res => {
             album.push(res.data);
             const index = album.length - 1
 
@@ -129,24 +129,25 @@ const photoSection = (() => {
 
     const albumNumbersContainer = document.getElementById('album-numbers');
     
+    let currentNumber;
     let numberNode;
-    const resetNumber = () => number = null;
+    const resetNumber = () => numberNode = null;
 
     const chooseAlbumNumber = () => {
         const target = event.target;
         if(target.tagName == 'BUTTON'){
-            albumNumbersContainer.classList.remove('album' + currentAlbumNumber);
+            albumNumbersContainer.classList.remove('album' + currentNumber);
             clearPlacedPhotos();
            
-            if(target == number){
-                number = null;
-                currentAlbumNumber = null;
+            if(target == numberNode){
+                numberNode = null;
+                currentNumber = null;
                 return;
             }
            
-            number = target;
-            currentAlbumNumber = +target.children[1].textContent;
-            albumNumbersContainer.classList.add('album' + currentAlbumNumber);
+            numberNode = target;
+            currentNumber = +target.children[1].textContent;
+            albumNumbersContainer.classList.add('album' + currentNumber);
 
             appendPlacePhotos();
         }
@@ -154,7 +155,7 @@ const photoSection = (() => {
 
     const placePhotos = Array.from(document.getElementsByClassName('place-photo'));
     const clearPlacedPhotos = () => {
-        if(number){
+        if(numberNode){
             placePhotos.forEach(photo => {
                 if (photo.firstChild) {
                     photo.className = 'place-photo';
@@ -166,17 +167,17 @@ const photoSection = (() => {
 
     const appendPlacePhotos = async() => {
         
-        let album = albums[currentAlbumNumber];
+        let album = albums[currentNumber];
         if(!album){
-            await remote.getAlbumImages(currentAlbumNumber).then(res => {
-                album = albums[currentAlbumNumber] = res.data;
+            await remote.getAlbumImages(currentNumber).then(res => {
+                album = albums[currentNumber] = res.data;
             }).catch(e => {
                 console.log(e);
             })
         }
 
         album.forEach((image, i) => {
-            if(number){
+            if(numberNode){
                 const photo = document.createElement('div');
                 
                 photo.className = 'appended';
