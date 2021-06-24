@@ -2,14 +2,13 @@ const dragElement = ({target, isTransform, isParent, mouseDownCallback, dragCall
     target.addEventListener('mousedown', onMouseDown);
     
     let pos1 = 0,
-        pos2 = 0;
+        pos2 = 0,
+        offsetTop,
+        offsetLeft;
 
-    let className;
     let node = target;
-    let offsetTop;
-    let offsetLeft;
-
     let dragged;
+
     function onMouseDown(e) {
         e.preventDefault();
         e.stopPropagation();
@@ -28,11 +27,11 @@ const dragElement = ({target, isTransform, isParent, mouseDownCallback, dragCall
         pos2 = e.pageY;            
         offsetTop = parseFloat(window.getComputedStyle(node).top)
         offsetLeft = parseFloat(window.getComputedStyle(node).left);
-    
 
         window.addEventListener('mousemove', onDrag);
         window.addEventListener('mouseup', closeDrag);
     }
+
     function onDrag(e) {
         e.preventDefault();
         dragged = true;
@@ -55,15 +54,6 @@ const dragElement = ({target, isTransform, isParent, mouseDownCallback, dragCall
             dragCallback(pos1, pos2, offsetLeft, offsetTop)
         }
         
-        switch (className) {
-            case 'point':
-                checkPointPosition();
-                break;
-            case 'clouds-container':
-                addBoxShadow();
-                break;
-        }
-        
     }
 
     function closeDrag() {        
@@ -77,6 +67,7 @@ const dragElement = ({target, isTransform, isParent, mouseDownCallback, dragCall
             offsetTop,
             clientX: event.clientX,
             clientY: event.clientY,
+            dragged
         }
 
         if(closeCallback){
@@ -91,21 +82,6 @@ const dragElement = ({target, isTransform, isParent, mouseDownCallback, dragCall
             node.style.mozTransform = null;
             node.style.webkitTransform = null;
         }
-
-
-        switch (className) {
-            case 'move-btn':
-                app.resetMoveButtons();
-                break;
-            case 'clouds-container':
-                dragged && notes.resetHeader(node, offsetLeft, offsetTop);
-                break;
-        }
-    }
-
-    const addBoxShadow = () => {
-        const parent = node.parentElement;
-        !parent.className.includes('box-shadow') && parent.classList.add('box-shadow'); 
     }
 
     return () => {
