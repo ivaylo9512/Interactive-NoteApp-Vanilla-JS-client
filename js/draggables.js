@@ -50,8 +50,17 @@ const dragElement = ({target, isTransform, isParent, mouseDownCallback, dragCall
             node.style.top = offsetTop + 'px';
         }
 
+        const dragObject = {
+            target,
+            node,
+            offsetLeft,
+            offsetTop,
+            pos1,
+            pos2,
+        }
+
         if(dragCallback){
-            dragCallback(pos1, pos2, offsetLeft, offsetTop)
+            dragCallback(dragObject, closeDrag)
         }
         
     }
@@ -60,7 +69,7 @@ const dragElement = ({target, isTransform, isParent, mouseDownCallback, dragCall
         window.removeEventListener('mousemove', onDrag);
         window.removeEventListener('mouseup', closeDrag);
 
-        let dragObject = {
+        const dragObject = {
             target,
             node,
             offsetLeft,

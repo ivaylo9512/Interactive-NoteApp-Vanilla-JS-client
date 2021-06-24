@@ -93,7 +93,6 @@ const notes = (() => {
     }
 
     let isTransitionFinished = true;
-    let headerHeight = cloudHeader.offsetHeight;
     let focusedNote,
         rotate,
         focusedCloud,
@@ -135,9 +134,7 @@ const notes = (() => {
                 hideUserNote();
             
             }, 3000);
-            //??
-            !headerWidth && (headerWidth = focusedCloud.offsetWidth); 
-            
+
             app.setfocusedNote(note);
             rotate = 360;
         }
@@ -185,6 +182,8 @@ const notes = (() => {
         }
         
         const textArea = focusedCloud.firstElementChild; 
+        const headerWidth = focusedCloud.offsetWidth;
+        const headerHeight = focusedCloud.offsetHeight;
         if(Math.abs(offsetLeft) < headerWidth * 0.7 && Math.abs(offsetTop) < headerHeight * 0.7){
             focusedCloud.classList.remove('translate');
             textArea.classList.remove('active');

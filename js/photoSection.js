@@ -24,13 +24,10 @@ const photoSection = (() => {
         }
     }
     
-    const choosePhoto = async (dragObject, elementFromPoint) => {
+    const choosePhoto = async ({target:photo, node}, elementFromPoint) => {
         if(!numberNode){
             return;
         }
-
-        const photo = dragObject.target;
-        const node = dragObject.node;
 
         photo.style.opacity = 1;
         photo.style.transition = 'opacity 1s'
