@@ -448,6 +448,7 @@ const app = (() =>{
         }
         body.classList.toggle('full-mode-active');
         currentAlbumNumber = null;
+        number = null;
         isFullMode = !isFullMode;
     }
 
@@ -556,7 +557,7 @@ const app = (() =>{
                         photoCopy.id = image.id;
                         photoCopy.style.backgroundImage = `url('${remote.getBase() + image.location}')`;
                         
-                        dragElement(photoCopy);                    
+                        dragElement(photoCopy, true);                    
                         photosFragment.insertBefore(containerCopy, photosFragment.firstChild);
                     });
                     photosContainer.insertBefore(photosFragment, photosContainer.firstChild);
@@ -569,21 +570,22 @@ const app = (() =>{
     const albumNumbersContainer = document.getElementById('album-numbers');
     let number;
     const chooseAlbumNumber = () => {
-        
-        if(event.target != event.currentTarget && !number){
-            number = event.target;
-            currentAlbumNumber = +number.id;
-
-            currentAlbumNumber == 2 ? albumNumbersContainer.classList.add('middle') : albumNumbersContainer.classList.remove('middle');
-
-            albumNumbersContainer.classList.add('active');
-            number.classList.add('slide-middle');
+        const target = event.target;
+        if(target.tagName == 'BUTTON'){
+            albumNumbersContainer.classList.remove('album' + currentAlbumNumber);
+            clearPlacedPhotos();
+           
+            if(target == number){
+                number = null;
+                currentAlbumNumber = null;
+                return;
+            }
+           
+            number = target;
+            currentAlbumNumber = +target.children[1].textContent;
+            albumNumbersContainer.classList.add('album' + currentAlbumNumber);
 
             appendPlacePhotos();
-
-        }else {
-            clearPlacedPhotos();
-            currentAlbumNumber = null;
         }
     }
 
@@ -595,10 +597,6 @@ const app = (() =>{
                     photo.removeChild(photo.lastChild);
                 }
             })
-
-            albumNumbersContainer.classList.remove('active');
-            number.classList.remove('slide-middle');
-            number = null;
         }
     }
 
@@ -625,7 +623,7 @@ const app = (() =>{
                 placePhotos[i].appendChild(photoCopy);
                 placePhotos[i].className = 'placed-photo';
                 
-                dragElement(photoCopy);
+                dragElement(photoCopy, true);
             }
         })
     }
@@ -803,7 +801,8 @@ const app = (() =>{
             fullModeNav.addEventListener('click', fullScreenNavEvents);
 
             document.getElementById('input-photo').addEventListener('input', appendPhoto);
-
+            
+            albumNumbersContainer.addEventListener('click', chooseAlbumNumber)
             saveButton.addEventListener('mouseover', () => editButton.classList.add('rotate'));
             saveButton.addEventListener('mouseout', () => editButton.classList.remove('rotate'));
             saveButton.addEventListener('click', savePhotos);

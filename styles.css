@@ -2113,6 +2113,9 @@ body.full-mode-active .timeline-months,
     position: relative;
     transition: 2s all;
 }
+.clouds-container-photo-section button *{
+    pointer-events: none;
+}
 .clouds-container-photo-section p{
     position: absolute;
     top: 50%;
@@ -2125,39 +2128,39 @@ body.full-mode-active .timeline-months,
 .clouds-container-photo-section svg{
     display: block;
 }
-.clouds-container-photo-section.second-album button:first-child,
-.clouds-container-photo-section.third-album button:first-child{
+.album-photo-numbers.album2 button:first-child,
+.album-photo-numbers.album3 button:first-child{
     -moz-transform: translatex(-20%) rotate(-25deg);
     -webkit-transform: translatex(-20%) rotate(-25deg);
     transform: translatex(-20%) rotate(-25deg);
 }
-.clouds-container-photo-section.second-album button:nth-child(2){
+.album-photo-numbers.album2 button:nth-child(2){
     -moz-transform: scale(1.3) translateY(-35%);
     -webkit-transform: scale(1.3) translateY(-35%);
     transform: scale(1.3) translateY(-35%);
 }
-.clouds-container-photo-section.second-album button:last-child,
-.clouds-container-photo-section.first-album button:last-child{
+.album-photo-numbers.album2 button:last-child,
+.album-photo-numbers.album1 button:last-child{
     -moz-transform: translatex(20%) rotate(25deg);
     -webkit-transform: translatex(20%) rotate(25deg);
     transform: translatex(20%) rotate(25deg);
 }
-.clouds-container-photo-section.first-album button:first-child{
+.album-photo-numbers.album1 button:first-child{
     -moz-transform: translate(calc(100% + 0.2vw), -45%) scale(1.3);
     -webkit-transform: translate(calc(100% + 0.2vw), -45%) scale(1.3);
     transform: translate(calc(100% + 0.2vw), -45%) scale(1.3);
 }
-.clouds-container-photo-section.first-album button:nth-child(2){
+.album-photo-numbers.album1 button:nth-child(2){
     -moz-transform: translateX(calc(-120% - 0.2vw)) rotate(-25deg);
     -webkit-transform: translateX(calc(-120% - 0.2vw)) rotate(-25deg);
     transform: translateX(calc(-120% - 0.2vw)) rotate(-25deg);
 }
-.clouds-container-photo-section.third-album button:nth-child(2){
+.album-photo-numbers.album3 button:nth-child(2){
     -moz-transform: translateX(calc(120% + 0.2vw)) rotate(25deg);
     -webkit-transform: translateX(calc(120% + 0.2vw)) rotate(25deg);
     transform: translateX(calc(120% + 0.2vw)) rotate(25deg);
 }
-.clouds-container-photo-section.third-album button:last-child{
+.album-photo-numbers.album3 button:last-child{
     -moz-transform: translate(calc(-100% - 0.2vw), -45%) scale(1.3);
     -webkit-transform: translate(calc(-100% - 0.2vw), -45%) scale(1.3);
     transform: translate(calc(-100% - 0.2vw), -45%) scale(1.3);
