@@ -428,7 +428,6 @@ const app = (() =>{
     
     const fullModeNav = document.getElementById('full-mode-nav');
     const fullMode = document.getElementById('full-mode');
-    const photosContainer = document.getElementById('photos-container-full-mode');
     const playNav = document.getElementById('play-nav');
 
     let isFullMode;
@@ -502,7 +501,7 @@ const app = (() =>{
                     showFullScreenNotes();
                     break;
                 case 'Photos':
-                    showPhotoSection();
+                    photoSection.showPhotoSection();
                     break;
                 case 'Play':        
                     break;
@@ -532,43 +531,6 @@ const app = (() =>{
         playNav.classList.remove('play-box-hovered');           
         playNav.classList.remove('play-box-transitioned')            
     }  
-
-    const photoContainer = (() => { 
-        const container = document.createElement('div');
-        container.className = 'drag-photo-container';
-
-        const photo = document.createElement('div');
-        photo.className = 'drag-photo';
-        
-        container.appendChild(photo);
-        return container;
-    })();
-
-    const photosFragment = document.createDocumentFragment();
-    const showPhotoSection = () => {
-        fullMode.classList.add("photo-section-active");
-        
-        if(photosContainer.children.length == 0){
-            remote.getAlbumImages(0).then(
-                res => {
-                    const images = res.data;
-
-                    images.forEach((image) => {
-                        const containerCopy = photoContainer.cloneNode(true);
-                        const photoCopy = containerCopy.children[0];
-
-                        photoCopy.id = image.id;
-                        photoCopy.style.backgroundImage = `url('${remote.getBase() + image.location}')`;
-                        
-                        dragElement(photoCopy, true);                    
-                        photosFragment.insertBefore(containerCopy, photosFragment.firstChild);
-                    });
-                    photosContainer.insertBefore(photosFragment, photosContainer.firstChild);
-                }
-            )
-        }
-    }
-
     const savePhotos = () => {
         const album = albums[currentAlbumNumber];
 

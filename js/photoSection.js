@@ -1,4 +1,15 @@
 const photoSection = (() => {
+    const photoContainer = (() => { 
+        const container = document.createElement('div');
+        container.className = 'drag-photo-container';
+
+        const photo = document.createElement('div');
+        photo.className = 'drag-photo';
+        
+        container.appendChild(photo);
+        return container;
+    })();
+
     const photoEndDrag = (dragObject) => {
         elementFromPoint = document.elementFromPoint(event.clientX, event.clientY);
 
@@ -18,7 +29,6 @@ const photoSection = (() => {
     }
     
     const choosePhoto = async () => {
-
         if(!numberNode){
             resetPhoto();
             return;
@@ -187,7 +197,7 @@ const photoSection = (() => {
                 placePhotos[i].appendChild(photo);
                 placePhotos[i].className = 'placed-photo';
                 
-                dragElement(photo, true);
+                dragElement({target:photo, transform:true, parent: true, mouseDownCallback});
             }
         })
     }
@@ -210,10 +220,93 @@ const photoSection = (() => {
                 photoCopy.id = image.id;
                 photoCopy.src = remote.getBase() + image.location;
                 
-                dragElement(photoCopy);
+                dragElement({target:photo, transform:true, parent: true, mouseDownCallback});
+
                 photosContainer.insertBefore(containerCopy, photosContainer.firstChild);
             })
         }
+    }
+
+    const photosFragment = document.createDocumentFragment();
+    const showPhotoSection = () => {
+        fullMode.classList.add("photo-section-active");
+        
+        if(photosContainer.children.length == 0){
+            remote.getAlbumImages(0).then(
+                res => {
+                    const images = res.data;
+
+                    images.forEach((image) => {
+                        const containerCopy = photoContainer.cloneNode(true);
+                        const photoCopy = containerCopy.children[0];
+
+                        photoCopy.id = image.id;
+                        photoCopy.style.backgroundImage = `url('${remote.getBase() + image.location}')`;
+                        
+                        dragElement(photoCopy, true);                    
+                        photosFragment.insertBefore(containerCopy, photosFragment.firstChild);
+                    });
+                    photosContainer.insertBefore(photosFragment, photosContainer.firstChild);
+                }
+            )
+        }
+    }
+
+
+    const mouseDownCallback = (target) => {
+        if(className.includes('loading')) return false;
+        if (className == 'appended') {
+            clearPhoto(target, target.parentElement);
+            return false;
+        }
+    }
+
+    const clearPhoto = (photo, node) => {
+        let photoContainer = document.createElement('DIV');
+        photoContainer.appendChild(photo);
+
+        photoContainer.className = 'drag-photo-container';
+        photo.className = 'drag-photo loading';
+        node.className = 'place-photo loading';
+
+        photosContainer.appendChild(photoContainer);
+
+        let album = albums[currentAlbumNumber];
+        remote.updatePhotoAlbum(photo.id, 0).then(res => {
+            let index = placePhotos.indexOf(node);
+
+            placePhotos[index] = placePhotos[album.length - 1];
+            placePhotos[album.length - 1] = node;                            
+
+            const lastElement = album.pop();
+            if(index != album.length) album[index] = lastElement;
+
+
+            const photos = placePhotos.filter(placePhoto => {
+                if(placePhoto.children[0]) {
+                    if(placePhoto.children[0].id == photo.id) return placePhoto 
+                }
+            })
+            if(photos.length > 0){
+                photos[0].removeChild(photos[0].firstChild);
+                photos[0].className = 'place-photo';
+            }
+
+        })
+        .catch(e =>{
+            photosContainer.removeChild(photoContainer);
+            node.appendChild(photo);
+
+            photoContainer.className = 'drag-photo-container';
+            node.className = 'placed-photo';
+            photo.className = 'appended';
+            console.log(e);
+        })
+        .finally(() =>{
+            node.classList.remove('loading');
+            photo.classList.remove('loading');
+
+        })
     }
 
     const initialize = () =>{
@@ -224,6 +317,7 @@ const photoSection = (() => {
     return {
         initialize,
         clearPlacedPhotos,
-        resetNumber
+        resetNumber,
+        showPhotoSection
     }
 })()
