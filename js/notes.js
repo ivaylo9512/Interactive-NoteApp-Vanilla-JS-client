@@ -131,7 +131,7 @@ const notes = (() => {
                 focusedCloud.addEventListener('mouseover', addShadow, { once: true})
                 updateBtn.addEventListener('mouseover', updateNote);
                 
-                removeDrag = dragElement(draggedCloud);                
+                removeDrag = dragElement({target:draggedCloud, dragCallback:addParentShadow, closeCallback:resetHeader});                
                 hideUserNote();
             
             }, 3000);
@@ -142,7 +142,7 @@ const notes = (() => {
             rotate = 360;
         }
         
-        function hideUserNote(){ 
+        const hideUserNote = () => { 
             window.addEventListener('mousedown', function hideUserNote(){
                 const target = event.target;
                 const parent = target.parentElement;
@@ -169,13 +169,23 @@ const notes = (() => {
             }, true);
         }
     }
+
     const addShadow = () => {
         focusedCloud.classList.add('box-shadow');
     }
 
-    const resetHeader = (header, offsetLeft, offsetTop) => {
+    const addParentShadow = ({node}) => {
+        const parent = node.parentElement;
+        if(parent.className.includes('box-shadow')) parent.classList.add('box-shadow'); 
+    }
+
+    const resetHeader = ({node:header, offsetLeft, offsetTop, dragged}) => {
+        if(!dragged){
+            return;
+        }
+        
         const textArea = focusedCloud.firstElementChild; 
-        if(Math.abs(offsetLeft) < headerWidth && Math.abs(offsetTop) < headerHeight){
+        if(Math.abs(offsetLeft) < headerWidth * 0.7 && Math.abs(offsetTop) < headerHeight * 0.7){
             focusedCloud.classList.remove('translate');
             textArea.classList.remove('active');
             
@@ -247,6 +257,7 @@ const notes = (() => {
     }
 
     const bindNote = () => {
+        event.stopPropagation();
         if(!app.getIsFullMode() && !isNoteViewActivated){
             noteHolders.addEventListener('click', unbindNote);
             animationNote.style.display = 'block';
@@ -322,14 +333,25 @@ const notes = (() => {
             }
         });
     }
-    
+    const checkPointPosition = ({offsetLeft, offsetTop}, closeDrag) => {
+        if (offsetLeft > window.innerWidth / 25) {
+            date.showMonths();
+            closeDrag();
+        } else if (offsetTop < -window.innerHeight / 15) {
+            date.showYears();
+            closeDrag();
+        }
+    }    
     
     const start = () => {
+        dragElement({target: document.getElementById('move-note'), isParent:true});
+        dragElement({target:document.getElementById('point'), isTransform: true, dragCallback: checkPointPosition});
+
         noteHolders.addEventListener('click', unbindNote);
         noteHeader.addEventListener('mouseover', showTopAnimations);
         noteHeader.addEventListener('mouseout', hideTopAnimations);
         noteHeader.addEventListener('click', showNoteView);
-        inputNote.addEventListener('mousedown', popNote);
+        inputNote.addEventListener('click', popNote);
         document.getElementById('submit-btn').addEventListener('click', submitNote);
         document.getElementById('input-note-btn').addEventListener('click', unbindNote)
         document.getElementById('close-btn').addEventListener('click', bindNote)
