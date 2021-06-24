@@ -434,8 +434,8 @@ const app = (() =>{
     const fullModeToggle = () => {
         if(isFullMode){ 
             notes.resetNoteView();
+            photoSection.clearPlacedPhotos();
             fullModeReset();
-            clearPlacedPhotos();
             setTimeout(() => window.scrollTo(0, body.scrollHeight),0);   
         }else{
             animate.skipAnimations();
@@ -446,9 +446,9 @@ const app = (() =>{
             }
             playNav.classList.remove('fixed');
         }
+        photoSection.resetNumber();
         body.classList.toggle('full-mode-active');
         currentAlbumNumber = null;
-        number = null;
         isFullMode = !isFullMode;
     }
 
@@ -566,175 +566,6 @@ const app = (() =>{
         }
     }
 
-    const placePhotos = Array.from(document.getElementsByClassName('place-photo'));
-    const albumNumbersContainer = document.getElementById('album-numbers');
-    let number;
-    const chooseAlbumNumber = () => {
-        const target = event.target;
-        if(target.tagName == 'BUTTON'){
-            albumNumbersContainer.classList.remove('album' + currentAlbumNumber);
-            clearPlacedPhotos();
-           
-            if(target == number){
-                number = null;
-                currentAlbumNumber = null;
-                return;
-            }
-           
-            number = target;
-            currentAlbumNumber = +target.children[1].textContent;
-            albumNumbersContainer.classList.add('album' + currentAlbumNumber);
-
-            appendPlacePhotos();
-        }
-    }
-
-    const clearPlacedPhotos = () => {
-        if(number){
-            placePhotos.forEach(photo => {
-                if (photo.firstChild) {
-                    photo.className = 'place-photo';
-                    photo.removeChild(photo.lastChild);
-                }
-            })
-        }
-    }
-
-    const photo = document.createElement('div');
-    photo.className = 'appended';
-    const appendPlacePhotos = async() => {
-        
-        let album = albums[currentAlbumNumber];
-        if(!album){
-            await remote.getAlbumImages(currentAlbumNumber).then(res => {
-                album = albums[currentAlbumNumber] = res.data;
-            }).catch(e => {
-                console.log(e);
-            })
-        }
-
-        album.forEach((image, i) => {
-            if(number){
-                const photoCopy = photo.cloneNode(false);
-                
-                photoCopy.id = image.id;
-                photoCopy.style.backgroundImage = `url('${remote.getBase() + image.location}')`;
-                
-                placePhotos[i].appendChild(photoCopy);
-                placePhotos[i].className = 'placed-photo';
-                
-                dragElement(photoCopy, true);
-            }
-        })
-    }
-
-    const appendPhoto = () => {
-        const input = event.target;
-    
-        if (input.files && input.files[0]) {
-            const image = input.files[0];
-            
-            const imageData = new FormData();
-            imageData.append('photo', image);
-
-            remote.submitImage(imageData).then(res => {
-                const image = res.data;
-                
-                const containerCopy = photoContainer.cloneNode(true);
-                const photoCopy = containerCopy.children[0];
-
-                photoCopy.id = image.id;
-                photoCopy.src = remote.getBase() + image.location;
-                
-                dragElement(photoCopy);
-                photosContainer.insertBefore(containerCopy, photosContainer.firstChild);
-            })
-        }
-    }
-
-    const updateChosenPhoto = (id, elementFromPoint) => { 
-        const album = albums[currentAlbumNumber]
-
-        return remote.updatePhotoAlbum(id, currentAlbumNumber).then(res => {
-            album.push(res.data);
-            const index = album.length - 1
-
-            placePhotos[placePhotos.indexOf(elementFromPoint)] = placePhotos[index];
-            placePhotos[index] = elementFromPoint;
-        })
-        
-    }
-
-    const exchangePhotos = (placedPhoto, currentPhoto, newPhoto) => {
-        const index = placePhotos.indexOf(placedPhoto);
-        const album = albums[currentAlbumNumber];
-
-        return remote.exchangePhotos(currentPhoto, newPhoto).then(res => {
-            const image = res.data;
-            album[index] = image
-            
-            const photos = placePhotos.filter(placePhoto => {
-                if(placePhoto.children[0]) {
-                    if(placePhoto.children[0].id == currentPhoto) return placePhoto 
-                }
-            })
-            if(photos.length > 0){
-                photos[0].firstChild.src = remote.getBase() + image.location;
-                photos[0].firstChild.id = image.id;
-                photos[0].className = 'place-photo';
-            }
-
-        })
-    }
-
-    const clearPhoto = (photo, node) => {
-        let photoContainer = document.createElement('DIV');
-        photoContainer.appendChild(photo);
-        
-        photoContainer.className = 'drag-photo-container';
-        photo.className = 'drag-photo loading';
-        node.className = 'place-photo loading';
-
-        photosContainer.appendChild(photoContainer);
-
-        let album = albums[currentAlbumNumber];
-        remote.updatePhotoAlbum(photo.id, 0).then(res => {
-            let index = placePhotos.indexOf(node);
-            
-            placePhotos[index] = placePhotos[album.length - 1];
-            placePhotos[album.length - 1] = node;                            
-
-            const lastElement = album.pop();
-            if(index != album.length) album[index] = lastElement;
-
-
-            const photos = placePhotos.filter(placePhoto => {
-                if(placePhoto.children[0]) {
-                    if(placePhoto.children[0].id == photo.id) return placePhoto 
-                }
-            })
-            if(photos.length > 0){
-                photos[0].removeChild(photos[0].firstChild);
-                photos[0].className = 'place-photo';
-            }
-
-        })
-        .catch(e =>{
-            photosContainer.removeChild(photoContainer);
-            node.appendChild(photo);
-
-            photoContainer.className = 'drag-photo-container';
-            node.className = 'placed-photo';
-            photo.className = 'appended';
-            console.log(e);
-        })
-        .finally(() =>{
-            node.classList.remove('loading');
-            photo.classList.remove('loading');
-
-        })
-    }
-
     const savePhotos = () => {
         const album = albums[currentAlbumNumber];
 
@@ -799,10 +630,7 @@ const app = (() =>{
             document.getElementById('full-mode-btn').addEventListener('click', fullModeToggle);
             menuCircle.addEventListener('click', fullModeNavToggle);
             fullModeNav.addEventListener('click', fullScreenNavEvents);
-
-            document.getElementById('input-photo').addEventListener('input', appendPhoto);
             
-            albumNumbersContainer.addEventListener('click', chooseAlbumNumber)
             saveButton.addEventListener('mouseover', () => editButton.classList.add('rotate'));
             saveButton.addEventListener('mouseout', () => editButton.classList.remove('rotate'));
             saveButton.addEventListener('click', savePhotos);
@@ -821,9 +649,6 @@ const app = (() =>{
     return {
         start,
         getCurrentAlbumNumber,
-        updateChosenPhoto,
-        exchangePhotos,
-        clearPhoto,
         moveEditablePhoto,
         resetMoveButtons,
         setfocusedNote,
