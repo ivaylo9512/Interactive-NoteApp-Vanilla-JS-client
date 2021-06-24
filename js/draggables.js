@@ -1,12 +1,10 @@
-const dragElement = ({target, transform, dragParent, isStopPropagation, mouseDownCallback, closeCallBack}) => {
+const dragElement = ({target, isTransform, isParent, mouseDownCallback, dragCallback, closeCallback}) => {
     target.addEventListener('mousedown', onMouseDown);
     
     let pos1 = 0,
         pos2 = 0;
 
     let className;
-    let elementFromPoint;
-
     let node = target;
     let offsetTop;
     let offsetLeft;
@@ -14,26 +12,22 @@ const dragElement = ({target, transform, dragParent, isStopPropagation, mouseDow
     let dragged;
     function onMouseDown(e) {
         e.preventDefault();
+        e.stopPropagation();
         dragged = false;
 
-        className = target.className;        
         if(mouseDownCallback){
-            if(!mouseDownCallback()) return;
+            if(!mouseDownCallback(target)) return;
         }
-        if (className == 'appended') {
-            node = target.parentElement;
-            app.clearPhoto(target, node);
-            return;
-        }
-        if(isStopPropagation) e.stopPropagation();
-        if(className.includes('loading')) return;
-        if(dragParent) node = target.parentElement;
+
+        if(isParent) node = target.parentElement;
+       
+        node.style.pointerEvents = 'none';
+        node.style.transition = '0s';
 
         pos1 = e.pageX;
         pos2 = e.pageY;            
         offsetTop = parseFloat(window.getComputedStyle(node).top)
         offsetLeft = parseFloat(window.getComputedStyle(node).left);
-        node.style.pointerEvents = 'none';
     
 
         window.addEventListener('mousemove', onDrag);
@@ -48,7 +42,7 @@ const dragElement = ({target, transform, dragParent, isStopPropagation, mouseDow
         pos1 = e.pageX;
         pos2 = e.pageY;
         
-        if(transform){
+        if(isTransform){
             node.style.mozTransform = `translate(${offsetLeft}px, ${offsetTop}px)`;
             node.style.webkitTransform = `translate(${offsetLeft}px, ${offsetTop}px)`;
             node.style.transform = `translate(${offsetLeft}px, ${offsetTop}px)`; 
@@ -56,11 +50,12 @@ const dragElement = ({target, transform, dragParent, isStopPropagation, mouseDow
             node.style.left = offsetLeft + 'px';
             node.style.top = offsetTop + 'px';
         }
+
+        if(dragCallback){
+            dragCallback(pos1, pos2, offsetLeft, offsetTop)
+        }
         
         switch (className) {
-            case 'move-btn':
-                app.moveEditablePhoto(pos1, pos2);
-                break;
             case 'point':
                 checkPointPosition();
                 break;
@@ -76,6 +71,7 @@ const dragElement = ({target, transform, dragParent, isStopPropagation, mouseDow
         window.removeEventListener('mouseup', closeDrag);
 
         let dragObject = {
+            target,
             node,
             offsetLeft,
             offsetTop,
@@ -83,38 +79,29 @@ const dragElement = ({target, transform, dragParent, isStopPropagation, mouseDow
             clientY: event.clientY,
         }
 
-        if(closeCallBack){
-            closeCallBack(dragObject);
+        if(closeCallback){
+            closeCallback(dragObject);
         }
+
+        node.style.pointerEvents = 'all';
+        node.style.transition = null;
+
+        if(isTransform){
+            node.style.transform = null;
+            node.style.mozTransform = null;
+            node.style.webkitTransform = null;
+        }
+
 
         switch (className) {
             case 'move-btn':
                 app.resetMoveButtons();
-                break;
-            case 'point':
-                resetNavPoint();
                 break;
             case 'clouds-container':
                 dragged && notes.resetHeader(node, offsetLeft, offsetTop);
                 break;
         }
     }
-
-    const checkPointPosition = () => {
-        if (offsetLeft > window.innerWidth / 25) {
-            date.showMonths();
-            closeDrag();
-        } else if (offsetTop < -window.innerHeight / 15) {
-            date.showYears();
-            closeDrag();
-        }
-    }
-
-    const resetNavPoint = () => {
-        node.style.transition = null;
-        node.style.left = 0;
-        node.style.top = 0;
-    }    
 
     const addBoxShadow = () => {
         const parent = node.parentElement;
