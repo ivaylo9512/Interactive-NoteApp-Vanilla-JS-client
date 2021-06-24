@@ -1,4 +1,8 @@
 const photoSection = (() => {
+    const photosContainer = document.getElementById('photos-container-full-mode');
+    const albumNumbersContainer = document.getElementById('album-numbers');
+    const placePhotos = Array.from(document.getElementsByClassName('place-photo'));
+
     const photoContainer = (() => { 
         const container = document.createElement('div');
         container.className = 'drag-photo-container';
@@ -10,31 +14,23 @@ const photoSection = (() => {
         return container;
     })();
 
-    const photoEndDrag = (dragObject) => {
-        elementFromPoint = document.elementFromPoint(event.clientX, event.clientY);
+    const closeCallback = (dragObject) => {
+        const elementFromPoint = document.elementFromPoint(event.clientX, event.clientY);
 
-        switch (elementFromPoint.className) {
-            case 'place-photo':
-                choosePhoto();
-                break;
-            case 'appended':
-                exchangePhotos();
-                break;
-            default:
-                resetPhoto();
-                break;
+        if(elementFromPoint.className == 'place-photo'){
+            choosePhoto(dragObject, elementFromPoint);
+        }else if(elementFromPoint.className == 'appended'){
+            exchangePhotos(dragObject, elementFromPoint);
         }
-        node.style.zIndex = 'auto';
-        node.style.pointerEvents = 'auto';
     }
     
-    const choosePhoto = async () => {
+    const choosePhoto = async (dragObject, elementFromPoint) => {
         if(!numberNode){
-            resetPhoto();
             return;
         }
 
-        const photo = target;
+        const photo = dragObject.target;
+        const node = dragObject.node;
 
         photo.style.opacity = 1;
         photo.style.transition = 'opacity 1s'
@@ -42,16 +38,13 @@ const photoSection = (() => {
     
         elementFromPoint.appendChild(photo);
         node.style.display = 'none';
-
         
         try{
-            await app.updateChosenPhoto(photo.id, elementFromPoint);
+            await updateChosenPhoto(photo.id, elementFromPoint);
         }catch(e){
             node.appendChild(photo);
-            node.style.display = 'block';
-
+            node.style.display = 'inline-block';
             console.log(e);
-            resetPhoto(node);
             return;
         }finally{
             photo.classList.remove('loading');
@@ -62,28 +55,27 @@ const photoSection = (() => {
         node.parentElement.removeChild(node);
     }
     
-    const exchangePhotos = async() => {
+    const exchangePhotos = async (dragObject, elementFromPoint) => {
         const currentPhoto = elementFromPoint;
         const currentPhotoId = parseInt(currentPhoto.id);
-        const currentPhotoSrc = currentPhoto.src;
+        const currentPhotoSrc = currentPhoto.style.backgroundImage;
 
-        const photo = target;
+        const photo = dragObject.target;
         const newPhotoId = parseInt(photo.id);
-        const newPhotoSrc = photo.src;
+        const newPhotoSrc = photo.style.backgroundImage;
 
         photo.classList.add('loading');
         currentPhoto.classList.add('loading');
 
-        resetPhoto();
-        currentPhoto.src = newPhotoSrc;
-        photo.src = currentPhotoSrc;
+        currentPhoto.style.backgroundImage = newPhotoSrc;
+        photo.style.backgroundImage = currentPhotoSrc;
 
 
         try{
             await exchange(currentPhoto.parentElement, currentPhotoId, newPhotoId);
         }catch(e){
-            photo.src = newPhotoSrc;
-            currentPhoto.src = currentPhotoSrc;
+            photo.style.backgroundImage = newPhotoSrc;
+            currentPhoto.style.backgroundImage = currentPhotoSrc;
             console.log(e);
             return;
         }finally{
@@ -105,12 +97,12 @@ const photoSection = (() => {
             album[index] = image
             
             const photos = placePhotos.filter(placePhoto => {
-                if(placePhoto.children[0]) {
-                    if(placePhoto.children[0].id == currentPhoto) return placePhoto 
+                if(placePhoto.children[0] && placePhoto.children[0].id == currentPhoto) {
+                    return placePhoto;
                 }
             })
-            if(photos.length > 0){
-                photos[0].firstChild.src = remote.getBase() + image.location;
+            if(photos){
+                photos[0].firstChild.style.backgroundImage = remote.getBase() + image.location;
                 photos[0].firstChild.id = image.id;
                 photos[0].className = 'place-photo';
             }
@@ -130,14 +122,6 @@ const photoSection = (() => {
         })
         
     }
-    
-    const resetPhoto = () => {
-        node.style.webkitTransform = null;
-        node.style.mozTransform = null;
-        node.style.transform = null;
-    }
-
-    const albumNumbersContainer = document.getElementById('album-numbers');
     
     let currentNumber;
     let numberNode;
@@ -163,7 +147,6 @@ const photoSection = (() => {
         }
     }
 
-    const placePhotos = Array.from(document.getElementsByClassName('place-photo'));
     const clearPlacedPhotos = () => {
         if(numberNode){
             placePhotos.forEach(photo => {
@@ -180,7 +163,7 @@ const photoSection = (() => {
         if(!album){
             await remote.getAlbumImages(currentNumber).then(res => {
                 album = res.data;
-                album.setAlbum(num, album)
+                app.setAlbum(currentNumber, album)
             }).catch(e => {
                 console.log(e);
             })
@@ -197,7 +180,7 @@ const photoSection = (() => {
                 placePhotos[i].appendChild(photo);
                 placePhotos[i].className = 'placed-photo';
                 
-                dragElement({target:photo, transform:true, parent: true, mouseDownCallback});
+                dragElement({target:photo, isTransform:true, isParent:true, mouseDownCallback, closeCallback});
             }
         })
     }
@@ -218,9 +201,9 @@ const photoSection = (() => {
                 const photoCopy = containerCopy.children[0];
 
                 photoCopy.id = image.id;
-                photoCopy.src = remote.getBase() + image.location;
+                photoCopy.style.backgroundImage = `url('${remote.getBase() + image.location}')`;
                 
-                dragElement({target:photo, transform:true, parent: true, mouseDownCallback});
+                dragElement({target:photo, isTransform:true, isParent:true, mouseDownCallback, closeCallback});
 
                 photosContainer.insertBefore(containerCopy, photosContainer.firstChild);
             })
@@ -228,9 +211,7 @@ const photoSection = (() => {
     }
 
     const photosFragment = document.createDocumentFragment();
-    const showPhotoSection = () => {
-        fullMode.classList.add("photo-section-active");
-        
+    const showPhotoSection = () => {        
         if(photosContainer.children.length == 0){
             remote.getAlbumImages(0).then(
                 res => {
@@ -243,7 +224,7 @@ const photoSection = (() => {
                         photoCopy.id = image.id;
                         photoCopy.style.backgroundImage = `url('${remote.getBase() + image.location}')`;
                         
-                        dragElement(photoCopy, true);                    
+                        dragElement({target:photoCopy, isTransform:true, isParent:true, mouseDownCallback, closeCallback});
                         photosFragment.insertBefore(containerCopy, photosFragment.firstChild);
                     });
                     photosContainer.insertBefore(photosFragment, photosContainer.firstChild);
@@ -254,11 +235,15 @@ const photoSection = (() => {
 
 
     const mouseDownCallback = (target) => {
+        const className = target.className
         if(className.includes('loading')) return false;
+        
         if (className == 'appended') {
             clearPhoto(target, target.parentElement);
             return false;
         }
+
+        return true;
     }
 
     const clearPhoto = (photo, node) => {
@@ -271,7 +256,7 @@ const photoSection = (() => {
 
         photosContainer.appendChild(photoContainer);
 
-        let album = albums[currentAlbumNumber];
+        let album = app.getAlbum(currentNumber);
         remote.updatePhotoAlbum(photo.id, 0).then(res => {
             let index = placePhotos.indexOf(node);
 
