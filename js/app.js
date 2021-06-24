@@ -2,7 +2,10 @@ const app = (() =>{
     const body = document.body;
     const userPhotosContainer = document.getElementById('user-photos');
     const appendedPhotos = Array.from(userPhotosContainer.children);
+    
     const albums = []
+    const getAlbum = num => albums[num];
+    const setAlbum = (num, album) => albums[num] = album;
 
     let currentAlbumNumber;
     const getCurrentAlbumNumber = () => currentAlbumNumber;
@@ -169,9 +172,9 @@ const app = (() =>{
                 posX = minPosX;
             }
         }
-}
+    }
 
-    function stopResize(e) {
+    const stopResize = (e) => {
         isResizing = false;
 
         if (e.target != currentPhoto.node && e.target.parentElement != currentPhoto.node) {
@@ -617,6 +620,7 @@ const app = (() =>{
             animate.initialize();
             date.initialize();        
             colorize.initialize();
+            photoSection.initialize();
             notes.start();
         
             dragElement(document.getElementById('move-note'));
@@ -654,7 +658,9 @@ const app = (() =>{
         setfocusedNote,
         findUserPhoto,
         getIsFullMode,
-        getIsLoaded
+        getIsLoaded,
+        getAlbum,
+        setAlbum
     }
 })();
 app.start();

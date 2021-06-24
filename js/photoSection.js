@@ -88,7 +88,7 @@ const photoSection = (() => {
 
     const exchange = (placedPhoto, currentPhoto, newPhoto) => {
         const index = placePhotos.indexOf(placedPhoto);
-        const album = albums[currentNumber];
+        const album = app.getAlbum(currentNumber);
 
         return remote.exchangePhotos(currentPhoto, newPhoto).then(res => {
             const image = res.data;
@@ -109,7 +109,7 @@ const photoSection = (() => {
     }
 
     const updateChosenPhoto = (id, elementFromPoint) => { 
-        const album = albums[currentNumber]
+        const album = app.getAlbum(currentNumber)
 
         return remote.updatePhotoAlbum(id, currentNumber).then(res => {
             album.push(res.data);
@@ -166,11 +166,11 @@ const photoSection = (() => {
     }
 
     const appendPlacePhotos = async() => {
-        
-        let album = albums[currentNumber];
+        let album = app.getAlbum(currentNumber);
         if(!album){
             await remote.getAlbumImages(currentNumber).then(res => {
-                album = albums[currentNumber] = res.data;
+                album = res.data;
+                album.setAlbum(num, album)
             }).catch(e => {
                 console.log(e);
             })
