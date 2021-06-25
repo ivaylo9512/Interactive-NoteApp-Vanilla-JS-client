@@ -911,7 +911,6 @@ body.full-mode-active .play-box{
 .balloon {
     fill: #EAE9E5;
     stroke: #EAE9E5;
-    filter: url(#balloon-shadow);
 }
 .balloon path:not(:first-child){
     stroke-width: 4px;
@@ -923,11 +922,6 @@ body.full-mode-active .play-box{
 .balloons-container{
     height: 17.6%;
     text-align: center;
-}
-.balloons-container svg {
-    --gradient: url(#balloon-gradient);
-    --line-fill: #EAE9E5;
-    --line-stroke: #EAE9E5;
 }
 .balloons-container svg{
     position: relative;

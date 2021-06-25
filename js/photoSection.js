@@ -29,8 +29,6 @@ const photoSection = (() => {
             return;
         }
 
-        photo.style.opacity = 1;
-        photo.style.transition = 'opacity 1s'
         photo.classList.add('loading');
     
         elementFromPoint.appendChild(photo);
@@ -99,9 +97,10 @@ const photoSection = (() => {
                 }
             })
             if(photos){
-                photos[0].firstChild.style.backgroundImage = remote.getBase() + image.location;
-                photos[0].firstChild.id = image.id;
-                photos[0].className = 'place-photo';
+                const photo = photos[0];
+                photos.firstChild.style.backgroundImage = remote.getBase() + image.location;
+                photos.firstChild.id = image.id;
+                photos.className = 'place-photo';
             }
 
         })
@@ -302,4 +301,4 @@ const photoSection = (() => {
         resetNumber,
         showPhotoSection
     }
-})()
+})();

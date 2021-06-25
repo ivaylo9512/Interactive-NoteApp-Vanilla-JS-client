@@ -7,6 +7,7 @@ const notes = (() => {
     const cloudContainer = document.getElementById('cloud-headers');
     const cloudHeader = document.getElementById('cloud-header');
     const cloudSvg = document.getElementById('cloud');
+    const playMode = document.getElementById('play-mode');
 
     let userNotes = []; 
     const getNotes = (date) => {
@@ -61,9 +62,9 @@ const notes = (() => {
         resetNotes();
         addHeaders();
 
-        app.getIsFullMode ?
-            window.scrollTo(0, body.scrollHeight - 849) :
-                window.scrollTo(0, body.scrollHeight - 2749);
+        app.getIsFullMode() ?
+            window.scrollTo(0, body.scrollHeight) :
+                window.scrollTo(0, body.scrollHeight - playMode.offsetHeight - window.innerHeight);
                 
         userNotes.forEach((userNote, i) => {
             const note = noteContainer.cloneNode(true);
@@ -369,7 +370,7 @@ const notes = (() => {
         }
     }    
     
-    const start = () => {
+    const initialize = () => {
         dragElement({target: document.getElementById('move-note'), isParent:true});
         dragElement({target:document.getElementById('point'), isTransform: true, dragCallback: checkPointPosition});
 
@@ -385,7 +386,7 @@ const notes = (() => {
     }
 
     return {
-        start,
+        initialize,
         bindNote,
         unpopNote,
         resetNoteView,

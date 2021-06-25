@@ -109,5 +109,5 @@ const colorize = (() => {
 
     return {
         initialize
-    };
+    }
 })();
