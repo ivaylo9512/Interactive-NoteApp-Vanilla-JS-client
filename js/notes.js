@@ -198,29 +198,33 @@ const notes = (() => {
         if(!dragged){
             return;
         }
-        
-        const textArea = focusedCloud.firstElementChild; 
-        const headerWidth = focusedCloud.offsetWidth;
-        const headerHeight = focusedCloud.offsetHeight;
+        const cloud = focusedNote.cloud;
+        const textArea = cloud.firstElementChild; 
+        const headerWidth = cloud.offsetWidth;
+        const headerHeight = cloud.offsetHeight;
         if(Math.abs(offsetLeft) < headerWidth * 0.7 && Math.abs(offsetTop) < headerHeight * 0.7){
-            focusedCloud.classList.remove('translate');
             textArea.classList.remove('active');
-            
-            header.style.transition = '1.5s';
             header.style.left = null;
             header.style.top = null;
-        }else if(textArea.className != 'active')
+        }else if(textArea.className != 'active'){
             textArea.className = 'active';
+        }
     }
 
     const updateNote = (e) => {
+        const noteInfo = focusedNote.userNote;
+        const name = noteInfo.name;
+
         const updateNote = {
-            id: focusedNote.id,
-            name: focusedNote.name.value,
-            note: focusedNote.note.value,
+            id: noteInfo.id,
+            name: noteInfo.name.value,
+            note: noteInfo.note.value,
         }
-        remote.updateNote(updateNote);
-        //same catch as submit i da dam else koito izliza prozorec s error ako e drug
+        remote.updateNote(updateNote).then(() =>{
+            name.classList.remove('error');
+            name.placeholder = '';
+            
+        }).catch(e => noteCatch(e));
 
         rotateBtn(e.target);
     }
@@ -335,21 +339,22 @@ const notes = (() => {
     const inputName = inputNote.children[0];
     const inputText = inputNote.children[1];
     const submitNote = () => {
-        remote.submitNote(inputName.value, inputText.value).then(
-            res =>{
-                inputName.classList.remove('error');
-                inputName.placeholder = '';
+        remote.submitNote(inputName.value, inputText.value).then(() =>{
+            inputName.classList.remove('error');
+            inputName.placeholder = '';
 
-                inputName.value = '';
-                inputText.value = '';
-            }
-        ).catch(e => {
-            if(e.response.data.message == 'Note must have a name'){
-                inputName.classList.add('error');
-                inputName.placeholder = 'Note must have a name';
-            }
-        });
+            inputName.value = '';
+            inputText.value = '';
+        }).catch(e => noteCatch(e, inputName))
     }
+
+    const noteCatch = (e, inputName) => {
+        if(e.response.data.message == 'Note must have a name'){
+            inputName.classList.add('error');
+            inputName.placeholder = 'Note must have a name';
+        }
+    }
+
     const checkPointPosition = ({offsetLeft, offsetTop}, closeDrag) => {
         if (offsetLeft > window.innerWidth / 25) {
             date.showMonths();
