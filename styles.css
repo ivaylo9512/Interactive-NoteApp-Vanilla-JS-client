@@ -53,6 +53,9 @@ body.full-mode-active .play-mode{
 body.full-mode-active .note-section{
     display: none;
 }
+body.full-mode-active .full-mode{
+    display: block;
+}
 body.note-section-active .note-section{
     display: block;
 }
@@ -1271,24 +1274,20 @@ body.full-mode-active .note-animation{
     height: 30vh;
     z-index: 2;
     flex-direction: column;
-    transition-property: border-radius, transform, box-shadow;
+    transition: 1.5s all, 0s box-shadow;
     display: -webkit-box;
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
 }
-.cloud-header.border-radius > div{
-    border-radius: 50%;
-    transition-delay: 1.3s;
-}
 .cloud-header.translate > div{
-    transition-duration: 1.5s;
+    border-radius: 50%;
     -webkit-transform: translateY(-8px);
     -moz-transform: translateY(-8px);
     transform: translateY(-8px);
 }
 .cloud-header.box-shadow > div{
-    transition-delay: 0s;
+    transition: 1.5s all, 1.5s box-shadow;
     box-shadow: 1px 0px 3px;
 }
 .cloud-header textarea{
@@ -1386,9 +1385,11 @@ body.full-mode-active .cloud-header h1,
     left: 6%;
     transform-origin: top;
 }
-body.full-mode-active .clouds > div:nth-child(1),
 .note-section.animated .clouds > div:nth-child(1){
     animation: first-cloud-transition 2.3s forwards ease-out 1s;
+}
+body.full-mode-active .clouds > div:nth-child(1){
+    animation: first-cloud-transition 0s forwards ease-out 0s;
 }
 .clouds > div:nth-child(2) {
     font-size: 4.5vh;
@@ -1399,13 +1400,16 @@ body.full-mode-active .clouds > div:nth-child(1),
     transform-origin: 40% 60%;
     bottom: 79%;
     left: 37%;
-    transition: 2s 1.45s;
+    transition: 2s transform 1.45s;
 }
 body.full-mode-active .clouds > div:nth-child(2),
 .note-section.animated .clouds > div:nth-child(2){
     -webkit-transform: scale(1) rotate(10.97deg);
     -moz-transform: scale(1) rotate(10.97deg);
     transform: scale(1) rotate(10.97deg);
+}
+body.full-mode-active .clouds > div:nth-child(2){
+    transition: 0s transform 0s;
 }
 .clouds div:nth-child(2) .date-container{
     margin-top: calc(-0.5em + 9%);
@@ -1419,9 +1423,11 @@ body.full-mode-active .clouds > div:nth-child(2),
     bottom: 35%;
     height: 90%;
 }
-body.full-mode-active .clouds > div:nth-child(3),
 .note-section.animated .clouds > div:nth-child(3){
     animation: third-cloud-transition 4s forwards ease-out;
+}
+body.full-mode-active .clouds > div:nth-child(3){
+    animation: third-cloud-transition 0s forwards ease-out;
 }
 .cloud-headers p{
     color: #EAE9E5;
@@ -1753,9 +1759,6 @@ body.full-mode-active .input-note{
     box-sizing: border-box;
     position: relative;
 }
-body.full-mode-active .full-mode{
-    display: block;
-}
 .full-mode nav {
     background: #41291b;
     transition: 1.5s transform 0.15s;
@@ -1951,7 +1954,7 @@ body.full-mode-active .timeline-months,
     display: -webkit-flex;
     display: flex;
 }
-.days-container:nth-child(1):focus + .days-container.visible{
+.days-container:nth-child(1).active + .days-container.visible{
     transition: 2s width ease-in-out 1.5s, 2s height ease-in-out 1.5s, 2s border-radius ease-in-out 1.5s, 1.5s transform ease-in-out 0s;
     visibility: visible;
     width: 29vh;
@@ -1967,7 +1970,7 @@ body.full-mode-active .timeline-months,
     opacity: 0;
     padding: 0 2%;
 }
-.days-container:nth-child(1):focus + .days-container > div {
+.days-container:nth-child(1).active + .days-container > div {
     opacity: 1;
     transition: 1s opacity 3.5s;
 }
@@ -2255,6 +2258,10 @@ body.full-mode-active .full-mode-circle.active {
     position: relative;
     background: no-repeat center center / cover;
     top: -12.5%;
+}
+.drag-photo{
+    opacity: 1s;
+    transition: 1s opacity;
 }
 .drag-photo.loading{
     opacity: 0.2;
