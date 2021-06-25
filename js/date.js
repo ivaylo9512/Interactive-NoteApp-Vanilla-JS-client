@@ -10,7 +10,7 @@ const date = (() => {
     const minYear = 1995;
     const currentYear = new Date().getFullYear();
      
-    function appendYears(){
+    const appendYears = () => {
         const yearsFragment = document.createDocumentFragment();
 
         for(let i = currentYear; i >= minYear; i--){
@@ -170,7 +170,7 @@ const date = (() => {
     }
 
     const daysContainer = document.getElementById('days-container');
-
+    const daysBtn = document.getElementById('days-btn');
     const chosenMonth = document.getElementById('chosen-month');
     const chosenYear = document.getElementById('chosen-year');
     const chosenDay = document.getElementById('chosen-day');
@@ -187,6 +187,7 @@ const date = (() => {
         
         month = monthIndex + 1;
         setDaysCount(monthsDays[monthIndex]);
+        daysBtn.classList.add('active');
         checkDate();
     }
 
@@ -204,11 +205,11 @@ const date = (() => {
         checkDate();
     }
 
-    function setDay() {
+    const setDay = () => {
         if (event.target.tagName == 'A') {
             day = event.target.textContent;
             chosenDay.textContent = day;
-
+            daysBtn.classList.remove('active');
             checkDate();
         }
     }
@@ -239,6 +240,8 @@ const date = (() => {
         months.forEach(month => month.addEventListener('click',() => setMonth(months.indexOf(month))));
         years.forEach(year => year.addEventListener('click', () => setYear(year.children[0].textContent)));
         daysContainer.addEventListener('click', setDay);  
+        daysBtn.addEventListener('click', () => daysBtn.classList.toggle('active'));
+
     }
 
     return {
