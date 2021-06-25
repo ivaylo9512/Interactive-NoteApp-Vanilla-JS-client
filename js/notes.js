@@ -85,90 +85,108 @@ const notes = (() => {
             }else{
                 rightNotesFragment.appendChild(note);
             }
- 
-            note.addEventListener('mousedown', () => showUserNote(i, note, userNote, updateBtn));
+            
+            const noteInfo = {i, note, userNote, updateBtn};
+            note.addEventListener('mousedown', () => showUserNote(noteInfo));
         })
         rightNotesContainer.appendChild(rightNotesFragment);
         leftNotesContainer.appendChild(leftNotesFragment);
     }
 
     let isTransitionFinished = true;
-    let focusedNote,
-        rotate,
-        focusedCloud,
-        headerWidth;    
-    const showUserNote = (index, note, noteInfo, updateBtn) => {
-        let removeDrag, draggedCloud, textArea, nameInput;
+    let isHideNote;
+    let rotate;
+    let focusedNote;
+    let removeDrag;
+    let transitionEvent;
+    const showUserNote = (noteInfo) => {
+        let {i, note, userNote, updateBtn} = noteInfo;
 
         if(noteInfo != focusedNote && isTransitionFinished){
             isTransitionFinished = false;
-
-            let cloudIndex = Math.floor(index / 2);
-            if(index >= userNotes.length - 2){
+            isHideNote = false;
+            hideUserNote();
+            focusedNote = noteInfo;
+            
+            let cloudIndex = Math.floor(i / 2);
+            if(i >= userNotes.length - 2){
                 cloudIndex = cloudHeaders.length - 1;
             }else if(userNotes.length % 2 != 0 && note.parentElement == rightNotesContainer){
                 cloudIndex++;
             }
 
-            focusedCloud = cloudHeaders[cloudIndex];
-            draggedCloud = focusedCloud.children[1];
-            nameInput = note.children[0];
-
-            textArea = focusedCloud.children[0]; 
-            textArea.value = noteInfo.note;
-
-            focusedNote = noteInfo;
-            focusedNote.note = textArea;
-            focusedNote.name = nameInput;
+            const focusedCloud = cloudHeaders[cloudIndex];
+            focusedNote.cloud = focusedCloud;
+            
+            userNote.name = note.children[0];
+            userNote.note = focusedCloud.children[0];
+            userNote.note.value = userNote.note;
 
             note.classList.add('active');
-            focusedCloud.classList.add('translate');        
-            setTimeout(() => focusedCloud.classList.add('border-radius'), 0);
-            setTimeout(() => {
+            focusedCloud.classList.add('translate');   
+            
+            focusedCloud.addEventListener('mousedown', checkIfHideable);
+            window.addEventListener('mousedown', hideUserNoteEvent);
+            
+            removeDrag = dragElement({target:focusedCloud.children[1], dragCallback:addParentShadow, closeCallback:resetHeader});                
+            transitionEvent = setTimeout(() => {
                 isTransitionFinished = true;
 
-                focusedCloud.addEventListener('mouseover', addShadow, { once: true})
+                focusedCloud.addEventListener('mouseenter', addShadow)
                 updateBtn.addEventListener('mouseover', updateNote);
                 
-                removeDrag = dragElement({target:draggedCloud, dragCallback:addParentShadow, closeCallback:resetHeader});                
-                hideUserNote();
-            
             }, 3000);
 
             app.setfocusedNote(note);
             rotate = 360;
+        }else{
+            isHideNote = false;
         }
-        
-        const hideUserNote = () => { 
-            window.addEventListener('mousedown', function hideUserNote(){
-                const target = event.target;
-                const parent = target.parentElement;
-                const className = parent && parent.className;
-                
-                if(target != note && parent != note && !className.includes('user-photo') && target != draggedCloud && target.tagName != 'TEXTAREA'){
-                    // TODO just 1 big class?
-                    focusedCloud.classList.remove('box-shadow');
-                    focusedCloud.classList.remove('translate');        
-                    focusedCloud.classList.remove('border-radius');
-                    focusedCloud.firstElementChild.classList.remove('active');
-                    note.classList.remove('active');
-                    
-                    const draggedStyle = draggedCloud.style;
-                    draggedStyle.top = draggedStyle.left = draggedStyle.transition = focusedNote = null; 
-                   
-                    app.setfocusedNote(null);
-                    removeDrag();
+    }
 
-                    focusedCloud.removeEventListener('mouseover', addShadow);
-                    updateBtn.removeEventListener('mouseover', updateNote);
-                    window.removeEventListener('mousedown', hideUserNote, true);
-                }
-            }, true);
+    const checkIfHideable = () => {
+        if(focusedNote.cloud == event.currentTarget){
+            isHideNote = false;
+        } 
+    }
+
+    const hideUserNoteEvent = () => { 
+        const target = event.target;
+        const parent = target.parentElement;
+        const className = parent && parent.className;
+        
+        if(isHideNote && !className.includes('user-photo')){          
+            hideUserNote();
+            isTransitionFinished = true;
+            clearTimeout(transitionEvent);
+        }
+        isHideNote = true;
+    }
+
+    const hideUserNote = () => {
+        if(focusedNote){
+            const cloud = focusedNote.cloud;
+
+            cloud.classList.remove('box-shadow');
+            cloud.classList.remove('translate');        
+            cloud.firstElementChild.classList.remove('active');
+            cloud.removeEventListener('mouseenter', addShadow);
+            cloud.removeEventListener('mousedown', checkIfHideable);
+
+            focusedNote.note.classList.remove('active');
+            focusedNote.updateBtn.removeEventListener('mouseover', updateNote);
+            window.removeEventListener('mousedown', hideUserNoteEvent);
+
+            removeDrag();
+            app.setfocusedNote(null);
+
+            const draggedStyle = cloud.children[1].style;
+            draggedStyle.top = draggedStyle.left = draggedStyle.transition = focusedNote = null; 
         }
     }
 
     const addShadow = () => {
-        focusedCloud.classList.add('box-shadow');
+        focusedNote.cloud.classList.add('box-shadow');
     }
 
     const addParentShadow = ({node}) => {
