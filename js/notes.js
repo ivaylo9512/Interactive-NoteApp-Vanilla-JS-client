@@ -87,6 +87,7 @@ const notes = (() => {
             }
             
             const noteInfo = {i, note, userNote, updateBtn};
+            noteName.addEventListener('input', () => userNote.name = e.currentTarget.value);
             note.addEventListener('mousedown', () => showUserNote(noteInfo));
         })
         rightNotesContainer.appendChild(rightNotesFragment);
@@ -116,11 +117,9 @@ const notes = (() => {
             }
 
             const focusedCloud = cloudHeaders[cloudIndex];
+            focusedCloud.children[0].value = userNote.note;
             focusedNote.cloud = focusedCloud;
             
-            userNote.name = note.children[0];
-            userNote.note = focusedCloud.children[0];
-            userNote.note.value = userNote.note;
 
             note.classList.add('active');
             focusedCloud.classList.add('translate');   
@@ -211,20 +210,24 @@ const notes = (() => {
         }
     }
 
+    const changeNoteText = (e) => {
+        focusedNote.userNote.note = e.currentTarget.value;
+    }
+
     const updateNote = (e) => {
-        const noteInfo = focusedNote.userNote;
-        const name = noteInfo.name;
+        const {id, name, note} = focusedNote.userNote;
+        const nameNode = focusedNote.note.children[0];
 
         const updateNote = {
-            id: noteInfo.id,
-            name: noteInfo.name.value,
-            note: noteInfo.note.value,
+            id,
+            name,
+            note
         }
         remote.updateNote(updateNote).then(() =>{
-            name.classList.remove('error');
-            name.placeholder = '';
+            nameNode.classList.remove('error');
+            nameNode.placeholder = '';
             
-        }).catch(e => noteCatch(e));
+        }).catch(e => noteCatch(e, nameNode));
 
         rotateBtn(e.target);
     }
@@ -256,6 +259,7 @@ const notes = (() => {
         const cloudsCount = (notesCount - 4) / 2
         for (let i = 0; i < cloudsCount; i++) {
             const cloudHeaderCopy = cloudHeader.cloneNode(true);
+            cloudHeaderCopy.children[0].addEventListener('input', changeNoteText);
             cloudHeaders.push(cloudHeaderCopy);
             cloudsFragment.appendChild(cloudHeaderCopy);
         }
@@ -369,6 +373,7 @@ const notes = (() => {
         dragElement({target: document.getElementById('move-note'), isParent:true});
         dragElement({target:document.getElementById('point'), isTransform: true, dragCallback: checkPointPosition});
 
+        cloudHeader.children[0].addEventListener('input', changeNoteText)
         noteHolders.addEventListener('click', unbindNote);
         noteHeader.addEventListener('mouseover', showTopAnimations);
         noteHeader.addEventListener('mouseout', hideTopAnimations);
