@@ -83,7 +83,7 @@ const app = (() =>{
     let isResizing;
     let isRotating;
     
-    const moveEditablePhoto = (pos1, pos2) => {
+    const moveEditablePhoto = ({pos1, pos2}) => {
         if (isEditMode) {
             isMoving = true;
             rotateButton.style.display = 'none';
@@ -307,10 +307,8 @@ const app = (() =>{
 
                 const styles = window.getComputedStyle(photo);
                 currentPhoto.zIndex = styles.zIndex;
-                currentPhoto.left = parseFloat(styles.left);
-                currentPhoto.leftPosition = currentPhoto.left;
-                currentPhoto.top = parseFloat(styles.top);
-                currentPhoto.topPosition = currentPhoto.top;
+                currentPhoto.left = currentPhoto.leftPosition = parseFloat(styles.left);
+                currentPhoto.top = currentPhoto.topPosition = parseFloat(styles.top);
                 currentPhoto.width = parseFloat(styles.width);
                 currentPhoto.widthSize = currentPhoto.width;
                 currentPhoto.widthUnits = 'px';
@@ -501,6 +499,7 @@ const app = (() =>{
                     showFullScreenNotes();
                     break;
                 case 'Photos':
+                    fullMode.classList.add("photo-section-active");
                     photoSection.showPhotoSection();
                     break;
                 case 'Play':        
@@ -583,11 +582,9 @@ const app = (() =>{
             date.initialize();        
             colorize.initialize();
             photoSection.initialize();
-            notes.start();
+            notes.initialize();
         
-            dragElement(document.getElementById('move-note'));
-            dragElement(document.getElementById('point'));
-            dragElement(moveButton);
+            dragElement({target:moveButton, isParent:true, closeCallback: resetMoveButtons, dragCallback:moveEditablePhoto});
 
             document.getElementById('play-box').addEventListener('mouseover', setPlayBoxHover);
             document.getElementById('play-box').addEventListener('mouseleave', removePlayBoxHover);
